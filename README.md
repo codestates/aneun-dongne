@@ -1,3 +1,5 @@
+<h1>🏡 아는동네 🏡</h1>
+
 속도의 시대에 잃어버리고 살았던 우리 동네의 아름다움,
 
 동네의 매력을 발견하며 팍팍한 삶에 따뜻한 위안을 전하는 **아는동네**
@@ -23,3 +25,27 @@
 계획이 없어도, 즉흥적으로 오늘 하루는 발이 이끄는 대로
 
 우리동네 여행을 시작해 보세요!
+
+<h2> 🛠 기술 스택 </h2>
+<img src ="https://user-images.githubusercontent.com/72595163/143447368-c4c6ff48-bff3-45e8-bd90-a71c71f1e327.png"/>
+
+<h2> 📃 Documents </h2>
+<ul>
+  <li><a href="https://www.figma.com/file/jDF0JU7yNritvz43jHq3Z7/tenten-team-library?node-id=0%3A1">Prototype</a></li>
+  <li><a href="https://tmddl0807.gitbook.io/tenten/">API</a></li>
+  <li><a href="https://dbdiagram.io/d/619d974d02cf5d186b653044">DB schema</a></li>
+</ul>
+
+<h2> 👩‍👩‍👦‍👦 Team </h2>
+<table border="1">
+	<th>이미지</th>
+	<th>미모지</th>
+  <th>이미지</th>
+  <th>미모지</th>
+	<tr><!-- 첫번째 줄 시작 -->
+    <td><a href="https://github.com/tmddl0807">손승이</a></td>
+    <td><a href="https://github.com/hwa7879">남경화</a></td>
+    <td><a href="https://github.com/ryu9663">류준열</a></td>
+    <td><a href="https://github.com/haeyong9701">윤해용</a></td>
+	</tr><!-- 첫번째 줄 끝 -->
+    </table>

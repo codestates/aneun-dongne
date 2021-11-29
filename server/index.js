@@ -1,9 +1,18 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
+app.use(express.json());
 const port = 80;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.use(
+  cors({
+    origin: true,
+    credentials: true
+  })
+);
+
+app.get("/api", (req, res) => {
+  res.send({ hello : "Hello World!" });
 });
 
 app.listen(port, () => {

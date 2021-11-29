@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: [
+      // 클라이언트 s3 주소
       "http://localhost:3000",
       "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
     ],

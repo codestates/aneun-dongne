@@ -29,7 +29,7 @@
 <ul>
   <li><a href="https://www.figma.com/file/jDF0JU7yNritvz43jHq3Z7/tenten-team-library?node-id=0%3A1">Prototype</a></li>
   <li><a href="https://tmddl0807.gitbook.io/tenten/">API</a></li>
-  <li><a href="https://dbdiagram.io/d/619d974d02cf5d186b653044">DB schema</a></li>
+  <li><a href="https://dbdiagram.io/d/61a48f748c901501c0d6dc5b">DB schema</a></li>
 </ul>
 
 <h2> 👩‍👩‍👦‍👦 Team </h2>

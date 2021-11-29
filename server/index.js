@@ -9,7 +9,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [
+      "http://localhost:3000",
+      "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })

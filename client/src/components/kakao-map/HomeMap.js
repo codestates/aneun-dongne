@@ -16,21 +16,20 @@ const SearchLocation = styled.select`
     margin-bottom: 5px;
     margin-right: 5px;
     margin-left:5px;
-    width: 70px;
+    width: 120px;
     height: 40px;
     background-color: white;
     /* border:gray 1px solid; */
     border:none;
     
-    /* border:1px gray solid; */
-    /* padding-right: ${(props) => (props.first ? '-15px' : '0')}; */
+    //중앙선 더 오른쪽으로 옮기고 싶은데 잘안된다..
     border-right:${(props) => (props.first ? '1px gray solid' : 'none')};
 `
 const SearchKeyWord = styled.input`
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left:5px;
-    width: 150px;
+    width: 250px;
     height: 40px;
     background-color: white;
     border:gray 1px solid;
@@ -43,7 +42,7 @@ const SearchPlace = styled.input`
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left:5px;
-    width: 150px;
+    width: 250px;
     height: 40px;
     background-color: white;
     border:gray 1px solid;
@@ -54,7 +53,7 @@ const SearchBtn = styled.button`
     margin-top: 160px;
     margin-bottom: 5px;
     margin-left:5px;
-    width: 150px;
+    width: 250px;
     height : 40px;
     background-color: rgb(192, 251, 255);
     border:none;
@@ -69,7 +68,7 @@ const SearchBar = styled.div`
     margin-left:5px;
     display:flex;
     padding:5px;
-    width: 150px;
+    width: 250px;
     height : 40px;
     border-radius: 5px;
     border:1px gray solid;
@@ -81,11 +80,12 @@ const MapRightBar = styled.div`
     border:1px rgb(192, 251, 255) solid;
     border-radius: 10px;
     margin-left: 30px;
-    bottom : 10px;
+    bottom : 20px;
+    width:280px;
     padding-left: 10px;
     padding-right: 10px;
 `
-
+//오른쪽 버튼
 const RightBtn = styled.button`
     border-radius: 5px;
     position: relative;
@@ -108,7 +108,11 @@ const RightBtnBox = styled.div`
     padding-left: 0;
     
 `
-
+//지도
+const Map = styled.div`
+    width: 870px;
+    
+`
 
 const HomeMap = () => {
     const kakao = window.kakao
@@ -157,8 +161,8 @@ const HomeMap = () => {
         map.panTo(moveLatLng)
         //setPickPoint를 등록하여 클릭한것과 같은 효과를 낸다.
         setPickPoint([moveLatLng.Ma,moveLatLng.La])
-        //검색창 빈칸으로 만들기
-        setPlace(' ')
+        //검색창 빈칸으로 만들기 -> 하면안된다. 검색어 없을때 검색누르면 alert창 나옴
+        // setPlace(' ')
         console.log(area,sigg)
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert("검색 결과가 없습니다.")
@@ -426,7 +430,8 @@ const changeSigg = (sigg) => {
   return (
     <div className="map-box">
        
-    <div id="map" ></div>
+    <Map id="map" ></Map>
+    {/* <div id="map" ></div> */}
     <MapRightBar >
         <p>오늘 떠나볼 동네는?</p>
         <SearchBar>

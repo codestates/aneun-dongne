@@ -2,23 +2,22 @@
 /* !우선 완성하고 나중에 다 styled-component화 시키겠습니다.. */
 /* *{border:1px gray solid} */
 #map{
-    width:600px;
+    /* width:600px; */
 }
 .map-box {
     background-color: white;
-    position: sticky;
-    top:0;
     left:10px;
     right:250px;
-    z-index: 3;
+    /* z-index: 3; */
     padding-left: 100px;
-    padding-right: 100%;
+    /* padding-right: 100%; */
+
     padding-bottom : 30px;
     display:flex;
-    width: 1200px;
+    width: 100%;
     /* margin-left: auto; */
     /* margin-right: auto; */
-    margin-top: 50px;
+    padding-top: 50px;
     border-bottom:1px rgb(192, 251, 255) solid;
 }
 .map-searchbar {
@@ -26,7 +25,7 @@
     flex-direction: column;
     width: 100%;
 }
-.kakao-map,#map{width:100%;height: 420px;}
+/* .kakao-map,#map{width:100%;height: 420px;} */
 
 .map-searchbar{ 
     background-color: rgb(192, 251, 255);

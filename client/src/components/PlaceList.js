@@ -12,8 +12,8 @@ function PlaceList() {
         height: 100vh;
         display: grid; 
         grid-template-columns: repeat(3, 1fr);
-        flex-direction: column;
-        position: relative;
+        
+        /* position: relative; */
         
 
     `

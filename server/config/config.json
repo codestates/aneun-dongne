@@ -4,6 +4,7 @@
     "password": "aneun_dongne",
     "database": "aneun_dongne",
     "host": "aneun-dongne.c09uhsuuz67e.ap-northeast-2.rds.amazonaws.com",
+    "port" : 13306,
     "dialect": "mysql"
   },
   "test": {

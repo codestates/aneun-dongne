@@ -15,7 +15,7 @@ function PlaceList() {
     // })
     const PlaceList = styled.div`
         display:flex;
-        /* flex-direction: column; */
+        flex-direction: column;
         position: relative;
     `
 

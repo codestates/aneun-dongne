@@ -111,56 +111,61 @@ const RightBtnBox = styled.div`
 
 
 const HomeMap = () => {
-
-
+    const kakao = window.kakao
+    const [placeList,setPlaceList] = useRecoilState(placelist) 
+    const [location,setLocation] = useRecoilState(locations)//{lat:37,lon:128}  
+    const [meetingPlace,setMeetingPlace] = useRecoilState(meetingplace)   
     
-  const [count,setCount] = useState(0)//1번만시작하게함
-//   const placeList = useSelector((state=>state.changePlaceListReducer))
-  const [placeList,setPlaceList] = useRecoilState(placelist) 
-  
-  const [pending, setPending] = useState(true)
-  const [map, setMap] = useState(null)
-  const kakao = window.kakao
-  const [place,setPlace] = useState('')
-//   const {lat,lon,region,city, add} = useSelector((state=>state.locationReducer),shallowEqual)
-  const [location,setLocation] = useRecoilState(locations)//{lat:37,lon:128}
-  const [centerPosition,setCenterPosition] = useState([location.lat,location.lon])
+    const [count,setCount] = useState(0)//1번만시작하게함
+    const [pending, setPending] = useState(true)
+    const [map, setMap] = useState(null)
+    const [place,setPlace] = useState('')
+    const [centerPosition,setCenterPosition] = useState([location.lat,location.lon])
 //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
-  const [meetingPlace,setMeetingPlace] = useRecoilState(meetingplace)   
-//   const dispatch = useDispatch()
+  
+//!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
+    const [pickPoint,setPickPoint] = useState([location.lat,location.lon])
 
-  //클릭한 좌표중심 업데이트하여 새로운 좌표 중심반경 10km 재검색해야함 => 클릭하면 그 지점으로 좌표중심 업데이트
-  const [pickPoint,setPickPoint] = useState([location.lat,location.lon])
-//!지역 검색창을 위한 state
-  const [area,setArea] = useState(' ')//메인페이지에서 넘어오면 userAddress[0]넣기
-  const [areaIdx,setAreaIdx] = useState(0)//메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg,setSigg] = useState(' ')//메인페이지에서 넘어오면 userAddress[1]넣기
-//! 지도 줌인,줌아웃
-  const [level,setLevel] = useState(9)
+    //!지역 검색창을 위한 state
+    const [area,setArea] = useState(' ')//메인페이지에서 넘어오면 userAddress[0]넣기
+    const [areaIdx,setAreaIdx] = useState(0)//메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
+    const [sigg,setSigg] = useState(' ')//메인페이지에서 넘어오면 userAddress[1]넣기
+
+    //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
+    const [level,setLevel] = useState(9)
   
   /**
    *! 장소 검색시 실행되는 함수 serachPlace
    * @param keyword 검색어
    */
-  const searchPlace = keyword => {
+    const searchPlace = keyword => {
     setCount(0)
     setPending(true)
     const places = new kakao.maps.services.Places()
     //검색
     places.keywordSearch(keyword, (result, status) => {
+
+
       if (status === kakao.maps.services.Status.OK) {
+          //
+
         const firstItem = result[0]
         const { x, y } = firstItem
         const moveLatLng = new kakao.maps.LatLng(y, x)
         
-        console.log(map)
+        // console.log(moveLatLng.La)
         map.panTo(moveLatLng)
+        //setPickPoint를 등록하여 클릭한것과 같은 효과를 낸다.
+        setPickPoint([moveLatLng.Ma,moveLatLng.La])
+        //검색창 빈칸으로 만들기
+        setPlace(' ')
+        console.log(area,sigg)
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert("검색 결과가 없습니다.")
       } else {
         alert("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.")
       }
-      
+    //   setPickPoint()
       setPending(false)
     })
   }
@@ -195,6 +200,7 @@ axios.get(`http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationB
       params:{
       MobileOS:'ETC',
       MobileApp:'TourAPI3.0_Guide',
+      //! 관광지 개수
       numOfRows: 50,
       // areaCode:33,
       // sigunguCode:7,
@@ -215,25 +221,25 @@ axios.get(`http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationB
       }
     }
     ,{'content-type': 'application/json'}).then(res=>{
-      // console.log(res.data.response.header)
+    //   console.log(res.data)
       console.log(res.data.response.body.items.item)
       let list = (res.data.response.body.items.item)
+      //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소],..]
       list=list.map(el=>{
         return [Number(el.mapy),Number(el.mapx),el.title,el.firstimage,el.addr1]
-        
       })
-      
     //   dispatch(changePlaceList(list))
-    setPlaceList(list)
+    setPlaceList(list)//-> 이걸 PlaceList.js에서 사용한다.
       
     })
     .catch(err=>console.log(err))
   // }
-},[pickPoint])
+},[pickPoint])//! pickPoint가 바뀔때마다, 즉 지도를 클릭할때마다 실행.
 // ?
   
 // !
 useEffect(()=>{ // * 위의 useEffect에서 받아온 좌표들을 지도에 노란색 마커로 표시
+    console.log(meetingPlace)
     console.log(area,sigg)
     console.log("effect")
     
@@ -250,7 +256,7 @@ useEffect(()=>{ // * 위의 useEffect에서 받아온 좌표들을 지도에 노
       position: map.getCenter(),
       map: map,
     });
-    // !마커 여러개찍기
+    // !마커 여러개찍기, placeList:[[관광지1의 y좌표,x좌표,제목,썸네일,주소],[관광지2의 y좌표,x좌표,제목,썸네일,주소],...]
     let positions = []
     for(let i = 0;i<placeList.length;i++){
       positions.push(
@@ -260,7 +266,7 @@ useEffect(()=>{ // * 위의 useEffect에서 받아온 좌표들을 지도에 노
           content:placeList[i][2],
           latlng: new kakao.maps.LatLng(placeList[i][0], placeList[i][1])
       })
-    }
+    }//!position = [ {addr:주소,latlng:좌표,content:관광지이름,img:관광지썸네일},... ]
     
   //   let positions = [
   //     {
@@ -284,7 +290,7 @@ useEffect(()=>{ // * 위의 useEffect에서 받아온 좌표들을 지도에 노
       
       // 마커 이미지를 생성합니다    
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-      // console.log(positions[i].latlng)
+      
       // 마커를 생성합니다
       let marker = new kakao.maps.Marker({
           map: map, // 마커를 표시할 지도
@@ -339,7 +345,7 @@ useEffect(()=>{ // * 위의 useEffect에서 받아온 좌표들을 지도에 노
   // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
   
 
-  //내위치 마커의 infowindow
+  //내위치 마커의 infowindow -> 파란색마커임, 
   let iwContentCenter = '<div style="padding:5px;">내 위치 <br></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
   iwPositionCenter = new kakao.maps.LatLng([location.lat,location.lon]),iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다; //인포윈도우 표시 위치입니다
   // 인포윈도우를 생성합니다
@@ -389,7 +395,7 @@ axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.get
     setMeetingPlace([address.region_1depth_name,address.region_2depth_name,address.address_name])
   })
 //   .then(res=>console.log(meetingPlace))
-  .catch(err=>console.log(err)) 
+  .catch(err=>console.log(err)) //237줄에 console.log(meetingPlace)있음.
 });
     setMap(map)
     setPending(false)
@@ -397,31 +403,20 @@ axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.get
 
 
 // !지역
-function cat1_change(key,sel){
-    if(key == '') return;
-    var name = cat2_name[key];
-    var val = cat2_num[key];
-   
-    for(let i=sel.length-1; i>=0; i--)
-     sel.options[i] = null;
-    sel.options[0] = new Option('-선택-','', '', 'true');
-    for(let i=0; i<name.length; i++){
-     sel.options[i+1] = new Option(name[i],val[i]);
-    }
-   }
+
 //    const [area,setArea] = useState(' ')
 // const [sigg,setSigg] = useState(' ')
 // const [areaIdx,setAreaIdx] = useState(0)
 //!
 
 
-const changeArea = async (area) => {
+const changeArea = (area) => {
     console.log(area);
     searchPlace(area)
     setArea(area)
-    await setAreaIdx(cat1_name.indexOf(area))
+    setAreaIdx(cat1_name.indexOf(area))
 }
-const changeSigg = async (sigg) => {
+const changeSigg = (sigg) => {
     console.log(area, sigg);
     searchPlace(`${area} ${sigg}`)
     setSigg(sigg)
@@ -470,3 +465,15 @@ const changeSigg = async (sigg) => {
 }
 
 export default HomeMap
+
+
+
+
+
+
+
+
+//! 남은거 : 
+//! 시군구,도 option에 있는 글자를 지도에 파란마커가 있는 주소와 일치시키기
+//! 무한스크롤
+//! css,반응형

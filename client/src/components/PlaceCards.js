@@ -3,14 +3,17 @@ import styled from "styled-components";
 import notImageYet from '../images/not-image-yet.png'
 const PlaceCard = styled.div`
     margin:10px;
+    border:1px gray solid;
+    width:300px;
     .place-cards{
         display:flex;
         flex-direction:column;
+        width: 250px;
     }
     .place-cards > img {
         border:1px red solid;
-        width: 200px;
-        height:180px;
+        width: 250px;
+        height:230px;
         object-fit: scale-down;
     }
     .place-cards-title > {
@@ -25,7 +28,7 @@ function PlaceCards({title,img,addr1}) {
             <div className = 'place-cards'>
                 {img ? <img src= {img} /> : <img src= {notImageYet} />}
                 <div className ='place-cards-title'>
-                    <span>{`[${addr1}]`}</span> 
+                    <div>{`[${addr1}] `}</div> 
                     <span>{title}</span>
                 </div>    
                 <hr />

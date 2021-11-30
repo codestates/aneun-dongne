@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import dotenv from "dotenv";
-import { nowlocation } from "../recoil.js/recoil";
+import { nowlocation } from "../recoil/recoil";
 import { useRecoilState } from "recoil";
 dotenv.config();
 
@@ -57,14 +57,46 @@ export const MenuButton = styled.button`
   }
 `;
 
-export const TitleView = styled.div`
+export const TitleFirstView = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column-reverse;
-  margin-left: 20rem;
-  margin-right: 0.5rem;
-  width: 100%;
+  flex-direction: column;
+
+  /* margin-left: 20rem;
+  margin-right: 0.5rem; */
+  width: 100vw;
+  height: 100vh;
+
+  .title {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+`;
+
+export const TitleSecondView = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* margin-left: 20rem;
+  margin-right: 0.5rem; */
+  width: 100vw;
+  height: 100vh;
+
+  .title {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+`;
+export const TitleThirdView = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* margin-left: 20rem;
+  margin-right: 0.5rem; */
+  width: 100vw;
   height: 100vh;
 
   .title {
@@ -108,18 +140,34 @@ function Mainpage() {
   //const [isStart, setIsStart] = useState(false);
 
   const history = useHistory();
-  const ToHomepage = () => {
-    history.push("/homepage");
+  const ToHome = () => {
+    history.push("/home");
   };
+
+  //위치기반 첫번째 사진 넣기
+  //해시태그 움짤
+  //내가 가본 곳 움짤
+  //후기 나열하기
 
   return (
     <>
       <Body>
         <Button>
-          <MenuButton onClick={ToHomepage}>시작하기</MenuButton>
-          <TitleView>
+          <MenuButton onClick={ToHome}>시작하기</MenuButton>
+          <TitleFirstView>
             <div className="title">우리 동네에서 인기있는 관광지는?</div>
-          </TitleView>
+          </TitleFirstView>
+          <TitleSecondView>
+            <div className="title">
+              저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.
+            </div>
+          </TitleSecondView>
+          <TitleThirdView>
+            <div className="title">
+              그곳이 어디라도 간직하고 싶다면 내가 서있는 바로 그곳을 저장할 수
+              있어요.
+            </div>
+          </TitleThirdView>
         </Button>
       </Body>
     </>

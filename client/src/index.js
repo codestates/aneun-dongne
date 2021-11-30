@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot } from "recoil"; // recoil 추가
 import App from "./App";
 
 ReactDOM.render(

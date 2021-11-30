@@ -2,19 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const App = () => {
-  const [isContent, setContnet] = useState("연결됐니?");
+import Mainpage from "./pages/Mainpage";
 
-  // axios 요청 : ec2 주소
-  const isToggle = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/hello`).then((res) => {
-      setContnet(res.data.data);
-    });
-  };
+const App = () => {
   return (
-    <div>
-      <button onClick={isToggle}>{isContent}</button>
-    </div>
+    <>
+      <Mainpage />
+    </>
   );
 };
 

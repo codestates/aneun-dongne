@@ -3,7 +3,7 @@ import { useSetRecoilState, useRecoilValue, useResetRecoilState, useRecoilState 
 import styled from "styled-components";
 import PlaceCards from './PlaceCards';
 import { placelist,meetingplace,locations } from '../recoil/recoil';
-import Cards from './Cards';
+
 function PlaceList() {
     // const placeList = useSelector((state=>state.changePlaceListReducer))
     const placeList = useRecoilValue(placelist) 

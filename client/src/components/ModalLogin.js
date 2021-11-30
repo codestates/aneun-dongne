@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-export const FormContainer = styled.div`
+const FormContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   input {
     margin: 20px 0px;
@@ -56,16 +62,24 @@ const ModalLogin = ({ handleResponseSuccess }) => {
   return (
     <>
       <FormContainer>
-        <div>Log in</div>
+        <div className="form-title">Log in</div>
         <form onSubmit={(e) => e.preventDefault()}>
-          <label for="email">Email</label>
-          <input id="email" type="text" onChange={handleInputValue("email")} />
-          <label for="password">password</label>
-          <input
-            id="password"
-            type="password"
-            onChange={handleInputValue("password")}
-          />
+          <div className="form-email">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="text"
+              onChange={handleInputValue("email")}
+            />
+          </div>
+          <div className="form-password">
+            <label for="password">password</label>
+            <input
+              id="password"
+              type="password"
+              onChange={handleInputValue("password")}
+            />
+          </div>
           <div className="login-button" onClick={handleLogin}>
             Log in
           </div>

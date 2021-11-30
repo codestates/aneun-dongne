@@ -29,7 +29,7 @@ const App = () => {
     <>
       <BrowserRouter>
         <Switch>
-          <Route path="/main">
+          <Route exact path="/main">
             <Mainpage handleResponseSuccess={handleResponseSuccess} />
           </Route>
           <Route exact path="/home">

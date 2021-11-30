@@ -30,13 +30,18 @@ const FormContainer = styled.div`
     cursor: pointer;
     color: #a3dcf3;
   }
+
+  .alert-box {
+    color: red;
+  }
 `;
 
-const ModalLogin = ({ handleResponseSuccess }) => {
+const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -44,6 +49,13 @@ const ModalLogin = ({ handleResponseSuccess }) => {
 
   const handleLogin = () => {
     const { email, password } = loginInfo;
+    if (email === "") {
+      setErrorMessage("이메일을 입력하세요");
+      return;
+    } else if (password === "") {
+      setErrorMessage("비밀번호를 입력하세요");
+      return;
+    }
 
     axios
       .post(
@@ -56,6 +68,9 @@ const ModalLogin = ({ handleResponseSuccess }) => {
       )
       .then(() => {
         handleResponseSuccess();
+      })
+      .catch((error) => {
+        setErrorMessage("아이디와 비밀번호를 정확히 입력하세요");
       });
   };
 
@@ -80,11 +95,14 @@ const ModalLogin = ({ handleResponseSuccess }) => {
               onChange={handleInputValue("password")}
             />
           </div>
+          <div className="alert-box">{errorMessage}</div>
           <div className="login-button" onClick={handleLogin}>
-            Log in
+            로그인
           </div>
           <div>아직 회원이 아니신가요?</div>
-          <div className="signup-link">회원가입하기</div>
+          <div className="signup-link" onClick={ToSignupModal}>
+            회원가입하기
+          </div>
         </form>
       </FormContainer>
     </>

@@ -32,8 +32,10 @@ const FormContainer = styled.div`
   }
 `;
 
-const ModalSignup = () => {
-  const [loginInfo, setLoginInfo] = useState({
+// TODO 회원가입 유효성 검사 만들기
+
+const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
+  const [userinfo, setUserInfo] = useState({
     nickname: "",
     email: "",
     password: "",
@@ -41,7 +43,28 @@ const ModalSignup = () => {
   });
 
   const handleInputValue = (key) => (e) => {
-    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+    setUserInfo({ ...userinfo, [key]: e.target.value });
+  };
+
+  const handleSignup = () => {
+    const { nickname, email, password } = userinfo;
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/user/signup`,
+        {
+          nickname,
+          email,
+          password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
+      .then(() => {
+        handleResponseSuccess();
+      });
   };
 
   return (
@@ -81,8 +104,12 @@ const ModalSignup = () => {
               onChange={handleInputValue("passwordConfrim")}
             />
           </div>
-          <div className="login-button">회원가입</div>
-          <div className="signup-link">로그인창으로 가기</div>
+          <div className="login-button" onClick={handleSignup}>
+            회원가입
+          </div>
+          <div className="signup-link" onClick={ToLoginModal}>
+            로그인창으로 가기
+          </div>
         </form>
       </FormContainer>
     </>

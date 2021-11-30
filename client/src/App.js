@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
+import { RecoilRoot } from "recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
@@ -27,19 +28,21 @@ const App = () => {
 
   return (
     <>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/main">
-            <Mainpage handleResponseSuccess={handleResponseSuccess} />
-          </Route>
-          <Route exact path="/home">
-            <Home userinfo={userinfo} />
-          </Route>
-          <Route path="/">
-            {isLogin ? <Redirect to="/home" /> : <Redirect to="/main" />}
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <RecoilRoot>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/main">
+              <Mainpage handleResponseSuccess={handleResponseSuccess} />
+            </Route>
+            <Route exact path="/home">
+              <Home userinfo={userinfo} />
+            </Route>
+            <Route path="/">
+              {isLogin ? <Redirect to="/home" /> : <Redirect to="/main" />}
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </RecoilRoot>
     </>
   );
 };

@@ -43,7 +43,7 @@ export const ModalView = styled.div`
   }
 `;
 
-const Mainpage = () => {
+const Mainpage = ({ handleResponseSuccess }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
@@ -75,6 +75,20 @@ const Mainpage = () => {
     }
   };
 
+  const ToLoginModal = () => {
+    if (isSignupOpen) {
+      setIsSignupOpen(false);
+      setIsLoginOpen(true);
+    }
+  };
+
+  const ToSignupModal = () => {
+    if (isLoginOpen) {
+      setIsLoginOpen(false);
+      setIsSignupOpen(true);
+    }
+  };
+
   return (
     <>
       <ModalContainer>
@@ -85,7 +99,10 @@ const Mainpage = () => {
                 <div className="cancel-button" onClick={closeLoginModalHandler}>
                   취소
                 </div>
-                <ModalLogin />
+                <ModalLogin
+                  handleResponseSuccess={handleResponseSuccess}
+                  ToSignupModal={ToSignupModal}
+                />
               </ModalView>
             </ModalBackdrop>
           </>
@@ -102,7 +119,10 @@ const Mainpage = () => {
                 >
                   취소
                 </div>
-                <ModalSignup />
+                <ModalSignup
+                  handleResponseSuccess={handleResponseSuccess}
+                  ToLoginModal={ToLoginModal}
+                />
               </ModalView>
             </ModalBackdrop>
           </>

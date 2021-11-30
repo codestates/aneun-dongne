@@ -1,1 +1,1 @@
-// 전역 변수는 여기
+import { atom, selector } from "recoil";

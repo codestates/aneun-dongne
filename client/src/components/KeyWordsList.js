@@ -31,7 +31,9 @@ const KeyWord = styled.span`
     margin:6px;
     padding:2px;
     border-radius: 5px;
-    background-color: skyblue;
+    border:1px solid rgb(192, 251, 255);
+    background-color: rgba(192, 251, 255,0.8);
+    color:black;
 `
 function KeyWordsList() {
     return (

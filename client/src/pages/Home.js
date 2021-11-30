@@ -8,15 +8,17 @@ const FixedComp = styled.div`
     position: sticky;
     top:0;
 `
+
 function Home() {
     return (
-        <div>
-            <FixedComp>
-                <KeyWordsList />
-                <HomeMap />
-            </FixedComp>
-            <PlaceList />
-        </div>
+        <>
+        <FixedComp>
+            <KeyWordsList />
+            <HomeMap />
+        </FixedComp>
+        <PlaceList />
+        </>
+        
     )
 }
 

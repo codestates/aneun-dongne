@@ -16,8 +16,8 @@ const SearchLocation = styled.select`
     margin-bottom: 5px;
     margin-right: 5px;
     margin-left:5px;
-    width: 120px;
-    height: 40px;
+    width: 80%;
+    height: 100%;
     background-color: white;
     /* border:gray 1px solid; */
     border:none;
@@ -29,8 +29,8 @@ const SearchKeyWord = styled.input`
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left:5px;
-    width: 250px;
-    height: 40px;
+    width: 80%;
+    height: 100%;
     background-color: white;
     border:gray 1px solid;
     border-radius: 10px;
@@ -42,8 +42,8 @@ const SearchPlace = styled.input`
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left:5px;
-    width: 250px;
-    height: 40px;
+    width: 80%;
+    height: 100%;
     background-color: white;
     border:gray 1px solid;
     border-radius: 10px;
@@ -53,8 +53,8 @@ const SearchBtn = styled.button`
     margin-top: 160px;
     margin-bottom: 5px;
     margin-left:5px;
-    width: 250px;
-    height : 40px;
+    width: 80%;
+    height : 100%;
     background-color: rgb(192, 251, 255);
     border:none;
     border-radius: 10px;
@@ -68,7 +68,7 @@ const SearchBar = styled.div`
     margin-left:5px;
     display:flex;
     padding:5px;
-    width: 250px;
+    width: 80%;
     height : 40px;
     border-radius: 5px;
     border:1px gray solid;
@@ -79,11 +79,11 @@ const MapRightBar = styled.div`
     flex-direction:column;
     border:1px rgb(192, 251, 255) solid;
     border-radius: 10px;
-    margin-left: 30px;
+    margin-left: 2rem;
     bottom : 20px;
-    width:280px;
-    padding-left: 10px;
-    padding-right: 10px;
+    width:14rem;
+    padding-left: 1rem;
+    
 `
 //오른쪽 버튼
 const RightBtn = styled.button`
@@ -110,7 +110,7 @@ const RightBtnBox = styled.div`
 `
 //지도
 const Map = styled.div`
-    width: 870px;
+    width: 70%;
     
 `
 

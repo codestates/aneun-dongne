@@ -11,7 +11,9 @@ function PlaceList() {
     const PlaceList = styled.div`
         height: 100vh;
         display: grid; 
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        
+        
         
         /* position: relative; */
         

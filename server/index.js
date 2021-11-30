@@ -29,10 +29,6 @@ sequelize.sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
     console.error(err);
 })
 
-app.get("/", (req, res) => {
-  res.status(201).send("Hello World");
-});
-
 app.get("/hello", (req, res) => {
   res.json({ data: "서버랑 연결 됐어요!!" });
 });

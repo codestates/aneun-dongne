@@ -9,7 +9,9 @@ function PlaceList() {
     const placeList = useRecoilValue(placelist) 
 
     const PlaceList = styled.div`
-        display:flex;
+        height: 100vh;
+        display: grid; 
+        grid-template-columns: repeat(3, 1fr);
         flex-direction: column;
         position: relative;
         

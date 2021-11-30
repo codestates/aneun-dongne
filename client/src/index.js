@@ -1,11 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import { RecoilRoot } from 'recoil'; // recoil 추가
 import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>  
   </React.StrictMode>,
   document.getElementById("root")
 );

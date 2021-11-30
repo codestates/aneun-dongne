@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import Home from './pages/Home';
+import './App.css'
 const App = () => {
   const [isContent, setContnet] = useState("연결됐니?");
 
@@ -13,7 +14,10 @@ const App = () => {
   return (
     <div>
       <button onClick={isToggle}>{isContent}</button>
+      <Home />
+      
     </div>
+    
   );
 };
 

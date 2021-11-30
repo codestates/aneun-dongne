@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Homepage from "./pages/Homepage";
+import Mainpage from "./pages/Mainpage";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const App = () => {
   const [isContent, setContnet] = useState("연결됐니?");
@@ -10,10 +14,20 @@ const App = () => {
       setContnet(res.data.data);
     });
   };
+
   return (
-    <div>
-      <button onClick={isToggle}>{isContent}</button>
-    </div>
+    <>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <Mainpage />
+          </Route>
+          <Route exact path="/homepage">
+            <Homepage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 };
 

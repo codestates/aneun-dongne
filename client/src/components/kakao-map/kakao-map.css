@@ -39,6 +39,7 @@ p {
 
 
 }
+.kakao-map{width:100%;height: 220px;}
 .map-rightbar > button {
     background-color: aquamarine;
 }

@@ -7,6 +7,9 @@ import { RecoilRoot } from "recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
+import ModalLogin from "./components/ModalLogin";
+import DetailPage from './pages/DetailPage/DetailPage-index';
+import Header from './pages/Mainpage/index';
 
 
 const App = () => {
@@ -30,26 +33,20 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+      {/* <Header /> */}
         <Switch>
-         <Route
-              exact
-              path="/"
-              render={() =>
-                isLogin ? (
-                  <Route exact path="/home">
-                    <Home userinfo={userinfo}/>
-                  </Route>
-          
-                ) : (
-                  <Mainpage handleResponseSuccess={handleResponseSuccess} />
-                )
-              }
-            />
-            <Redirect from="*" to="/" />
+         <Route exact path="/"><Mainpage handleResponseSuccess={handleResponseSuccess} /></Route>
+         {/* <Redirect from="*" to="/" /> */}
+         <Route path="/home"><Home /></Route>
+         <Route path = "/detailpage/:id" component={DetailPage}></Route>
+         {/* //!
+         {isShowLoginModal ? <ModalLogin /> : null }
+         //! */}
         </Switch>
       </BrowserRouter>
     </>
   );
+
 };
 
 export default App;

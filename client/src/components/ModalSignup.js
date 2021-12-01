@@ -3,12 +3,8 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { valid } from "../validator";
-// import { MessageObj } from
-const messageObj = {
-  nickname: "닉네임은 두글자 이상입니다.",
-  email: "이메일을 정확히 입력해주세요.",
-  password: "비밀번호는 8자 이상입니다.",
-};
+import { message } from "../message";
+
 //TODO 관심사 분리하기
 const FormContainer = styled.div`
   display: flex;
@@ -83,7 +79,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
       });
     } else {
       setErrorMessage((prev) => {
-        prev[id] = messageObj[id];
+        prev[id] = message[id];
         return prev;
       });
     }

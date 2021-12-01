@@ -69,7 +69,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
       .then(() => {
         handleResponseSuccess();
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage("아이디와 비밀번호를 정확히 입력하세요");
       });
   };
@@ -77,7 +77,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
   return (
     <>
       <FormContainer>
-        <div className="form-title">Log in</div>
+        <div className="form-title">아는 동네</div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-email">
             <label for="email">Email</label>

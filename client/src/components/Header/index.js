@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import ModalLogin from "../../components/ModalLogin";
-import ModalSignup from "../../components/ModalSignup";
+import ModalLogin from "../ModalLogin";
+import ModalSignup from "../ModalSignup";
 
 import { Styled } from "./style";
 
-const Mainpage = ({ handleResponseSuccess }) => {
+const Header = ({ handleResponseSuccess }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
@@ -56,11 +56,8 @@ const Mainpage = ({ handleResponseSuccess }) => {
       <Styled.ModalContainer>
         {isLoginOpen ? (
           <>
-            <Styled.ModalBackdrop>
-              <Styled.ModalView>
-                <div className="cancel-button" onClick={closeLoginModalHandler}>
-                  취소
-                </div>
+            <Styled.ModalBackdrop onClick={closeLoginModalHandler}>
+              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
                 <ModalLogin
                   handleResponseSuccess={handleResponseSuccess}
                   ToSignupModal={ToSignupModal}
@@ -73,14 +70,8 @@ const Mainpage = ({ handleResponseSuccess }) => {
       <Styled.ModalContainer>
         {isSignupOpen ? (
           <>
-            <Styled.ModalBackdrop>
-              <Styled.ModalView>
-                <div
-                  className="cancel-button"
-                  onClick={closeSignupModalHandler}
-                >
-                  취소
-                </div>
+            <Styled.ModalBackdrop onClick={closeSignupModalHandler}>
+              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
                 <ModalSignup
                   handleResponseSuccess={handleResponseSuccess}
                   ToLoginModal={ToLoginModal}
@@ -91,12 +82,19 @@ const Mainpage = ({ handleResponseSuccess }) => {
         ) : null}
       </Styled.ModalContainer>
 
-      <Styled.MainpageContainer>
-        <button onClick={openLoginModalHandler}>login</button>
-        <button onClick={openSignupModalHandler}>Sign Up</button>
-      </Styled.MainpageContainer>
+      <Styled.HeaderContainer>
+        <div id="logo">아는 동네</div>
+        <div className="header-button">
+          <div className="mainpage-button" onClick={openLoginModalHandler}>
+            login
+          </div>
+          <div className="mainpage-button" onClick={openSignupModalHandler}>
+            Sign Up
+          </div>
+        </div>
+      </Styled.HeaderContainer>
     </>
   );
 };
 
-export default Mainpage;
+export default Header;

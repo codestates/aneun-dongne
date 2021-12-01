@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import dotenv from "dotenv";
 import { nowlocation } from "../recoil/recoil";
 import { useRecoilState } from "recoil";
-dotenv.config();
+
+import Header from "../components/Header";
 
 export const Body = styled.div`
   position: relative;
@@ -151,6 +151,7 @@ function Mainpage() {
 
   return (
     <>
+      <Header />
       <Body>
         <Button>
           <MenuButton onClick={ToHome}>시작하기</MenuButton>

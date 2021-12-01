@@ -70,7 +70,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
   return (
     <>
       <FormContainer>
-        <div className="form-title">Sign In</div>
+        <div className="form-title">아는 동네</div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-nickname">
             <label for="nickname">Nickname</label>

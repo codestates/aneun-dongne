@@ -1,31 +1,51 @@
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import Home from "./pages/Home";
-import Mainpage from "./pages/Mainpage";
-import axios from "axios";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
+import axios from "axios";
 import "./App.css";
-const App = () => {
-  const [isContent, setContnet] = useState("연결됐니?");
+import { RecoilRoot } from "recoil";
 
-  // axios 요청 : ec2 주소
-  const isToggle = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/hello`).then((res) => {
-      setContnet(res.data.data);
+import Mainpage from "./pages/Mainpage";
+import Home from "./pages/Home";
+
+
+const App = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userinfo, setUserinfo] = useState(null);
+
+  const history = useHistory();
+
+  const isAuthenticated = () => {
+    axios.get(`${process.env.REACT_APP_API_URL}/user/info`).then((res) => {
+      setUserinfo(res.data.data.userInfo);
+      setIsLogin(true);
+      history.push("/");
     });
+  };
+  
+  const handleResponseSuccess = () => {
+    isAuthenticated();
   };
 
   return (
     <>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/">
-            <Mainpage />
-          </Route>
-          <Route exact path="/home">
-            <Home />
-          </Route>
+         <Route
+              exact
+              path="/"
+              render={() =>
+                isLogin ? (
+                  <Route exact path="/home">
+                    <Home userinfo={userinfo}/>
+                  </Route>
+          
+                ) : (
+                  <Mainpage handleResponseSuccess={handleResponseSuccess} />
+                )
+              }
+            />
+            <Redirect from="*" to="/" />
         </Switch>
       </BrowserRouter>
     </>

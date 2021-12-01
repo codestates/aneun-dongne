@@ -10,6 +10,7 @@ export const placelist = atom({
   key: "placelist",
   default: [],
 });
+
 //메인페이지에서 유저주소, 좌표 넘어오면 연결시키기
 export const meetingplace = atom({
   key: "meetingplace",

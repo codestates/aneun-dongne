@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const dotenv = require('dotenv')
+const { sequelize } = require('./models/index');
 
 const app = express();
 const PORT = 80;
@@ -19,9 +21,13 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.status(201).send("Hello World");
-});
+sequelize.sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
+.then(() => {
+    console.log('데이터베이스 연결 성공');
+})
+.catch((err) => {
+    console.error(err);
+})
 
 app.get("/hello", (req, res) => {
   res.json({ data: "서버랑 연결 됐어요!!" });

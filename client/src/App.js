@@ -31,15 +31,18 @@ const App = () => {
       <RecoilRoot>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/main">
-              <Mainpage handleResponseSuccess={handleResponseSuccess} />
-            </Route>
-            <Route exact path="/home">
-              <Home userinfo={userinfo} />
-            </Route>
-            <Route path="/">
-              {isLogin ? <Redirect to="/home" /> : <Redirect to="/main" />}
-            </Route>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                isLogin ? (
+                  <Home userinfo={userinfo} />
+                ) : (
+                  <Mainpage handleResponseSuccess={handleResponseSuccess} />
+                )
+              }
+            />
+            <Redirect from="*" to="/" />
           </Switch>
         </BrowserRouter>
       </RecoilRoot>

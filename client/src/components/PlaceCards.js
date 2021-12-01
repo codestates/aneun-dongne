@@ -6,7 +6,7 @@ const PlaceCard = styled.div`
     margin-top:3rem;
     border:1px rgb(107, 217, 224) solid;
     border-radius: 20px;
-    width:20rem;
+    width:17rem;
     .place-cards{
         
         display:flex;
@@ -37,7 +37,8 @@ const PlaceCard = styled.div`
 
 
 function PlaceCards({title,img,addr1}) {
-    console.log(addr1)
+    
+    // console.log(addr1)
     return (
             <PlaceCard>
             <div className = 'place-cards'>

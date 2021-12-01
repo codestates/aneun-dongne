@@ -29,7 +29,6 @@ p {
     flex-direction: column;
     width: 100%;
 }
-.kakao-map{width:100%;height: 420px;}
 
 .map-searchbar{ 
     background-color: rgb(192, 251, 255);

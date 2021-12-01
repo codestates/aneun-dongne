@@ -115,7 +115,12 @@ const Map = styled.div`
 `
 
 const HomeMap = () => {
+    
     const kakao = window.kakao
+    // const new kakao.maps = kakao.maps
+    // const new kakao.maps = new kakao.maps
+    // ! 혹시모르니 new kakao.maps = new kakao.maps인거 기억
+    
     const [placeList,setPlaceList] = useRecoilState(placelist) 
     const [location,setLocation] = useRecoilState(locations)//{lat:37,lon:128}  
     const [meetingPlace,setMeetingPlace] = useRecoilState(meetingplace)   
@@ -145,6 +150,7 @@ const HomeMap = () => {
     const searchPlace = keyword => {
     setCount(0)
     setPending(true)
+    // const places = new kakao.maps.services.Places()
     const places = new kakao.maps.services.Places()
     //검색
     places.keywordSearch(keyword, (result, status) => {

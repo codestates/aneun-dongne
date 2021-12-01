@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
+import { valid } from "../validator";
+// import { MessageObj } from
+const messageObj = {
+  nickname: "닉네임은 두글자 이상입니다.",
+  email: "이메일을 정확히 입력해주세요.",
+  password: "비밀번호는 8자 이상입니다.",
+};
+//TODO 관심사 분리하기
 const FormContainer = styled.div`
   display: flex;
   align-items: center;
@@ -30,24 +38,59 @@ const FormContainer = styled.div`
     cursor: pointer;
     color: #a3dcf3;
   }
+
+  .error-message {
+    color: red;
+  }
 `;
 
-// TODO 회원가입 유효성 검사 만들기
-
 const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
-  const [userinfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo] = useState({
     nickname: "",
     email: "",
     password: "",
     passwordConfrim: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState({
+    nickname: "",
+    email: "",
+    password: "",
+    passwordConfrim: "",
+  });
+
+  // TODO 에러메시지가 있을 경우에는 회원가입 버튼 누르지못하게.. + 빈 칸 있으면..
+
   const handleInputValue = (key) => (e) => {
-    setUserInfo({ ...userinfo, [key]: e.target.value });
+    setUserInfo({ ...userInfo, [key]: e.target.value });
+    const id = e.target.id;
+    const value = e.target.value;
+    if (id === "password-confirm") {
+      if (userInfo.password === e.target.value) {
+        setErrorMessage({ ...errorMessage, passwordConfrim: "" });
+      } else {
+        setErrorMessage({
+          ...errorMessage,
+          passwordConfrim: "비밀번호가 일치하지 않습니다.",
+        });
+      }
+      return;
+    }
+    if (valid[id](value)) {
+      setErrorMessage((prev) => {
+        prev[id] = "";
+        return prev;
+      });
+    } else {
+      setErrorMessage((prev) => {
+        prev[id] = messageObj[id];
+        return prev;
+      });
+    }
   };
 
   const handleSignup = () => {
-    const { nickname, email, password } = userinfo;
+    const { nickname, email, password } = userInfo;
 
     axios
       .post(
@@ -73,43 +116,52 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
         <div className="form-title">아는 동네</div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-nickname">
-            <label for="nickname">Nickname</label>
+            <label htmlFor="nickname">Nickname</label>
             <input
               id="nickname"
               type="text"
+              value={userInfo.nickname}
               onChange={handleInputValue("nickname")}
             />
+            <div className="error-message">{errorMessage.nickname}</div>
           </div>
           <div className="form-email">
-            <label for="email">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               id="email"
               type="text"
+              value={userInfo.email}
               onChange={handleInputValue("email")}
             />
+            <div className="error-message">{errorMessage.email}</div>
           </div>
+
           <div className="form-password">
-            <label for="password">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
+              value={userInfo.password}
               onChange={handleInputValue("password")}
             />
+            <div className="error-message">{errorMessage.password}</div>
           </div>
           <div className="form-password-confirm">
-            <label for="password">Password Confirm</label>
+            <label htmlFor="password-confirm">Password Confirm</label>
             <input
               id="password-confirm"
               type="password"
+              value={userInfo.passwordConfrim}
               onChange={handleInputValue("passwordConfrim")}
             />
-          </div>
-          <div className="login-button" onClick={handleSignup}>
-            회원가입
+            <div className="error-message">{errorMessage.passwordConfrim}</div>
           </div>
           <div className="signup-link" onClick={ToLoginModal}>
             로그인창으로 가기
           </div>
+          <button type="submit" className="login-button" onClick={handleSignup}>
+            회원가입
+          </button>
         </form>
       </FormContainer>
     </>

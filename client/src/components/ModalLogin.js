@@ -42,13 +42,13 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const { email, password } = loginInfo;
 
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
   const handleLogin = () => {
-    const { email, password } = loginInfo;
     if (email === "") {
       setErrorMessage("이메일을 입력하세요");
       return;
@@ -80,25 +80,31 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
         <div className="form-title">아는 동네</div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-email">
-            <label for="email">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               id="email"
               type="text"
+              value={email}
               onChange={handleInputValue("email")}
             />
           </div>
           <div className="form-password">
-            <label for="password">password</label>
+            <label htmlFor="password">password</label>
             <input
               id="password"
               type="password"
+              value={password}
               onChange={handleInputValue("password")}
             />
           </div>
           <div className="alert-box">{errorMessage}</div>
-          <div className="login-button" onClick={handleLogin}>
+          {/* <div className="login-button" onClick={handleLogin}>
             로그인
-          </div>
+          </div> */}
+
+          <button type="submit" onClick={handleLogin}>
+            로그인
+          </button>
           <div>아직 회원이 아니신가요?</div>
           <div className="signup-link" onClick={ToSignupModal}>
             회원가입하기

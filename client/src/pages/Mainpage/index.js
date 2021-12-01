@@ -1,47 +1,9 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 
-import ModalLogin from "../components/ModalLogin";
-import ModalSignup from "../components/ModalSignup";
+import ModalLogin from "../../components/ModalLogin";
+import ModalSignup from "../../components/ModalSignup";
 
-const MainpageContainer = styled.div`
-  height: 3000px; // 나중에 높이 정해지면 지우기
-
-  button {
-    width: 100px;
-    height: 100px;
-    background-color: red;
-  }
-`;
-
-export const ModalContainer = styled.div`
-  position: relative;
-`;
-
-export const ModalBackdrop = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-`;
-
-export const ModalView = styled.div`
-  position: fixed;
-  background-color: white;
-  width: 500px;
-  height: 500px;
-  z-index: 2;
-  border: 1px solid black;
-
-  .cancel-button {
-    width: 50px;
-    height: 50px;
-    background-color: red;
-  }
-`;
+import { Styled } from "./style";
 
 const Mainpage = ({ handleResponseSuccess }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -91,11 +53,11 @@ const Mainpage = ({ handleResponseSuccess }) => {
 
   return (
     <>
-      <ModalContainer>
+      <Styled.ModalContainer>
         {isLoginOpen ? (
           <>
-            <ModalBackdrop>
-              <ModalView>
+            <Styled.ModalBackdrop>
+              <Styled.ModalView>
                 <div className="cancel-button" onClick={closeLoginModalHandler}>
                   취소
                 </div>
@@ -103,16 +65,16 @@ const Mainpage = ({ handleResponseSuccess }) => {
                   handleResponseSuccess={handleResponseSuccess}
                   ToSignupModal={ToSignupModal}
                 />
-              </ModalView>
-            </ModalBackdrop>
+              </Styled.ModalView>
+            </Styled.ModalBackdrop>
           </>
         ) : null}
-      </ModalContainer>
-      <ModalContainer>
+      </Styled.ModalContainer>
+      <Styled.ModalContainer>
         {isSignupOpen ? (
           <>
-            <ModalBackdrop>
-              <ModalView>
+            <Styled.ModalBackdrop>
+              <Styled.ModalView>
                 <div
                   className="cancel-button"
                   onClick={closeSignupModalHandler}
@@ -123,16 +85,16 @@ const Mainpage = ({ handleResponseSuccess }) => {
                   handleResponseSuccess={handleResponseSuccess}
                   ToLoginModal={ToLoginModal}
                 />
-              </ModalView>
-            </ModalBackdrop>
+              </Styled.ModalView>
+            </Styled.ModalBackdrop>
           </>
         ) : null}
-      </ModalContainer>
+      </Styled.ModalContainer>
 
-      <MainpageContainer>
+      <Styled.MainpageContainer>
         <button onClick={openLoginModalHandler}>login</button>
         <button onClick={openSignupModalHandler}>Sign Up</button>
-      </MainpageContainer>
+      </Styled.MainpageContainer>
     </>
   );
 };

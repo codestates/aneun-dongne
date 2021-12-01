@@ -1,61 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
 
-import { valid } from "../validator";
-import { message } from "../message";
+import { valid } from "../../validator";
+import { message } from "../../message";
 
-//TODO 관심사 분리하기
-const FormContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  input {
-    margin: 20px 0px;
-    width: 300px;
-    height: 30px;
-  }
-
-  .login-button {
-    cursor: pointer;
-    width: 60px;
-    height: 40px;
-    background-color: #a3dcf3;
-  }
-
-  .signup-link {
-    cursor: pointer;
-    color: #a3dcf3;
-  }
-
-  .error-message {
-    color: red;
-  }
-`;
+import { Styled } from "../ModalSignup/style";
 
 const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     email: "",
     password: "",
-    passwordConfrim: "",
+    passwordConfirm: "",
   });
 
   const [errorMessage, setErrorMessage] = useState({
     nickname: "",
     email: "",
     password: "",
-    passwordConfrim: "",
+    passwordConfirm: "",
+    confirm: "",
   });
 
-  // TODO 에러메시지가 있을 경우에는 회원가입 버튼 누르지못하게.. + 빈 칸 있으면..
+  // TODO 중복된 이메일과 닉네임은 서버. 어떻게 할 지?
 
   const handleInputValue = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
@@ -63,11 +30,11 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
     const value = e.target.value;
     if (id === "password-confirm") {
       if (userInfo.password === e.target.value) {
-        setErrorMessage({ ...errorMessage, passwordConfrim: "" });
+        setErrorMessage({ ...errorMessage, passwordConfirm: "" });
       } else {
         setErrorMessage({
           ...errorMessage,
-          passwordConfrim: "비밀번호가 일치하지 않습니다.",
+          passwordConfirm: "비밀번호가 일치하지 않습니다.",
         });
       }
       return;
@@ -86,7 +53,32 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
   };
 
   const handleSignup = () => {
-    const { nickname, email, password } = userInfo;
+    const { nickname, email, password, passwordConfirm } = userInfo;
+    if (
+      nickname === "" ||
+      email === "" ||
+      password === "" ||
+      passwordConfirm === ""
+    ) {
+      setErrorMessage({
+        ...errorMessage,
+        confirm: "양식을 채워주세요.",
+      });
+      return;
+    }
+
+    if (
+      errorMessage.nickname ||
+      errorMessage.email ||
+      errorMessage.password ||
+      errorMessage.passwordConfirm
+    ) {
+      setErrorMessage({
+        ...errorMessage,
+        confirm: "양식을 올바르게 작성해주세요.",
+      });
+      return;
+    }
 
     axios
       .post(
@@ -108,7 +100,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
 
   return (
     <>
-      <FormContainer>
+      <Styled.FormContainer>
         <div className="form-title">아는 동네</div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-nickname">
@@ -147,11 +139,12 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
             <input
               id="password-confirm"
               type="password"
-              value={userInfo.passwordConfrim}
-              onChange={handleInputValue("passwordConfrim")}
+              value={userInfo.passwordConfirm}
+              onChange={handleInputValue("passwordConfirm")}
             />
-            <div className="error-message">{errorMessage.passwordConfrim}</div>
+            <div className="error-message">{errorMessage.passwordConfirm}</div>
           </div>
+          <div className="error-message">{errorMessage.confirm}</div>
           <div className="signup-link" onClick={ToLoginModal}>
             로그인창으로 가기
           </div>
@@ -159,7 +152,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
             회원가입
           </button>
         </form>
-      </FormContainer>
+      </Styled.FormContainer>
     </>
   );
 };

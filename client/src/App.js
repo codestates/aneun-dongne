@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { RecoilRoot } from "recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
+
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -21,31 +22,32 @@ const App = () => {
       history.push("/");
     });
   };
-
+  
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
 
   return (
     <>
-      <RecoilRoot>
-        <BrowserRouter>
-          <Switch>
-            <Route
+      <BrowserRouter>
+        <Switch>
+         <Route
               exact
               path="/"
               render={() =>
                 isLogin ? (
-                  <Home userinfo={userinfo} />
+                  <Route exact path="/home">
+                    <Home userinfo={userinfo}/>
+                  </Route>
+          
                 ) : (
                   <Mainpage handleResponseSuccess={handleResponseSuccess} />
                 )
               }
             />
             <Redirect from="*" to="/" />
-          </Switch>
-        </BrowserRouter>
-      </RecoilRoot>
+        </Switch>
+      </BrowserRouter>
     </>
   );
 };

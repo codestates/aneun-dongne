@@ -76,6 +76,7 @@ const Header = ({ handleResponseSuccess }) => {
         ) : null}
       </Styled.ModalContainer>
 
+      {/* 지금 홈화면 인지 아닌지 상태로 */}
       <Styled.HeaderContainer>
         <div className="header-wrapper">
           <div id="logo">아는 동네</div>

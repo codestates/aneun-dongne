@@ -78,11 +78,11 @@ export const Styled = {
     button {
       border: 0;
       transition: all 0.3s;
-    }
 
-    button:hover {
-      background-color: #6af4aa;
-      transition: all 0.3s;
+      &:hover {
+        background-color: #6af4aa;
+        transition: all 0.3s;
+      }
     }
   `,
 };

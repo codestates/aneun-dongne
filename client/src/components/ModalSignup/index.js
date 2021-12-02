@@ -34,7 +34,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
       } else {
         setErrorMessage({
           ...errorMessage,
-          passwordConfirm: "비밀번호가 일치하지 않습니다.",
+          passwordConfirm: message.passordConfirm,
         });
       }
       return;
@@ -54,28 +54,18 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
 
   const handleSignup = () => {
     const { nickname, email, password, passwordConfirm } = userInfo;
-    if (
-      nickname === "" ||
-      email === "" ||
-      password === "" ||
-      passwordConfirm === ""
-    ) {
+    if (nickname === "" || email === "" || password === "" || passwordConfirm === "") {
       setErrorMessage({
         ...errorMessage,
-        confirm: "양식을 채워주세요.",
+        confirm: message.blankConfirm,
       });
       return;
     }
 
-    if (
-      errorMessage.nickname ||
-      errorMessage.email ||
-      errorMessage.password ||
-      errorMessage.passwordConfirm
-    ) {
+    if (errorMessage.nickname || errorMessage.email || errorMessage.password || errorMessage.passwordConfirm) {
       setErrorMessage({
         ...errorMessage,
-        confirm: "양식을 올바르게 작성해주세요.",
+        confirm: message.correctConfirm,
       });
       return;
     }
@@ -105,33 +95,18 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-nickname">
             <label htmlFor="nickname">Nickname</label>
-            <input
-              id="nickname"
-              type="text"
-              value={userInfo.nickname}
-              onChange={handleInputValue("nickname")}
-            />
+            <input id="nickname" type="text" value={userInfo.nickname} onChange={handleInputValue("nickname")} />
             <div className="error-message">{errorMessage.nickname}</div>
           </div>
           <div className="form-email">
             <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="text"
-              value={userInfo.email}
-              onChange={handleInputValue("email")}
-            />
+            <input id="email" type="text" value={userInfo.email} onChange={handleInputValue("email")} />
             <div className="error-message">{errorMessage.email}</div>
           </div>
 
           <div className="form-password">
             <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={userInfo.password}
-              onChange={handleInputValue("password")}
-            />
+            <input id="password" type="password" value={userInfo.password} onChange={handleInputValue("password")} />
             <div className="error-message">{errorMessage.password}</div>
           </div>
           <div className="form-password-confirm">

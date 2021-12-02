@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import dotenv from "dotenv";
 import { nowlocation } from "../recoil/recoil";
 import { useRecoilState, useRecoilValue } from "recoil";
-
 import { placelist } from "../recoil/recoil";
 
-dotenv.config();
 
 export const Body = styled.div`
   position: relative;
@@ -16,12 +13,32 @@ export const Body = styled.div`
   flex-direction: column;
 `;
 
+export const Button = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+
+  .upload-btn {
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    background-color: blue;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cancel {
+    background-color: gray;
+  }
+`;
+
 export const MenuButton = styled.button`
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-
   font-size: 1.2rem;
   color: white;
   width: 100px;
@@ -37,9 +54,11 @@ export const MenuButton = styled.button`
 
   :hover {
     background-color: #6af4aa;
+
     transition: all 0.3s;
   }
 `;
+
 
 export const TitleView = styled.div`
   display: flex;
@@ -68,7 +87,6 @@ export const TitleFirstView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   width: 100vw;
   height: 100vh;
 
@@ -184,6 +202,7 @@ export const MainImage = styled.div`
   }
 `;
 
+
 //현재위치 가져오기
 // navigator.geolocation.getCurrentPosition(function(pos) {
 //     var latitude = pos.coords.latitude;
@@ -191,11 +210,10 @@ export const MainImage = styled.div`
 //     alert("현재 위치는 : " + latitude + ", "+ longitude);
 // });
 
-//useEffect
-
 function Mainpage() {
   const [location, setlocation] = useRecoilState(nowlocation);
   const placeList = useRecoilValue(placelist);
+
   if (navigator.geolocation) {
     // GPS를 지원갸능할 때
     navigator.geolocation.getCurrentPosition(
@@ -273,6 +291,7 @@ function Mainpage() {
           </video> */
   }
 
+
   return (
     <>
       <Body>
@@ -327,6 +346,7 @@ function Mainpage() {
           </div>
           <MenuButton onClick={ToHome}>시작하기</MenuButton>
         </TitleEndView>
+
       </Body>
     </>
   );

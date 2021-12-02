@@ -191,6 +191,8 @@ export const MainImage = styled.div`
 //     alert("현재 위치는 : " + latitude + ", "+ longitude);
 // });
 
+//useEffect
+
 function Mainpage() {
   const [location, setlocation] = useRecoilState(nowlocation);
   const placeList = useRecoilValue(placelist);
@@ -216,6 +218,21 @@ function Mainpage() {
   } else {
     alert("GPS를 지원하지 않습니다");
   }
+
+  // axios
+  //   .get(
+  //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
+  //     {
+  //       headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+  //       params: { lat, lon },
+  //     }
+  //   )
+  //   .then(function (response) {
+  //     console.log(JSON.stringify(response.data));
+  //   });
+  // useEffect(() => {
+  //   if (!response) return setlocation();
+  // }, []);
 
   //도로명 주소 가져오는 코드
   //역지오코딩

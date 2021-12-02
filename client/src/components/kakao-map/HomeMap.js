@@ -5,7 +5,7 @@ import { useSetRecoilState, useRecoilValue, useResetRecoilState, useRecoilState 
 import styled from 'styled-components'
 import dotenv from 'dotenv'
 import notImageYet from '../../images/not-image-yet.png'
-import { placelist,meetingplace,locations } from '../../recoil/recoil';
+import { placelist,meetingplace,nowlocation } from '../../recoil/recoil';
 import './kakao-map.css'
 import { cat1_num, cat1_name, cat2_num, cat2_name } from '../../location-data';
 dotenv.config()
@@ -122,7 +122,7 @@ const HomeMap = () => {
     // ! 혹시모르니 new kakao.maps = new kakao.maps인거 기억
     
     const [placeList,setPlaceList] = useRecoilState(placelist) 
-    const [location,setLocation] = useRecoilState(locations)//{lat:37,lon:128}  
+    const [location,setLocation] = useRecoilState(nowlocation)//{lat:37,lon:128}  
     const [meetingPlace,setMeetingPlace] = useRecoilState(meetingplace)   
     
     const [count,setCount] = useState(0)//1번만시작하게함
@@ -231,12 +231,12 @@ axios.get(`http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationB
       }
     }
     ,{'content-type': 'application/json'}).then(res=>{
-    //   console.log(res.data)
+      console.log(res.data)
       console.log(res.data.response.body.items.item)
       let list = (res.data.response.body.items.item)
-      //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소],..]
+      //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소,컨텐트id],..]
       list=list.map(el=>{
-        return [Number(el.mapy),Number(el.mapx),el.title,el.firstimage,el.addr1]
+        return [Number(el.mapy),Number(el.mapx),el.title,el.firstimage,el.addr1,el.contentid,]
       })
     //   dispatch(changePlaceList(list))
     setPlaceList(list)//-> 이걸 PlaceList.js에서 사용한다.
@@ -274,7 +274,8 @@ useEffect(()=>{ // * 위의 useEffect에서 받아온 좌표들을 지도에 노
           addr:placeList[i][4],
           img:placeList[i][3],
           content:placeList[i][2],
-          latlng: new kakao.maps.LatLng(placeList[i][0], placeList[i][1])
+          latlng: new kakao.maps.LatLng(placeList[i][0], placeList[i][1]),
+          contentId : placeList[i][5]
       })
     }//!position = [ {addr:주소,latlng:좌표,content:관광지이름,img:관광지썸네일},... ]
     
@@ -435,8 +436,9 @@ const changeSigg = (sigg) => {
 /* margin-top:${(props)=>props.first?'10px':'50px'} */
   return (
     <div className="map-box">
-       
+    
     <Map id="map" ></Map>
+    
     {/* <div id="map" ></div> */}
     <MapRightBar >
         <p>오늘 떠나볼 동네는?</p>

@@ -6,6 +6,9 @@ import "./App.css";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
+import ModalLogin from "./components/ModalLogin";
+import DetailPage from './pages/DetailPage/DetailPage-index';
+import Header from './pages/Mainpage/index';
 
 import Header from "./components/Header";
 
@@ -33,17 +36,22 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route exact path="/">
+         <Route exact path="/">
             <Mainpage handleResponseSuccess={handleResponseSuccess} />
-          </Route>
-          <Route exact path="/home">
-            <Home userinfo={userinfo} />
-          </Route>
-          {/* <Redirect from="*" to="/" /> */}
+         </Route>
+         {/* <Redirect from="*" to="/" /> */}
+         <Route exact path="/home">
+           <Home userinfo={userinfo} />
+         </Route>
+         <Route exact path = "/detailpage/:id" component={DetailPage}></Route>
+         {/* //!
+         {isShowLoginModal ? <ModalLogin /> : null }
+         //! */}
         </Switch>
       </BrowserRouter>
     </>
   );
+
 };
 
 export default App;

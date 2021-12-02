@@ -8,12 +8,11 @@ import { RecoilRoot } from "recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
-import ModalLogin from "./components/ModalLogin";
-import DetailPage from './pages/DetailPage/DetailPage-index';
+import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 
-
 const App = () => {
+  // TODO userinfo, isLogin 리코일로 관리하기
   const [isLogin, setIsLogin] = useState(false);
   const [userinfo, setUserinfo] = useState(null);
 
@@ -30,30 +29,23 @@ const App = () => {
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
-
-
-  // TODO isLogin 활용하기!
+  // TODO isLogin 활용해서 리다이렉트 연결해놓기!
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <Header handleResponseSuccess={handleResponseSuccess} />
         <Switch>
-         <Route exact path="/">
-            <Mainpage handleResponseSuccess={handleResponseSuccess} />
-         </Route>
-         {/* <Redirect from="*" to="/" /> */}
-         <Route exact path="/home">
-           <Home userinfo={userinfo} />
-         </Route>
-         <Route exact path = "/detailpage/:id" component={DetailPage}></Route>
-         {/* //!
-         {isShowLoginModal ? <ModalLogin /> : null }
-         //! */}
+          <Route exact path="/">
+            <Mainpage />
+          </Route>
+          <Route exact path="/home">
+            <Home userinfo={userinfo} />
+          </Route>
+          {/* <Redirect from="*" to="/" /> */}
         </Switch>
       </BrowserRouter>
     </>
   );
-
 };
 
 export default App;

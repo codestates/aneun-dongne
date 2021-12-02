@@ -2,9 +2,15 @@ import styled from "styled-components";
 
 export const Styled = {
   HeaderContainer: styled.div`
-    display: flex;
-    justify-content: space-between;
+    position: fixed;
+    z-index: 999;
+    background-color: white;
+    width: 100%;
 
+    .header-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
     #logo {
       cursor: pointer;
       margin: 20px;

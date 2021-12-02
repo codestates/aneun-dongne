@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import dotenv from "dotenv";
 import { nowlocation } from "../recoil/recoil";
 import { useRecoilState } from "recoil";
-dotenv.config();
 
 export const Body = styled.div`
   position: relative;

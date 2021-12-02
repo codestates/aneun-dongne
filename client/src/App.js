@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
-import { RecoilRoot } from "recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
@@ -11,6 +10,7 @@ import ModalLogin from "./components/ModalLogin";
 import DetailPage from './pages/DetailPage/DetailPage-index';
 import Header from './pages/Mainpage/index';
 
+import Header from "./components/Header";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -25,20 +25,25 @@ const App = () => {
       history.push("/");
     });
   };
-  
+
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
 
+  // TODO isLogin 활용하기!
   return (
     <>
       <BrowserRouter>
-      {/* <Header /> */}
+        <Header />
         <Switch>
-         <Route exact path="/"><Mainpage handleResponseSuccess={handleResponseSuccess} /></Route>
+         <Route exact path="/">
+            <Mainpage handleResponseSuccess={handleResponseSuccess} />
+         </Route>
          {/* <Redirect from="*" to="/" /> */}
-         <Route path="/home"><Home /></Route>
-         <Route path = "/detailpage/:id" component={DetailPage}></Route>
+         <Route exact path="/home">
+           <Home userinfo={userinfo} />
+         </Route>
+         <Route exact path = "/detailpage/:id" component={DetailPage}></Route>
          {/* //!
          {isShowLoginModal ? <ModalLogin /> : null }
          //! */}

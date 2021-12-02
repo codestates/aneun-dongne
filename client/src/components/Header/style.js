@@ -1,13 +1,27 @@
 import styled from "styled-components";
 
 export const Styled = {
-  MainpageContainer: styled.div`
-    height: 3000px; // 나중에 높이 정해지면 지우기
+  HeaderContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
 
-    button {
-      width: 100px;
-      height: 100px;
-      background-color: red;
+    #logo {
+      cursor: pointer;
+      margin: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .header-button {
+      display: flex;
+    }
+
+    .mainpage-button {
+      cursor: pointer;
+      margin: 20px 20px;
+      width: 90px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
     }
   `,
 
@@ -32,11 +46,5 @@ export const Styled = {
     height: 500px;
     z-index: 2;
     border: 1px solid black;
-
-    .cancel-button {
-      width: 50px;
-      height: 50px;
-      background-color: red;
-    }
   `,
 };

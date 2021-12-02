@@ -5,8 +5,6 @@ import axios from "axios";
 import { nowlocation } from "../recoil/recoil";
 import { useRecoilState } from "recoil";
 
-import Header from "../components/Header";
-
 export const Body = styled.div`
   position: relative;
   display: flex;
@@ -151,7 +149,6 @@ function Mainpage() {
 
   return (
     <>
-      <Header />
       <Body>
         <Button>
           <MenuButton onClick={ToHome}>시작하기</MenuButton>

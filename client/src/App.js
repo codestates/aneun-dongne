@@ -7,6 +7,8 @@ import "./App.css";
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
 
+import Header from "./components/Header";
+
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [userinfo, setUserinfo] = useState(null);
@@ -29,14 +31,15 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+        <Header />
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Mainpage handleResponseSuccess={handleResponseSuccess} />
           </Route>
           <Route exact path="/home">
             <Home userinfo={userinfo} />
           </Route>
-          <Redirect from="*" to="/" />
+          {/* <Redirect from="*" to="/" /> */}
         </Switch>
       </BrowserRouter>
     </>

@@ -1,40 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import axios from "axios";
 
-const FormContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  input {
-    margin: 20px 0px;
-    width: 300px;
-    height: 30px;
-  }
-
-  .login-button {
-    cursor: pointer;
-    width: 60px;
-    height: 40px;
-    background-color: #a3dcf3;
-  }
-
-  .signup-link {
-    cursor: pointer;
-    color: #a3dcf3;
-  }
-
-  .alert-box {
-    color: red;
-  }
-`;
+import { Styled } from "./style";
+import { message } from "../../message";
 
 const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
   const [loginInfo, setLoginInfo] = useState({
@@ -50,10 +18,10 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
 
   const handleLogin = () => {
     if (email === "") {
-      setErrorMessage("이메일을 입력하세요");
+      setErrorMessage(message.loginEmail);
       return;
     } else if (password === "") {
-      setErrorMessage("비밀번호를 입력하세요");
+      setErrorMessage(message.loginPassword);
       return;
     }
 
@@ -70,39 +38,26 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
         handleResponseSuccess();
       })
       .catch(() => {
-        setErrorMessage("아이디와 비밀번호를 정확히 입력하세요");
+        setErrorMessage(message.loginError);
       });
   };
 
   return (
     <>
-      <FormContainer>
+      <Styled.FormContainer>
         <div className="form-title">아는 동네</div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-email">
             <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="text"
-              value={email}
-              onChange={handleInputValue("email")}
-            />
+            <input id="email" type="text" value={email} onChange={handleInputValue("email")} />
           </div>
           <div className="form-password">
             <label htmlFor="password">password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={handleInputValue("password")}
-            />
+            <input id="password" type="password" value={password} onChange={handleInputValue("password")} />
           </div>
           <div className="alert-box">{errorMessage}</div>
-          {/* <div className="login-button" onClick={handleLogin}>
-            로그인
-          </div> */}
 
-          <button type="submit" onClick={handleLogin}>
+          <button type="submit" className="login-button" onClick={handleLogin}>
             로그인
           </button>
           <div>아직 회원이 아니신가요?</div>
@@ -110,7 +65,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
             회원가입하기
           </div>
         </form>
-      </FormContainer>
+      </Styled.FormContainer>
     </>
   );
 };

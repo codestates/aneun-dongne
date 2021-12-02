@@ -79,7 +79,7 @@ const Header = ({ handleResponseSuccess }) => {
       <Styled.HeaderContainer>
         <div className="header-wrapper">
           <div id="logo">아는 동네</div>
-          <div className="header-button">
+          <div className="header-button-wrapper">
             <div className="mainpage-button" onClick={openLoginModalHandler}>
               login
             </div>

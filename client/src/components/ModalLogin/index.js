@@ -60,7 +60,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
           <button type="submit" className="login-button" onClick={handleLogin}>
             로그인
           </button>
-          <div>아직 회원이 아니신가요?</div>
+          <div className="signup-text">아직 회원이 아니신가요?</div>
           <div className="signup-link" onClick={ToSignupModal}>
             회원가입하기
           </div>

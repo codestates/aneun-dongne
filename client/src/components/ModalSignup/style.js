@@ -12,26 +12,40 @@ export const Styled = {
       align-items: center;
     }
 
+    .form-title {
+      margin: 70px 0px 30px 0px;
+    }
+
     input {
       margin: 20px 0px;
       width: 300px;
       height: 30px;
     }
 
-    .login-button {
+    .signup-button {
       cursor: pointer;
       width: 60px;
       height: 40px;
       background-color: #a3dcf3;
     }
 
-    .signup-link {
+    .login-link {
       cursor: pointer;
       color: #a3dcf3;
     }
 
     .error-message {
       color: red;
+    }
+
+    button {
+      border: 0;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background-color: #6af4aa;
+      transition: all 0.3s;
     }
   `,
 };

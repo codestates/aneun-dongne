@@ -17,7 +17,7 @@ export const Styled = {
       font-size: 2rem;
       font-weight: bold;
     }
-    .header-button {
+    .header-button-wrapper {
       display: flex;
     }
 
@@ -39,18 +39,22 @@ export const Styled = {
     position: fixed;
     display: flex;
     justify-content: center;
+    backdrop-filter: contrast(50%);
+    /* backdrop-filter: brightness(50%); */
+
     align-items: center;
     width: 100vw;
     height: 100vh;
-    z-index: 1;
+    z-index: 1000;
   `,
 
   ModalView: styled.div`
     position: fixed;
     background-color: white;
-    width: 500px;
-    height: 500px;
+    width: 450px;
+    height: 550px;
     z-index: 2;
-    border: 1px solid black;
+    border: 1px solid white;
+    border-radius: 20px;
   `,
 };

@@ -29,23 +29,15 @@ const App = () => {
 
   return (
     <>
-      <BrowserRouter>
+  <BrowserRouter>
         <Switch>
-         <Route
-              exact
-              path="/"
-              render={() =>
-                isLogin ? (
-                  <Route exact path="/home">
-                    <Home userinfo={userinfo}/>
-                  </Route>
-          
-                ) : (
-                  <Mainpage handleResponseSuccess={handleResponseSuccess} />
-                )
-              }
-            />
-            <Redirect from="*" to="/" />
+          <Route exact path="/">
+            <Mainpage handleResponseSuccess={handleResponseSuccess} />
+          </Route>
+          <Route path="/home">
+            <Home userinfo={userinfo} />
+          </Route>
+          <Redirect from="*" to="/" />
         </Switch>
       </BrowserRouter>
     </>

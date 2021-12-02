@@ -14,10 +14,10 @@ const FixedComp = styled.div`
 function Home() {
   return (
     <>
-      <FixedComp>
-        <KeyWordsList />
-        <HomeMap />
-      </FixedComp>
+      {/* <FixedComp> */}
+      <KeyWordsList />
+      <HomeMap />
+      {/* </FixedComp> */}
       <PlaceList />
     </>
   );

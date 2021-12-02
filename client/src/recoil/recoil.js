@@ -1,7 +1,6 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
 
-
 export const nowlocation = atom({
   key: "nowlocation",
   default: { lat: 0, lon: 0 },
@@ -16,44 +15,49 @@ export const placelist = atom({
 //!meetingplace는 아마 수정될텐데 우선은 기능에 필요해서 남겨둠
 export const meetingplace = atom({
   key: "meetingplace",
-  default: ''
+
+  default: ["", "", ""],
 });
 //! 관광지 관련 전역변수
 export const placeaddress = atom({
-  key : 'placeaddress',
-  default : ""
-})
+  key: "placeaddress",
+  default: "",
+});
 
-export const placetitle = atom ({
-  key : "placetitle",
-  default : ""
-})
+export const placetitle = atom({
+  key: "placetitle",
+  default: "",
+});
 
 export const placelocation = atom({
-  key : 'placelocation',
-  default : {lat:0,lon:0,}
-})
-export const placeimg = atom ({
-  key : 'placeimg',
-  default : ''
-})
+  key: "placelocation",
+  default: { lat: 0, lon: 0 },
+});
+export const placeimg = atom({
+  key: "placeimg",
+  default: "",
+});
 
 export const sendPlaceinfo = selector({
-  key:'sendPlaceInfo',
-  get:({get}) => {
+  key: "sendPlaceInfo",
+  get: ({ get }) => {
     return {
-      img:get(placeimg),
-      location:get(placelocation),
-      title:get(placetitle),
-      address:get(placeaddress)
-    }
+      img: get(placeimg),
+      location: get(placelocation),
+      title: get(placetitle),
+      address: get(placeaddress),
+    };
   },
-  set:({set},img,location,title,address) => {
-    set(placeimg,img);
-    set(placetitle,title);
-    set(placelocation,location);
+  set: ({ set }, img, location, title, address) => {
+    set(placeimg, img);
+    set(placetitle, title);
+    set(placelocation, location);
     set(placeaddress, address);
-  }
-  
-})
+  },
+});
 
+//! Home화면에서 현재위치 저장 모달
+export const isSavepositionOpen = atom({
+  key: "isSavepositionOpen",
+  default: false,
+});

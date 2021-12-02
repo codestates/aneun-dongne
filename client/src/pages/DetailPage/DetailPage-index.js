@@ -90,7 +90,7 @@ function DetailPage({ match }) {
   return (
     <>
       <Styled.Div>
-        <Styled.H2>{placeAddr}</Styled.H2>
+        <Styled.Address>{placeAddr}</Styled.Address>
         <Styled.Title>{title}</Styled.Title>
         {/* {pageURL ? <div>{pageURL}</div> : null} */}
         {pageURL ? (

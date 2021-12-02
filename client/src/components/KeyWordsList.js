@@ -13,7 +13,8 @@ const Div = styled.div`
     height : 100px;
     border:1px gray solid;
 `
-export const KeyWordBox = styled.div`
+
+const KeyWordBox = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     padding-left: 30px;
@@ -22,7 +23,8 @@ export const KeyWordBox = styled.div`
     background-color:white;
     
 `
-export const KeyWord = styled.span`
+
+const KeyWord = styled.span`
     position: relative;//이미지 opactiry 영향 안받게함
     top:10px;
     text-align: center;

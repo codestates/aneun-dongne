@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSetRecoilState, useRecoilValue, useResetRecoilState, useRecoilState } from "recoil";
 import styled from "styled-components";
 import PlaceCards from "./PlaceCards";
+
 import {
   placelist,
   meetingplace,
+  locations,
   placeaddress,
   placelocation,
   placeimg,
@@ -22,17 +24,16 @@ const PlaceLists = styled.div`
 const MoveToTopBtn = styled.button`
   border-radius: 70%;
   background: rgba(255, 255, 255, 0.7);
-  width: 4rem;
-  height: 4rem;
+  width: 60px;
+  height: 60px;
+  z-index: 999;
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 10px;
+  right: 10px;
 
-  ${(BtnStatus) => {
-    return BtnStatus ? `display: none` : null;
-  }}
+  display: ${(props) => (props.BtnStatus ? "inline" : "none")};
   &:hover {
-    background: rgba(192, 251, 255, 0.7);
+    background: red;
   }
 `;
 
@@ -55,27 +56,27 @@ function PlaceList() {
   const [ScrollY, setScrollY] = useState(0);
   const [BtnStatus, setBtnStatus] = useState(false);
   //! Top 버튼에 필요한 주석
-  // useEffect(() => {
-  //     const watch = () => {
-  //       window.addEventListener('scroll', handleFollow);
-  //     }
-  //     watch(); // addEventListener 함수를 실행
-  //     console.log(BtnStatus)
-  //     return () => {
-  //       window.removeEventListener('scroll', handleFollow); // addEventListener 함수를 삭제
-  //     }
-  //   })
+  useEffect(() => {
+    const watch = () => {
+      window.addEventListener("scroll", handleFollow);
+    };
+    watch(); // addEventListener 함수를 실행
+    console.log(BtnStatus);
+    return () => {
+      window.removeEventListener("scroll", handleFollow); // addEventListener 함수를 삭제
+    };
+  });
 
-  //   const handleFollow = () => {
-  //     setScrollY(window.pageYOffset);
-  //     if(ScrollY > 300) {
-  //       // 100 이상이면 버튼이 보이게
-  //       setBtnStatus(true);
-  //     } else {
-  //       // 100 이하면 버튼이 사라지게
-  //       setBtnStatus(false);
-  //     }
-  //   }
+  const handleFollow = () => {
+    setScrollY(window.pageYOffset);
+    if (ScrollY > 300) {
+      // 100 이상이면 버튼이 보이게
+      setBtnStatus(true);
+    } else {
+      // 100 이하면 버튼이 사라지게
+      setBtnStatus(false);
+    }
+  };
   function topBtn() {
     window.scroll({
       top: 0,
@@ -95,10 +96,11 @@ function PlaceList() {
     // setSendPlaceInfo(path,obj,title,address)
   }
 
+  //! React.memo써서 안변한건 리렌더링 안되게 해야함
   return (
     <PlaceLists>
       {placeList.map((place, idx) => {
-        console.log(place[4]);
+        // console.log(place[4]);
         return (
           <Div key={idx}>
             {/* addr1이 undefined 되는 장소가 있어서 addr1는 임시방편으로 3항연산자 처리함 나중에 살펴보자. */}

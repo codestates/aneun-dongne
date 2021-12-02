@@ -4,7 +4,10 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-import { RecoilRoot } from "recoil";
+import { useRecoilState } from "recoil";
+
+import { loginState } from "./recoil/recoil";
+import { userInformation } from "./recoil/recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
@@ -12,9 +15,8 @@ import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 
 const App = () => {
-  // TODO userinfo, isLogin 리코일로 관리하기
-  const [isLogin, setIsLogin] = useState(false);
-  const [userinfo, setUserinfo] = useState(null);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const [userInfo, setUserinfo] = useRecoilState(userInformation);
 
   const history = useHistory();
 
@@ -29,7 +31,6 @@ const App = () => {
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
-  // TODO isLogin 활용해서 리다이렉트 연결해놓기!
   return (
     <>
       <BrowserRouter>
@@ -39,7 +40,7 @@ const App = () => {
             <Mainpage />
           </Route>
           <Route exact path="/home">
-            <Home userinfo={userinfo} />
+            <Home userinfo={userInfo} />
           </Route>
           {/* <Redirect from="*" to="/" /> */}
         </Switch>

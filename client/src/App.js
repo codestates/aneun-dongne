@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
-import { RecoilRoot } from "recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
 
+import Header from "./components/Header";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -22,30 +22,24 @@ const App = () => {
       history.push("/");
     });
   };
-  
+
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
 
+  // TODO isLogin 활용하기!
   return (
     <>
       <BrowserRouter>
+        <Header />
         <Switch>
-         <Route
-              exact
-              path="/"
-              render={() =>
-                isLogin ? (
-                  <Route exact path="/home">
-                    <Home userinfo={userinfo}/>
-                  </Route>
-          
-                ) : (
-                  <Mainpage handleResponseSuccess={handleResponseSuccess} />
-                )
-              }
-            />
-            <Redirect from="*" to="/" />
+          <Route exact path="/">
+            <Mainpage handleResponseSuccess={handleResponseSuccess} />
+          </Route>
+          <Route exact path="/home">
+            <Home userinfo={userinfo} />
+          </Route>
+          {/* <Redirect from="*" to="/" /> */}
         </Switch>
       </BrowserRouter>
     </>

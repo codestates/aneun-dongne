@@ -5,6 +5,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import { nowlocation } from "../recoil/recoil";
 import { useRecoilState } from "recoil";
+
 dotenv.config();
 
 export const Body = styled.div`
@@ -104,7 +105,7 @@ export const TitleThirdView = styled.div`
     font-weight: bold;
   }
 `;
-//현재위치 가져오기
+// 현재위치 가져오기
 // navigator.geolocation.getCurrentPosition(function(pos) {
 //     var latitude = pos.coords.latitude;
 //     var longitude = pos.coords.longitude;
@@ -113,7 +114,7 @@ export const TitleThirdView = styled.div`
 
 function Mainpage() {
   const [location, setlocation] = useRecoilState(nowlocation);
-
+  
   if (navigator.geolocation) {
     // GPS를 지원갸능할 때
     navigator.geolocation.getCurrentPosition(
@@ -136,6 +137,8 @@ function Mainpage() {
   } else {
     alert("GPS를 지원하지 않습니다");
   }
+ 
+
 
   //const [isStart, setIsStart] = useState(false);
 
@@ -172,5 +175,6 @@ function Mainpage() {
       </Body>
     </>
   );
+    
 }
 export default Mainpage;

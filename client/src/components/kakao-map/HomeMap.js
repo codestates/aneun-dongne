@@ -7,7 +7,8 @@ import dotenv from 'dotenv'
 import notImageYet from '../../images/not-image-yet.png'
 import { placelist,meetingplace,nowlocation } from '../../recoil/recoil';
 import './kakao-map.css'
-import { cat1_num, cat1_name, cat2_num, cat2_name } from '../../location-data';
+import { cat1_name, cat2_name } from '../../location-data';
+import { withCookies, Cookies, useCookies } from 'react-cookie';
 dotenv.config()
 
 // 지역검색창
@@ -115,21 +116,23 @@ const Map = styled.div`
 `
 
 const HomeMap = () => {
-    
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
     const kakao = window.kakao
     // const new kakao.maps = kakao.maps
     // const new kakao.maps = new kakao.maps
     // ! 혹시모르니 new kakao.maps = new kakao.maps인거 기억
-    
+    //! 처음은 recoil/nowlocation의 좌표로 시작한다.
+    const location = useRecoilValue(nowlocation)
+    console.log(location)
     const [placeList,setPlaceList] = useRecoilState(placelist) 
-    const [location,setLocation] = useRecoilState(nowlocation)//{lat:37,lon:128}  
     const [meetingPlace,setMeetingPlace] = useRecoilState(meetingplace)   
     
     const [count,setCount] = useState(0)//1번만시작하게함
     const [pending, setPending] = useState(true)
     const [map, setMap] = useState(null)
     const [place,setPlace] = useState('')
-    const [centerPosition,setCenterPosition] = useState([location.lat,location.lon])
+    
+// 배포할때까지 안쓰면 지워 const [centerPosition,setCenterPosition] = useState([location.lat,location.lon])
 //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
   
 //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.

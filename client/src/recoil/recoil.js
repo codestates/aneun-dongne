@@ -16,7 +16,7 @@ export const placelist = atom({
 //!meetingplace는 아마 수정될텐데 우선은 기능에 필요해서 남겨둠
 export const meetingplace = atom({
   key: "meetingplace",
-  default: ["", "", ""],
+  default: ''
 });
 //! 관광지 관련 전역변수
 export const placeaddress = atom({

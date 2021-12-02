@@ -8,7 +8,7 @@ import notImageYet from "../../images/not-image-yet.png";
 import { placelist, meetingplace, nowlocation } from "../../recoil/recoil";
 import "./kakao-map.css";
 import { cat1_name, cat2_name } from "../../location-data";
-import { withCookies, Cookies, useCookies } from "react-cookie";
+
 import HomeRightbar from "../Home-Rightbar/Home-Rightbar-index";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
 dotenv.config();
@@ -29,7 +29,6 @@ const Map = styled.div`
 `;
 
 const HomeMap = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const kakao = window.kakao;
   // const new kakao.maps = kakao.maps
   // const new kakao.maps = new kakao.maps
@@ -191,20 +190,6 @@ const HomeMap = () => {
       });
     } //!position = [ {addr:주소,latlng:좌표,content:관광지이름,img:관광지썸네일},... ]
 
-    //   let positions = [
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.9841931357, 126.9042297694)
-    //     },
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.9841931357, 126.9042297694)
-    //     },
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.6196823854,127.4915450327)
-    //     },
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.8299471303,127.5074902248)
-    //     }
-    // ];
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     for (let i = 0; i < positions.length; i++) {
       // 마커 이미지의 이미지 크기 입니다

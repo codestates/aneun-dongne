@@ -122,6 +122,7 @@ const HomeMap = () => {
     // ! 혹시모르니 new kakao.maps = new kakao.maps인거 기억
     
     const [placeList,setPlaceList] = useRecoilState(placelist) 
+
     const [location,setLocation] = useRecoilState(nowlocation)//{lat:37,lon:128}  
     const [meetingPlace,setMeetingPlace] = useRecoilState(meetingplace)   
     
@@ -231,6 +232,7 @@ axios.get(`http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationB
       }
     }
     ,{'content-type': 'application/json'}).then(res=>{
+
       console.log(res.data)
       console.log(res.data.response.body.items.item)
       let list = (res.data.response.body.items.item)
@@ -436,7 +438,7 @@ const changeSigg = (sigg) => {
 /* margin-top:${(props)=>props.first?'10px':'50px'} */
   return (
     <div className="map-box">
-    
+
     <Map id="map" ></Map>
     
     {/* <div id="map" ></div> */}

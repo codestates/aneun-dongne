@@ -1,7 +1,6 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
 
-
 export const nowlocation = atom({
   key: "nowlocation",
   default: { lat: 0, lon: 0 },
@@ -16,6 +15,7 @@ export const placelist = atom({
 //!meetingplace는 아마 수정될텐데 우선은 기능에 필요해서 남겨둠
 export const meetingplace = atom({
   key: "meetingplace",
+
   default: ["", "", ""],
 });
 //! 관광지 관련 전역변수
@@ -57,3 +57,10 @@ export const sendPlaceinfo = selector({
   
 })
 
+export const locations = atom({
+  key: "location",
+  default: {
+    lat: 36,
+    lon: 127,
+  },
+});

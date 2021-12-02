@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
+import { RecoilRoot } from "recoil";
+
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
 import ModalLogin from "./components/ModalLogin";
 import DetailPage from './pages/DetailPage/DetailPage-index';
-import Header from './pages/Mainpage/index';
-
 import Header from "./components/Header";
+
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -29,6 +30,7 @@ const App = () => {
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
+
 
   // TODO isLogin 활용하기!
   return (

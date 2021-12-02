@@ -9,8 +9,8 @@ const PlaceCard = styled.div`
     width:17rem;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: box-shadow .1s ,transform .1s;
-    
     text-decoration: inherit;
+    
     .place-cards{
         text-decoration: none;    
         display:flex;
@@ -35,15 +35,13 @@ const PlaceCard = styled.div`
     .place-cards-title {
         margin-left:0.5rem;
         margin-top:0.3rem;
-        /* text-decoration-line: white; */
-        /* display:none; */
     }
     
 `
 
 
-function PlaceCards({title,img,addr1,onClick}) {
-    
+
+function PlaceCards({title,img,addr1,onClick}) {    
     // console.log(addr1)
     return (
             <PlaceCard onClick={onClick}>

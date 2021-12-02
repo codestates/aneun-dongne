@@ -13,29 +13,68 @@ export const Styled = {
     }
 
     .form-title {
-      margin: 70px 0px 30px 0px;
+      margin: 30px 0px 30px 0px;
+    }
+
+    label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00ccff;
+    }
+
+    .form-nickname {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-email {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-password {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-password-confirm {
+      display: flex;
+      flex-direction: column;
     }
 
     input {
-      margin: 20px 0px;
       width: 300px;
-      height: 30px;
+      height: 40px;
+      border: 1px solid #00ccff;
+      margin-bottom: 5px;
     }
 
     .signup-button {
       cursor: pointer;
-      width: 60px;
-      height: 40px;
-      background-color: #a3dcf3;
+      width: 150px;
+      height: 50px;
+      background-color: #00ccff;
+      color: white;
+      border-radius: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
     }
 
     .login-link {
       cursor: pointer;
-      color: #a3dcf3;
+      color: #00ccff;
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+
+    .login-link:hover {
+      text-decoration: underline;
     }
 
     .error-message {
+      height: 10px;
       color: red;
+      margin-bottom: 20px;
     }
 
     button {

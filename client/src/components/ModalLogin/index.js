@@ -55,7 +55,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
             <label htmlFor="password">password</label>
             <input id="password" type="password" value={password} onChange={handleInputValue("password")} />
           </div>
-          <div className="alert-box">{errorMessage}</div>
+          <div className="error-message">{errorMessage}</div>
 
           <button type="submit" className="login-button" onClick={handleLogin}>
             로그인

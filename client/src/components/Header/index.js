@@ -57,9 +57,9 @@ const Header = ({ handleResponseSuccess }) => {
         {isLoginOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeLoginModalHandler}>
-              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
+              <Styled.LoginModalView onClick={(e) => e.stopPropagation()}>
                 <ModalLogin handleResponseSuccess={handleResponseSuccess} ToSignupModal={ToSignupModal} />
-              </Styled.ModalView>
+              </Styled.LoginModalView>
             </Styled.ModalBackdrop>
           </>
         ) : null}

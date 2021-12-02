@@ -48,11 +48,21 @@ export const Styled = {
     z-index: 1000;
   `,
 
+  LoginModalView: styled.div`
+    position: fixed;
+    background-color: white;
+    width: 450px;
+    height: 500px;
+    z-index: 2;
+    border: 1px solid white;
+    border-radius: 20px;
+  `,
+
   ModalView: styled.div`
     position: fixed;
     background-color: white;
     width: 450px;
-    height: 550px;
+    height: 650px;
     z-index: 2;
     border: 1px solid white;
     border-radius: 20px;

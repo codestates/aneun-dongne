@@ -5,7 +5,6 @@ export const Styled = {
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100%;
 
     form {
       display: flex;
@@ -34,14 +33,14 @@ export const Styled = {
     }
 
     input {
-      margin: 10px 0px 30px 0px;
+      margin-bottom: 30px;
       width: 300px;
       height: 40px;
       border: 1px solid #00ccff;
     }
 
     .login-button {
-      margin-top: 30px;
+      margin-top: 5px;
       cursor: pointer;
       width: 150px;
       height: 50px;
@@ -52,10 +51,16 @@ export const Styled = {
       font-weight: bold;
     }
 
+    .error-message {
+      height: 20px;
+      color: red;
+    }
+
     .signup-link {
       cursor: pointer;
       color: #00ccff;
       font-size: 1rem;
+      margin-top: 5px;
     }
 
     .signup-link:hover {
@@ -63,7 +68,7 @@ export const Styled = {
     }
 
     .signup-text {
-      margin: 20px 0px;
+      margin-top: 20px;
     }
 
     .alert-box {

@@ -120,12 +120,12 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
             <div className="error-message">{errorMessage.passwordConfirm}</div>
           </div>
           <div className="error-message">{errorMessage.confirm}</div>
-          <div className="login-link" onClick={ToLoginModal}>
-            로그인창으로 가기
-          </div>
           <button type="submit" className="signup-button" onClick={handleSignup}>
             회원가입
           </button>
+          <div className="login-link" onClick={ToLoginModal}>
+            로그인창으로 가기
+          </div>
         </form>
       </Styled.FormContainer>
     </>

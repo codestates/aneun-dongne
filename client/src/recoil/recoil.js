@@ -69,7 +69,7 @@ export const loginState = atom({
   default: false,
 });
 
-export const userInformation = atom({
-  key: "userInformation",
+export const userInfo = atom({
+  key: "userInfo",
   default: null,
 });

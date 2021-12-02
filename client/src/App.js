@@ -7,7 +7,7 @@ import "./App.css";
 import { useRecoilState } from "recoil";
 
 import { loginState } from "./recoil/recoil";
-import { userInformation } from "./recoil/recoil";
+import { userInfo } from "./recoil/recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
@@ -16,13 +16,13 @@ import Header from "./components/Header";
 
 const App = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [userInfo, setUserinfo] = useRecoilState(userInformation);
+  const [info, setInfo] = useRecoilState(userInfo);
 
   const history = useHistory();
 
   const isAuthenticated = () => {
     axios.get(`${process.env.REACT_APP_API_URL}/user/info`).then((res) => {
-      setUserinfo(res.data.data.userInfo);
+      setInfo(res.data.data.userInfo);
       setIsLogin(true);
       history.push("/");
     });
@@ -40,7 +40,7 @@ const App = () => {
             <Mainpage />
           </Route>
           <Route exact path="/home">
-            <Home userinfo={userInfo} />
+            <Home info={info} />
           </Route>
           {/* <Redirect from="*" to="/" /> */}
         </Switch>

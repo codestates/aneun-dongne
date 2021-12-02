@@ -10,11 +10,12 @@ const FixedComp = styled.div`
 `
 
 function Home() {
+    
     return (
         <>
         <FixedComp>
-            <KeyWordsList />
-            <HomeMap />
+            <KeyWordsList />            
+            <HomeMap />            
         </FixedComp>
         <PlaceList />
         </>

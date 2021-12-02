@@ -7,8 +7,12 @@ const PlaceCard = styled.div`
     border:1px rgb(107, 217, 224) solid;
     border-radius: 20px;
     width:17rem;
+    box-shadow: 4px 4px 4px rgb(85, 85, 85);
+    transition: box-shadow .1s ,transform .1s;
+    text-decoration: inherit;
+    
     .place-cards{
-        
+        text-decoration: none;    
         display:flex;
         flex-direction:column;
         align-content: center;
@@ -36,18 +40,18 @@ const PlaceCard = styled.div`
 `
 
 
-function PlaceCards({title,img,addr1}) {
-    
+
+function PlaceCards({title,img,addr1,onClick}) {    
     // console.log(addr1)
     return (
-            <PlaceCard>
+            <PlaceCard onClick={onClick}>
             <div className = 'place-cards'>
                 {img ? <img src= {img} /> : <img src= {notImageYet} />}
                 <div className ='place-cards-title'>
                     <div>{`[${addr1}] `}</div>
                     <span>{title}</span>
                 </div>    
-                <hr />
+                
             </div>
             </PlaceCard>
         

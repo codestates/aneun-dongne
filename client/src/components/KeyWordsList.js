@@ -13,6 +13,7 @@ const Div = styled.div`
     height : 100px;
     border:1px gray solid;
 `
+
 const KeyWordBox = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -22,6 +23,7 @@ const KeyWordBox = styled.div`
     background-color:white;
     
 `
+
 const KeyWord = styled.span`
     position: relative;//이미지 opactiry 영향 안받게함
     top:10px;

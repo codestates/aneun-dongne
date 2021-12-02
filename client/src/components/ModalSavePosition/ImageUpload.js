@@ -2,13 +2,13 @@ import React, { useRef } from "react";
 
 import "./imageUpload.css";
 
-function ImageUpload({ signUpImage, setSignUpImage }) {
+function ImageUpload({ placeImage, setPlaceImage }) {
   const inputValue = useRef(null);
 
-  function inputFileHandler(inputValue, setSignUpImage) {
+  function inputFileHandler(inputValue, setPlaceImage) {
     const image = inputValue.current.files;
-    setSignUpImage(image[0]);
-    console.log(signUpImage);
+    setPlaceImage(image[0]);
+    console.log(placeImage);
   }
 
   function inputBtn(e, inputValue) {
@@ -17,24 +17,23 @@ function ImageUpload({ signUpImage, setSignUpImage }) {
   }
 
   // function inputImageHandler(){
-  //     const image = signUpImage.current.files
+  //     const image = placeImage.current.files
   // }
 
   return (
     <div className="image-upload-box">
-      <p>이미지</p>
       <input
         name="image"
         className="input-blind"
         ref={inputValue}
         type="file"
-        onChange={(e) => inputFileHandler(inputValue, setSignUpImage)}
+        onChange={(e) => inputFileHandler(inputValue, setPlaceImage)}
       />
-      {signUpImage ? (
+      {placeImage ? (
         <div
           className="img_preview"
           onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url('${URL.createObjectURL(signUpImage)}')` }}
+          style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
         ></div>
       ) : (
         <div className="img_preview" onClick={(e) => inputBtn(e, inputValue)}></div>

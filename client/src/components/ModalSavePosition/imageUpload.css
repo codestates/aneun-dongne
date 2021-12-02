@@ -9,9 +9,10 @@
 .image-upload-box .input-blind {
   display: none;
 }
+/* 이게 클릭하면 이미지 업로드창뜨는거  */
 .image-upload-box .img_preview {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   background-size: contain;
   display: block;
   background-color: #ddd;

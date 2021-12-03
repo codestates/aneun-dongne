@@ -63,8 +63,10 @@ export const TitleView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
+
+  img {
+    width: 100%;
+  }
 
   .title {
     position: absolute;
@@ -85,7 +87,6 @@ export const TitleFirstView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
   height: 100vh;
 
   .title {
@@ -99,7 +100,6 @@ export const TitleSecondView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
   height: 100vh;
 
   .title {
@@ -122,7 +122,6 @@ export const TitleThirdView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
   height: 100vh;
 
   .title {
@@ -146,7 +145,6 @@ export const TitlePeopleView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
   height: 100vh;
 
   .title {
@@ -172,7 +170,7 @@ export const TitleEndView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100vw;
+  /* width: 100vw; */
   height: 50vh;
   background-color: #88bfff;
 
@@ -193,7 +191,6 @@ export const TitleEndView = styled.div`
 
 export const MainImage = styled.div`
   > img {
-    width: 100vw;
     height: 100vh;
 
     cursor: pointer;

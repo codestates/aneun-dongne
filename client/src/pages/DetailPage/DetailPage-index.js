@@ -18,6 +18,7 @@ function DetailPage({ match }) {
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
   console.log("pathname찍어봤음", pathname);
+
   useEffect(() => {
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     window.scrollTo(0, 0);

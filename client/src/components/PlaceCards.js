@@ -10,6 +10,7 @@ const PlaceCard = styled.div`
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: box-shadow 0.1s, transform 0.1s;
   text-decoration: inherit;
+
   &:hover {
     transform: scale(1.1);
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -33,6 +34,7 @@ const PlaceCard = styled.div`
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 10px;
+
     border-radius: 20px;
 
     /* object-fit: scale-down; */
@@ -40,6 +42,7 @@ const PlaceCard = styled.div`
   .place-cards-title {
     margin-left: 10px;
     margin-top: 6px;
+
   }
 `;
 

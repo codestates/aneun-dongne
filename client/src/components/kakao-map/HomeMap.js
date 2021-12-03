@@ -26,6 +26,7 @@ const Map = styled.div`
     left: 0;
     width: 100%;
   }
+
 `;
 
 const HomeMap = () => {
@@ -37,14 +38,16 @@ const HomeMap = () => {
   const location = useRecoilValue(nowlocation);
   console.log(location);
   const [placeList, setPlaceList] = useRecoilState(placelist);
+
   const [meetingPlace, setMeetingPlace] = useRecoilState(meetingplace);
 
   const [count, setCount] = useState(0); //1번만시작하게함
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
   const [place, setPlace] = useState("");
-
+  
   // 배포할때까지 안쓰면 지워 const [centerPosition,setCenterPosition] = useState([location.lat,location.lon])
+
   //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.

@@ -7,8 +7,10 @@ import PlaceList from "../components/PlaceList";
 import KeyWordsList from "../components/KeyWordsList";
 
 const FixedComp = styled.div`
+  /* position: fixed;
+  top: 8%; */
   position: sticky;
-  top: 0;
+  top: 8%;
 `;
 
 function Home() {

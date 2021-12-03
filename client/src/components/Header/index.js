@@ -95,14 +95,17 @@ const Header = ({ handleResponseSuccess }) => {
         ) : null}
       </Styled.ModalContainer>
 
+      {/* 지금 홈화면 인지 아닌지 상태로 */}
       <Styled.HeaderContainer>
-        <div id="logo">아는 동네</div>
-        <div className="header-button">
-          <div className="mainpage-button" onClick={openLoginModalHandler}>
-            login
-          </div>
-          <div className="mainpage-button" onClick={openSignupModalHandler}>
-            Sign Up
+        <div className="header-wrapper">
+          <div id="logo">아는 동네</div>
+          <div className="header-button-wrapper">
+            <div className="mainpage-button" onClick={openLoginModalHandler}>
+              login
+            </div>
+            <div className="mainpage-button" onClick={openSignupModalHandler}>
+              Sign Up
+            </div>
           </div>
         </div>
       </Styled.HeaderContainer>

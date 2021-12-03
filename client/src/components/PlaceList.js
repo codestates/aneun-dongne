@@ -34,6 +34,7 @@ const MoveToTopBtn = styled.button`
   display: ${(props) => (props.BtnStatus ? "inline" : "none")};
   &:hover {
     background: red;
+
   }
 `;
 
@@ -101,6 +102,7 @@ function PlaceList() {
     <PlaceLists>
       {placeList.map((place, idx) => {
         // console.log(place[4]);
+
         return (
           <Div key={idx}>
             {/* addr1이 undefined 되는 장소가 있어서 addr1는 임시방편으로 3항연산자 처리함 나중에 살펴보자. */}

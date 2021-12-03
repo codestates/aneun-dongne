@@ -23,6 +23,7 @@ const PlaceLists = styled.div`
 `;
 const MoveToTopBtn = styled.button`
   border-radius: 70%;
+
   background: rgba(255, 255, 255, 0.7);
   width: 60px;
   height: 60px;
@@ -45,6 +46,7 @@ const StyledLink = styled(Link)`
 const Div = styled.div`
   color: black;
 `;
+
 
 function PlaceList() {
   const history = useHistory();

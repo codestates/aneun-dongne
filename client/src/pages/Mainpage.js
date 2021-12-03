@@ -45,10 +45,10 @@ export const MenuButton = styled.button`
   border-style: none;
   cursor: pointer;
   transition: all 0.3s;
-  margin-left: 20rem;
-  margin-right: 20rem;
+  margin-left: 350px;
+  margin-right: 350px;
   border-radius: 25px;
-  margin-top: 100px;
+  margin-top: 10px;
   background-color: #00ccff;
 
   :hover {
@@ -73,13 +73,13 @@ export const TitleView = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
-    margin-bottom: 10rem;
+    margin-bottom: 400px;
     background-color: #f0f9ff99;
     border-radius: 20px;
-    width: 400px;
-    height: 50px;
+    width: 700px;
+    height: 70px;
   }
 `;
 export const TitleFirstView = styled.div`
@@ -107,12 +107,12 @@ export const TitleSecondView = styled.div`
     font-weight: bold;
   }
   .PageTitle {
-    margin-top: 3rem;
+    margin-top: 50px;
     font-size: 1.5rem;
     font-weight: bold;
     > img {
-      width: 0.05rem;
-      height: 0.05rem;
+      width: 10px;
+      height: 10px;
       cursor: pointer;
     }
   }
@@ -129,12 +129,12 @@ export const TitleThirdView = styled.div`
     font-weight: bold;
   }
   .PageTitle {
-    margin-top: 3rem;
+    margin-top: 50px;
     font-size: 1.5rem;
     font-weight: bold;
     > img {
-      width: 0.05rem;
-      height: 0.05rem;
+      width: 10px;
+      height: 10px;
       cursor: pointer;
     }
   }
@@ -148,18 +148,18 @@ export const TitlePeopleView = styled.div`
   height: 100vh;
 
   .title {
-    margin-bottom: 3rem;
+    margin-bottom: 60px;
     font-size: 2.5rem;
     font-weight: bold;
   }
 
   .peopleTitle {
-    margin-top: 3rem;
+    margin-top: 50px;
     font-size: 1.5rem;
     font-weight: bold;
     > img {
-      width: 0.05rem;
-      height: 0.05rem;
+      width: 10px;
+      height: 10px;
       cursor: pointer;
     }
   }
@@ -170,7 +170,6 @@ export const TitleEndView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /* width: 100vw; */
   height: 50vh;
   background-color: #88bfff;
 
@@ -181,7 +180,7 @@ export const TitleEndView = styled.div`
     align-items: center;
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 10rem;
+    margin-bottom: 170px;
     /* background-color: #f0f9ff99; */
     border-radius: 20px;
     width: 800px;
@@ -208,6 +207,7 @@ function Mainpage() {
   const [location, setlocation] = useRecoilState(nowlocation);
   const placeList = useRecoilValue(placelist);
 
+  console.log(location);
   if (navigator.geolocation) {
     // GPS를 지원갸능할 때
     navigator.geolocation.getCurrentPosition(
@@ -217,6 +217,23 @@ function Mainpage() {
           lat: position.coords.latitude,
           lon: position.coords.longitude,
         });
+        //console.log(location);
+        //if (location.lon !== 0 && location.lat !== 0) {
+        axios
+          .get(
+            `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${position.coords.longitude}&y=${position.coords.latitude}&input_coord=WGS84`,
+            {
+              headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+            }
+          )
+          .then((response) => {
+            console.log(response.data);
+          })
+
+          .then();
+        //post로 서버에 보냄.axios.post('endpoint/userinfo').then(res=>console.log(res))
+        //axios.post('endpoint/userinfo',{유저좌표,유저주소}).then(res=>console.log(res))
+        //}
       },
       function (error) {
         console.error(error);
@@ -231,20 +248,11 @@ function Mainpage() {
     alert("GPS를 지원하지 않습니다");
   }
 
-  // axios
-  //   .get(
-  //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
-  //     {
-  //       headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-  //       params: { lat, lon },
-  //     }
-  //   )
-  //   .then(function (response) {
-  //     console.log(JSON.stringify(response.data));
-  //   });
-  // useEffect(() => {
-  //   if (!response) return setlocation();
-  // }, []);
+  useEffect((response) => {
+    if (!response) setlocation();
+  }, []);
+
+  //0, undifined
 
   //도로명 주소 가져오는 코드
   //역지오코딩
@@ -297,6 +305,7 @@ function Mainpage() {
         </MainImage>
         <TitleFirstView>
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
+          <img src="/mapimg.png" />
         </TitleFirstView>
         <TitleSecondView>
           <div className="title">저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.</div>
@@ -326,7 +335,6 @@ function Mainpage() {
             동네를 산책하는 재미가 생겼어요!! <p>박OO</p>
           </div>
         </TitlePeopleView>
-
         <TitleEndView>
           <div className="title">나와 어울리는 장소로 떠날 준비가 되셨나요?</div>
           <MenuButton onClick={ToHome}>시작하기</MenuButton>

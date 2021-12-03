@@ -12,7 +12,7 @@ import { userInfo } from "./recoil/recoil";
 
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
-// import DetailPage from "./pages/DetailPage/DetailPage-index";
+import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 
 const App = () => {

@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { loginState } from "./recoil/recoil";
@@ -14,6 +13,7 @@ import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
+import Slider from "./pages/Slider/Slider";
 
 const App = () => {
   const setIsLogin = useSetRecoilState(loginState);
@@ -39,6 +39,7 @@ const App = () => {
         <Header handleResponseSuccess={handleResponseSuccess} />
         <Switch>
           <Route exact path="/">
+            <Slider />
             <Mainpage />
           </Route>
           <Route exact path="/home">

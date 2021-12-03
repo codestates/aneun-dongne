@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { nowlocation } from "../recoil/recoil";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { placelist } from "../recoil/recoil";
 
 export const Body = styled.div`
   position: relative;
@@ -58,30 +55,6 @@ export const MenuButton = styled.button`
   }
 `;
 
-export const TitleView = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  img {
-    width: 100%;
-  }
-
-  .title {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 400px;
-    background-color: #f0f9ff99;
-    border-radius: 20px;
-    width: 700px;
-    height: 70px;
-  }
-`;
 export const TitleFirstView = styled.div`
   display: flex;
   align-items: center;
@@ -148,18 +121,18 @@ export const TitlePeopleView = styled.div`
   height: 100vh;
 
   .title {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
     font-size: 2.5rem;
     font-weight: bold;
   }
 
   .peopleTitle {
-    margin-top: 50px;
+    margin-top: 30px;
     font-size: 1.5rem;
     font-weight: bold;
     > img {
-      width: 10px;
-      height: 10px;
+      width: 15px;
+      height: 15px;
       cursor: pointer;
     }
   }
@@ -196,91 +169,16 @@ export const MainImage = styled.div`
   }
 `;
 
-//현재위치 가져오기
-// navigator.geolocation.getCurrentPosition(function(pos) {
-//     var latitude = pos.coords.latitude;
-//     var longitude = pos.coords.longitude;
-//     alert("현재 위치는 : " + latitude + ", "+ longitude);
-// });
+export const Image = styled.div`
+  display: flex;
+  img {
+    width: 1000px;
+    height: 650px;
+    object-fit: cover;
+  }
+`;
 
 function Mainpage() {
-  const [location, setlocation] = useRecoilState(nowlocation);
-  const placeList = useRecoilValue(placelist);
-
-  console.log(location);
-  if (navigator.geolocation) {
-    // GPS를 지원갸능할 때
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        // alert(position.coords.latitude + " " + position.coords.longitude);
-        setlocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-        //console.log(location);
-        //if (location.lon !== 0 && location.lat !== 0) {
-        axios
-          .get(
-            `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${position.coords.longitude}&y=${position.coords.latitude}&input_coord=WGS84`,
-            {
-              headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-            }
-          )
-          .then((response) => {
-            console.log(response.data);
-          })
-
-          .then();
-        //post로 서버에 보냄.axios.post('endpoint/userinfo').then(res=>console.log(res))
-        //axios.post('endpoint/userinfo',{유저좌표,유저주소}).then(res=>console.log(res))
-        //}
-      },
-      function (error) {
-        console.error(error);
-      },
-      {
-        enableHighAccuracy: false,
-        maximumAge: 0,
-        timeout: Infinity,
-      }
-    );
-  } else {
-    alert("GPS를 지원하지 않습니다");
-  }
-
-  useEffect((response) => {
-    if (!response) setlocation();
-  }, []);
-
-  //0, undifined
-
-  //도로명 주소 가져오는 코드
-  //역지오코딩
-  // let geocoder = new kakao.maps.services.Geocoder();
-
-  // let coord = new kakao.maps.LatLng(37.56496830314491, 126.93990862062978);
-  // let callback = function (result, status) {
-  //   if (status === kakao.maps.services.Status.OK) {
-  //     console.log("여기 위치는" + result[0].address.address_name + "입니다");
-  //   }
-  // };
-
-  // geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-
-  //좌표 값에 해당하는 행정동, 법정동 정보를 얻는다.
-  // let geocodersec = new kakao.maps.services.Geocoder();
-
-  // let callbacksec = function (result, status) {
-  //   if (status === kakao.maps.services.Status.OK) {
-  //     console.log("지역 명칭 : " + result[0].address_name);
-  //     console.log("행정구역 코드 : " + result[0].code);
-  //   }
-  // };
-
-  // geocodersec.coord2RegionCode(126.9786567, 37.566826, callbacksec);
-
-  //const [isStart, setIsStart] = useState(false);
-
   const history = useHistory();
   const ToHome = () => {
     history.push("/home");
@@ -296,43 +194,48 @@ function Mainpage() {
   return (
     <>
       <Body>
-        <MainImage>
-          <TitleView>
-            <img src="/Mainimg.jpg" />
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
-          </TitleView>
-        </MainImage>
+        {/* <TitleView>
+          <div className="title">어디론가 놀러가고 싶으신가요?</div>
+          <MenuButton onClick={ToHome}>시작하기</MenuButton>
+        </TitleView> */}
+
         <TitleFirstView>
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
-          <img src="/mapimg.png" />
+          <Image>
+            <img src="/mapclick.png" />
+          </Image>
         </TitleFirstView>
         <TitleSecondView>
           <div className="title">저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.</div>
-          <img src="/blankpage.png" />
+          <Image>
+            <img src="/mapimgpeople.png" />
+          </Image>
         </TitleSecondView>
         <TitleThirdView>
           <div className="title">그곳이 어디라도 간직하고 싶다면 내가 서있는 바로 그곳을 저장할 수 있어요.</div>
-          <img src="/blankpage.png" />
+          <Image>
+            <img src="/likedlistimg.png" />
+          </Image>
         </TitleThirdView>
         <TitlePeopleView>
           <div className="title">유저들의 후기</div>
           <img src="/people3.png" />
           <div className="peopleTitle">
-            우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>강OO</p>
+            우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>-강OO</p>
           </div>
+
           <img src="/people2.png" />
           <div className="peopleTitle">
-            가고싶은 곳을 정하기 어려울 때 좋아요! <p>최OO</p>
+            가고싶은 곳을 정하기 어려울 때 좋아요! <p>-최OO</p>
           </div>
           <img src="/people1.png" />
           <div className="peopleTitle">
             친구들이 우리동네에 놀러왔을 때 원하는 곳으로 데려가기 간편해요!!
-            <p>정OO</p>
+            <p>-정OO</p>
           </div>
           <img src="/people4.png" />
           <div className="peopleTitle">
-            동네를 산책하는 재미가 생겼어요!! <p>박OO</p>
+            동네를 산책하는 재미가 생겼어요!! <p>-박OO-</p>
           </div>
         </TitlePeopleView>
         <TitleEndView>

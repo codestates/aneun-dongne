@@ -2,16 +2,22 @@ import styled from "styled-components";
 
 export const Styled = {
   HeaderContainer: styled.div`
-    display: flex;
-    justify-content: space-between;
+    position: fixed;
+    z-index: 999;
+    background-color: white;
+    width: 100%;
 
+    .header-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
     #logo {
       cursor: pointer;
       margin: 20px;
       font-size: 2rem;
       font-weight: bold;
     }
-    .header-button {
+    .header-button-wrapper {
       display: flex;
     }
 
@@ -33,18 +39,32 @@ export const Styled = {
     position: fixed;
     display: flex;
     justify-content: center;
+    backdrop-filter: contrast(50%);
+    /* backdrop-filter: brightness(50%); */
+
     align-items: center;
     width: 100vw;
     height: 100vh;
-    z-index: 1;
+    z-index: 1000;
+  `,
+
+  LoginModalView: styled.div`
+    position: fixed;
+    background-color: white;
+    width: 450px;
+    height: 500px;
+    z-index: 2;
+    border: 1px solid white;
+    border-radius: 20px;
   `,
 
   ModalView: styled.div`
     position: fixed;
     background-color: white;
-    width: 500px;
-    height: 500px;
+    width: 450px;
+    height: 650px;
     z-index: 2;
-    border: 1px solid black;
+    border: 1px solid white;
+    border-radius: 20px;
   `,
 };

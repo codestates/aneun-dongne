@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import HomeMap from "../../components/kakao-map/HomeMap";
 import PlaceList from "../../components/PlaceList";
-import KeyWordsList from "../../components/Home-KeyWordsList";
+import KeyWordsList from "../../components/HashTag/Home-KeyWordsList";
 import { useRecoilState } from "recoil";
 import { loading, defaultposition, nowlocation } from "../../recoil/recoil";
 

@@ -4,12 +4,15 @@ import axios from "axios";
 import MapInRoom from "../../components/kakao-map/MapInRoom/MapInRoom-index";
 import notImageYet from "../../images/not-image-yet.png";
 import { Styled } from "./style";
-import KeyWordCommon from "../../components/KeyWordCommon";
-import CommentCommon from "../../components/CommentCommon";
+import KeyWordTemplate from "../../components/HashTag/KeyWordTemplate";
+import CommentTemplate from "../../components/Comment/CommentTemplate";
+import MyComment from "../../components/Comment/MyComment";
+import { useRecoilValue } from "recoil";
+import { mycomments } from "../../recoil/recoil";
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
-
+  const myComments = useRecoilValue(mycomments);
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
   const [imgURL, setImgURL] = useState("");
@@ -112,19 +115,23 @@ function DetailPage({ match }) {
           </Styled.Overview>
         ) : null}
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
-        <KeyWordCommon keywordDummy={keywordDummy} />
+        <KeyWordTemplate keywordDummy={keywordDummy} />
         <Styled.LikeBtn onClick={LikeHandler}>
           <i class={likeOrNot ? "fas fa-heart" : "hide"}></i>
           <i class={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
         </Styled.LikeBtn>
-        <CommentCommon commentDummy={commentDummy}></CommentCommon>
+        <CommentTemplate commentDummy={commentDummy}></CommentTemplate>
+        {myComments.map((el, idx) => {
+          return <div key={idx}>{el}</div>;
+        })}
+        <MyComment writeDummy={writeDummy}></MyComment>
       </Styled.Div>
     </>
   );
 }
 
 export default DetailPage;
-
+const writeDummy = [];
 const keywordDummy = ["#왕릉", "#공원"];
 
 const commentDummy = [
@@ -132,14 +139,14 @@ const commentDummy = [
     img: "/people1.png",
     nickname: "류준열",
     comment: "안녕하세요",
-    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요"],
+    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요", "아침해가뜨면", "매일같은사람들과"],
     data: "2021-12-03", //형식 모르겠음 db보고 결정
   },
   {
-    img: "/people1.png",
+    img: "/people2.png",
     nickname: "윤해용",
     comment: "팀장이에요",
-    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요"],
+    keyword: ["안녕", "감사", "잘있어", "다시만나"],
     data: "2021-12-03", //형식 모르겠음 db보고 결정
   },
 ];

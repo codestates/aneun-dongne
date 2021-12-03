@@ -64,7 +64,7 @@ export const Styled = {
   LikeBtn: styled.button`
     border: 1px red solid;
     border-radius: 20px;
-    background: white;
+    /* background: white; */
     width: 60px;
     height: 30px;
     margin-left: auto;

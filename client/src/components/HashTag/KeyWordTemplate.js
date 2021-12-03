@@ -23,6 +23,7 @@ const KeyWord = styled.span`
   color: black;
   cursor: pointer;
   transition: all 0.5s ease-in-out;
+
   &:hover {
     color: black;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -35,7 +36,7 @@ const KeyWord = styled.span`
   }
 `;
 
-function KeyWordCommon({ keywordDummy }) {
+function KeyWordTemplate({ keywordDummy }) {
   return (
     <>
       <KeyWordBox>
@@ -47,4 +48,4 @@ function KeyWordCommon({ keywordDummy }) {
   );
 }
 
-export default KeyWordCommon;
+export default KeyWordTemplate;

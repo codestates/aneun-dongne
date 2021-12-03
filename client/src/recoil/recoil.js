@@ -62,6 +62,12 @@ export const defaultposition = atom({
   default: { lat: 0, lon: 0 },
 });
 
+// ! 댓글
+export const mycomments = atom({
+  key: "mycomments",
+  default: [],
+});
+
 // ! 위치기반 API
 export const pickpoint = selector({
   key: "pickpoint",

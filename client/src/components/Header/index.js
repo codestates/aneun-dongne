@@ -57,12 +57,9 @@ const Header = ({ handleResponseSuccess }) => {
         {isLoginOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeLoginModalHandler}>
-              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalLogin
-                  handleResponseSuccess={handleResponseSuccess}
-                  ToSignupModal={ToSignupModal}
-                />
-              </Styled.ModalView>
+              <Styled.LoginModalView onClick={(e) => e.stopPropagation()}>
+                <ModalLogin handleResponseSuccess={handleResponseSuccess} ToSignupModal={ToSignupModal} />
+              </Styled.LoginModalView>
             </Styled.ModalBackdrop>
           </>
         ) : null}
@@ -72,24 +69,24 @@ const Header = ({ handleResponseSuccess }) => {
           <>
             <Styled.ModalBackdrop onClick={closeSignupModalHandler}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalSignup
-                  handleResponseSuccess={handleResponseSuccess}
-                  ToLoginModal={ToLoginModal}
-                />
+                <ModalSignup handleResponseSuccess={handleResponseSuccess} ToLoginModal={ToLoginModal} />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>
         ) : null}
       </Styled.ModalContainer>
 
+      {/* 지금 홈화면 인지 아닌지 상태로 */}
       <Styled.HeaderContainer>
-        <div id="logo">아는 동네</div>
-        <div className="header-button">
-          <div className="mainpage-button" onClick={openLoginModalHandler}>
-            login
-          </div>
-          <div className="mainpage-button" onClick={openSignupModalHandler}>
-            Sign Up
+        <div className="header-wrapper">
+          <div id="logo">아는 동네</div>
+          <div className="header-button-wrapper">
+            <div className="mainpage-button" onClick={openLoginModalHandler}>
+              login
+            </div>
+            <div className="mainpage-button" onClick={openSignupModalHandler}>
+              Sign Up
+            </div>
           </div>
         </div>
       </Styled.HeaderContainer>

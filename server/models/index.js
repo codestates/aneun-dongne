@@ -12,6 +12,12 @@ db.Post = require("./post")(sequelize, Sequelize);
 
 db.User = require("./user")(sequelize, Sequelize);
 
+db.Comment = require("./comment")(sequelize, Sequelize);
+
+db.Like = require("./like")(sequelize, Sequelize);
+
+db.Visited = require("./visited")(sequelize, Sequelize);
+
 db.sequelize = sequelize;
 
 module.exports = db;

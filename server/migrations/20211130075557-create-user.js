@@ -2,7 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("Users", {
-      user_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -26,11 +26,11 @@ module.exports = {
       user_image_path: {
         type: Sequelize.STRING,
       },
-      user_createdAt: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      user_updatedAt: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },

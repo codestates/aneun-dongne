@@ -5,7 +5,7 @@ import HomeMap from "../../components/kakao-map/HomeMap";
 import PlaceList from "../../components/PlaceList";
 import KeyWordsList from "../../components/HashTag/Home-KeyWordsList";
 import { useRecoilState } from "recoil";
-import { loading, defaultposition, nowlocation } from "../../recoil/recoil";
+import { defaultposition } from "../../recoil/recoil";
 
 const FixedComp = styled.div`
   position: relative;
@@ -13,7 +13,6 @@ const FixedComp = styled.div`
 `;
 
 function Home() {
-  const [isLoading, setIsLoading] = useRecoilState(loading);
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
   // * 현재위치 받는 useEffect
   const getPosition = () => {
@@ -25,7 +24,7 @@ function Home() {
         // console.log(isLoading);
 
         setDefaultPosition({ lat, lon });
-        setIsLoading(false);
+
         // console.log(isLoading);
       },
       (err) => alert("위치권한을 허용해주세요")
@@ -41,14 +40,9 @@ function Home() {
     <>
       <FixedComp>
         <KeyWordsList />
-        {isLoading ? (
-          <div>로딩인디케이터 만들면 여기 넣기</div>
-        ) : (
-          <>
-            <HomeMap defaultPosition={defaultPosition} />
-            <PlaceList />
-          </>
-        )}
+
+        <HomeMap defaultPosition={defaultPosition} />
+        <PlaceList />
       </FixedComp>
     </>
   );

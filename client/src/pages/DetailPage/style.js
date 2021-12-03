@@ -33,7 +33,7 @@ export const Styled = {
   `,
 
   Overview: styled.span`
-    width: 70%;
+    width: 700px;
     margin-left: auto;
     margin-right: auto;
 

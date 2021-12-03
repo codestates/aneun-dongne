@@ -87,7 +87,6 @@ export const TitleFirstView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   height: 100vh;
 
   .title {
@@ -101,7 +100,6 @@ export const TitleSecondView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   height: 100vh;
 
   .title {
@@ -124,7 +122,6 @@ export const TitleThirdView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   height: 100vh;
 
   .title {
@@ -148,7 +145,6 @@ export const TitlePeopleView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   height: 100vh;
 
   .title {
@@ -174,7 +170,6 @@ export const TitleEndView = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   height: 50vh;
   background-color: #88bfff;
 

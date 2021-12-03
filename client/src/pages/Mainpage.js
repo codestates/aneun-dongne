@@ -204,53 +204,53 @@ export const MainImage = styled.div`
 // });
 
 function Mainpage() {
-  const [location, setlocation] = useRecoilState(nowlocation);
+  // const [location, setlocation] = useRecoilState(nowlocation);
   const placeList = useRecoilValue(placelist);
 
-  console.log(location);
-  if (navigator.geolocation) {
-    // GPS를 지원갸능할 때
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        // alert(position.coords.latitude + " " + position.coords.longitude);
-        setlocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-        //console.log(location);
-        //if (location.lon !== 0 && location.lat !== 0) {
-        axios
-          .get(
-            `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${position.coords.longitude}&y=${position.coords.latitude}&input_coord=WGS84`,
-            {
-              headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-            }
-          )
-          .then((response) => {
-            console.log(response.data);
-          })
+  // console.log(location);
+  // if (navigator.geolocation) {
+  //   // GPS를 지원갸능할 때
+  //   navigator.geolocation.getCurrentPosition(
+  //     function (position) {
+  //       // alert(position.coords.latitude + " " + position.coords.longitude);
+  //       setlocation({
+  //         lat: position.coords.latitude,
+  //         lon: position.coords.longitude,
+  //       });
+  //       //console.log(location);
+  //       //if (location.lon !== 0 && location.lat !== 0) {
+  //       axios
+  //         .get(
+  //           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${position.coords.longitude}&y=${position.coords.latitude}&input_coord=WGS84`,
+  //           {
+  //             headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+  //           }
+  //         )
+  //         .then((response) => {
+  //           console.log(response.data);
+  //         })
 
-          .then();
-        //post로 서버에 보냄.axios.post('endpoint/userinfo').then(res=>console.log(res))
-        //axios.post('endpoint/userinfo',{유저좌표,유저주소}).then(res=>console.log(res))
-        //}
-      },
-      function (error) {
-        console.error(error);
-      },
-      {
-        enableHighAccuracy: false,
-        maximumAge: 0,
-        timeout: Infinity,
-      }
-    );
-  } else {
-    alert("GPS를 지원하지 않습니다");
-  }
+  //         .then();
+  //       //post로 서버에 보냄.axios.post('endpoint/userinfo').then(res=>console.log(res))
+  //       //axios.post('endpoint/userinfo',{유저좌표,유저주소}).then(res=>console.log(res))
+  //       //}
+  //     },
+  //     function (error) {
+  //       console.error(error);
+  //     },
+  //     {
+  //       enableHighAccuracy: false,
+  //       maximumAge: 0,
+  //       timeout: Infinity,
+  //     }
+  //   );
+  // } else {
+  //   alert("GPS를 지원하지 않습니다");
+  // }
 
-  useEffect((response) => {
-    if (!response) setlocation();
-  }, []);
+  // useEffect((response) => {
+  //   if (!response) setlocation();
+  // }, []);
 
   //0, undifined
 

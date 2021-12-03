@@ -53,8 +53,12 @@ export const sendPlaceinfo = selector({
     set(placetitle, title);
     set(placelocation, location);
     set(placeaddress, address);
-
   },
+});
+//! 로딩state
+export const loading = atom({
+  key: "loading",
+  default: true,
 });
 
 //! Home화면에서 현재위치 저장 모달
@@ -62,17 +66,7 @@ export const isSavepositionOpen = atom({
   key: "isSavepositionOpen",
   default: false,
 });
-  },
-});
-
-export const locations = atom({
-  key: "location",
-  default: {
-    lat: 36,
-    lon: 127,
-  },
-});
-
+//! 로긴
 export const loginState = atom({
   key: "loginState",
   default: false,

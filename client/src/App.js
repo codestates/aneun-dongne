@@ -10,7 +10,7 @@ import { loginState } from "./recoil/recoil";
 import { userInfo } from "./recoil/recoil";
 
 import Mainpage from "./pages/Mainpage";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 

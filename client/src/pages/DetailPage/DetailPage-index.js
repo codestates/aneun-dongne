@@ -4,7 +4,8 @@ import axios from "axios";
 import MapInRoom from "../../components/kakao-map/MapInRoom/MapInRoom-index";
 import notImageYet from "../../images/not-image-yet.png";
 import { Styled } from "./style";
-
+import KeyWordCommon from "../../components/KeyWordCommon";
+import CommentCommon from "../../components/CommentCommon";
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
@@ -17,7 +18,8 @@ function DetailPage({ match }) {
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
-
+  const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
+  const [likeOrNot, setLikeOrNot] = useState(true);
   useEffect(() => {
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     window.scrollTo(0, 0);
@@ -76,6 +78,15 @@ function DetailPage({ match }) {
     //readMore=true일때는 더보기, false일때는 간략히 버튼이 보이게 함
     setReadMore(!readMore);
   };
+
+  //! 이 글에 내가 좋아요를 눌렀는지 싫었는지도 DB에 저장해야할듯
+  //! 초기화 안되게
+  const LikeHandler = () => {
+    setLikeOrNot(!likeOrNot);
+    //좋아요한 상태면 -1
+    if (likeOrNot) setLike(like - 1);
+    else setLike(like + 1);
+  };
   return (
     <>
       <Styled.Div>
@@ -88,6 +99,7 @@ function DetailPage({ match }) {
         ) : null}
         {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src={notImageYet} />}
         {overView ? (
+          // !이거 css로 할수있대 나중에 ㄱ
           <Styled.Overview>
             <span className="first-overview">{FirstOverView}</span>
             <Styled.ReadMoreBtn className={!readMore ? null : "hide"} onClick={readMoreHandler}>
@@ -100,6 +112,12 @@ function DetailPage({ match }) {
           </Styled.Overview>
         ) : null}
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
+        <KeyWordCommon keywordDummy={keywordDummy} />
+        <Styled.LikeBtn onClick={LikeHandler}>
+          <i class={likeOrNot ? "fas fa-heart" : "hide"}></i>
+          <i class={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
+        </Styled.LikeBtn>
+        <CommentCommon commentDummy={commentDummy}></CommentCommon>
       </Styled.Div>
     </>
   );
@@ -108,3 +126,20 @@ function DetailPage({ match }) {
 export default DetailPage;
 
 const keywordDummy = ["#왕릉", "#공원"];
+
+const commentDummy = [
+  {
+    img: "/people1.png",
+    nickname: "류준열",
+    comment: "안녕하세요",
+    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요"],
+    data: "2021-12-03", //형식 모르겠음 db보고 결정
+  },
+  {
+    img: "/people1.png",
+    nickname: "윤해용",
+    comment: "팀장이에요",
+    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요"],
+    data: "2021-12-03", //형식 모르겠음 db보고 결정
+  },
+];

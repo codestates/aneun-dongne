@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { MemoCards } from "./PlaceCards";
+import PlaceCards from "./PlaceCards";
 
 import { placelist, placeaddress, placelocation, placeimg, placetitle } from "../recoil/recoil";
 import { Link } from "react-router-dom";
@@ -89,8 +90,6 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
-
-  //! React.memo써서 안변한건 리렌더링 안되게 해야함
   return (
     <PlaceLists>
       {placeList.map((place, idx) => {

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import HomeMap from "../components/kakao-map/HomeMap";
-import PlaceList from "../components/PlaceList";
-import KeyWordsList from "../components/KeyWordsList";
+import HomeMap from "../../components/kakao-map/HomeMap";
+import PlaceList from "../../components/PlaceList";
+import KeyWordsList from "../../components/Home-KeyWordsList";
 import { useRecoilState } from "recoil";
-import { loading, defaultposition, nowlocation } from "../recoil/recoil";
-import TestRecoil from "../components/TestRecoil";
-import TestHomeMap from "../components/kakao-map/testHomeMap";
+import { loading, defaultposition, nowlocation } from "../../recoil/recoil";
 
 const FixedComp = styled.div`
   position: relative;
@@ -16,9 +14,7 @@ const FixedComp = styled.div`
 
 function Home() {
   const [isLoading, setIsLoading] = useRecoilState(loading);
-  // const [defaultPosition, setDefaultPosition] = useState({ lat: 0, lon: 0 });
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
-  const [location, setLocation] = useRecoilState(nowlocation);
   // * 현재위치 받는 useEffect
   const getPosition = () => {
     navigator.geolocation.watchPosition(
@@ -50,14 +46,9 @@ function Home() {
         ) : (
           <>
             <HomeMap defaultPosition={defaultPosition} />
-
             <PlaceList />
           </>
         )}
-        {/* <TestHomeMap defaultPosition={location} /> */}
-        {/* <React.Suspense fallback={<div>hi</div>}> */}
-        {/* <TestRecoil /> */}
-        {/* </React.Suspense> */}
       </FixedComp>
     </>
   );

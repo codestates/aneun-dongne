@@ -207,7 +207,7 @@ function Mainpage() {
   const [location, setlocation] = useRecoilState(nowlocation);
   const placeList = useRecoilValue(placelist);
 
-  console.log(location);
+  // console.log(location);
   if (navigator.geolocation) {
     // GPS를 지원갸능할 때
     navigator.geolocation.getCurrentPosition(
@@ -227,7 +227,7 @@ function Mainpage() {
             }
           )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
           })
 
           .then();

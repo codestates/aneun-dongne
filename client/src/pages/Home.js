@@ -10,16 +10,17 @@ const FixedComp = styled.div`
   /* position: fixed;
   top: 8%; */
   position: sticky;
+  /* position: relative; */
   top: 8%;
 `;
 
 function Home() {
   return (
     <>
-      {/* <FixedComp> */}
-      <KeyWordsList />
-      <HomeMap />
-      {/* </FixedComp> */}
+      <FixedComp>
+        <KeyWordsList />
+        <HomeMap />
+      </FixedComp>
       <PlaceList />
     </>
   );

@@ -27,7 +27,7 @@ const Map = styled.div`
   }
 `;
 
-const HomeMap = ({ defaultPosition }) => {
+const TestHomeMap = ({ defaultPosition }) => {
   const kakao = window.kakao;
   const location = useRecoilValue(nowlocation);
 
@@ -43,8 +43,8 @@ const HomeMap = ({ defaultPosition }) => {
   //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
-  const [pickPoint, setPickPoint] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
-  // const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
+  //   const [pickPoint, setPickPoint] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
+  const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
 
   //!지역 검색창을 위한 state
   const [area, setArea] = useState(" "); //메인페이지에서 넘어오면 userAddress[0]넣기
@@ -52,7 +52,7 @@ const HomeMap = ({ defaultPosition }) => {
   const [sigg, setSigg] = useState(" "); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
-  const [level, setLevel] = useState(9);
+  const [level, setLevel] = useState(2);
   // console.log("클릭한지점", pickPoint);
   /**
    *! 장소 검색시 실행되는 함수 serachPlace
@@ -139,7 +139,7 @@ const HomeMap = ({ defaultPosition }) => {
         { "content-type": "application/json" }
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         // console.log(res.data.response.body.items.item);
         let list = res.data.response.body.items.item;
         //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소,컨텐트id],..]
@@ -274,18 +274,6 @@ const HomeMap = ({ defaultPosition }) => {
 
       // ?  좌표를 주소로 변환 -> 버튼 클릭시 onClick이벤트를 통해 91번줄로 이동
       //! 왠지 주소쓸일 없을듯 우선 남겨놈
-      // axios
-      //   .get(
-      //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
-      //     { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
-      //   )
-      //   .then((res) => res.data.documents[0].address)
-      //   .then((address) => {
-      //     // console.log(address)
-      //     setMeetingPlace([address.region_1depth_name, address.region_2depth_name, address.address_name]);
-      //   })
-      //   //   .then(res=>console.log(meetingPlace))
-      //   .catch((err) => console.log(err)); //237줄에 console.log(meetingPlace)있음.
     });
     setMap(map);
     setPending(false);
@@ -326,7 +314,7 @@ const HomeMap = ({ defaultPosition }) => {
   );
 };
 
-export default HomeMap;
+export default TestHomeMap;
 
 //! 남은거 :
 //! 시군구,도 option에 있는 글자를 지도에 파란마커가 있는 주소와 일치시키기

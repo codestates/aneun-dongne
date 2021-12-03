@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { nowlocation } from "../recoil/recoil";
+
 import { useRecoilState, useRecoilValue } from "recoil";
 import { placelist } from "../recoil/recoil";
 
@@ -196,90 +196,8 @@ export const MainImage = styled.div`
   }
 `;
 
-//현재위치 가져오기
-// navigator.geolocation.getCurrentPosition(function(pos) {
-//     var latitude = pos.coords.latitude;
-//     var longitude = pos.coords.longitude;
-//     alert("현재 위치는 : " + latitude + ", "+ longitude);
-// });
-
 function Mainpage() {
-  // const [location, setlocation] = useRecoilState(nowlocation);
   const placeList = useRecoilValue(placelist);
-
-  // console.log(location);
-  // if (navigator.geolocation) {
-  //   // GPS를 지원갸능할 때
-  //   navigator.geolocation.getCurrentPosition(
-  //     function (position) {
-  //       // alert(position.coords.latitude + " " + position.coords.longitude);
-  //       setlocation({
-  //         lat: position.coords.latitude,
-  //         lon: position.coords.longitude,
-  //       });
-  //       //console.log(location);
-  //       //if (location.lon !== 0 && location.lat !== 0) {
-  //       axios
-  //         .get(
-  //           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${position.coords.longitude}&y=${position.coords.latitude}&input_coord=WGS84`,
-  //           {
-  //             headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-  //           }
-  //         )
-  //         .then((response) => {
-  //           console.log(response.data);
-  //         })
-
-  //         .then();
-  //       //post로 서버에 보냄.axios.post('endpoint/userinfo').then(res=>console.log(res))
-  //       //axios.post('endpoint/userinfo',{유저좌표,유저주소}).then(res=>console.log(res))
-  //       //}
-  //     },
-  //     function (error) {
-  //       console.error(error);
-  //     },
-  //     {
-  //       enableHighAccuracy: false,
-  //       maximumAge: 0,
-  //       timeout: Infinity,
-  //     }
-  //   );
-  // } else {
-  //   alert("GPS를 지원하지 않습니다");
-  // }
-
-  // useEffect((response) => {
-  //   if (!response) setlocation();
-  // }, []);
-
-  //0, undifined
-
-  //도로명 주소 가져오는 코드
-  //역지오코딩
-  // let geocoder = new kakao.maps.services.Geocoder();
-
-  // let coord = new kakao.maps.LatLng(37.56496830314491, 126.93990862062978);
-  // let callback = function (result, status) {
-  //   if (status === kakao.maps.services.Status.OK) {
-  //     console.log("여기 위치는" + result[0].address.address_name + "입니다");
-  //   }
-  // };
-
-  // geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-
-  //좌표 값에 해당하는 행정동, 법정동 정보를 얻는다.
-  // let geocodersec = new kakao.maps.services.Geocoder();
-
-  // let callbacksec = function (result, status) {
-  //   if (status === kakao.maps.services.Status.OK) {
-  //     console.log("지역 명칭 : " + result[0].address_name);
-  //     console.log("행정구역 코드 : " + result[0].code);
-  //   }
-  // };
-
-  // geocodersec.coord2RegionCode(126.9786567, 37.566826, callbacksec);
-
-  //const [isStart, setIsStart] = useState(false);
 
   const history = useHistory();
   const ToHome = () => {

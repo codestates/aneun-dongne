@@ -6,19 +6,17 @@ import PlaceList from "../components/PlaceList";
 import KeyWordsList from "../components/KeyWordsList";
 import { useRecoilState } from "recoil";
 import { loading, defaultposition, nowlocation } from "../recoil/recoil";
-import TestRecoil from "../components/TestRecoil";
-import TestHomeMap from "../components/kakao-map/testHomeMap";
 
 const FixedComp = styled.div`
   position: relative;
   margin-top: 80px;
 `;
 
-function Home() {
+function TestRecoilHome() {
   const [isLoading, setIsLoading] = useRecoilState(loading);
   // const [defaultPosition, setDefaultPosition] = useState({ lat: 0, lon: 0 });
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
-  const [location, setLocation] = useRecoilState(nowlocation);
+
   // * 현재위치 받는 useEffect
   const getPosition = () => {
     navigator.geolocation.watchPosition(
@@ -28,7 +26,7 @@ function Home() {
         const lon = position.coords.longitude;
         // console.log(isLoading);
 
-        setDefaultPosition({ lat, lon });
+        setLocation({ lat, lon });
         setIsLoading(false);
         // console.log(isLoading);
       },
@@ -63,4 +61,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default TestRecoilHome;

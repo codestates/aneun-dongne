@@ -52,3 +52,4 @@ const App = () => {
 };
 
 export default App;
+// "/detailpage/:id"

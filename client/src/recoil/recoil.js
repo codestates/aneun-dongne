@@ -53,6 +53,15 @@ export const sendPlaceinfo = selector({
     set(placetitle, title);
     set(placelocation, location);
     set(placeaddress, address);
+
+  },
+});
+
+//! Home화면에서 현재위치 저장 모달
+export const isSavepositionOpen = atom({
+  key: "isSavepositionOpen",
+  default: false,
+});
   },
 });
 

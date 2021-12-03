@@ -7,100 +7,26 @@ import dotenv from "dotenv";
 import notImageYet from "../../images/not-image-yet.png";
 import { placelist, meetingplace, nowlocation } from "../../recoil/recoil";
 import "./kakao-map.css";
-import { cat1_num, cat1_name, cat2_num, cat2_name } from "../../location-data";
+import { cat1_name, cat2_name } from "../../location-data";
+
+import HomeRightbar from "../Home-Rightbar/Home-Rightbar-index";
+import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
 dotenv.config();
 
-// 지역검색창
-const SearchLocation = styled.select`
-  margin-bottom: 5px;
-  margin-right: 5px;
-  margin-left: 5px;
-  width: 80%;
-  height: 100%;
-  background-color: white;
-  /* border:gray 1px solid; */
-  border: none;
-
-  //중앙선 더 오른쪽으로 옮기고 싶은데 잘안된다..
-  border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
-`;
-const SearchKeyWord = styled.input`
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  width: 80%;
-  height: 100%;
-  background-color: white;
-  border: gray 1px solid;
-  border-radius: 10px;
-  padding: 5px;
-`;
-
-const SearchPlace = styled.input`
-  border: 1px gray solid;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  width: 80%;
-  height: 100%;
-  background-color: white;
-  border: gray 1px solid;
-  border-radius: 10px;
-  padding: 5px;
-`;
-const SearchBtn = styled.button`
-  margin-top: 160px;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  width: 80%;
-  height: 100%;
-  background-color: rgb(192, 251, 255);
-  border: none;
-  border-radius: 10px;
-  padding: 5px;
-`;
-const SearchBar = styled.div`
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  display: flex;
-  padding: 5px;
-  width: 80%;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px gray solid;
-`;
-const MapRightBar = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  border: 1px rgb(192, 251, 255) solid;
-  border-radius: 10px;
-  margin-left: 2rem;
-  bottom: 20px;
-  width: 14rem;
-  padding-left: 1rem;
-`;
-//오른쪽 버튼
-const RightBtn = styled.button`
-  border-radius: 5px;
-  position: relative;
-  left: -10px;
-  background-color: rgb(192, 251, 255);
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.9) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0) 100%);
-  height: 40px;
-  width: 100px;
-  margin-top: 30px;
-  border: none;
-`;
-const RightBtnBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-left: 0;
-`;
 //지도
 const Map = styled.div`
   width: 70%;
+  &:hover {
+    color: black;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+  }
+  &:hover:after {
+    left: 0;
+    width: 100%;
+  }
+
 `;
 
 const HomeMap = () => {
@@ -108,17 +34,20 @@ const HomeMap = () => {
   // const new kakao.maps = kakao.maps
   // const new kakao.maps = new kakao.maps
   // ! 혹시모르니 new kakao.maps = new kakao.maps인거 기억
-
+  //! 처음은 recoil/nowlocation의 좌표로 시작한다.
+  const location = useRecoilValue(nowlocation);
+  console.log(location);
   const [placeList, setPlaceList] = useRecoilState(placelist);
 
-  const [location, setLocation] = useRecoilState(nowlocation); //{lat:37,lon:128}
   const [meetingPlace, setMeetingPlace] = useRecoilState(meetingplace);
 
   const [count, setCount] = useState(0); //1번만시작하게함
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
   const [place, setPlace] = useState("");
-  const [centerPosition, setCenterPosition] = useState([location.lat, location.lon]);
+  
+  // 배포할때까지 안쓰면 지워 const [centerPosition,setCenterPosition] = useState([location.lat,location.lon])
+
   //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
@@ -264,20 +193,6 @@ const HomeMap = () => {
       });
     } //!position = [ {addr:주소,latlng:좌표,content:관광지이름,img:관광지썸네일},... ]
 
-    //   let positions = [
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.9841931357, 126.9042297694)
-    //     },
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.9841931357, 126.9042297694)
-    //     },
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.6196823854,127.4915450327)
-    //     },
-    //     {
-    //         latlng: new kakao.maps.LatLng(37.8299471303,127.5074902248)
-    //     }
-    // ];
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     for (let i = 0; i < positions.length; i++) {
       // 마커 이미지의 이미지 크기 입니다
@@ -414,40 +329,21 @@ const HomeMap = () => {
   return (
     <div className="map-box">
       <Map id="map"></Map>
-
-      {/* <div id="map" ></div> */}
-      <MapRightBar>
-        <p>오늘 떠나볼 동네는?</p>
-        <SearchBar>
-          <SearchLocation first value={area} onChange={(e) => changeArea(e.target.value)} name="h_area1">
-            {cat1_name.map((el, idx) => {
-              return <option key={idx}>{el}</option>;
-            })}
-          </SearchLocation>
-
-          <SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
-            {cat2_name[areaIdx + 1].map((el, idx) => {
-              return <option key={idx}>{el}</option>;
-            })}
-          </SearchLocation>
-        </SearchBar>
-        <SearchKeyWord placeholder="ex) 가을, 놀이공원"></SearchKeyWord>
-
-        <SearchPlace
-          type="text"
-          value={place}
-          onChange={(e) => handleSearch(e)}
-          placeholder="ex) 경복궁, 창덕궁"
-          onKeyUp={(e) => {
-            if (e.key === "Enter") searchPlace(place);
-          }}
-        ></SearchPlace>
-        <SearchBtn onClick={() => searchPlace(place)}>검색</SearchBtn>
-      </MapRightBar>
-      <RightBtnBox>
+      <HomeRightbar
+        area={area}
+        sigg={sigg}
+        areaIdx={areaIdx}
+        changeArea={changeArea}
+        changeSigg={changeSigg}
+        handleSearch={handleSearch}
+        searchPlace={searchPlace}
+        place={place}
+      />
+      <HomeRightBtn />
+      {/* <RightBtnBox>
         <RightBtn>현재위치 저장</RightBtn>
         <RightBtn>내가 가본 곳</RightBtn>
-      </RightBtnBox>
+      </RightBtnBox> */}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
+
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { loginState } from "./recoil/recoil";
@@ -43,6 +44,7 @@ const App = () => {
           <Route exact path="/home">
             <Home info={info} />
           </Route>
+          <Route exact path="/detailpage/:id" component={DetailPage}></Route>
           {/* <Redirect from="*" to="/" /> */}
         </Switch>
       </BrowserRouter>

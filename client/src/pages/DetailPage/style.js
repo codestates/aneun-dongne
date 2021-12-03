@@ -1,22 +1,25 @@
 import styled from "styled-components";
 
 export const Styled = {
+  Div: styled.div`
+    display: flex;
+    flex-direction: column;
+    /* border: 1px blue solid; */
+  `,
   Img: styled.img`
-    width: 70%;
-    height: 15rem;
+    /* border: 1px red solid; */
+    width: 696px;
+    height: 466px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 1rem;
   `,
-  Div: styled.div`
-    display: flex;
-    flex-direction: column;
-  `,
 
-  H2: styled.h2`
+  Address: styled.h2`
     margin-left: auto;
     margin-right: auto;
-    color: rgb(192, 251, 255);
+    color: skyblue;
+
     margin-bottom: 1rem;
     margin-top: 1rem;
   `,
@@ -31,7 +34,7 @@ export const Styled = {
   `,
 
   Overview: styled.span`
-    width: 70%;
+    width: 700px;
     margin-left: auto;
     margin-right: auto;
 

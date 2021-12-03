@@ -31,6 +31,7 @@ const App = () => {
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
+
   return (
     <>
       <BrowserRouter>

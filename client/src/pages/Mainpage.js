@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import { useRecoilState, useRecoilValue } from "recoil";
+import { placelist } from "../recoil/recoil";
+
 export const Body = styled.div`
   position: relative;
   display: flex;
@@ -179,6 +182,8 @@ export const Image = styled.div`
 `;
 
 function Mainpage() {
+  const placeList = useRecoilValue(placelist);
+
   const history = useHistory();
   const ToHome = () => {
     history.push("/home");

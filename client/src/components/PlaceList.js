@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState, useRecoilValue, useResetRecoilState, useRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { MemoCards } from "./PlaceCards";
 import PlaceCards from "./PlaceCards";
 
-import {
-  placelist,
-  meetingplace,
-  locations,
-  placeaddress,
-  placelocation,
-  placeimg,
-  placetitle,
-  sendPlaceinfo,
-} from "../recoil/recoil";
-import { Link, useHistory } from "react-router-dom";
+import { placelist, placeaddress, placelocation, placeimg, placetitle } from "../recoil/recoil";
+import { Link } from "react-router-dom";
 
 const PlaceLists = styled.div`
   height: 100vh;
@@ -31,11 +23,14 @@ const MoveToTopBtn = styled.button`
   position: fixed;
   bottom: 10px;
   right: 10px;
+  border: 0.5px solid rgb(192, 251, 255);
 
   display: ${(props) => (props.BtnStatus ? "inline" : "none")};
   &:hover {
-    background: red;
-
+    background: rgba(192, 251, 255, 0.7);
+    transform: scale(1.1);
+    bottom: 13px;
+    border: 0.5px solid white;
   }
 `;
 
@@ -46,25 +41,24 @@ const StyledLink = styled(Link)`
 const Div = styled.div`
   color: black;
 `;
-
+// React.memo 쓰기
+// 아 근데 왜 안돼 우선 제껴,
 
 function PlaceList() {
-  const history = useHistory();
   const placeList = useRecoilValue(placelist);
-  const [placeLocation, setPlaceLocation] = useRecoilState(placelocation);
-  const [placeAddress, setPlaceAddress] = useRecoilState(placeaddress);
-  // const [sendPlaceInfo,setSendPlaceInfo] = useRecoilState(sendPlaceinfo)
-  const [imgURL, setImgURL] = useRecoilState(placeimg);
-  const [title, setTitle] = useRecoilState(placetitle);
+  const setPlaceLocation = useSetRecoilState(placelocation);
+  const setPlaceAddress = useSetRecoilState(placeaddress);
+  const setImgURL = useSetRecoilState(placeimg);
+  const setTitle = useSetRecoilState(placetitle);
   const [ScrollY, setScrollY] = useState(0);
   const [BtnStatus, setBtnStatus] = useState(false);
+
   //! Top 버튼에 필요한 주석
   useEffect(() => {
     const watch = () => {
       window.addEventListener("scroll", handleFollow);
     };
     watch(); // addEventListener 함수를 실행
-    console.log(BtnStatus);
     return () => {
       window.removeEventListener("scroll", handleFollow); // addEventListener 함수를 삭제
     };
@@ -73,10 +67,10 @@ function PlaceList() {
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
     if (ScrollY > 300) {
-      // 100 이상이면 버튼이 보이게
+      // 300 이상이면 버튼이 보이게
       setBtnStatus(true);
     } else {
-      // 100 이하면 버튼이 사라지게
+      // 300 이하면 버튼이 사라지게
       setBtnStatus(false);
     }
   };
@@ -95,27 +89,20 @@ function PlaceList() {
     setImgURL(path);
     setTitle(title);
     setPlaceAddress(address);
-
-    // setSendPlaceInfo(path,obj,title,address)
   }
-
-  //! React.memo써서 안변한건 리렌더링 안되게 해야함
   return (
     <PlaceLists>
       {placeList.map((place, idx) => {
-        // console.log(place[4]);
-
         return (
           <Div key={idx}>
             {/* addr1이 undefined 되는 장소가 있어서 addr1는 임시방편으로 3항연산자 처리함 나중에 살펴보자. */}
             <StyledLink to={`/detailpage/${place[5]}`}>
-              <PlaceCards
+              <MemoCards
                 onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
-                // onClick = {()=>getPlaceLocation(place[3],{lat:place[0],lon:place[1]},place[2],place[4])}
                 title={place[2]}
                 img={place[3]}
                 addr1={place[4] ? place[4].split(" ")[0] : null}
-              />
+              ></MemoCards>
             </StyledLink>
           </Div>
         );
@@ -127,4 +114,4 @@ function PlaceList() {
   );
 }
 
-export default PlaceList;
+export default React.memo(PlaceList);

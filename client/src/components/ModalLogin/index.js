@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { Styled } from "./style";
 import { message } from "../../message";
 
-const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
+import { token } from "../../recoil/recoil";
+
+const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandler }) => {
+  const [accessToken, setAccessToken] = useRecoilState(token);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -16,7 +20,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (email === "") {
       setErrorMessage(message.loginEmail);
       return;
@@ -24,23 +28,31 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal }) => {
       setErrorMessage(message.loginPassword);
       return;
     }
-
-    axios
+    // `${process.env.REACT_APP_API_URL}/user/login`,
+    await axios
       .post(
-        `${process.env.REACT_APP_API_URL}/user/login`,
+        "http://localhost:80/user/login",
         {
           email,
           password,
         },
         { "Content-Type": "application/json", withCredentials: true }
       )
+      .then((res) => {
+        // closeLoginModalHandler();
+        console.log("하이");
+        setAccessToken(res.data.data.accessToken);
+      })
       .then(() => {
+        console.log(accessToken);
         handleResponseSuccess();
       })
       .catch(() => {
         setErrorMessage(message.loginError);
       });
   };
+
+  useEffect(() => {});
 
   return (
     <>

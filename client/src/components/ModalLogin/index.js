@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -9,7 +9,6 @@ import { token } from "../../recoil/recoil";
 
 const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandler }) => {
   const [accessToken, setAccessToken] = useRecoilState(token);
-
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -41,6 +40,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       )
       .then((res) => {
         // closeLoginModalHandler();
+        console.log("하이");
         setAccessToken(res.data.data.accessToken);
       })
       .then(() => {
@@ -51,6 +51,8 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         setErrorMessage(message.loginError);
       });
   };
+
+  useEffect(() => {});
 
   return (
     <>

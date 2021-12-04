@@ -9,12 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Visited.belongsTo(models.User);
+      Visited.belongsTo(models.Post);
     }
   }
   Visited.init(
     {
-      user_id: DataTypes.INTEGER,
-      post_contentid: DataTypes.INTEGER,
+      visited_user_id: DataTypes.INTEGER,
+      visited_post_contentid: DataTypes.INTEGER,
       visited_area: DataTypes.STRING,
       visited_sigg: DataTypes.STRING,
       visited_mapx: DataTypes.INTEGER,

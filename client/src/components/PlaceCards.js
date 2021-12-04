@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import notImageYet from "../images/not-image-yet.png";
+import notImageYet from "../img/not-image-yet.png";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 3rem;

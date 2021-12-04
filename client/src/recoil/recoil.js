@@ -101,6 +101,20 @@ export const updatecomment = atom({
   default: false,
 });
 
+//! 댓글 수정 이러면 어케됨??
+export const updateText = atom({
+  key: "updateText",
+  default: "",
+});
+export const update = selector({
+  key: "update",
+  get: ({ get }) => {
+    return get(updateText);
+  },
+  set: ({ set }, value) => {
+    set(updateText, value);
+  },
+});
 // ! 위치기반 API
 export const pickpoint = selector({
   key: "pickpoint",

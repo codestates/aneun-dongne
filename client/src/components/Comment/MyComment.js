@@ -11,7 +11,21 @@ const Comment = styled.div`
   display: flex;
   border: 1px gray solid;
   height: 200px;
-  margin: 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  box-shadow: 4px 4px 4px rgb(85, 85, 85);
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    color: black;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+  }
+  &:hover:after {
+    left: 0;
+    width: 100%;
+  }
 `;
 const Profile = styled.div`
   position: relative;
@@ -130,7 +144,8 @@ function MyComment() {
         //이렇게하면 댓글안쓰면 댓글입력하세요 메시지 나오게를 못함
         setDefaultComment([{ ...myComment, ...{ text, tags } }, ...defaultComment]);
       }
-      console.log(defaultComment);
+      console.log("myComment", text);
+      console.log("댓글확인", defaultComment);
       setPending(false);
       setTags([]);
       setSomething("");

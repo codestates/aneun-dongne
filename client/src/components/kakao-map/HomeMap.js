@@ -4,7 +4,7 @@ import { useRecoilValue, useRecoilState } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
 import styled from "styled-components";
 import dotenv from "dotenv";
-import notImageYet from "../../images/not-image-yet.png";
+import notImageYet from "../../img/not-image-yet.png";
 import { placelist, nowlocation } from "../../recoil/recoil";
 import "./kakao-map.css";
 import { cat1_name } from "../../location-data";

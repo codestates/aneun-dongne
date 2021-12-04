@@ -15,20 +15,20 @@ const KeyWord = styled.span`
   max-width: 130px;
   max-height: 25px;
   margin: 6px;
-
+  box-shadow: 4px 4px 4px rgb(85, 85, 85);
   padding: 3px;
   border-radius: 5px;
   border: 1px solid rgb(192, 251, 255);
   background-color: rgba(192, 251, 255, 0.8);
   color: black;
   cursor: pointer;
-  transition: all 0.5s ease-in-out;
 
   &:hover {
     color: black;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
     transform: scale(1.1);
+    transition: all 0.3s ease;
   }
   &:hover:after {
     left: 0;

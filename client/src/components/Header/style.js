@@ -17,7 +17,9 @@ export const Styled = {
       margin: 20px;
       font-size: 2rem;
       font-weight: bold;
+      width: 100px;
     }
+
     .header-button-wrapper {
       display: flex;
     }

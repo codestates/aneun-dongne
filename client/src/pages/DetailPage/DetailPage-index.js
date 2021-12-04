@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import MapInRoom from "../../components/kakao-map/MapInRoom/MapInRoom-index";
-import notImageYet from "../../images/not-image-yet.png";
+import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
 import KeyWordTemplate from "../../components/HashTag/KeyWordTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
@@ -74,9 +74,13 @@ function DetailPage({ match }) {
         // ?
       });
   }, [pathname]);
-
-  // console.log(pageURL);
-  // console.log(title, placeAddr, imgURL);
+  useEffect(() => {
+    //axios.get
+    //새로고침=>전체댓글을 받는다. => 리코일전체댓글을 바꾼다. 오케이
+    //댓글이 수정,삭제되면? => 어차피 전체댓글을 받음 . ㄱㅊ음
+    //좋아요도 마찬가지.
+    //하 이거 어케하냐
+  }, []);
 
   const overView = overview.replace(/(<([^>]+)>)/gi, "");
   let FirstOverView = overView.slice(0, 130);
@@ -108,13 +112,13 @@ function DetailPage({ match }) {
   return (
     <>
       <Styled.Div>
-        <Styled.Address>{placeAddr}</Styled.Address>
         <Styled.Title>{title}</Styled.Title>
         {pageURL ? (
-          <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title}`}>
+          <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title} 홈페이지`}>
             홈페이지로 이동
           </Styled.PageURL>
         ) : null}
+        {/* 여기도 사진 넘기기기능 넣자. */}
         {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src={notImageYet} />}
         {overView ? (
           // !이거 css로 할수있대 나중에 ㄱ
@@ -129,6 +133,7 @@ function DetailPage({ match }) {
             </Styled.CutDownBtn>
           </Styled.Overview>
         ) : null}
+
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
         <KeyWordTemplate keywordDummy={keywordDummy} />
         <Styled.LikeBtn onClick={LikeHandler}>
@@ -137,10 +142,7 @@ function DetailPage({ match }) {
         </Styled.LikeBtn>
         <MyComment></MyComment>
         <CommentTemplate commentDummy={defaultComment}></CommentTemplate>
-        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
-        {/* {console.log(defaultComment)} */}
-        {/* <CommentTemplate commentDummy={defaultComment}></CommentTemplate> */}
-        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
+        {/* 어쨌든 요청받은 댓글을 defaultComment에 넣기만 하면 된다. */}
       </Styled.Div>
     </>
   );

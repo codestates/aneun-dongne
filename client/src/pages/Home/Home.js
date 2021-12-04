@@ -8,7 +8,7 @@ import { loading, defaultposition } from "../../recoil/recoil";
 
 const FixedComp = styled.div`
   position: relative;
-  margin-top: 80px;
+  margin-top: 90px;
 `;
 
 function Home() {

@@ -7,6 +7,9 @@ import { Styled } from "./style";
 import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+//링크에 밑줄떠서 추가했어요
 
 const Header = ({ handleResponseSuccess }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -113,7 +116,11 @@ const Header = ({ handleResponseSuccess }) => {
       {/* 지금 홈화면 인지 아닌지 상태로 */}
       <Styled.HeaderContainer>
         <div className="header-wrapper">
-          <div id="logo">아는 동네</div>
+          <Link to="/">
+            {/* 링크하면 자꾸 밑줄생겨서 이래저래 해보다 그냥 이미지로 바꿨습니다.. */}
+            {/* <div id="logo">아는동네</div> */}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" id="logo"></img>
+          </Link>
           <div className="header-button-wrapper">
             {!isLogin ? (
               <>

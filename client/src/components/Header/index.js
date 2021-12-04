@@ -4,13 +4,14 @@ import ModalLogin from "../ModalLogin";
 import ModalSignup from "../ModalSignup";
 
 import { Styled } from "./style";
-import { isSavepositionOpen } from "../../recoil/recoil";
+import { isSavepositionOpen, loginState } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
 
 const Header = ({ handleResponseSuccess }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
       setIsLoginOpen(false);
@@ -104,12 +105,25 @@ const Header = ({ handleResponseSuccess }) => {
         <div className="header-wrapper">
           <div id="logo">아는 동네</div>
           <div className="header-button-wrapper">
-            <div className="mainpage-button" onClick={openLoginModalHandler}>
-              login
-            </div>
-            <div className="mainpage-button" onClick={openSignupModalHandler}>
-              Sign Up
-            </div>
+            {!isLogin ? (
+              <>
+                <div className="mainpage-button" onClick={openLoginModalHandler}>
+                  login
+                </div>
+                <div className="mainpage-button" onClick={openSignupModalHandler}>
+                  Sign Up
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="mainpage-button" onClick={openLoginModalHandler}>
+                  Log Out
+                </div>
+                <div className="mainpage-button" onClick={openSignupModalHandler}>
+                  My Page
+                </div>
+              </>
+            )}
           </div>
         </div>
       </Styled.HeaderContainer>

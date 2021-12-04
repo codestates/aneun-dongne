@@ -35,6 +35,12 @@ export const placeimg = atom({
   default: "",
 });
 
+//! 로딩state
+export const loading = atom({
+  key: "loading",
+  default: true,
+});
+
 //! Home화면에서 현재위치 저장 모달
 export const isSavepositionOpen = atom({
   key: "isSavepositionOpen",

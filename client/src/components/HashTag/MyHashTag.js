@@ -5,6 +5,7 @@ export const TagsInput = styled.div`
   z-index: 999;
   /* background-color: red; */
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 48px;
@@ -118,6 +119,12 @@ const MyHashTag = ({ initialTags }) => {
   return (
     <>
       <TagsInput>
+        <input
+          className="tag-input"
+          type="text"
+          onKeyUp={(event) => (event.key === "Enter" ? addTags(event) : null)}
+          placeholder="Press enter to add tags"
+        />
         <div id="tags">
           {tags.map((tag, index) => (
             <div key={index} className="tag">
@@ -128,12 +135,6 @@ const MyHashTag = ({ initialTags }) => {
             </div>
           ))}
         </div>
-        <input
-          className="tag-input"
-          type="text"
-          onKeyUp={(event) => (event.key === "Enter" ? addTags(event) : null)}
-          placeholder="Press enter to add tags"
-        />
       </TagsInput>
     </>
   );

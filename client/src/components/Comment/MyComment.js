@@ -55,6 +55,7 @@ const ContentBox = styled.div`
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0) 100%
     );
+    transition: all 0.5s ease;
   }
   button:after {
     position: absolute;
@@ -74,7 +75,6 @@ const ContentBox = styled.div`
     border-radius: 5px;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
   }
   button:hover {
     color: black;
@@ -82,7 +82,6 @@ const ContentBox = styled.div`
   }
   button:hover:after {
     left: 0;
-    width: 100%;
   }
   button:active {
     //
@@ -97,8 +96,6 @@ const Content = styled.input`
   height: 60px;
   padding-left: 10px;
   padding-right: 10px;
-  /* border: 1px gray solid; */
-  /* background-color: whitesmoke; */
 `;
 
 const HashTagWrapper = styled.div`
@@ -111,23 +108,13 @@ const HashTagWrapper = styled.div`
   left: 10px;
   white-space: nowrap;
   border: none;
-  /* overflow-y: scroll; */
-
-  /* overflow: auto; */
-  /* white-space: nowrap; */
 `;
 const Date = styled.div`
   position: absolute;
   bottom: 10px;
   right: 10px;
 `;
-//? 이거 왜 안돼 갑자기
-// const today = new Date();
 
-// const year = today.getFullYear(); // 년도
-// const month = today.getMonth() + 1; // 월
-// const date = today.getDate(); // 날짜
-// const day = today.getDay(); // 요일
 function MyComment({ writeDummy }) {
   const [something, setSomething] = useState("");
   const [myComments, setMyComments] = useRecoilState(mycomments);

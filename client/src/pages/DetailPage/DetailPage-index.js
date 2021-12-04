@@ -7,12 +7,12 @@ import { Styled } from "./style";
 import KeyWordTemplate from "../../components/HashTag/KeyWordTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
-import { useRecoilValue } from "recoil";
-import { mycomments } from "../../recoil/recoil";
+import { useRecoilState } from "recoil";
+import { defaultcomments, updatecomment } from "../../recoil/recoil";
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
-  const myComments = useRecoilValue(mycomments);
+  // const [updateComment, setUpdateComment] = useRecoilState(updatecomment);
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
   const [imgURL, setImgURL] = useState("");
@@ -21,6 +21,9 @@ function DetailPage({ match }) {
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
+
+  //기존댓글
+  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
   useEffect(() => {
@@ -82,6 +85,12 @@ function DetailPage({ match }) {
     setReadMore(!readMore);
   };
 
+  // useEffect(() => {
+  //   if (updateComment) {
+
+  //   }
+  //   setUpdateComment(false);
+  // }, [updatecomment]);
   //! 이 글에 내가 좋아요를 눌렀는지 싫었는지도 DB에 저장해야할듯
   //! 초기화 안되게
   const LikeHandler = () => {
@@ -90,6 +99,7 @@ function DetailPage({ match }) {
     if (likeOrNot) setLike(like - 1);
     else setLike(like + 1);
   };
+
   return (
     <>
       <Styled.Div>
@@ -117,16 +127,15 @@ function DetailPage({ match }) {
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
         <KeyWordTemplate keywordDummy={keywordDummy} />
         <Styled.LikeBtn onClick={LikeHandler}>
-          <i class={likeOrNot ? "fas fa-heart" : "hide"}></i>
-          <i class={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
+          <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
+          <i className={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
         </Styled.LikeBtn>
-        <CommentTemplate commentDummy={commentDummy}></CommentTemplate>
-        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
-        {myComments.map((el, idx) => {
-          return <div key={idx}>{el}</div>;
-        })}
-        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
         <MyComment></MyComment>
+        <CommentTemplate commentDummy={defaultComment}></CommentTemplate>
+        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
+        {/* {console.log(defaultComment)} */}
+        {/* <CommentTemplate commentDummy={defaultComment}></CommentTemplate> */}
+        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
       </Styled.Div>
     </>
   );
@@ -135,28 +144,3 @@ function DetailPage({ match }) {
 export default DetailPage;
 
 const keywordDummy = ["#왕릉", "#공원"];
-
-const commentDummy = [
-  {
-    img: "/people1.png",
-    nickname: "류준열",
-    comment: "안녕하세요",
-    keyword: [
-      "안녕하세요",
-      "감사해요",
-      "잘있어요",
-      "다시만나요",
-      "여기 더보기버튼을 만들어볼게요",
-      "아침해가뜨면",
-      "매일같은사람들과",
-    ],
-    data: "2021-12-03", //형식 모르겠음 db보고 결정
-  },
-  {
-    img: "/people2.png",
-    nickname: "윤해용",
-    comment: "팀장이에요",
-    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요"],
-    data: "2021-12-03", //형식 모르겠음 db보고 결정
-  },
-];

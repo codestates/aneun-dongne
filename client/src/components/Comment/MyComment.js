@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import MyHashTag from "../HashTag/MyHashTag";
-import { useRecoilState } from "recoil";
-import { mycomments } from "../../recoil/recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { defaultcomments, updatecomment } from "../../recoil/recoil";
 const CommentWrapper = styled.div`
   width: 100%;
 `;
@@ -37,13 +37,13 @@ const NickName = styled.span`
 `;
 
 const ContentBox = styled.div`
-  margin-top: 40px;
+  margin-top: 30px;
   position: relative;
   width: 480px;
   height: 140px;
   > button {
     position: absolute;
-    right: 10px;
+    right: -10px;
     top: 20px;
     width: 80px;
     border: none;
@@ -91,35 +91,60 @@ const HashTagWrapper = styled.div`
 `;
 const Date = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   right: 10px;
 `;
 
 function MyComment() {
+  const [pending, setPending] = useState(false);
   const [something, setSomething] = useState("");
-  const [myComments, setMyComments] = useRecoilState(mycomments);
+  const [text, setText] = useState("");
+  const [updateComment, setUpdateComment] = useRecoilState(updatecomment);
+  const [tags, setTags] = useState([]);
+  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
+
+  //이게 응답이라고 생각
+  const myComment = { img: "/people3.png", nickname: "김코딩", comment: "", tags: [], date: "DB에서 날라오겠지" };
   const writeSomething = (e) => {
     setSomething(e.target.value);
   };
 
   const registerMyComment = (something) => {
     console.log(something);
-    setSomething("");
-    setMyComments([...myComments, [something]]);
+    setUpdateComment(false); //창 내리기 하려고 만들었는데 왜 안됨 -> DetailPage-index 랑 연결
+    // axios들어가야함
+    setText(something);
+    setPending(true);
   };
+
+  useEffect(() => {
+    if (pending) {
+      setUpdateComment(true);
+      if (text.length > 0) {
+        //엔터키 누르면 두번렌더링되서 한번 빈칸나오는거 우선 이렇게 해놨는데 임시방편임
+        //이렇게하면 댓글안쓰면 댓글입력하세요 메시지 나오게를 못함
+        setDefaultComment([{ ...myComment, ...{ text, tags } }, ...defaultComment]);
+      }
+      console.log(defaultComment);
+      setPending(false);
+      setTags([]);
+      setSomething("");
+    }
+  }, [pending]);
 
   useEffect(() => {}, []);
   return (
     <CommentWrapper>
       <Comment>
         <Profile>
-          <ProfileImg src="/people3.png"></ProfileImg>
-          <NickName>김코딩</NickName>
+          <ProfileImg src={myComment.img}></ProfileImg>
+          <NickName>{myComment.nickname}</NickName>
         </Profile>
         <ContentBox>
           <Content
             type="text"
             value={something}
+            placeholder="댓글을 입력하슈"
             onChange={(e) => writeSomething(e)}
             onKeyUp={(e) => {
               if (e.key === "Enter") registerMyComment(something);
@@ -127,10 +152,10 @@ function MyComment() {
           ></Content>
           <button onClick={() => registerMyComment(something)}>작성하기</button>
           <HashTagWrapper>
-            <MyHashTag initialTags={[]} />
+            <MyHashTag tags={tags} setTags={setTags} />
           </HashTagWrapper>
         </ContentBox>
-        <Date>작성날짜 : {`DB에서 시간날라오겠지`}</Date>
+        <Date>작성날짜 : {myComment.date}</Date>
       </Comment>
     </CommentWrapper>
   );

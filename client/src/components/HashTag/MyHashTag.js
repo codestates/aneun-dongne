@@ -86,6 +86,8 @@ export const TagsInput = styled.div`
   > input {
     flex: 1;
     border: none;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 46px;
     font-size: 14px;
     /* padding: 4px 0 0 0; */
@@ -98,21 +100,18 @@ export const TagsInput = styled.div`
   }
 `;
 
-const MyHashTag = ({ initialTags }) => {
-  // const selectedTags = (tags) => console.log(tags);
-  //   const initialTags = { initialTags };
-  //   console.log(initialTags);
-  const [tags, setTags] = useState(initialTags);
+const MyHashTag = ({ setTags, tags }) => {
   const removeTags = (indexToRemove) => {
     setTags(tags.filter((_, index) => index !== indexToRemove));
   };
 
   const addTags = (event) => {
-    const filtered = tags.filter((el) => el === event.target.value);
+    const filtered = tags.filter((el) => el === event.target.value); //중복검사
     if (event.target.value !== "" && filtered.length === 0) {
+      console.log(event.target.value);
       setTags([...tags, event.target.value]);
-      // selectedTags([...tags, event.target.value]);
       event.target.value = "";
+      console.log("tags", tags);
     }
   };
 
@@ -122,8 +121,8 @@ const MyHashTag = ({ initialTags }) => {
         <input
           className="tag-input"
           type="text"
-          onKeyUp={(event) => (event.key === "Enter" ? addTags(event) : null)}
-          placeholder="Press enter to add tags"
+          onKeyUp={(event) => (event.code === "Space" ? addTags(event) : null)}
+          placeholder="해시태그를 입력하슈"
         />
         <div id="tags">
           {tags.map((tag, index) => (

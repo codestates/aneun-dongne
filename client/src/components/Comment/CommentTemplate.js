@@ -6,16 +6,21 @@ const CommentWrapper = styled.div`
   width: 100%;
 `;
 
-function CommentCommon({ commentDummy }) {
+function CommentTemplate({ commentDummy }) {
+  // console.log(commentDummy);
   return (
     <>
       <CommentWrapper>
         {commentDummy.map((comment, idx) => {
-          return <Comments key={idx} comment={comment}></Comments>;
+          return (
+            <div key={idx}>
+              <Comments commentId={idx} comment={comment}></Comments>
+            </div>
+          );
         })}
       </CommentWrapper>
     </>
   );
 }
 
-export default CommentCommon;
+export default CommentTemplate;

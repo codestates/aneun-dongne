@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSetRecoilState, useRecoilValue, useResetRecoilState, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
 import styled from "styled-components";
 import dotenv from "dotenv";
 import notImageYet from "../../images/not-image-yet.png";
-import { placelist, nowlocation, loading, pickpoint, getPlace } from "../../recoil/recoil";
+import { placelist, nowlocation } from "../../recoil/recoil";
 import "./kakao-map.css";
-import { cat1_name, cat2_name } from "../../location-data";
+import { cat1_name } from "../../location-data";
 import HomeRightbar from "../Home-Rightbar/Home-Rightbar-index";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
 dotenv.config();

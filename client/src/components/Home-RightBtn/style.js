@@ -47,7 +47,6 @@ export const Styled = {
     }
     &:hover:after {
       left: 0;
-      width: 100%;
     }
     &:active {
       //

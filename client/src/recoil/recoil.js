@@ -53,7 +53,6 @@ export const sendPlaceinfo = selector({
     set(placetitle, title);
     set(placelocation, location);
     set(placeaddress, address);
-
   },
 });
 
@@ -61,8 +60,6 @@ export const sendPlaceinfo = selector({
 export const isSavepositionOpen = atom({
   key: "isSavepositionOpen",
   default: false,
-});
-  },
 });
 
 export const locations = atom({
@@ -81,4 +78,9 @@ export const loginState = atom({
 export const userInfo = atom({
   key: "userInfo",
   default: null,
+});
+
+export const token = atom({
+  key: "token",
+  default: "",
 });

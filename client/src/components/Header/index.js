@@ -56,7 +56,7 @@ const Header = ({ handleResponseSuccess }) => {
       setIsSignupOpen(true);
     }
   };
-  console.log(isSavePositionOpen);
+  // console.log(isSavePositionOpen);
 
   return (
     <>
@@ -65,7 +65,11 @@ const Header = ({ handleResponseSuccess }) => {
           <>
             <Styled.ModalBackdrop onClick={closeLoginModalHandler}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalLogin handleResponseSuccess={handleResponseSuccess} ToSignupModal={ToSignupModal} />
+                <ModalLogin
+                  handleResponseSuccess={handleResponseSuccess}
+                  ToSignupModal={ToSignupModal}
+                  closeLoginModalHandler={closeLoginModalHandler}
+                />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>

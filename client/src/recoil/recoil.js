@@ -52,7 +52,11 @@ export const loginState = atom({
   key: "loginState",
   default: false,
 });
-
+//! 로긴모달
+export const loginModal = atom({
+  key: "loginModal",
+  default: false,
+});
 export const userInfo = atom({
   key: "userInfo",
   default: null,

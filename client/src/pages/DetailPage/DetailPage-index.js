@@ -7,8 +7,8 @@ import { Styled } from "./style";
 import KeyWordTemplate from "../../components/HashTag/KeyWordTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
-import { useRecoilState } from "recoil";
-import { defaultcomments, updatecomment } from "../../recoil/recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { defaultcomments, loginState, loginModal } from "../../recoil/recoil";
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
@@ -21,7 +21,9 @@ function DetailPage({ match }) {
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
-
+  //로긴모달창,로긴상태
+  const isLogin = useRecoilValue(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
   //기존댓글
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
@@ -94,6 +96,9 @@ function DetailPage({ match }) {
   //! 이 글에 내가 좋아요를 눌렀는지 싫었는지도 DB에 저장해야할듯
   //! 초기화 안되게
   const LikeHandler = () => {
+    if (!isLogin) {
+      setIsLoginOpen(true);
+    }
     setLikeOrNot(!likeOrNot);
     //좋아요한 상태면 -1
     if (likeOrNot) setLike(like - 1);

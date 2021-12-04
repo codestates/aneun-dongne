@@ -88,6 +88,7 @@ export const TagsInput = styled.div`
     border: none;
     padding-left: 10px;
     padding-right: 10px;
+    width: 400px;
     height: 46px;
     font-size: 14px;
     /* padding: 4px 0 0 0; */
@@ -122,7 +123,7 @@ const MyHashTag = ({ setTags, tags }) => {
           className="tag-input"
           type="text"
           onKeyUp={(event) => (event.code === "Space" ? addTags(event) : null)}
-          placeholder="해시태그를 입력하슈"
+          placeholder="스페이스바로 해시태그 완성하는겨"
         />
         <div id="tags">
           {tags.map((tag, index) => (

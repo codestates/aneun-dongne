@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import ModalLogin from "../ModalLogin";
 import ModalSignup from "../ModalSignup";
-
+import { withCookies, Cookies, useCookies } from "react-cookie";
 import { Styled } from "./style";
-import { isSavepositionOpen, loginState } from "../../recoil/recoil";
+import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
+import axios from "axios";
 
 const Header = ({ handleResponseSuccess }) => {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+  const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
@@ -57,7 +59,15 @@ const Header = ({ handleResponseSuccess }) => {
       setIsSignupOpen(true);
     }
   };
-  // console.log(isSavePositionOpen);
+  const logoutHandler = () => {
+    console.log("hi");
+    axios.post("http://localhost:80/signout", {}, { withCredentials: true }).then((res) => {
+      //로긴상태 해제
+      setIsLogin(false);
+    });
+    console.log(isLogin);
+    // console.log(cookies);
+  };
 
   return (
     <>
@@ -116,7 +126,7 @@ const Header = ({ handleResponseSuccess }) => {
               </>
             ) : (
               <>
-                <div className="mainpage-button" onClick={openLoginModalHandler}>
+                <div className="mainpage-button" onClick={logoutHandler}>
                   Log Out
                 </div>
                 <div className="mainpage-button" onClick={openSignupModalHandler}>

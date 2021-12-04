@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import MyHashTag from "../HashTag/MyHashTag";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { defaultcomments, updatecomment } from "../../recoil/recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { defaultcomments, updatecomment, loginState, loginModal } from "../../recoil/recoil";
 const CommentWrapper = styled.div`
   width: 100%;
 `;
@@ -102,7 +102,9 @@ function MyComment() {
   const [updateComment, setUpdateComment] = useRecoilState(updatecomment);
   const [tags, setTags] = useState([]);
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
-
+  //로긴모달창,로긴상태
+  const isLogin = useRecoilValue(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
   //이게 응답이라고 생각
   const myComment = { img: "/people3.png", nickname: "김코딩", comment: "", tags: [], date: "DB에서 날라오겠지" };
   const writeSomething = (e) => {
@@ -110,6 +112,9 @@ function MyComment() {
   };
 
   const registerMyComment = (something) => {
+    if (!isLogin) {
+      setIsLoginOpen(true);
+    }
     console.log(something);
     setUpdateComment(false); //창 내리기 하려고 만들었는데 왜 안됨 -> DetailPage-index 랑 연결
     // axios들어가야함

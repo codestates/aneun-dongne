@@ -1,10 +1,12 @@
-const express = require("express");
+require("dotenv").config();
 const cors = require("cors");
-const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const express = require("express");
 const db = require("./models");
 
 const app = express();
-const PORT = 4000;
+const PORT = 80;
+const controllers = require("./controllers");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -20,6 +22,11 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
+app.get("/user/info", controllers.auth);
+app.post("/user/signup", controllers.signup);
+app.post("/user/login", controllers.signin);
+app.post("/signout", controllers.signout);
 
 db.sequelize
   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행

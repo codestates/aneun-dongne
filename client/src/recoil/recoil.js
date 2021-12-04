@@ -126,3 +126,7 @@ export const getPlace = selector({
     );
   },
 });
+export const token = atom({
+  key: "token",
+  default: "",
+});

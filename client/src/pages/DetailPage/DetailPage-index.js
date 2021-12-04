@@ -126,14 +126,14 @@ function DetailPage({ match }) {
           return <div key={idx}>{el}</div>;
         })}
         {/*  내가 쓰는 댓글들이 들아갈 공간 */}
-        <MyComment writeDummy={writeDummy}></MyComment>
+        <MyComment></MyComment>
       </Styled.Div>
     </>
   );
 }
 
 export default DetailPage;
-const writeDummy = [];
+
 const keywordDummy = ["#왕릉", "#공원"];
 
 const commentDummy = [

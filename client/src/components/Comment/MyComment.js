@@ -56,35 +56,15 @@ const ContentBox = styled.div`
       rgba(0, 0, 0, 0) 100%
     );
     transition: all 0.5s ease;
+    border-radius: 20px;
   }
-  button:after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 100%;
-    top: 0;
-    right: 0;
-    z-index: -1;
-    background-color: rgb(192, 251, 255);
-    background-image: linear-gradient(
-      to left top,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    border-radius: 5px;
-    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-  }
+
   button:hover {
-    color: black;
     transform: scale(1.1);
   }
-  button:hover:after {
-    left: 0;
-  }
+
   button:active {
-    //
+    transform: scale(1.1);
   }
 `;
 
@@ -115,7 +95,7 @@ const Date = styled.div`
   right: 10px;
 `;
 
-function MyComment({ writeDummy }) {
+function MyComment() {
   const [something, setSomething] = useState("");
   const [myComments, setMyComments] = useRecoilState(mycomments);
   const writeSomething = (e) => {
@@ -142,10 +122,10 @@ function MyComment({ writeDummy }) {
             value={something}
             onChange={(e) => writeSomething(e)}
             onKeyUp={(e) => {
-              if (e.key === "Enter") registerMyComment(e.target.value);
+              if (e.key === "Enter") registerMyComment(something);
             }}
           ></Content>
-          <button onClick={registerMyComment}>작성하기</button>
+          <button onClick={() => registerMyComment(something)}>작성하기</button>
           <HashTagWrapper>
             <MyHashTag initialTags={[]} />
           </HashTagWrapper>

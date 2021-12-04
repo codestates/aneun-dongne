@@ -2,16 +2,16 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("Visiteds", {
-      visited_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
+      visited_user_id: {
         type: Sequelize.INTEGER,
       },
-      post_contentid: {
+      visited_post_contentid: {
         type: Sequelize.INTEGER,
       },
       visited_area: {
@@ -32,11 +32,11 @@ module.exports = {
       visited_memo_image_path: {
         type: Sequelize.STRING,
       },
-      visited_createdAt: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      visited_updatedAt: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },

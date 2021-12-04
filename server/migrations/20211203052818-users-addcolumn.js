@@ -44,7 +44,11 @@ module.exports = {
         },
       })
       .then(function () {
-        queryInterface.addColumn("Comments", "comment_user_id", {
+        queryInterface.addColumn("Likes", "like_user_id", {
+          type: Sequelize.INTEGER,
+          references: { model: "Users", key: "id" },
+        });
+        queryInterface.addColumn("Visiteds", "visited_user_id", {
           type: Sequelize.INTEGER,
           references: { model: "Users", key: "id" },
         });

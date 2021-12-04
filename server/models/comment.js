@@ -9,12 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Comment.belongsTo(models.User);
+      Comment.belongsTo(models.Post);
+      Comment.belongsToMany(models.Hashtag, { through: "comment_hashtag" });
     }
   }
   Comment.init(
     {
-      user_id: DataTypes.INTEGER,
-      post_contentid: DataTypes.INTEGER,
+      comment_user_id: DataTypes.INTEGER,
+      comment_post_contentid: DataTypes.INTEGER,
       comment_content: DataTypes.STRING,
     },
     {

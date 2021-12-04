@@ -2,7 +2,7 @@ require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const db = require("./models");
+const { sequelize } = require("./models/index");
 
 const app = express();
 const PORT = 80;
@@ -28,18 +28,14 @@ app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
 app.post("/signout", controllers.signout);
 
-db.sequelize
-  .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
-  .then(() => {
-    console.log("데이터베이스 연결 성공");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-
-app.get("/hello", (req, res) => {
-  res.json({ data: "서버랑 연결 됐어요!!" });
-});
+// sequelize
+//   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
+//   .then(() => {
+//     console.log("데이터베이스 연결 성공");
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 const server = app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);

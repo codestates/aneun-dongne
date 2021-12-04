@@ -9,29 +9,14 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     await queryInterface
-      .createTable("Users", {
+      .createTable("Hashtags", {
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        nickname: {
-          type: Sequelize.STRING,
-        },
-        user_sigg: {
-          type: Sequelize.STRING,
-        },
-        user_area: {
-          type: Sequelize.STRING,
-        },
-        email: {
-          type: Sequelize.STRING,
-        },
-        password: {
-          type: Sequelize.STRING,
-        },
-        user_image_path: {
+        hashtag_name: {
           type: Sequelize.STRING,
         },
         createdAt: {
@@ -44,9 +29,11 @@ module.exports = {
         },
       })
       .then(function () {
-        queryInterface.addColumn("Comments", "comment_user_id", {
-          type: Sequelize.INTEGER,
-          references: { model: "Users", key: "id" },
+        queryInterface.createTable("comment_hashtag", {
+          ch_hashtag_id: {
+            type: Sequelize.INTEGER,
+            references: { model: "Hashtags", key: "id" },
+          },
         });
       });
   },

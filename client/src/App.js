@@ -14,6 +14,7 @@ import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
+import Slider from "./pages/Slider/Slider";
 
 const App = () => {
   const setIsLogin = useSetRecoilState(loginState);
@@ -45,17 +46,18 @@ const App = () => {
 
   return (
     <>
-      <Header handleResponseSuccess={handleResponseSuccess} />
-      <Switch>
-        <Route exact path="/">
-          <Mainpage />
-        </Route>
-        <Route exact path="/home">
-          <Home info={info} />
-        </Route>
-        <Route exact path="/detailpage/:id" component={DetailPage}></Route>
-        {/* <Redirect from="*" to="/" /> */}
-      </Switch>
+        <Header handleResponseSuccess={handleResponseSuccess} />
+        <Switch>
+          <Route exact path="/">
+            <Slider />
+            <Mainpage />
+          </Route>
+          <Route exact path="/home">
+            <Home info={info} />
+          </Route>
+          <Route exact path="/detailpage/:id" component={DetailPage}></Route>
+          {/* <Redirect from="*" to="/" /> */}
+        </Switch>
     </>
   );
 };

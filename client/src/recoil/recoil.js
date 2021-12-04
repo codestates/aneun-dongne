@@ -46,6 +46,7 @@ export const isSavepositionOpen = atom({
   key: "isSavepositionOpen",
   default: false,
 });
+
 //! 로긴
 export const loginState = atom({
   key: "loginState",

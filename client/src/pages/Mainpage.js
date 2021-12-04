@@ -58,30 +58,6 @@ export const MenuButton = styled.button`
   }
 `;
 
-export const TitleView = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  img {
-    width: 100%;
-  }
-
-  .title {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 400px;
-    background-color: #f0f9ff99;
-    border-radius: 20px;
-    width: 700px;
-    height: 70px;
-  }
-`;
 export const TitleFirstView = styled.div`
   display: flex;
   align-items: center;
@@ -148,18 +124,18 @@ export const TitlePeopleView = styled.div`
   height: 100vh;
 
   .title {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
     font-size: 2.5rem;
     font-weight: bold;
   }
 
   .peopleTitle {
-    margin-top: 50px;
+    margin-top: 30px;
     font-size: 1.5rem;
     font-weight: bold;
     > img {
-      width: 10px;
-      height: 10px;
+      width: 15px;
+      height: 15px;
       cursor: pointer;
     }
   }
@@ -196,6 +172,15 @@ export const MainImage = styled.div`
   }
 `;
 
+export const Image = styled.div`
+  display: flex;
+  img {
+    width: 1000px;
+    height: 650px;
+    object-fit: cover;
+  }
+`;
+
 function Mainpage() {
   const placeList = useRecoilValue(placelist);
 
@@ -214,43 +199,48 @@ function Mainpage() {
   return (
     <>
       <Body>
-        <MainImage>
-          <TitleView>
-            <img src="/Mainimg.jpg" />
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
-          </TitleView>
-        </MainImage>
+        {/* <TitleView>
+          <div className="title">어디론가 놀러가고 싶으신가요?</div>
+          <MenuButton onClick={ToHome}>시작하기</MenuButton>
+        </TitleView> */}
+
         <TitleFirstView>
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
-          <img src="/mapimg.png" />
+          <Image>
+            <img src="/mapclick.png" />
+          </Image>
         </TitleFirstView>
         <TitleSecondView>
           <div className="title">저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.</div>
-          <img src="/blankpage.png" />
+          <Image>
+            <img src="/mapimgpeople.png" />
+          </Image>
         </TitleSecondView>
         <TitleThirdView>
           <div className="title">그곳이 어디라도 간직하고 싶다면 내가 서있는 바로 그곳을 저장할 수 있어요.</div>
-          <img src="/blankpage.png" />
+          <Image>
+            <img src="/likedlistimg.png" />
+          </Image>
         </TitleThirdView>
         <TitlePeopleView>
           <div className="title">유저들의 후기</div>
           <img src="/people3.png" />
           <div className="peopleTitle">
-            우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>강OO</p>
+            우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>-강OO</p>
           </div>
+
           <img src="/people2.png" />
           <div className="peopleTitle">
-            가고싶은 곳을 정하기 어려울 때 좋아요! <p>최OO</p>
+            가고싶은 곳을 정하기 어려울 때 좋아요! <p>-최OO</p>
           </div>
           <img src="/people1.png" />
           <div className="peopleTitle">
             친구들이 우리동네에 놀러왔을 때 원하는 곳으로 데려가기 간편해요!!
-            <p>정OO</p>
+            <p>-정OO</p>
           </div>
           <img src="/people4.png" />
           <div className="peopleTitle">
-            동네를 산책하는 재미가 생겼어요!! <p>박OO</p>
+            동네를 산책하는 재미가 생겼어요!! <p>-박OO-</p>
           </div>
         </TitlePeopleView>
         <TitleEndView>

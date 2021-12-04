@@ -11,7 +11,7 @@ import { userInfo } from "./recoil/recoil";
 import { token } from "./recoil/recoil";
 
 import Mainpage from "./pages/Mainpage";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 
@@ -61,3 +61,4 @@ const App = () => {
 };
 
 export default App;
+// "/detailpage/:id"

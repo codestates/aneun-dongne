@@ -86,14 +86,6 @@ function Comments({ comment }) {
           <Content type="text" value={comment.comment}></Content>
           <HashTagWrapper>
             <OthersHashTag initialTags={comment.keyword} />
-            {/* {comment.keyword.map((word, idx) => {
-              // return <span key={idx}>{word}</span>;
-              return (
-                <span key={idx}>
-                  <HashTag initialTags={word} />
-                </span>
-              );
-            })} */}
           </HashTagWrapper>
         </ContentBox>
         <Date>작성날짜 : {comment.data}</Date>

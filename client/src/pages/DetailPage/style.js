@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Styled = {
   Div: styled.div`
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     width: 700px;

@@ -22,7 +22,7 @@ function DetailPage({ match }) {
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
-  const [likeOrNot, setLikeOrNot] = useState(true);
+  const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
   useEffect(() => {
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     window.scrollTo(0, 0);
@@ -121,9 +121,11 @@ function DetailPage({ match }) {
           <i class={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
         </Styled.LikeBtn>
         <CommentTemplate commentDummy={commentDummy}></CommentTemplate>
+        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
         {myComments.map((el, idx) => {
           return <div key={idx}>{el}</div>;
         })}
+        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
         <MyComment writeDummy={writeDummy}></MyComment>
       </Styled.Div>
     </>
@@ -139,14 +141,22 @@ const commentDummy = [
     img: "/people1.png",
     nickname: "류준열",
     comment: "안녕하세요",
-    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요", "아침해가뜨면", "매일같은사람들과"],
+    keyword: [
+      "안녕하세요",
+      "감사해요",
+      "잘있어요",
+      "다시만나요",
+      "여기 더보기버튼을 만들어볼게요",
+      "아침해가뜨면",
+      "매일같은사람들과",
+    ],
     data: "2021-12-03", //형식 모르겠음 db보고 결정
   },
   {
     img: "/people2.png",
     nickname: "윤해용",
     comment: "팀장이에요",
-    keyword: ["안녕", "감사", "잘있어", "다시만나"],
+    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요"],
     data: "2021-12-03", //형식 모르겠음 db보고 결정
   },
 ];

@@ -37,7 +37,7 @@ const NickName = styled.span`
 const ContentBox = styled.div`
   /* background-color: yellow; */
 
-  margin-top: 40px;
+  margin-top: 20px;
   position: relative;
   width: 400px;
   height: 140px;
@@ -45,7 +45,7 @@ const ContentBox = styled.div`
 
 const Content = styled.div`
   position: absolute;
-  top: 10px;
+  top: 0px;
   left: 10px;
   width: 370px;
   height: 60px;
@@ -57,13 +57,12 @@ const Content = styled.div`
 
 const ContentInput = styled.div`
   position: absolute;
-  top: 10px;
+  top: 0px;
   left: 10px;
   width: 460px;
-  height: 60px;
+  height: 80px;
   padding-left: 10px;
   padding-right: 10px;
-  /* border: 1px gray solid; */
 
   > input {
     position: absolute;
@@ -74,8 +73,10 @@ const ContentInput = styled.div`
     padding-left: 10px;
     padding-right: 10px;
   }
+
   .change-comment {
     position: absolute;
+    /* top: -20px; */
     right: -20px;
     border: none;
     background-color: rgb(192, 251, 255);
@@ -91,7 +92,7 @@ const ContentInput = styled.div`
     border-radius: 20px;
   }
 
-  button:hover {
+  > .change-comment:hover {
     transform: scale(1.1);
     background-image: linear-gradient(
       to left top,
@@ -103,7 +104,7 @@ const ContentInput = styled.div`
 
   .delete-comment {
     position: absolute;
-    top: 50px;
+    top: 60px;
     right: -20px;
     border: none;
     background-color: rgb(192, 251, 255);
@@ -119,7 +120,7 @@ const ContentInput = styled.div`
     border-radius: 20px;
   }
 
-  button:hover {
+  .delete-comment:hover {
     transform: scale(1.1);
     background-image: linear-gradient(
       to left top,
@@ -134,9 +135,10 @@ const HashTagWrapper = styled.div`
   /* display: flex; */
   position: absolute;
   /* background-color: pink; */
+
   width: 370px;
-  height: 50px;
-  bottom: 10px;
+  height: 40px;
+  bottom: 0px;
   left: 10px;
   white-space: nowrap;
   border: none;
@@ -181,7 +183,7 @@ function Comments({ comment, commentId }) {
 
   // 댓글 삭제요청 보내는 함수
   function deleteComment() {
-    if (commentId === undefined) console.log("아이디가 없는디요"); //숫자라서 정확하기 명시해야함
+    if (commentId === undefined) console.log("삭제하려는 댓글이 존재하지 않습니다."); //숫자라서 정확하기 명시해야함
     // else if (!login) console.log("로긴하소");
     console.log(clickedBtn, commentId);
     //axios
@@ -189,7 +191,7 @@ function Comments({ comment, commentId }) {
   }
   // 댓글 수정요청 보내는 함수
   function changeComment() {
-    if (commentId === undefined) console.log("아이디가 없는디요");
+    if (commentId === undefined) console.log("수정하려는 댓글이 존재하지 않습니다.");
     // else if (!login) console.log("로긴하소");
     console.log(clickedBtn, commentId);
     //axios

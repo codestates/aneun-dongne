@@ -24,9 +24,8 @@ const App = () => {
   const history = useHistory();
 
   const isAuthenticated = async () => {
-    // `${process.env.REACT_APP_API_URL}/user/info`
     await axios
-      .get("http://localhost:80/user/info", {
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -46,18 +45,18 @@ const App = () => {
 
   return (
     <>
-        <Header handleResponseSuccess={handleResponseSuccess} />
-        <Switch>
-          <Route exact path="/">
-            <Slider />
-            <Mainpage />
-          </Route>
-          <Route exact path="/home">
-            <Home info={info} />
-          </Route>
-          <Route exact path="/detailpage/:id" component={DetailPage}></Route>
-          {/* <Redirect from="*" to="/" /> */}
-        </Switch>
+      <Header handleResponseSuccess={handleResponseSuccess} />
+      <Switch>
+        <Route exact path="/">
+          <Slider />
+          <Mainpage />
+        </Route>
+        <Route exact path="/home">
+          <Home info={info} />
+        </Route>
+        <Route exact path="/detailpage/:id" component={DetailPage}></Route>
+        {/* <Redirect from="*" to="/" /> */}
+      </Switch>
     </>
   );
 };

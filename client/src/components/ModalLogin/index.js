@@ -28,10 +28,10 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       setErrorMessage(message.loginPassword);
       return;
     }
-    // `${process.env.REACT_APP_API_URL}/user/login`,
+
     await axios
       .post(
-        "http://localhost:80/user/login",
+        `${process.env.REACT_APP_API_URL}/user/login`,
         {
           email,
           password,

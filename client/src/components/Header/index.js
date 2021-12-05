@@ -119,7 +119,10 @@ const Header = ({ handleResponseSuccess }) => {
           <Link to="/">
             {/* 링크하면 자꾸 밑줄생겨서 이래저래 해보다 그냥 이미지로 바꿨습니다.. */}
             {/* <div id="logo">아는동네</div> */}
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" id="logo"></img>
+            <img
+              src="https://media.discordapp.net/attachments/912244672578089002/912920442157805678/E53C1906-3AF2-4061-AFD3-E6E7A131BDCE.jpeg"
+              id="logo"
+            ></img>
           </Link>
           <div className="header-button-wrapper">
             {!isLogin ? (

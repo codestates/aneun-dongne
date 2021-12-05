@@ -7,14 +7,21 @@ const CommentWrapper = styled.div`
 `;
 
 function CommentTemplate({ commentDummy }) {
-  // console.log(commentDummy);
+  console.log(commentDummy);
   return (
     <>
       <CommentWrapper>
         {commentDummy.map((comment, idx) => {
           return (
             <div key={idx}>
-              <Comments commentId={idx} comment={comment}></Comments>
+              <Comments
+                img={comment.img}
+                nickname={comment.nickname}
+                text={comment.text}
+                initialTags={comment.tags}
+                date={comment.date}
+                commentId={idx}
+              ></Comments>
             </div>
           );
         })}
@@ -23,4 +30,5 @@ function CommentTemplate({ commentDummy }) {
   );
 }
 
-export default CommentTemplate;
+// export default CommentTemplate;
+export default React.memo(CommentTemplate);

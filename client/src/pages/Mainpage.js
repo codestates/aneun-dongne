@@ -199,7 +199,6 @@ function Mainpage() {
   return (
     <>
       <Body>
-        {isLogin ? "로그인되었습니다" : null}
         {/* <TitleView>
           <div className="title">어디론가 놀러가고 싶으신가요?</div>
           <MenuButton onClick={ToHome}>시작하기</MenuButton>

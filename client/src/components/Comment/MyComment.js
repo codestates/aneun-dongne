@@ -142,10 +142,10 @@ function MyComment() {
       if (text.length > 0) {
         //엔터키 누르면 두번렌더링되서 한번 빈칸나오는거 우선 이렇게 해놨는데 임시방편임
         //이렇게하면 댓글안쓰면 댓글입력하세요 메시지 나오게를 못함
-        setDefaultComment([{ ...myComment, ...{ text, tags } }, ...defaultComment]);
+        setDefaultComment([{ ...myComment, ...{ text, tags } }, ...defaultComment, ,]);
       }
       console.log("myComment", text);
-      console.log("댓글확인", defaultComment);
+      console.log("댓글확인 DefaultComment:", defaultComment);
       setPending(false);
       setTags([]);
       setSomething("");

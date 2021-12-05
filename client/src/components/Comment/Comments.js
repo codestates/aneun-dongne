@@ -167,20 +167,20 @@ const Date = styled.div`
   right: 10px;
 `;
 
-function Comments({ comment, commentId }) {
+function Comments({ img, nickname, text, initialTags, date, commentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
   const commentRef = useRef(null);
   //! text 를 State로 하면 한템포씩 밀린다.
-  const [text, setText] = useState("");
+  // const [text, setText] = useState("");
 
   useEffect(() => {
-    setText(comment.text);
-    console.log(comment.text);
-    console.log(text);
+    // setText(comment.text);
+    // console.log(comment.text);
+    // console.log(text);
   }, []);
 
   const username = "김코딩";
-  const canToChange = comment.nickname === username;
+  const canToChange = nickname === username;
   const ChangeHandler = () => {
     console.log("hi");
     if (canToChange) {
@@ -192,7 +192,7 @@ function Comments({ comment, commentId }) {
     // e.preventDefault(); //필요한가?
     setClickedBtn(e.target.className);
     if (clickedBtn === "change-comment") {
-      setText(e.target.value);
+      // setText(e.target.value);
     }
   }
 
@@ -221,46 +221,51 @@ function Comments({ comment, commentId }) {
     // else if (!login) console.log("로긴하소");
     console.log(clickedBtn, commentId);
     //axios
-    setText("res.body.text");
+    // setText("res.body.text");
     setClickedBtn("");
   }
-  // console.log(comment.text);
+  console.log(text);
   return (
     <>
       <Comment>
         <Profile>
-          <ProfileImg src={comment.img}></ProfileImg>
-          <NickName>{comment.nickname}</NickName>
+          <ProfileImg src={img}></ProfileImg>
+          <NickName>{nickname}</NickName>
         </Profile>
         <ContentBox>
-          {!canToChange ? (
-            <Content name="comment">{comment.text}</Content>
-          ) : (
-            <ContentInput>
-              <input
-                id="comment"
-                ref={commentRef}
-                type="text"
-                value={comment.text} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
-                onChange={(e) => ChangeHandler(e)}
-                name="comment"
-              />
-              <button className="change-comment" onClick={(e) => getCommentId(e)}>
-                댓글수정
-              </button>
-              <button className="delete-comment" onClick={(e) => getCommentId(e)}>
-                댓글삭제
-              </button>
-            </ContentInput>
-          )}
+          {/* {!canToChange ? ( */}
+          <Content name="comment">{text}</Content>
+          //{" "}
+          {/* // ) : (
+          // //   <ContentInput>
+          // //     <input
+          // //       id="comment"
+          // //       ref={commentRef}
+          // //       type="text"
+          // //       value={text} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
+          // //       onChange={(e) => ChangeHandler(e)}
+          // //       name="comment"
+          // //     />
+          // //     <button className="change-comment" onClick={(e) => getCommentId(e)}>
+          // //       댓글수정
+          // //     </button>
+          // //     <button className="delete-comment" onClick={(e) => getCommentId(e)}>
+          // //       댓글삭제
+          // //     </button>
+          // //   </ContentInput>
+          // // )} */}
           <HashTagWrapper>
-            <OthersHashTag initialTags={comment.tags} />
+            <OthersHashTag initialTags={initialTags} />
           </HashTagWrapper>
         </ContentBox>
-        <Date>작성날짜 : {comment.date}</Date>
+        <Date>작성날짜 : {date}</Date>
       </Comment>
     </>
   );
 }
-
-export default Comments;
+function PropsEqual(prev, next) {
+  console.log(prev.text === next.text);
+  return prev.text === next.text;
+}
+export default React.memo(Comments);
+// export default Comments;

@@ -40,6 +40,7 @@ const App = () => {
         history.push("/home");
       });
   };
+  //쿠키안에 jwt 있는지 보고 로긴상태결정
   useEffect(() => {
     console.log(cookies.jwt);
     if (cookies.jwt) {

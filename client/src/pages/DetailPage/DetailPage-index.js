@@ -140,11 +140,10 @@ function DetailPage({ match }) {
           <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
           <i className={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
         </Styled.LikeBtn>
-
         <MyComment></MyComment>
         <CommentTemplate commentDummy={defaultComment}></CommentTemplate>
 
-        {/* 어쨌든 요청받은 댓글을 defaultComment에 넣기만 하면 된다. */}
+        {/* 새로고침할때마다 get으로 전체댓글 얻으면 수정되든 삭제되든 괜찮음, defaultComment에 넣기만 하면 된다. */}
       </Styled.Div>
     </>
   );

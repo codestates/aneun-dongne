@@ -113,6 +113,7 @@ function MyComment() {
   const [pending, setPending] = useState(false);
   const [something, setSomething] = useState("");
   const [text, setText] = useState("");
+  const [count, setCount] = useState(0);
   const [updateComment, setUpdateComment] = useRecoilState(updatecomment);
   const [tags, setTags] = useState([]);
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
@@ -124,52 +125,24 @@ function MyComment() {
   const writeSomething = (e) => {
     setSomething(e.target.value);
   };
-
+  let body = { ...myComment, ...{ text: something, tags } };
   const registerMyComment = (e) => {
     e.preventDefault();
     if (!isLogin) {
       setIsLoginOpen(true);
     }
     if (something === "") {
+      //! 엔터치면 빈댓글까지 렌더링되는것
       alert("내용을 입력해주세요");
       return;
     }
-    // setText(something);
-    //!블로그
-    let body = { ...myComment, ...{ text: something, tags } };
-    // setDefaultComment(defaultComment.concat(body));
-    setDefaultComment([body].concat(defaultComment));
-    //댓글작성창 초기화
-    setSomething("");
-    setTags([]);
-    //!
-    //?기존
-    // // console.log(something);
-    // setUpdateComment(false); //창 내리기 하려고 만들었는데 왜 안됨 -> DetailPage-index 랑 연결
-    // // axios들어가야함
-    // // setText(something);
-    // setPending(true);
-    //?
-  };
-  //?
-  // useEffect(() => {
-  //   if (pending) {
-  //     setUpdateComment(true);
-  //     if (text.length > 0) {
-  //       //엔터키 누르면 두번렌더링되서 한번 빈칸나오는거 우선 이렇게 해놨는데 임시방편임
-  //       //이렇게하면 댓글안쓰면 댓글입력하세요 메시지 나오게를 못함
-  //       setDefaultComment([{ ...myComment, ...{ text, tags } }, ...defaultComment, ,]);
-  //     }
-  //     console.log("myComment", text);
-  //     console.log("댓글확인 DefaultComment:", defaultComment);
-  //     setPending(false);
-  //     setTags([]);
-  //     setSomething("");
-  //   }
-  // }, [pending]);
 
-  // useEffect(() => {}, []);
-  //?
+    setDefaultComment([body].concat(defaultComment));
+    // setPending(true);
+    setTags([]);
+    setSomething("");
+  };
+  useEffect(() => {}, [defaultComment]);
   return (
     <CommentWrapper>
       <Comment>
@@ -184,7 +157,10 @@ function MyComment() {
             placeholder="댓글을 입력하슈"
             onChange={(e) => writeSomething(e)}
             onKeyUp={(e) => {
-              if (e.key === "Enter") registerMyComment(e);
+              if (e.key === "Enter") {
+                registerMyComment(e);
+                e.target.value = "";
+              }
             }}
           ></Content>
 

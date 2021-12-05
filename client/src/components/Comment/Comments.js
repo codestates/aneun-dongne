@@ -3,6 +3,7 @@ import styled from "styled-components";
 import OthersHashTag from "../HashTag/OthersHashTag";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { loginState, updateText, update } from "../../recoil/recoil";
+import MyComment from "./MyComment";
 
 const Comment = styled.div`
   position: relative;
@@ -78,7 +79,8 @@ const ContentInput = styled.div`
   padding-left: 10px;
   padding-right: 10px;
 
-  > input {
+  > input,
+  div {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -169,9 +171,11 @@ const Date = styled.div`
 
 function Comments({ img, nickname, text, initialTags, date, commentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
-  const commentRef = useRef(null);
+  const divRef = useRef(null);
+  const inputRef = useRef(null);
+  const [editMode, setEditMode] = useState(false);
   //! text 를 State로 하면 한템포씩 밀린다.
-  // const [text, setText] = useState("");
+  const [comment, setComment] = useState(text);
 
   useEffect(() => {
     // setText(comment.text);
@@ -180,51 +184,49 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
   }, []);
 
   const username = "김코딩";
+  //! 이것도 서버에서하래 유저권한 관련된건 다 서버에서 토큰이랑 비교후 결정
   const canToChange = nickname === username;
-  const ChangeHandler = () => {
-    console.log("hi");
-    if (canToChange) {
-      // document.querySelector("#comment").focus();
-    }
-  };
 
   function getCommentId(e) {
-    // e.preventDefault(); //필요한가?
+    e.preventDefault(); //필요한가?
     setClickedBtn(e.target.className);
-    if (clickedBtn === "change-comment") {
-      // setText(e.target.value);
-    }
   }
 
-  // useEffect(() => {
-  //   if (clickedBtn === "delete-comment") {
-  //     deleteComment();
-  //   }
-  //   if (clickedBtn === "change-comment") {
-  //     changeComment();
-  //   }
-  // }, [clickedBtn]);
+  useEffect(() => {
+    if (clickedBtn === "delete-comment") {
+      deleteComment();
+    }
+    if (clickedBtn === "change-comment") {
+      changeComment();
+    }
+  }, [clickedBtn]);
 
   // 댓글 삭제요청 보내는 함수
   function deleteComment() {
     if (commentId === undefined) console.log("삭제하려는 댓글이 존재하지 않습니다."); //숫자라서 정확하기 명시해야함
-    // else if (!login) console.log("로긴하소");
+
     console.log(clickedBtn, commentId);
     //axios : 전체배열 다시 받아서 전체댓글recoil 바꾼다.
-    // 새로고침하면?? 초기화된다 -> 바로 get요청을 받는다. -> 괜찮다.
 
     setClickedBtn("");
   }
-  // 댓글 수정요청 보내는 함수 -> 어떻게하는거야..
+  // // 댓글 수정요청 보내는 함수 -> 어떻게하는거야..
   function changeComment() {
     if (commentId === undefined) console.log("수정하려는 댓글이 존재하지 않습니다.");
-    // else if (!login) console.log("로긴하소");
+
+    setEditMode(!editMode);
+
     console.log(clickedBtn, commentId);
-    //axios
-    // setText("res.body.text");
+
     setClickedBtn("");
   }
-  console.log(img, nickname, text, initialTags, date, commentId);
+  //댓글 바꾸는 함수
+  const ChangeHandler = (e) => {
+    setComment(e.target.value);
+    //axios
+    // setComment(e.target.value);
+  };
+  console.log(text);
   return (
     <>
       <Comment>
@@ -237,16 +239,34 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
             <Content name="comment">{text}</Content>
           ) : (
             <ContentInput>
-              <input
-                id="comment"
-                ref={commentRef}
-                type="text"
-                value={text} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
-                onChange={(e) => ChangeHandler(e)}
-                name="comment"
-              />
+              {!editMode ? (
+                <div
+                  id="commentRead"
+                  ref={divRef}
+                  //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
+
+                  name="comment"
+                >
+                  {comment}
+                </div>
+              ) : (
+                <input
+                  id="commentChange"
+                  ref={inputRef}
+                  type="text"
+                  value={comment} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
+                  onChange={(e) => ChangeHandler(e)}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") {
+                      ChangeHandler(e);
+                      setEditMode(false);
+                    }
+                  }}
+                  name="comment"
+                />
+              )}
               <button className="change-comment" onClick={(e) => getCommentId(e)}>
-                댓글수정
+                {editMode ? "수정완료" : "댓글수정"}
               </button>
               <button className="delete-comment" onClick={(e) => getCommentId(e)}>
                 댓글삭제

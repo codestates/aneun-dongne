@@ -12,20 +12,18 @@ function CommentTemplate({ commentDummy }) {
     <>
       <CommentWrapper>
         {commentDummy.map((comment, idx) => {
+          if (comment.text === "\n") return null;
+          // if (comment.text === "") alert("내용을 입력해주세요");
           return (
-            <>
-              {/* <div key={idx}> */}
-              <Comments
-                key={idx}
-                img={comment.img}
-                nickname={comment.nickname}
-                text={comment.text}
-                initialTags={comment.tags}
-                date={comment.date}
-                commentId={idx}
-              ></Comments>
-              {/* </div> */}
-            </>
+            <Comments
+              key={idx}
+              img={comment.img}
+              nickname={comment.nickname}
+              text={comment.text}
+              initialTags={comment.tags}
+              date={comment.date}
+              commentId={idx}
+            ></Comments>
           );
         })}
       </CommentWrapper>

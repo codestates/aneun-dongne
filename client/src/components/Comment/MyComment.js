@@ -130,13 +130,13 @@ function MyComment() {
     e.preventDefault();
     if (!isLogin) {
       setIsLoginOpen(true);
+      return;
     }
     if (something === "") {
-      //! 엔터치면 빈댓글까지 렌더링되는것
       alert("내용을 입력해주세요");
       return;
     }
-
+    // setDefaultComment(defaultComment.concat(body)); 왜 일케하면 memo되고 밑에꺼로하면 안됨
     setDefaultComment([body].concat(defaultComment));
     // setPending(true);
     setTags([]);

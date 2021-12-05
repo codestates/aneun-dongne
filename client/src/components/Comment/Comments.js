@@ -174,14 +174,11 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
   const divRef = useRef(null);
   const inputRef = useRef(null);
   const [editMode, setEditMode] = useState(false);
-  //! text 를 State로 하면 한템포씩 밀린다.
   const [comment, setComment] = useState(text);
 
   useEffect(() => {
-    // setText(comment.text);
-    // console.log(comment.text);
-    // console.log(text);
-  }, []);
+    setComment(text);
+  }, [text]);
 
   const username = "김코딩";
   //! 이것도 서버에서하래 유저권한 관련된건 다 서버에서 토큰이랑 비교후 결정

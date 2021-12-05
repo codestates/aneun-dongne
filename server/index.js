@@ -7,7 +7,7 @@ const express = require("express");
 const db = require("./models");
 
 const app = express();
-const HTTPS_PORT = 80;
+const PORT = process.env.HTTPS_PORT || 80;
 const controllers = require("./controllers");
 
 app.use(express.json());
@@ -19,8 +19,8 @@ app.use(
       // 클라이언트 s3 주소
       "https://localhost:3000",
       "http://localhost:3000",
-      "https://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
-      "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
+      "https://aneun-dongne.ml",
+      "http://aneun-dongne.ml",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
@@ -41,8 +41,8 @@ db.sequelize
     console.error(err);
   });
 
-app.get("/hello", (req, res) => {
-  res.json({ data: "서버랑 연결 됐어요!!" });
+app.get("/", (req, res) => {
+  res.send("서버 연결 됐어요!!");
 });
 
 let server;
@@ -52,9 +52,9 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const credentials = { key: privateKey, cert: certificate };
 
   server = https.createServer(credentials, app);
-  server.listen(HTTPS_PORT, () => console.log("https server runnning"));
+  server.listen(PORT, () => console.log("https server runnning"));
 } else {
-  server = app.listen(HTTPS_PORT, () => console.log("http server runnning"));
+  server = app.listen(PORT, () => console.log("http server runnning"));
 }
 
 module.exports = server;

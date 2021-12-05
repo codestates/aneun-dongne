@@ -102,7 +102,7 @@ const Header = ({ handleResponseSuccess }) => {
       {/* 지금 홈화면 인지 아닌지 상태로 */}
       <Styled.HeaderContainer>
         <div className="header-wrapper">
-          <div id="logo">아는 동네</div>
+          <div id="logo">아는 test 동네</div>
           <div className="header-button-wrapper">
             <div className="mainpage-button" onClick={openLoginModalHandler}>
               login

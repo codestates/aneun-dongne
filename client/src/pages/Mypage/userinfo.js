@@ -10,7 +10,7 @@ export default function UserInfo() {
   const history = useHistory();
   const { isLogin } = useSelector((state) => state);
   if (!url) {
-    url = "https://localhost3000/user";
+    url = "https://localhost:3000/user";
   }
 
   const logoutBtnHandler = (e) => {

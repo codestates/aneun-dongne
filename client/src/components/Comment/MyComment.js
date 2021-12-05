@@ -149,7 +149,7 @@ function MyComment() {
     setTags([]);
     setSomething("");
   };
-  useEffect(() => {}, [defaultComment]);
+
   return (
     <CommentWrapper>
       <Comment>

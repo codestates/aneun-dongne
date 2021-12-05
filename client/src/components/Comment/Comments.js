@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import OthersHashTag from "../HashTag/OthersHashTag";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { loginState, editcommentMode } from "../../recoil/recoil";
+import { useRecoilState } from "recoil";
+import { defaultcomments } from "../../recoil/recoil";
 import MyComment from "./MyComment";
+import MyHashTag from "../HashTag/MyHashTag";
 
 const Comment = styled.div`
   position: relative;
@@ -90,7 +91,8 @@ const ContentInput = styled.div`
     padding-right: 10px;
   }
 
-  .change-comment {
+  .change-comment,
+  .complete-change {
     position: absolute;
     /* top: -20px; */
     right: -20px;
@@ -108,7 +110,8 @@ const ContentInput = styled.div`
     border-radius: 20px;
   }
 
-  > .change-comment:hover {
+  > .change-comment:hover,
+  .complete-change:hover {
     transform: scale(1.1);
     background-image: linear-gradient(
       to left top,
@@ -118,7 +121,8 @@ const ContentInput = styled.div`
     );
   }
 
-  .delete-comment {
+  .delete-comment,
+  .get-back {
     position: absolute;
     top: 60px;
     right: -20px;
@@ -136,7 +140,8 @@ const ContentInput = styled.div`
     border-radius: 20px;
   }
 
-  .delete-comment:hover {
+  .delete-comment:hover,
+  .get-back:hover {
     transform: scale(1.1);
     background-image: linear-gradient(
       to left top,
@@ -169,20 +174,23 @@ const Date = styled.div`
   right: 10px;
 `;
 
-function Comments({ img, nickname, text, initialTags, date, commentId, editable }) {
+function Comments({ uuid, img, nickname, text, initialTags, date, commentId, editable }) {
   const [clickedBtn, setClickedBtn] = useState("");
-  const divRef = useRef(null);
-  const inputRef = useRef(null);
+
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
-  const [comment, setComment] = useState(text);
-  // const [prevComment, setPrevComment] = useState(text);
+  const [comment, setComment] = useState("text");
+
   const [changeOrNot, setChangeOrNot] = useState(false);
-  const prevComment = text;
+  const [tags, setTags] = useState(initialTags);
+  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
+  const [prevComment, setPrevComment] = useState(text);
 
   useEffect(() => {
+    //text,initialTags초기화
     setComment(text);
-  }, [text]);
+    setTags(initialTags);
+  }, [text, initialTags]);
 
   const username = "김코딩";
   //! 이것도 서버에서하래 유저권한 관련된건 다 서버에서 토큰이랑 비교후 결정
@@ -197,7 +205,7 @@ function Comments({ img, nickname, text, initialTags, date, commentId, editable 
     if (clickedBtn === "delete-comment") {
       deleteComment();
     }
-    if (clickedBtn === "change-comment") {
+    if (clickedBtn === "complete-change") {
       changeComment();
     }
   }, [clickedBtn]);
@@ -214,9 +222,18 @@ function Comments({ img, nickname, text, initialTags, date, commentId, editable 
   // // 댓글 수정요청 보내는 함수 -> 어떻게하는거야..
   function changeComment() {
     if (commentId === undefined) console.log("수정하려는 댓글이 존재하지 않습니다.");
+    console.log(tags, comment);
+    setDefaultComment([
+      ...defaultComment.slice(0, uuid),
+      { ...defaultComment[uuid], ...{ tags: tags, text: comment } },
+      ...defaultComment.slice(uuid + 1),
+    ]);
+    setPrevComment(comment);
+
     if (editMode) console.log("수정완료");
     else console.log("댓글수정 클릭");
-    setEditMode(!editMode);
+
+    setEditMode(false);
 
     // console.log(clickedBtn, commentId);
 
@@ -225,8 +242,6 @@ function Comments({ img, nickname, text, initialTags, date, commentId, editable 
   //댓글 바꾸는 함수
   const ChangeHandler = (e) => {
     setComment(e.target.value);
-    //axios
-    // setComment(e.target.value);
   };
   useEffect(() => {
     setComment(prevComment);
@@ -245,19 +260,12 @@ function Comments({ img, nickname, text, initialTags, date, commentId, editable 
           ) : (
             <ContentInput>
               {!editMode ? (
-                <div
-                  id="commentRead"
-                  ref={divRef}
-                  //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
-
-                  name="comment"
-                >
+                <div id="commentRead" name="comment">
                   {comment}
                 </div>
               ) : (
                 <input
                   id="commentChange"
-                  ref={inputRef}
                   type="text"
                   value={comment} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
                   onChange={(e) => ChangeHandler(e)}
@@ -270,22 +278,28 @@ function Comments({ img, nickname, text, initialTags, date, commentId, editable 
                   name="comment"
                 />
               )}
-              <button className="change-comment" onClick={(e) => getCommentId(e)}>
-                {editMode ? "수정완료" : "댓글수정"}
-              </button>
+              {!editMode ? (
+                <button className="change-comment" onClick={() => setEditMode(true)}>
+                  수정하기
+                </button>
+              ) : (
+                <button className="complete-change" onClick={(e) => getCommentId(e)}>
+                  수정완료
+                </button>
+              )}
               {!editMode ? (
                 <button className="delete-comment" onClick={(e) => getCommentId(e)}>
                   댓글삭제
                 </button>
               ) : (
-                <button className="delete-comment" onClick={() => setChangeOrNot(!changeOrNot)}>
+                <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
                   수정취소
                 </button>
               )}
             </ContentInput>
           )}
           <HashTagWrapper>
-            <OthersHashTag initialTags={initialTags} />
+            {editMode ? <MyHashTag tags={tags} setTags={setTags} /> : <OthersHashTag initialTags={initialTags} />}
           </HashTagWrapper>
         </ContentBox>
         <Date>작성날짜 : {date}</Date>

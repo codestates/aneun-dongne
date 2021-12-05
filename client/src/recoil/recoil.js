@@ -72,6 +72,7 @@ export const defaultcomments = atom({
   key: "defaultcomments",
   default: [
     {
+      //uuid:0,
       img: "/people1.png",
       nickname: "류준열",
       text: "안녕하세요",
@@ -88,6 +89,7 @@ export const defaultcomments = atom({
       editable: false,
     },
     {
+      //uuid:0,
       img: "/people2.png",
       nickname: "윤해용",
       text: "팀장이에요",

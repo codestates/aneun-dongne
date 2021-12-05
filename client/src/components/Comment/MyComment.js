@@ -121,7 +121,14 @@ function MyComment() {
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   //이게 응답이라고 생각
-  const myComment = { img: "/people3.png", nickname: "김코딩", text: "", tags: [], date: "DB에서 날라오겠지" };
+  const myComment = {
+    img: "/people3.png",
+    nickname: "김코딩",
+    text: "",
+    tags: [],
+    date: "DB에서 날라오겠지",
+    editable: true,
+  };
   const writeSomething = (e) => {
     setSomething(e.target.value);
   };

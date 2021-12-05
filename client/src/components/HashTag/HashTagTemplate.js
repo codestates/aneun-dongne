@@ -3,9 +3,11 @@ import styled from "styled-components";
 const KeyWordBox = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  /* grid-row-gap: 10px; */
   padding-left: 30px;
   height: 100px;
-
+  border: 1px gray solid;
   background-color: white;
 `;
 const KeyWord = styled.span`
@@ -36,7 +38,7 @@ const KeyWord = styled.span`
   }
 `;
 
-function KeyWordTemplate({ keywordDummy }) {
+function HashTagTemplate({ keywordDummy }) {
   return (
     <>
       <KeyWordBox>
@@ -48,4 +50,4 @@ function KeyWordTemplate({ keywordDummy }) {
   );
 }
 
-export default KeyWordTemplate;
+export default HashTagTemplate;

@@ -5,7 +5,8 @@ export const Styled = {
     margin-top: 80px;
     display: flex;
     flex-direction: column;
-    width: 700px;
+    /* width: 700px; */
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     > .hide {
@@ -14,7 +15,7 @@ export const Styled = {
   `,
   Img: styled.img`
     /* border: 1px red solid; */
-    width: 696px;
+    width: 700px;
     height: 466px;
     margin-left: auto;
     margin-right: auto;
@@ -34,8 +35,8 @@ export const Styled = {
   Title: styled.h2`
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 10px;
-    margin-top: 100px;
+    margin-bottom: 50px;
+    margin-top: 60px;
     padding: 10px;
     color: skyblue;
     &:hover {
@@ -58,6 +59,7 @@ export const Styled = {
     margin-left: auto;
     margin-right: auto;
     margin-top: 15px;
+    line-height: 30px;
     border: 1px rgb(192, 251, 255) solid;
     border-radius: 10px;
     padding: 20px;
@@ -115,5 +117,10 @@ export const Styled = {
     &:active {
       transform: scale(1.3);
     }
+  `,
+  Wrapper: styled.div`
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
   `,
 };

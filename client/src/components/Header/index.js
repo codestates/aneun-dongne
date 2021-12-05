@@ -8,9 +8,6 @@ import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil"
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-//링크에 밑줄떠서 추가했어요
-
 const Header = ({ handleResponseSuccess }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
@@ -113,11 +110,9 @@ const Header = ({ handleResponseSuccess }) => {
         ) : null}
       </Styled.ModalContainer>
 
-      {/* 지금 홈화면 인지 아닌지 상태로 */}
       <Styled.HeaderContainer>
         <div className="header-wrapper">
           <Link to="/">
-            {/* 링크하면 자꾸 밑줄생겨서 이래저래 해보다 그냥 이미지로 바꿨습니다.. */}
             {/* <div id="logo">아는동네</div> */}
             <img
               src="https://media.discordapp.net/attachments/912244672578089002/912920442157805678/E53C1906-3AF2-4061-AFD3-E6E7A131BDCE.jpeg"

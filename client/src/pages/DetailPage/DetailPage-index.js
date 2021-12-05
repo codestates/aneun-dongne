@@ -4,11 +4,12 @@ import axios from "axios";
 import MapInRoom from "../../components/kakao-map/MapInRoom/MapInRoom-index";
 import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
-import KeyWordTemplate from "../../components/HashTag/KeyWordTemplate";
+import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { defaultcomments, loginState, loginModal } from "../../recoil/recoil";
+
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
@@ -28,6 +29,7 @@ function DetailPage({ match }) {
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
+
   useEffect(() => {
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     window.scrollTo(0, 0);
@@ -77,9 +79,6 @@ function DetailPage({ match }) {
   useEffect(() => {
     //axios.get
     //새로고침=>전체댓글을 받는다. => 리코일전체댓글을 바꾼다. 오케이
-    //댓글이 수정,삭제되면? => 어차피 전체댓글을 받음 . ㄱㅊ음
-    //좋아요도 마찬가지.
-    //하 이거 어케하냐
   }, []);
 
   const overView = overview.replace(/(<([^>]+)>)/gi, "");
@@ -135,14 +134,16 @@ function DetailPage({ match }) {
         ) : null}
 
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
-        <KeyWordTemplate keywordDummy={keywordDummy} />
-        <Styled.LikeBtn onClick={LikeHandler}>
-          <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
-          <i className={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
-        </Styled.LikeBtn>
-        <MyComment></MyComment>
-        <CommentTemplate commentDummy={defaultComment}></CommentTemplate>
+        <Styled.Wrapper>
+          <HashTagTemplate keywordDummy={keywordDummy} />
 
+          <Styled.LikeBtn onClick={LikeHandler}>
+            <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
+            <i className={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
+          </Styled.LikeBtn>
+          <MyComment></MyComment>
+          <CommentTemplate commentDummy={defaultComment}></CommentTemplate>
+        </Styled.Wrapper>
         {/* 새로고침할때마다 get으로 전체댓글 얻으면 수정되든 삭제되든 괜찮음, defaultComment에 넣기만 하면 된다. */}
       </Styled.Div>
     </>

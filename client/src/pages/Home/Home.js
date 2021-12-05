@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import HomeMap from "../../components/kakao-map/HomeMap";
 import PlaceList from "../../components/PlaceList";
-import KeyWordsList from "../../components/HashTag/Home-KeyWordsList";
+import HashTagList from "../../components/HashTag/HashTagList";
 import { useRecoilState } from "recoil";
 import { loading, defaultposition } from "../../recoil/recoil";
 
 const FixedComp = styled.div`
   position: relative;
-  margin-top: 90px;
+  margin-top: 120px;
 `;
 
 function Home() {
@@ -39,7 +39,7 @@ function Home() {
   return (
     <>
       <FixedComp>
-        <KeyWordsList />
+        <HashTagList />
         {isLoading ? (
           <div>로딩인디케이터 만들면 여기 넣기</div>
         ) : (

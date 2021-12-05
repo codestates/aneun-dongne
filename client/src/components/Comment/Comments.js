@@ -2,13 +2,13 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import styled from "styled-components";
 import OthersHashTag from "../HashTag/OthersHashTag";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { loginState, updateText, update } from "../../recoil/recoil";
+import { loginState, editcommentMode } from "../../recoil/recoil";
 import MyComment from "./MyComment";
 
 const Comment = styled.div`
   position: relative;
   display: flex;
-  border: 1px gray solid;
+  border: 1px red solid;
   height: 200px;
   border-radius: 20px;
   margin-top: 10px;
@@ -169,12 +169,16 @@ const Date = styled.div`
   right: 10px;
 `;
 
-function Comments({ img, nickname, text, initialTags, date, commentId }) {
+function Comments({ img, nickname, text, initialTags, date, commentId, editable }) {
   const [clickedBtn, setClickedBtn] = useState("");
   const divRef = useRef(null);
   const inputRef = useRef(null);
+  //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(text);
+  // const [prevComment, setPrevComment] = useState(text);
+  const [changeOrNot, setChangeOrNot] = useState(false);
+  const prevComment = text;
 
   useEffect(() => {
     setComment(text);
@@ -182,7 +186,7 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
 
   const username = "김코딩";
   //! 이것도 서버에서하래 유저권한 관련된건 다 서버에서 토큰이랑 비교후 결정
-  const canToChange = nickname === username;
+  // const editable = nickname === username; //
 
   function getCommentId(e) {
     e.preventDefault(); //필요한가?
@@ -210,10 +214,11 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
   // // 댓글 수정요청 보내는 함수 -> 어떻게하는거야..
   function changeComment() {
     if (commentId === undefined) console.log("수정하려는 댓글이 존재하지 않습니다.");
-
+    if (editMode) console.log("수정완료");
+    else console.log("댓글수정 클릭");
     setEditMode(!editMode);
 
-    console.log(clickedBtn, commentId);
+    // console.log(clickedBtn, commentId);
 
     setClickedBtn("");
   }
@@ -223,7 +228,10 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
     //axios
     // setComment(e.target.value);
   };
-  console.log(text);
+  useEffect(() => {
+    setComment(prevComment);
+    setEditMode(false);
+  }, [changeOrNot]);
   return (
     <>
       <Comment>
@@ -232,7 +240,7 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
           <NickName>{nickname}</NickName>
         </Profile>
         <ContentBox>
-          {!canToChange ? (
+          {!editable ? (
             <Content name="comment">{text}</Content>
           ) : (
             <ContentInput>
@@ -265,9 +273,15 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
               <button className="change-comment" onClick={(e) => getCommentId(e)}>
                 {editMode ? "수정완료" : "댓글수정"}
               </button>
-              <button className="delete-comment" onClick={(e) => getCommentId(e)}>
-                댓글삭제
-              </button>
+              {!editMode ? (
+                <button className="delete-comment" onClick={(e) => getCommentId(e)}>
+                  댓글삭제
+                </button>
+              ) : (
+                <button className="delete-comment" onClick={() => setChangeOrNot(!changeOrNot)}>
+                  수정취소
+                </button>
+              )}
             </ContentInput>
           )}
           <HashTagWrapper>

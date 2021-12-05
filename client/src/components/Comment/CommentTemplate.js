@@ -4,10 +4,11 @@ import Comments from "./Comments";
 
 const CommentWrapper = styled.div`
   width: 100%;
+  border: 1px gray solid;
 `;
 
 function CommentTemplate({ commentDummy }) {
-  console.log(commentDummy);
+  // console.log(commentDummy);
   return (
     <>
       <CommentWrapper>
@@ -23,6 +24,7 @@ function CommentTemplate({ commentDummy }) {
               initialTags={comment.tags}
               date={comment.date}
               commentId={idx}
+              editable={comment.editable}
             ></Comments>
           );
         })}

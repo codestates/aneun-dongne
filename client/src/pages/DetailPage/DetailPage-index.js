@@ -140,7 +140,7 @@ function DetailPage({ match }) {
           <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
           <i className={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
         </Styled.LikeBtn>
-        <Styled.Overview></Styled.Overview>
+
         <MyComment></MyComment>
         <CommentTemplate commentDummy={defaultComment}></CommentTemplate>
 

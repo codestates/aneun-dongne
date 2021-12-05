@@ -13,8 +13,10 @@ function CommentTemplate({ commentDummy }) {
       <CommentWrapper>
         {commentDummy.map((comment, idx) => {
           return (
-            <div key={idx}>
+            <>
+              {/* <div key={idx}> */}
               <Comments
+                key={idx}
                 img={comment.img}
                 nickname={comment.nickname}
                 text={comment.text}
@@ -22,7 +24,8 @@ function CommentTemplate({ commentDummy }) {
                 date={comment.date}
                 commentId={idx}
               ></Comments>
-            </div>
+              {/* </div> */}
+            </>
           );
         })}
       </CommentWrapper>

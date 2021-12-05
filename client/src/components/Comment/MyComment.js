@@ -50,7 +50,7 @@ const NickName = styled.span`
   width: 100%;
 `;
 
-const ContentBox = styled.div`
+const ContentBox = styled.form`
   margin-top: 30px;
   position: relative;
   width: 480px;
@@ -82,7 +82,7 @@ const ContentBox = styled.div`
   }
 `;
 
-const Content = styled.input`
+const Content = styled.textarea`
   position: absolute;
   top: 10px;
   left: 10px;
@@ -120,39 +120,56 @@ function MyComment() {
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   //이게 응답이라고 생각
-  const myComment = { img: "/people3.png", nickname: "김코딩", comment: "", tags: [], date: "DB에서 날라오겠지" };
+  const myComment = { img: "/people3.png", nickname: "김코딩", text: "", tags: [], date: "DB에서 날라오겠지" };
   const writeSomething = (e) => {
     setSomething(e.target.value);
   };
 
-  const registerMyComment = (something) => {
+  const registerMyComment = (e) => {
+    e.preventDefault();
     if (!isLogin) {
       setIsLoginOpen(true);
     }
-    console.log(something);
-    setUpdateComment(false); //창 내리기 하려고 만들었는데 왜 안됨 -> DetailPage-index 랑 연결
-    // axios들어가야함
-    setText(something);
-    setPending(true);
-  };
-
-  useEffect(() => {
-    if (pending) {
-      setUpdateComment(true);
-      if (text.length > 0) {
-        //엔터키 누르면 두번렌더링되서 한번 빈칸나오는거 우선 이렇게 해놨는데 임시방편임
-        //이렇게하면 댓글안쓰면 댓글입력하세요 메시지 나오게를 못함
-        setDefaultComment([{ ...myComment, ...{ text, tags } }, ...defaultComment, ,]);
-      }
-      console.log("myComment", text);
-      console.log("댓글확인 DefaultComment:", defaultComment);
-      setPending(false);
-      setTags([]);
-      setSomething("");
+    if (something === "") {
+      alert("내용을 입력해주세요");
+      return;
     }
-  }, [pending]);
+    // setText(something);
+    //!블로그
+    let body = { ...myComment, ...{ text: something, tags } };
+    // setDefaultComment(defaultComment.concat(body));
+    setDefaultComment([body].concat(defaultComment));
+    //댓글작성창 초기화
+    setSomething("");
+    setTags([]);
+    //!
+    //?기존
+    // // console.log(something);
+    // setUpdateComment(false); //창 내리기 하려고 만들었는데 왜 안됨 -> DetailPage-index 랑 연결
+    // // axios들어가야함
+    // // setText(something);
+    // setPending(true);
+    //?
+  };
+  //?
+  // useEffect(() => {
+  //   if (pending) {
+  //     setUpdateComment(true);
+  //     if (text.length > 0) {
+  //       //엔터키 누르면 두번렌더링되서 한번 빈칸나오는거 우선 이렇게 해놨는데 임시방편임
+  //       //이렇게하면 댓글안쓰면 댓글입력하세요 메시지 나오게를 못함
+  //       setDefaultComment([{ ...myComment, ...{ text, tags } }, ...defaultComment, ,]);
+  //     }
+  //     console.log("myComment", text);
+  //     console.log("댓글확인 DefaultComment:", defaultComment);
+  //     setPending(false);
+  //     setTags([]);
+  //     setSomething("");
+  //   }
+  // }, [pending]);
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
+  //?
   return (
     <CommentWrapper>
       <Comment>
@@ -167,13 +184,14 @@ function MyComment() {
             placeholder="댓글을 입력하슈"
             onChange={(e) => writeSomething(e)}
             onKeyUp={(e) => {
-              if (e.key === "Enter") registerMyComment(something);
+              if (e.key === "Enter") registerMyComment(e);
             }}
           ></Content>
-          <button onClick={() => registerMyComment(something)}>작성하기</button>
+
           <HashTagWrapper>
             <MyHashTag tags={tags} setTags={setTags} />
           </HashTagWrapper>
+          <button onClick={registerMyComment}>작성하기</button>
         </ContentBox>
         <Date>작성날짜 : {myComment.date}</Date>
       </Comment>

@@ -224,7 +224,7 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
     // setText("res.body.text");
     setClickedBtn("");
   }
-  console.log(text);
+  console.log(img, nickname, text, initialTags, date, commentId);
   return (
     <>
       <Comment>
@@ -233,27 +233,26 @@ function Comments({ img, nickname, text, initialTags, date, commentId }) {
           <NickName>{nickname}</NickName>
         </Profile>
         <ContentBox>
-          {/* {!canToChange ? ( */}
-          <Content name="comment">{text}</Content>
-          //{" "}
-          {/* // ) : (
-          // //   <ContentInput>
-          // //     <input
-          // //       id="comment"
-          // //       ref={commentRef}
-          // //       type="text"
-          // //       value={text} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
-          // //       onChange={(e) => ChangeHandler(e)}
-          // //       name="comment"
-          // //     />
-          // //     <button className="change-comment" onClick={(e) => getCommentId(e)}>
-          // //       댓글수정
-          // //     </button>
-          // //     <button className="delete-comment" onClick={(e) => getCommentId(e)}>
-          // //       댓글삭제
-          // //     </button>
-          // //   </ContentInput>
-          // // )} */}
+          {!canToChange ? (
+            <Content name="comment">{text}</Content>
+          ) : (
+            <ContentInput>
+              <input
+                id="comment"
+                ref={commentRef}
+                type="text"
+                value={text} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
+                onChange={(e) => ChangeHandler(e)}
+                name="comment"
+              />
+              <button className="change-comment" onClick={(e) => getCommentId(e)}>
+                댓글수정
+              </button>
+              <button className="delete-comment" onClick={(e) => getCommentId(e)}>
+                댓글삭제
+              </button>
+            </ContentInput>
+          )}
           <HashTagWrapper>
             <OthersHashTag initialTags={initialTags} />
           </HashTagWrapper>

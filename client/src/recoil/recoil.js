@@ -131,3 +131,9 @@ export const token = atom({
   key: "token",
   default: "",
 });
+
+//유저 정보를 수정해야 한다면...
+export const infoEdit = atom({
+  key: "infoEdit",
+  default: "",
+});

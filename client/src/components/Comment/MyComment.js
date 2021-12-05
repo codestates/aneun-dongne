@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MyHashTag from "../HashTag/MyHashTag";
 import { useRecoilState } from "recoil";
 import { mycomments } from "../../recoil/recoil";
+
 const CommentWrapper = styled.div`
   width: 100%;
 `;

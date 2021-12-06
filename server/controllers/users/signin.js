@@ -15,6 +15,7 @@ module.exports = (req, res) => {
       } else {
         delete data.dataValues.password;
         const accessToken = generateAccessToken(data.dataValues);
+
         res.cookie("jwt", accessToken);
         sendAccessToken(res, accessToken);
       }

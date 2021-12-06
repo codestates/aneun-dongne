@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState } from "recoil";
-
+import { withCookies, Cookies, useCookies } from "react-cookie";
 import { Styled } from "./style";
 import { message } from "../../message";
 
-import { token } from "../../recoil/recoil";
+import { token, loginState } from "../../recoil/recoil";
 
 const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandler }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [accessToken, setAccessToken] = useRecoilState(token);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -28,6 +30,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       setErrorMessage(message.loginPassword);
       return;
     }
+
     // `${process.env.REACT_APP_API_URL}/user/login`,
     await axios
       .post(
@@ -39,19 +42,20 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         { "Content-Type": "application/json", withCredentials: true }
       )
       .then((res) => {
-        // closeLoginModalHandler();
-        console.log("하이");
-        setAccessToken(res.data.data.accessToken);
+        console.log(res);
+        // setAccessToken(res.data.data.accessToken);
+        closeLoginModalHandler();
+        setIsLogin(true);
       })
       .then(() => {
-        console.log(accessToken);
+        // console.log(accessToken);
         handleResponseSuccess();
       })
       .catch(() => {
         setErrorMessage(message.loginError);
       });
   };
-
+  console.log("모달로그인", cookies);
   useEffect(() => {});
 
   return (

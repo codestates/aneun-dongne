@@ -73,18 +73,19 @@ export const TagsInput = styled.div`
 `;
 
 const OthersHashTag = ({ initialTags }) => {
-  console.log(initialTags);
-  const [tags, setTags] = useState(initialTags);
+  // const [tags, setTags] = useState(initialTags);
 
   return (
     <>
       <TagsInput>
         <div id="tags">
-          {tags.map((tag, index) => (
-            <div key={index} className="tag">
-              {tag}
-            </div>
-          ))}
+          {initialTags
+            ? initialTags.map((tag, index) => (
+                <div key={index} className="tag">
+                  {tag}
+                </div>
+              ))
+            : null}
         </div>
       </TagsInput>
     </>

@@ -7,14 +7,12 @@ export const Styled = {
     z-index: 999;
     background-color: white;
     width: 100%;
-
     .header-wrapper {
       display: flex;
       justify-content: space-between;
     }
     #logo {
       cursor: pointer;
-      margin: 20px;
       font-size: 2rem;
       font-weight: bold;
       width: 100px;
@@ -27,7 +25,7 @@ export const Styled = {
     .mainpage-button {
       cursor: pointer;
       margin: 20px 20px;
-      width: 90px;
+      width: 100px;
       text-align: center;
       font-size: 1.5rem;
       font-weight: bold;

@@ -2,8 +2,11 @@ import styled from "styled-components";
 
 export const Styled = {
   Div: styled.div`
+    width: 700px;
     margin-top: 30px;
     margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -29,6 +32,6 @@ export const Styled = {
   Address: styled.div`
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
   `,
 };

@@ -122,11 +122,11 @@ function MyComment() {
   const setIsLoginOpen = useSetRecoilState(loginModal);
   //이게 응답이라고 생각
   const myComment = {
-    img: "/people3.png",
-    nickname: "김코딩",
+    img: "/people3.png", //유저 프로필
+    nickname: "김코딩", //유저닉네임
     text: "",
     tags: [],
-    date: "DB에서 날라오겠지",
+    date: "DB에서 날라오겠지", //현재날짜
     editable: true,
   };
   const writeSomething = (e) => {

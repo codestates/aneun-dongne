@@ -29,7 +29,7 @@ const App = () => {
     await axios
       .get("http://localhost:80/user/info", {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -42,13 +42,14 @@ const App = () => {
   };
   //쿠키안에 jwt 있는지 보고 로긴상태결정
   useEffect(() => {
-    console.log(cookies.jwt);
     if (cookies.jwt) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
     }
+    console.log(cookies);
   }, []);
+
   const handleResponseSuccess = () => {
     isAuthenticated();
   };

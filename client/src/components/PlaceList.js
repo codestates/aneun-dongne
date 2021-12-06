@@ -10,8 +10,10 @@ import { Link } from "react-router-dom";
 const PlaceLists = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 40px;
   text-decoration-line: none;
+  margin-left: 30px;
 `;
 const MoveToTopBtn = styled.button`
   border-radius: 70%;

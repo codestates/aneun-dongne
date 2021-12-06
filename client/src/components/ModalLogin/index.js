@@ -30,7 +30,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       setErrorMessage(message.loginPassword);
       return;
     }
-    console.log(cookies);
+
     // `${process.env.REACT_APP_API_URL}/user/login`,
     await axios
       .post(
@@ -42,21 +42,20 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         { "Content-Type": "application/json", withCredentials: true }
       )
       .then((res) => {
-        console.log(cookies.jwt);
-
-        setAccessToken(res.data.data.accessToken);
+        console.log(res);
+        // setAccessToken(res.data.data.accessToken);
         closeLoginModalHandler();
         setIsLogin(true);
       })
       .then(() => {
         // console.log(accessToken);
-        // handleResponseSuccess();
+        handleResponseSuccess();
       })
       .catch(() => {
         setErrorMessage(message.loginError);
       });
   };
-
+  console.log("모달로그인", cookies);
   useEffect(() => {});
 
   return (

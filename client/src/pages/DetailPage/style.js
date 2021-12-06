@@ -119,6 +119,8 @@ export const Styled = {
     }
   `,
   Wrapper: styled.div`
+    display: flex;
+    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
     width: 700px;

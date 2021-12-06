@@ -4,28 +4,15 @@ import { useRecoilValue, useRecoilState } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
 import styled from "styled-components";
 import dotenv from "dotenv";
-import notImageYet from "../../img/not-image-yet.png";
-import { placelist, nowlocation } from "../../recoil/recoil";
-import "./kakao-map.css";
-import { cat1_name } from "../../location-data";
-import HomeRightbar from "../Home-Rightbar/Home-Rightbar-index";
-import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
-dotenv.config();
+import notImageYet from "../../../img/not-image-yet.png";
+import { placelist, nowlocation } from "../../../recoil/recoil";
+import "../kakao-map.css";
+import { cat1_name } from "../../../location-data";
+import HomeRightbar from "../../Home-Rightbar/Home-Rightbar-index";
+import HomeRightBtn from "../../Home-RightBtn/HomeRightBtn-index";
+import { Styled } from "./style.js";
 
-//지도
-const Map = styled.div`
-  width: 70%;
-  &:hover {
-    color: black;
-    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05);
-  }
-  &:hover:after {
-    left: 0;
-    width: 100%;
-  }
-`;
+dotenv.config();
 
 const HomeMap = ({ defaultPosition }) => {
   const kakao = window.kakao;
@@ -52,7 +39,7 @@ const HomeMap = ({ defaultPosition }) => {
   const [sigg, setSigg] = useState(" "); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
-  const [level, setLevel] = useState(9);
+  const [level, setLevel] = useState(7);
   // console.log("클릭한지점", pickPoint);
   /**
    *! 장소 검색시 실행되는 함수 serachPlace
@@ -305,8 +292,7 @@ const HomeMap = ({ defaultPosition }) => {
   };
   /* margin-top:${(props)=>props.first?'10px':'50px'} */
   return (
-    <div className="map-box">
-      <Map id="map"></Map>
+    <Styled.Div>
       <HomeRightbar
         area={area}
         sigg={sigg}
@@ -317,12 +303,9 @@ const HomeMap = ({ defaultPosition }) => {
         searchPlace={searchPlace}
         place={place}
       />
-      <HomeRightBtn />
-      {/* <RightBtnBox>
-        <RightBtn>현재위치 저장</RightBtn>
-        <RightBtn>내가 가본 곳</RightBtn>
-      </RightBtnBox> */}
-    </div>
+
+      <Styled.Map id="map"></Styled.Map>
+    </Styled.Div>
   );
 };
 

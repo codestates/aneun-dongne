@@ -26,7 +26,7 @@ export const MenuBar = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #bed8ff;
+  background-color: #8ea1da;
 
   > img {
     margin: 30px;
@@ -44,7 +44,7 @@ export const MenuBar = styled.div`
     font-size: 1.5em;
     font-weight: 600;
     margin-top: 20px;
-    background-color: #bed8ff;
+    background-color: #8ea1da;
   }
 `;
 
@@ -63,7 +63,7 @@ export const View = styled.div`
   height: 80vh;
   border-radius: 10px;
   position: relative;
-  background-color: rgb(198 233 255);
+  background-color: #ebecef;
 `;
 const Viewcontent = styled.div`
   margin: 0px 0px 0 340px;
@@ -97,12 +97,12 @@ export const ContentBox = styled.div`
 
   > button {
     position: absolute;
-    right: 10px;
+    right: -100px;
     top: 20px;
     width: 80px;
     border: none;
     height: 40px;
-    background-color: rgb(192, 251, 255);
+    background-color: #8ea1da;
     background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
@@ -124,74 +124,50 @@ export const ContentBox = styled.div`
 
 dotenv.config();
 
-export default function UserInfo(props) {
+//회원수정, 로그아웃시켜줘야힘.
+
+const UserInfo = ({ accessToken, isLogout, props }) => {
+  const [userinfo, setUserInfo] = useRecoilState(userInfo);
+
   const [imgUrl, setImgUrl] = useState("");
   const [inputUsername, setInputUsername] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [InputPassword, setInputPassword] = useState("");
   const [InputNewPassword, setInputNewPassword] = useState("");
-  const [userinfo, setUserInfo] = useRecoilState(userInfo);
-  const [infoEdit, setInfoEdit] = useState("");
+  const [ConfirmMessage, setConfirmMessage] = useState("");
+  const [isDelete, setIsDelete] = useState(false);
+  // const [PasswordErr, setPasswordErr] = useState("");
+  // const [passwordError, setPasswordError] = useState("");
+  // const [passwordCheckError, setPasswordCheckError] = useState("");
 
   const history = useHistory();
 
+  useEffect(() => {
+    axios
+      .get("https://localhost:3000/user/info", { withCredentials: true })
+
+      .then((res) => {
+        if (!res.data) {
+          alert("로그인모달창으로 갑니다");
+        } else {
+          const { imgUrl, inputUsername, inputEmail } = res.data.data.userInfo;
+
+          setImgUrl(imgUrl);
+          setInputUsername(inputUsername);
+          setInputEmail(inputEmail);
+          props.accessToken(res.data.Info);
+        }
+      });
+  }, [accessToken]);
+
   //정보를 바로 받아온다면...?
-
-  // const EditWriteUserInfo = (e) => {
-  //   setInfoEdit(e.target.value);
-  // };
-
-  // const confirmInfo = (word) => {
-  //   setInfoEdit("");
-  //   setUserInfo([...userInfo, [word]]);
-  // };
 
   //app.js에서 login인인 상태에서 mypage로 들어온다.
   //아닐 경우에는 로그인 모달창이 뜨게 함.
 
   //로그인 상태를 recoil에서 true로 가져온다.
 
-  useEffect(() => {}, []);
-
-  const accessTokenRequest = () => {
-    axios.get("https://localhost:3000/user/info", { withCredentials: true }).then((res) => {
-      if (!res.data) {
-        alert("로그인모달창으로 갑니다");
-      } else {
-        const { imgUrl, inputUsername, inputEmail } = res.data.data.userInfo;
-
-        setImgUrl(imgUrl);
-        setInputUsername(inputUsername);
-        setInputEmail(inputEmail);
-        props.accessToken(res.data.Info);
-      }
-    });
-  };
-
-  const saveBtnHandler = (e) => {
-    // const token = JSON.parse(localStorage.getItem("token"));
-    axios
-      .put(
-        "https://localhost:3000/mypage",
-        {
-          // email: inputUsername,
-          nickname: userInfo.nikename,
-          users_image_path: userInfo.users_image_path,
-          password: userInfo.password,
-          new_password: userInfo.new_password, //새로운 비밀번호 추가됨.
-        },
-        {
-          "Content-Type": "application/json",
-          withCredentials: true,
-          // Authorization: `token ${token}`,
-        }
-      )
-      .then((res) => {
-        // localStorage.clear();
-        history.push("/mypage");
-      })
-      .catch((err) => console.log(err));
-  };
+  // const accessTokenRequest = () => {
 
   //파일변경
   const handleChangeFile = (e) => {
@@ -223,23 +199,81 @@ export default function UserInfo(props) {
     setInputNewPassword(e.target.value);
   };
 
+  //유효성검사
+  const validePassword = (InputPassword, InputNewPassword) => {
+    if (InputPassword !== InputNewPassword) {
+      alert("동일한 비밀번호를 입력하세요!");
+      return false;
+    }
+  };
+
+  //빈칸이 있는지 확인
   const handleEdit = () => {
     if (imgUrl === "" || inputUsername === "" || inputEmail === "" || InputPassword === "") {
       alert("빈칸이 있어요!");
       return;
     }
   };
+
   useEffect(() => {
     axios.post("http://localhost:3000/mypage").then((res) => {
       console.log(res);
     });
   }, []);
 
-  //댓글 추가 창처럼 내용이 추가되는 것....
+  const saveBtnHandler = () => {
+    if (!validePassword || !handleEdit) {
+      // const token = JSON.parse(localStorage.getItem("token"));
+      axios
+        .put(
+          "https://localhost:3000/mypage",
+          {
+            // email: inputUsername,
+            nickname: userInfo.nikename,
+            users_image_path: userInfo.users_image_path,
+            password: userInfo.password,
+            new_password: userInfo.new_password, //새로운 비밀번호 추가됨.
+          },
+          {
+            "Content-Type": "application/json",
+            withCredentials: true,
+            // Authorization: `token ${token}`,
+          }
+        )
+        .then((res) => {
+          setConfirmMessage("변경된 내용이 저장되었습니다!");
+          // localStorage.clear();
+          history.push("/mypage");
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  //회원탈퇴
+  const deleteHandler = () => {
+    axios
+      .delete(`http://localhost:4000/user/mypage`, {
+        headers: {
+          authorization: accessToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("탈퇴가 될지...", res);
+        isLogout();
+        setIsDelete(true);
+        setTimeout(() => {
+          history.push("/");
+        }, 1000);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Body>
       <MenuBar>
-        <img src={imgUrl} />
+        {/* <img src={imgUrl} /> */}
+        <img src="./people3.png" />
         <input type="file" id="input-file" onChange={handleChangeFile} />
         <button>프로필수정</button>
         <button>좋아요 한 관광지</button>
@@ -250,7 +284,9 @@ export default function UserInfo(props) {
       <userInfopage>
         <View>
           <Viewcontent>
-            <ProfileImg src={imgUrl}></ProfileImg>
+            {/* <ProfileImg src={imgUrl}></ProfileImg> */}
+            <ProfileImg src="./korea03.jpg"></ProfileImg>
+            <input type="file" id="input-file" onChange={handleChangeFile} />
             <ContentBox>
               {/* <Content
           type="text"
@@ -260,25 +296,33 @@ export default function UserInfo(props) {
             if (e.key === "Enter") confirmInfo(word);
           }}
         ></Content> */}
-              <input type="file" id="input-file" onChange={handleChangeFile} />
-              <div type="text" value={inputEmail}>
-                여기 이메일
-              </div>
 
-              <input type="text" placeholder="name" value={inputUsername} onChange={handleInputUsername} />
+              <div type="text" placeholder={inputEmail} value={inputEmail}>
+                여기 이메일 고정
+              </div>
+              <div>닉네임</div>
+              <input type="text" placeholder={inputUsername} value={inputUsername} onChange={handleInputUsername} />
               {/* <input type="text" placeholder="email" value={inputEmail} onChange={handleInputEmail} /> */}
+              <div>비밀번호</div>
               <input type="password" placeholder="password" value={InputPassword} onChange={handleInputPassword} />
+              <div>비밀번호 확인</div>
               <input
                 type="password"
                 placeholder="password confirm"
                 value={InputNewPassword}
                 onChange={handleInputNewPassword}
               />
-              <button onClick={() => saveBtnHandler()}>저장</button>
+              <button className="btn edit" onClick={saveBtnHandler()}>
+                저장
+              </button>
             </ContentBox>
+            <button className="btn exit" onClick={() => deleteHandler()}>
+              회원탈퇴
+            </button>
           </Viewcontent>
         </View>
       </userInfopage>
     </Body>
   );
-}
+};
+export default UserInfo;

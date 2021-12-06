@@ -71,7 +71,13 @@ const App = () => {
           아닐 경우에는 로그인 모달창이 뜨게 함.*/}
           {/* {isLogin ? <Mypage info={info} accessToken={accessToken} /> : <Home info={info} />} */}
           <Mypage />
+          {/* </Route>
+        <Route exact path="/mypage/likelists">
+          <Likelist /> */}
         </Route>
+        {/* <Commentlist />
+          <Visted /> */}
+
         <Route exact path="/detailpage/:id" component={DetailPage}></Route>
         {/* <Redirect from="*" to="/" /> */}
       </Switch>

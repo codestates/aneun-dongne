@@ -12,7 +12,7 @@ export const Body = styled.div`
   flex-direction: column;
 `;
 
-const userInfopage = styled.div`
+export const userInfopage = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -22,18 +22,18 @@ const userInfopage = styled.div`
   z-index: -1;
 `;
 
-const userProfilePage = styled.div`
+export const userProfilePage = styled.div`
   width: 500px;
   height: 500px;
 `;
-const ProfileImg = styled.img`
+export const ProfileImg = styled.img`
   border-radius: 50%;
   width: 80px;
   height: 80px;
   position: absolute;
   /* background-color: white; */
 `;
-const ContentBox = styled.div`
+export const ContentBox = styled.div`
   margin-top: 40px;
   position: relative;
   width: 480px;
@@ -65,37 +65,69 @@ const ContentBox = styled.div`
   }
 `;
 
-const LeftBar = styled.div`
+export const MenuBar = styled.div`
+  margin: 0px 50px 0 30px;
+  background: white;
+  box-shadow: rgb(180 180 180) -1px 1px 8px;
+  border-radius: 20px;
+  width: 320px;
+  height: 650px;
+  border-radius: 10px;
+  position: absolute;
+  padding: 20px;
+  z-index: 9;
+
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  color: var(--c-text-tertiary);
-  a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: 0.25s ease;
+  align-items: center;
 
-    * {
-      transition: 0.25s ease;
-    }
+  > img {
+    margin-top: 20px;
+    width: 30px;
+    cursor: pointer;
+  }
+  > input {
+    border: none;
+  }
+  .miniTitle {
+    align-self: flex-start;
 
-    i {
-      margin-right: 0.75rem;
-      font-size: 1.25em;
-      flex-shrink: 0;
-    }
-
-    & + a {
-      margin-top: 1.25rem;
-    }
-
-    &:hover,
-    &:focus {
-      transform: translateX(4px);
-      color: var(--c-text-primary);
+    > span {
+      margin-left: 10px;
+      margin-right: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
   }
+  #location {
+    color: black;
+    margin: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 20px;
+  }
+`;
+export const View = styled.div`
+  float: right;
+  width: 65%;
+  height: 100vh;
+  border-radius: 10px;
+  position: relative;
+`;
+
+const SearchResults = styled.div`
+  margin: 0px 0px 0 340px;
+
+  border-radius: 10px;
+  width: 200px;
+  height: 600px;
+  position: relative;
+  padding: 30px;
+
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 dotenv.config();
@@ -185,10 +217,27 @@ export default function UserInfo() {
   //댓글 추가 창처럼 내용이 추가되는 것....
   return (
     <Body>
+      <MenuBar>
+        여기에!
+        <div>
+          <img src={imgUrl} />
+          <label className="input-file-btn" for="input-file">
+            <div className="icon-text">수정</div>
+          </label>
+          <input type="file" id="input-file" accept="image/*" onChange={handleChangeFile} />
+          <div>프로필수정</div>
+          <div>좋아요 한 관광지</div>
+          <div>내가 쓴 리뷰</div>
+          <div>내가 가본 곳</div>
+        </div>
+      </MenuBar>
+
       <userInfopage>
-        <ProfileImg src="/people3.png"></ProfileImg>
-        <ContentBox>
-          {/* <Content
+        <View>
+          <SearchResults>
+            <ProfileImg src="/people3.png"></ProfileImg>
+            <ContentBox>
+              {/* <Content
           type="text"
           value={userinfo}
           onChange={(e) => EditWriteUserInfo(e)}
@@ -196,24 +245,14 @@ export default function UserInfo() {
             if (e.key === "Enter") confirmInfo(word);
           }}
         ></Content> */}
-          <div>
-            <img src={imgUrl} />
-            <label className="input-file-btn" for="input-file">
-              <div className="icon-text">수정</div>
-            </label>
-            <input type="file" id="input-file" accept="image/*" onChange={handleChangeFile} />
-          </div>
-          <input type="text" placeholder="name" value={inputUsername} onChange={handleInputUsername} />
-          <input type="text" placeholder="email" value={inputEmail} onChange={handleInputEmail} />
-          <input type="password" placeholder="password" value={InputPassword} onChange={handleInputPassword} />
-          <button onClick={() => saveBtnHandler()}>저장</button>
-          <div className="btn comfirm" onClick={handleEdit}>
-            저장
-          </div>
-          <div className="btn comfirm" onClick={handleEdit}>
-            회원탈퇴
-          </div>
-        </ContentBox>
+              <input type="file" id="input-file" accept="image/*" onChange={handleChangeFile} />
+              <input type="text" placeholder="name" value={inputUsername} onChange={handleInputUsername} />
+              <input type="text" placeholder="email" value={inputEmail} onChange={handleInputEmail} />
+              <input type="password" placeholder="password" value={InputPassword} onChange={handleInputPassword} />
+              <button onClick={() => saveBtnHandler()}>저장</button>
+            </ContentBox>
+          </SearchResults>
+        </View>
       </userInfopage>
     </Body>
   );

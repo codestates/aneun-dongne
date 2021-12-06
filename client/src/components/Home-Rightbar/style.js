@@ -11,7 +11,7 @@ export const Styled = {
     margin-left: 10px;
     margin-top: 10px;
 
-    width: 700px;
+    width: 600px;
     /* height: 130px; */
 
     /* &:hover {
@@ -24,16 +24,19 @@ export const Styled = {
       left: 0;
       width: 100%;
     } */
+
     > p {
-      margin-top: 10px;
-      margin-left: 10px;
+      margin: 2% auto;
+
+      text-align: center;
     }
   `,
   SearchWrapper: styled.div`
     height: 40px;
-
+    width: 550px;
+    margin: auto;
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-around; */
     height: 50px;
   `,
   // 도|시군구
@@ -43,6 +46,7 @@ export const Styled = {
     width: 50%;
     height: 100%;
     background-color: white;
+
     /* background-color: red; */
     border: none;
     /* border: 1px pink solid; */
@@ -51,12 +55,11 @@ export const Styled = {
   `,
   //도|시군구를 감싸고있는 div
   SearchBar: styled.div`
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 5px;
+    margin: 5px 2% 5px 2%;
+    /* margin-right: 5%; */
     display: flex;
     padding: 5px;
-    width: 180px;
+    width: 300px;
     height: 40px;
     border-radius: 5px;
     border: 1px gray solid;
@@ -73,11 +76,12 @@ export const Styled = {
     }
   `,
   //키워드 검색
-  SearchKeyWord: styled.input`
-    margin-top: 5px;
+  SearchKeyWord: styled.select`
+    /* margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 5px;
-    width: 180px;
+    margin-left: 5px; */
+    margin: 5px 2% 5px 2%;
+    width: 130px;
     height: 40px;
     background-color: white;
     background-image: linear-gradient(
@@ -125,9 +129,10 @@ export const Styled = {
   //장소검색
   SearchPlace: styled.input`
     border: 1px gray solid;
-    margin-top: 5px;
+    /* margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 5px;
+    margin-left: 5px; */
+    margin: 5px 2% 5px 2%;
     width: 180px;
     height: 40px;
     background-color: white;
@@ -151,7 +156,7 @@ export const Styled = {
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 5px;
-    width: 100px;
+    width: 80px;
     height: 40px;
     background-color: rgb(192, 251, 255);
     background-image: linear-gradient(

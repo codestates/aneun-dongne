@@ -8,9 +8,22 @@ import { placelist, placeaddress, placelocation, placeimg, placetitle } from "..
 import { Link } from "react-router-dom";
 
 const PlaceLists = styled.div`
-  height: 100vh;
+  /* height: 100vh; */
+
+  @media (min-width: 700px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1440px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 1920px) {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 40px;
   text-decoration-line: none;
   margin-left: 30px;

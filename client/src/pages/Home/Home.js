@@ -1,25 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import HomeMap from "../../components/kakao-map/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList";
 import HashTagList from "../../components/HashTag/HashTagList";
 import { useRecoilState } from "recoil";
-import { loading, defaultposition } from "../../recoil/recoil";
+import { loading, defaultposition, usersaddress } from "../../recoil/recoil";
+import Loading from "../../components/Loading";
 
 const FixedComp = styled.div`
-  border-top: 1px gray solid;
-  margin-top: 80px;
+  margin-top: 73px;
 `;
 const DivRow = styled.div`
-  display: row;
+  display: flex;
+  justify-content: space-evenly;
 `;
 const DivColumn = styled.div`
   display: flex;
   flex-direction: column;
+  align-content: center;
+`;
+const DivColumnSecond = styled.div`
+  display: flex;
+
+  flex-direction: column;
+  align-content: center;
+  /* border: 1px gray solid; */
+  position: absolute;
+  right: 3%;
 `;
 
 function Home() {
   const [isLoading, setIsLoading] = useRecoilState(loading);
+  const [add, setAdd] = useRecoilState(usersaddress);
+  const [pending, setPending] = useState(false);
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
   // * 현재위치 받는 useEffect
   const getPosition = () => {
@@ -31,32 +45,53 @@ function Home() {
         // console.log(isLoading);
 
         setDefaultPosition({ lat, lon });
-        setIsLoading(false);
+        console.log(isLoading);
+        axios
+          .get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`, {
+            headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+          })
+          .then((res) => {
+            return res.data.documents[0].address;
+          })
+          .then((address) => {
+            console.log(address);
+            setAdd({
+              area: address.region_1depth_name,
+              sigg: address.region_2depth_name,
+              address: address.address_name,
+            });
+          })
+          //   .then(res=>console.log(meetingPlace))
+          .catch((err) => console.log(err)); //237줄에 console.log(meetingPlace)있음.
         // console.log(isLoading);
+        setIsLoading(false);
       },
       (err) => alert("위치권한을 허용해주세요")
     );
   };
   useEffect(() => {
     // console.log("이건돼?");
+
     getPosition();
-    // console.log(defaultPosition);
-  });
+    // console.log(add);
+
+    // // console.log(defaultPosition);
+  }, [add]);
 
   return (
     <>
       <FixedComp>
         {isLoading ? (
-          <div>로딩인디케이터 만들면 여기 넣기</div>
+          <Loading />
         ) : (
           <DivRow>
             <DivColumn>
               <HomeMap defaultPosition={defaultPosition} />
             </DivColumn>
-            <DivColumn>
-              <HashTagList />
+            <DivColumnSecond>
+              {/* <HashTagList /> */}
               <PlaceList />
-            </DivColumn>
+            </DivColumnSecond>
           </DivRow>
         )}
       </FixedComp>

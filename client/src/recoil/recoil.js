@@ -2,10 +2,10 @@ import { atom, selector } from "recoil";
 import axios from "axios";
 //
 
-//
-export const nowlocation = atom({
+//! 유저 주소
+export const usersaddress = atom({
   key: "nowlocation",
-  default: { lat: 0, lon: 0 },
+  default: { add: "", sigg: "", addr: "" },
 });
 
 export const placelist = atom({
@@ -172,4 +172,33 @@ export const getPlace = selector({
 export const token = atom({
   key: "token",
   default: "",
+});
+
+// ! 위치기반 API
+
+export const setLo = selector({
+  key: "setLo",
+  get: async ({ get }) => {
+    return (
+      axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${get(pickpoint)[1]}&y=${
+            get(pickpoint)[0]
+          }&input_coord=WGS84`,
+          { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
+        )
+        .then((res) => res.data.documents[0].address)
+        .then((address) => {
+          // console.log(address)
+          console.log({
+            area: address.region_1depth_name,
+            sigg: address.region_2depth_name,
+            address: address.address_name,
+          });
+          return { area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name };
+        })
+        //   .then(res=>console.log(meetingPlace))
+        .catch((err) => console.log(err))
+    ); //237줄에 console.log(meetingPlace)있음.
+  },
 });

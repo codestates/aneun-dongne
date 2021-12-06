@@ -5,7 +5,8 @@ export const Styled = {
     margin-top: 80px;
     display: flex;
     flex-direction: column;
-    width: 700px;
+    /* width: 700px; */
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     > .hide {
@@ -14,35 +15,63 @@ export const Styled = {
   `,
   Img: styled.img`
     /* border: 1px red solid; */
-    width: 696px;
+    width: 700px;
     height: 466px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgb(85, 85, 85);
+    transition: box-shadow 0.1s, transform 0.1s;
+    text-decoration: inherit;
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
   `,
 
-  Address: styled.h2`
+  Title: styled.h2`
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 50px;
+    margin-top: 60px;
+    padding: 10px;
     color: skyblue;
+    &:hover {
+      transform: scale(1.05);
 
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-  `,
-  Title: styled.div`
-    margin-left: auto;
-    margin-right: auto;
+      transition: all 0.3s ease;
+    }
   `,
   PageURL: styled.a`
     margin-left: auto;
     margin-right: 2rem;
     margin-bottom: 2rem;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
   `,
 
   Overview: styled.span`
     width: 700px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 15px;
+    line-height: 30px;
+    border: 1px rgb(192, 251, 255) solid;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 4px 4px 4px rgb(85, 85, 85);
+    transition: box-shadow 0.1s, transform 0.1s;
+    text-decoration: inherit;
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
 
     > .hide {
       display: none;
@@ -70,8 +99,10 @@ export const Styled = {
     height: 30px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
     cursor: pointer;
-    transition: all 0.5s ease-in-out;
+    box-shadow: 4px 4px 4px rgb(85, 85, 85);
+    transition: all 0.1s ease-in-out;
     &:hover {
       color: black;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -82,8 +113,16 @@ export const Styled = {
       left: 0;
       width: 100%;
     }
+
     &:active {
       transform: scale(1.3);
     }
+  `,
+  Wrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
   `,
 };

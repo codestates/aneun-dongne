@@ -13,8 +13,8 @@ const Div = styled.div`
   border-radius: 10px;
   border: 1px rgb(192, 251, 255) solid;
   height: 140px;
-  margin-left: 10px;
-  margin-top: 10px;
+  /* margin-left: 10px; */
+  /* margin-top: 10px; */
 `;
 
 function HashTagList() {

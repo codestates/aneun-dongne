@@ -10,8 +10,12 @@ const FixedComp = styled.div`
   border-top: 1px gray solid;
   margin-top: 80px;
 `;
-const Div = styled.div`
+const DivRow = styled.div`
+  display: row;
+`;
+const DivColumn = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 function Home() {
@@ -45,14 +49,15 @@ function Home() {
         {isLoading ? (
           <div>로딩인디케이터 만들면 여기 넣기</div>
         ) : (
-          <>
-            <Div>
+          <DivRow>
+            <DivColumn>
               <HomeMap defaultPosition={defaultPosition} />
-
+            </DivColumn>
+            <DivColumn>
               <HashTagList />
-            </Div>
-            <PlaceList />
-          </>
+              <PlaceList />
+            </DivColumn>
+          </DivRow>
         )}
       </FixedComp>
     </>

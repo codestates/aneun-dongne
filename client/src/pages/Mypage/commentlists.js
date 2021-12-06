@@ -20,8 +20,8 @@ function Commentlists() {
     axios
       .get(
         `http://localhost:3000/mypage/commentlist`,
-        { data: { landmark, HashTag, likeCount } },
-        { "content-type": "application/json" }
+        // { data: { landmark, HashTag, likeCount } },
+        { "content-type": "application/json", withCredentials: true }
       )
       .then((res) => console.log(res));
     setSeletedLike(e.target.value);

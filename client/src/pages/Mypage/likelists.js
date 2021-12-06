@@ -20,8 +20,8 @@ function Likelists() {
     axios
       .get(
         `http://localhost:3000/mypage/likelists`,
-        { data: { landmark, HashTag, likeCount } },
-        { "content-type": "application/json" }
+        // { data: { landmark, HashTag, likeCount } },
+        { "content-type": "application/json", withCredentials: true }
       )
       .then((res) => console.log(res));
     setSeletedLike(e.target.value);

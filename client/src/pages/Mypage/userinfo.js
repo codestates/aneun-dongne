@@ -156,16 +156,25 @@ export default function UserInfo() {
   useEffect(() => {}, []);
 
   const saveBtnHandler = (e) => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    // const token = JSON.parse(localStorage.getItem("token"));
     axios
       .put(
         {
-          useInfo: { email: userInfo.email, nickname: userInfo.nikename, users_image_path: userInfo.users_image_path },
+          // email,
+          // nickname,
+          // users_image_path: {
+          //   // email: inputUsername,
+          //   nickname: userInfo.nikename,
+          //   users_image_path: userInfo.users_image_path,
+          //   password,
+          //   new_password,
         },
+        //내가 작성한 email
+
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${token}`,
+            // Authorization: `token ${token}`,
           },
           withCredentials: true,
         }
@@ -177,6 +186,7 @@ export default function UserInfo() {
       });
   };
 
+  //유효성검사추가
   //양식을 채울때
 
   const handleInputUsername = (e) => {

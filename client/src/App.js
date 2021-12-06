@@ -57,6 +57,7 @@ const App = () => {
           <Home info={info} />
         </Route>
         <Route exact path="/mypage">
+          {/* 로그인을 했을때 보이게 */}
           <Mypage />
         </Route>
         <Route exact path="/detailpage/:id" component={DetailPage}></Route>

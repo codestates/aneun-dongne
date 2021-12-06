@@ -4,13 +4,14 @@ import { cat1_name, cat2_name } from "../../location-data";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { loading, defaultposition, usersaddress, pickpoint, setLo } from "../../recoil/recoil";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
+import Loading from "../Loading";
 function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
   const [area, setArea] = useState(""); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
   const [sigg, setSigg] = useState(""); //메인페이지에서 넘어오면 userAddress[1]넣기
   const [add, setAdd] = useRecoilState(usersaddress);
   const loc = useRecoilValueLoadable(setLo);
-  const [pickPoint, setPickPoint] = useRecoilState(pickpoint);
+
   const changeArea = (area) => {
     console.log(area);
     searchPlace(area);
@@ -43,9 +44,13 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
 
   if (loc.state === "loading") {
     console.log("로딩");
-    return <div>hi</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
-  console.log(loc.contents.area);
+  console.log(loc);
 
   // useEffect(()=>{
 

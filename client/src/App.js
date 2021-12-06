@@ -15,6 +15,7 @@ import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 import Slider from "./pages/Slider/Slider";
+import Mypage from "./pages/Mypage/userinfo";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -64,6 +65,10 @@ const App = () => {
         </Route>
         <Route exact path="/home">
           <Home info={info} />
+        </Route>
+        <Route exact path="/mypage">
+          {/* 로그인을 했을때 보이게 */}
+          <Mypage />
         </Route>
         <Route exact path="/detailpage/:id" component={DetailPage}></Route>
         {/* <Redirect from="*" to="/" /> */}

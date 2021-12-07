@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { placelist } from "../recoil/recoil";
+import { placelist, loginState } from "../recoil/recoil";
 
 export const Body = styled.div`
   position: relative;
@@ -183,7 +183,7 @@ export const Image = styled.div`
 
 function Mainpage() {
   const placeList = useRecoilValue(placelist);
-
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const history = useHistory();
   const ToHome = () => {
     history.push("/home");
@@ -195,7 +195,7 @@ function Mainpage() {
             <source src="/Main.mp4" type="video/mp4" />
           </video> */
   }
-
+  console.log("로긴되었나요", isLogin);
   return (
     <>
       <Body>

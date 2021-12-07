@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
-import styled from "styled-components";
-=======
 import styled, { keyframes } from "styled-components";
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
 import OthersHashTag from "../HashTag/OthersHashTag";
 import { useRecoilState } from "recoil";
 import { defaultcomments } from "../../recoil/recoil";
@@ -183,11 +179,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
 
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
-<<<<<<< HEAD
-  const [comment, setComment] = useState("text");
-=======
   const [comment, setComment] = useState(text);
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
 
   const [changeOrNot, setChangeOrNot] = useState(false);
   const [tags, setTags] = useState(initialTags);
@@ -199,13 +191,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
     setComment(text);
     setTags(initialTags);
   }, [text, initialTags]);
-<<<<<<< HEAD
-=======
   useEffect(() => {
     console.log("위", text);
     setPrevComment(text);
   }, []);
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
 
   const username = "김코딩";
   //! 이것도 서버에서하래 유저권한 관련된건 다 서버에서 토큰이랑 비교후 결정
@@ -221,12 +210,9 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
       deleteComment();
     }
     if (clickedBtn === "complete-change") {
-<<<<<<< HEAD
-=======
       completeChange();
     }
     if (clickedBtn === "change-comment") {
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
       changeComment();
     }
   }, [clickedBtn]);
@@ -240,16 +226,11 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
 
     setClickedBtn("");
   }
-<<<<<<< HEAD
-  // // 댓글 수정요청 보내는 함수 -> 어떻게하는거야..
-  function changeComment() {
-=======
   function changeComment() {
     setPrevComment(comment);
     setEditMode(true);
   }
   function completeChange() {
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     if (commentId === undefined) console.log("수정하려는 댓글이 존재하지 않습니다.");
     console.log(tags, comment);
     setDefaultComment([
@@ -257,10 +238,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
       { ...defaultComment[uuid], ...{ tags: tags, text: comment } },
       ...defaultComment.slice(uuid + 1),
     ]);
-<<<<<<< HEAD
-    setPrevComment(comment);
-=======
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
 
     if (editMode) console.log("수정완료");
     else console.log("댓글수정 클릭");
@@ -276,10 +253,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
     setComment(e.target.value);
   };
   useEffect(() => {
-<<<<<<< HEAD
-=======
     console.log("아래", prevComment);
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     setComment(prevComment);
     setEditMode(false);
   }, [changeOrNot]);
@@ -315,16 +289,12 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
                 />
               )}
               {!editMode ? (
-<<<<<<< HEAD
-                <button className="change-comment" onClick={() => setEditMode(true)}>
-=======
                 <button
                   className="change-comment"
                   onClick={(e) => {
                     getCommentId(e);
                   }}
                 >
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
                   수정하기
                 </button>
               ) : (

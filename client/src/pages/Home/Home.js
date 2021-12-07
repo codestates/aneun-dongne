@@ -29,13 +29,6 @@ const DivColumnSecond = styled.div`
   position: absolute;
   right: 3%;
 `;
-const DivRow = styled.div`
-  display: row;
-`;
-const DivColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 function Home() {
   const [isLoading, setIsLoading] = useRecoilState(loading);

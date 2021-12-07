@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
+<<<<<<< HEAD:client/src/components/kakao-map/HomeMap/HomeMap.js
 import styled from "styled-components";
 import dotenv from "dotenv";
 import notImageYet from "../../../img/not-image-yet.png";
@@ -13,33 +14,44 @@ import HomeRightBtn from "../../Home-RightBtn/HomeRightBtn-index";
 import { Styled } from "./style.js";
 
 dotenv.config();
+=======
+
+import notImageYet from "../../../img/not-image-yet.png";
+import { placelist, nowlocation, pickpoint } from "../../../recoil/recoil";
+import "../kakao-map.css";
+import { cat1_name } from "../../../location-data";
+import HomeRightbar from "../../Home-Rightbar/Home-Rightbar-index";
+import HomeRightBtn from "../../Home-RightBtn/HomeRightBtn-index";
+import { Styled } from "./style.js";
+>>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a:client/src/components/kakao-map/HomeMap.js
 
 const HomeMap = ({ defaultPosition }) => {
   const kakao = window.kakao;
-  const location = useRecoilValue(nowlocation);
 
   const [placeList, setPlaceList] = useRecoilState(placelist);
-
+  // const [add, setAdd] = useState({ area: "", sigg: "", address: "" });
   const [count, setCount] = useState(0); //1번만시작하게함
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
   const [place, setPlace] = useState("");
 
-  // 배포할때까지 안쓰면 지워 const [centerPosition,setCenterPosition] = useState([location.lat,location.lon])
-
   //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
-  const [pickPoint, setPickPoint] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
-  // const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
+  // const [pickPoint, setPickPoint] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
+  const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
 
   //!지역 검색창을 위한 state
-  const [area, setArea] = useState(" "); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState(""); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(" "); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState(""); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
   const [level, setLevel] = useState(7);
+<<<<<<< HEAD:client/src/components/kakao-map/HomeMap/HomeMap.js
+=======
+
+>>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a:client/src/components/kakao-map/HomeMap.js
   // console.log("클릭한지점", pickPoint);
   /**
    *! 장소 검색시 실행되는 함수 serachPlace
@@ -126,7 +138,7 @@ const HomeMap = ({ defaultPosition }) => {
         { "content-type": "application/json" }
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         // console.log(res.data.response.body.items.item);
         let list = res.data.response.body.items.item;
         //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소,컨텐트id],..]
@@ -269,7 +281,8 @@ const HomeMap = ({ defaultPosition }) => {
       //   .then((res) => res.data.documents[0].address)
       //   .then((address) => {
       //     // console.log(address)
-      //     setMeetingPlace([address.region_1depth_name, address.region_2depth_name, address.address_name]);
+      //     setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
+      //     console.log(add);
       //   })
       //   //   .then(res=>console.log(meetingPlace))
       //   .catch((err) => console.log(err)); //237줄에 console.log(meetingPlace)있음.
@@ -278,30 +291,33 @@ const HomeMap = ({ defaultPosition }) => {
     setPending(false);
   }, [kakao.maps, placeList]);
 
-  const changeArea = (area) => {
-    console.log(area);
-    searchPlace(area);
-    setArea(area);
-    setAreaIdx(cat1_name.indexOf(area));
-  };
-  const changeSigg = (sigg) => {
-    console.log(area, sigg);
-    searchPlace(`${area} ${sigg}`);
-    setSigg(sigg);
-    setLevel(8);
-  };
+  // const changeArea = (area) => {
+  //   console.log(area);
+  //   searchPlace(area);
+  //   setArea(area);
+  //   setAreaIdx(cat1_name.indexOf(area));
+  // };
+  // const changeSigg = (sigg) => {
+  //   console.log(area, sigg);
+  //   searchPlace(`${area} ${sigg}`);
+  //   setSigg(sigg);
+  //   setLevel(8);
+  // };
   /* margin-top:${(props)=>props.first?'10px':'50px'} */
   return (
     <Styled.Div>
       <HomeRightbar
-        area={area}
-        sigg={sigg}
-        areaIdx={areaIdx}
-        changeArea={changeArea}
-        changeSigg={changeSigg}
+        // area={area}
+        // sigg={sigg}
+        // areaIdx={areaIdx}
+        // changeArea={changeArea}
+        // changeSigg={changeSigg}
+        setLevel={setLevel}
         handleSearch={handleSearch}
         searchPlace={searchPlace}
         place={place}
+        pickPoint={pickPoint}
+        setPickPoint={setPickPoint}
       />
 
       <Styled.Map id="map"></Styled.Map>

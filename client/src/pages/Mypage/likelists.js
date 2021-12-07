@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import dotenv from "dotenv";
+import { userInfo } from "../../recoil/recoil";
 
 require("dotenv").config();
 

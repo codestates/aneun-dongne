@@ -9,8 +9,8 @@ const CommentWrapper = styled.div`
 const Comment = styled.div`
   position: relative;
   display: flex;
-  border: 1px gray solid;
-  height: 200px;
+  /* border: 1px red solid; */
+  /* height: 200px; */
   border-radius: 20px;
   margin-top: 10px;
   margin-bottom: 40px;
@@ -54,7 +54,7 @@ const ContentBox = styled.form`
   margin-top: 30px;
   position: relative;
   width: 480px;
-  height: 140px;
+  /* height: 140px; */
   > button {
     position: absolute;
     right: -10px;
@@ -83,25 +83,32 @@ const ContentBox = styled.form`
 `;
 
 const Content = styled.textarea`
+  display: flex;
+  flex-wrap: wrap;
   position: absolute;
-  top: 10px;
+  top: 0;
   left: 10px;
   width: 370px;
-  height: 60px;
+  height: 70px;
   padding-left: 10px;
   padding-right: 10px;
 `;
 
 const HashTagWrapper = styled.div`
   /* display: flex; */
-  position: absolute;
+  /* position: absolute; */
   /* background-color: pink; */
   width: 370px;
-  height: 50px;
-  bottom: 10px;
+  /* height: 60px; */
+  top: 75px;
+  margin-top: 75px;
   left: 10px;
+  /* padding-left: 10px; */
+  padding-right: 10px;
+
   white-space: nowrap;
   border: none;
+  border: 1px gray solid;
 `;
 const Date = styled.div`
   position: absolute;

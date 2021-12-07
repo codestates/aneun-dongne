@@ -10,17 +10,17 @@ import { Link } from "react-router-dom";
 const PlaceLists = styled.div`
   /* height: 100vh; */
 
-  @media (min-width: 700px) {
+  @media (min-width: 1040px) {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @media (min-width: 1360px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
-  @media (min-width: 1440px) {
+  @media (min-width: 1730px) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-  }
-  @media (min-width: 1920px) {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
   }
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 const KeyWordBox = styled.div`
   display: flex;
+  justify-content: center;
+  /* background-color: red; */
   flex-wrap: wrap;
-  padding: 20px;
+  /* padding: 20px; */
   height: 100%;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   /* background-color: pink; */
 
   /* background-color: white; */
@@ -20,7 +22,7 @@ const KeyWord = styled.span`
   float: left;
 
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
-  padding: 3px;
+  padding: 5px;
   border-radius: 5px;
   /* border: 1px solid rgb(192, 251, 255); */
   background-color: rgb(192, 251, 255);
@@ -63,41 +65,6 @@ const KeyWord = styled.span`
 `;
 
 function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
-  // console.log(totalWidth, totalHeight);
-  // if (totalHeight !== 0 && totalHeight !== 0) {
-  //   let images = document.querySelectorAll(".ootdImageBox");
-  //   let colWidth = 0;
-  //   if (images[0]) {
-  //     colWidth = images[0].offsetWidth;
-  //     console.log(images[0].children[0].scrollWidth);
-  //     console.log(colWidth);
-  //   }
-
-  //   let imgStack = new Array(5).fill(0);
-  //   let sum = 0;
-  //   for (let i = 0; i < images.length; i++) {
-  //     console.log(images[i].offsetWidth);
-  //     const width = images[i].offsetWidth;
-  //     if (i == 0) {
-  //       sum += width;
-  //       continue;
-  //     }
-  //     if (sum >= totalWidth) {
-  //       let num = (totalWidth - sum) / (i + 1);
-  //       // let arr =
-  //       images[i].slice(0, i).forEach((el) => {
-  //         el.style.margin = `${num}px`;
-  //       });
-  //     }
-
-  // images[i].childNodes[0].style.margin = `10px`;
-
-  // if (i === images.length - 1) {
-  //   document.querySelector(".ootdList").style.height = `${Math.max.apply(0, imgStack)}px;`;
-  // }
-  // }
-  // }
-  // console.log(imgStack);
   return (
     <>
       <KeyWordBox id="total-box">

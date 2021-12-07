@@ -56,7 +56,7 @@ function Home() {
             return res.data.documents[0].address;
           })
           .then((address) => {
-            console.log(address);
+            // console.log(address);
             setAdd({
               area: address.region_1depth_name,
               sigg: address.region_2depth_name,

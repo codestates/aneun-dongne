@@ -35,7 +35,7 @@ const HomeMap = () => {
   const [sigg, setSigg] = useState(""); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
-  const [level, setLevel] = useState(15);
+  const [level, setLevel] = useState(12);
   //!
   const [wtm, setWtm] = useState({ x: 0, y: 0 });
   // console.log("클릭한지점", pickPoint);
@@ -83,25 +83,25 @@ const HomeMap = () => {
     setPlace(e.target.value);
     // e.target.value=''
   };
+  // ! 클릭할때마다 평면좌표 찍어온다.
+  useEffect(() => {
+    // if (wtm.x === 0 || wtm.y === 0) return null;
+    axios
+      .get(
+        `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84&output_coord=WTM`,
+        {
+          headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+        }
+      )
+      .then((res) => {
+        setWtm({ x: res.data.documents[0].x, y: res.data.documents[0].y });
+      })
 
-  // useEffect(() => {
-  //   // if (wtm.x === 0 || wtm.y === 0) return null;
-  //   axios
-  //     .get(
-  //       `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84&output_coord=WTM`,
-  //       {
-  //         headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       setWtm({ x: res.data.documents[0].x, y: res.data.documents[0].y });
-  //     })
-
-  //     .catch((err) => console.log(err));
-  // }, [pickPoint]);
+      .catch((err) => console.log(err));
+  }, [pickPoint]);
   useEffect(() => {
     // ! 평면좌표
-    // if (wtm.x === 0 || wtm.y === 0) return null;
+
     console.log("평면좌표", wtm);
 
     // * 지도의 한 점 클릭시 그 클릭한 점의 좌표 반경 10km의 관광지들의 좌표 전송
@@ -148,7 +148,6 @@ const HomeMap = () => {
         { "content-type": "application/json" }
       )
       .then((res) => {
-        console.log(res.data);
         // console.log(res.data.response.body.items.item);
         let list = res.data.response.body.items.item;
         //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소,컨텐트id],..]
@@ -271,7 +270,7 @@ const HomeMap = () => {
       // 마커 위에 인포윈도우를 표시합니다
       infowindowCenter.open(map, markerCenter);
     });
-    console.log("약ㅁ니아루미ㅏㄴㅇ");
+
     //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
     if (clickedNowLocationBtn) {
       axios
@@ -312,7 +311,6 @@ const HomeMap = () => {
         .then((address) => {
           // console.log(address)
           setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-          console.log(add);
         })
         //   .then(res=>console.log(meetingPlace))
         .catch((err) => console.log(err)); //

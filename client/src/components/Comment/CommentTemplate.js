@@ -4,7 +4,7 @@ import Comments from "./Comments";
 
 const CommentWrapper = styled.div`
   width: 100%;
-  border: 1px gray solid;
+  /* border: 1px gray solid; */
 `;
 
 function CommentTemplate({ commentDummy }) {

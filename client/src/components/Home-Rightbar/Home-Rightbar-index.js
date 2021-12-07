@@ -13,7 +13,7 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
   const [pending, setPending] = useState(true);
   const pickPoint = useRecoilValue(pickpoint);
   //! const loc = useRecoilValueLoadable(setLo);
-  console.log("픽포", pickPoint);
+
   const changeArea = (area) => {
     // console.log(area);
 
@@ -23,19 +23,16 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
     searchPlace(area);
   };
   const changeSigg = (sigg) => {
-    // console.log(area, sigg);
-    console.log("날봐날봐 귀순", cat2_name);
     searchPlace(`${area} ${sigg}`);
     setSigg(sigg);
 
     setLevel(8);
   };
 
-  console.log("여기좀봐요 ", add);
   //! 위의 chnageArea,changeSigg 들이랑 분리시켜야함
   useEffect(() => {
     setArea(add.area);
-    console.log("호ㅑㅇ");
+
     setPending(!pending);
   }, [add.area]);
   // useEffect(() => {
@@ -46,30 +43,8 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
   useEffect(() => {
     if (cat1_name.indexOf(area) >= 0) setAreaIdx(cat1_name.indexOf(add.area));
     setSigg(add.sigg);
-    console.log("인덱스", area, sigg, areaIdx);
+    // console.log("인덱스", area, sigg, areaIdx);
   }, [pending]);
-  //?
-  // useEffect(() => {
-  //   if (loc.contents === undefined) return;
-  //   setArea(loc.contents.area);
-  // }, [loc]);
-  // useEffect(() => {
-  //   if (cat1_name.indexOf(area) >= 0) setAreaIdx(cat1_name.indexOf(area));
-
-  //   setSigg(loc.contents.sigg);
-  //   console.log("인덱스", area, sigg, areaIdx);
-  // }, [areaIdx]);
-
-  // if (loc.state === "loading") {
-  //   // console.log("로딩");
-  //   return null;
-  // }
-  //?
-  // console.log(loc);
-
-  // useEffect(()=>{
-
-  // },[pickPoint])
 
   return (
     <div>

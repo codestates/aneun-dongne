@@ -22,23 +22,6 @@ function HomeRightBtn({ pending, setPending }) {
     setIsSavePositionOpen(true);
   };
 
-  // if (loc.state === "loading") {
-  //   return (
-  //     <>
-  //       <Styled.RightBtnBox>
-  //         <Styled.RightBtn onClick={openSavePositionModalHandler}>현재위치 저장</Styled.RightBtn>
-  //         <Styled.RightBtn>내가 가본 곳</Styled.RightBtn>
-  //         <Styled.RightBtn onClick={() => setPickPoint([nowLoc.lat, nowLoc.lon])}>
-  //           <i className="fas fa-map-marker-alt"></i>
-  //         </Styled.RightBtn>
-  //       </Styled.RightBtnBox>
-  //     </>
-  //   );
-  // }
-
-  // if (loc.state === "hasValue")
-
-  // console.log(nowLoc);
   return (
     <>
       <Styled.RightBtnBox>
@@ -47,7 +30,7 @@ function HomeRightBtn({ pending, setPending }) {
         <Styled.RightBtn
           onClick={() => {
             setPickPoint([nowLoc.lat, nowLoc.lon]);
-            setClickedNowLocationBtn(true);
+            setClickedNowLocationBtn(true); // 현재위치 버튼 눌렀다는 신호, HomeMap.js에서 반응한다.
           }}
         >
           <i className="fas fa-map-marker-alt"></i>

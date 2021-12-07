@@ -61,7 +61,7 @@ const Header = ({ handleResponseSuccess }) => {
   };
   const logoutHandler = () => {
     console.log("hi");
-    axios.post("http://localhost:80/signout", {}, { withCredentials: true }).then((res) => {
+    axios.post("https://localhost:80/signout", {}, { withCredentials: true }).then((res) => {
       //로긴상태 해제
       setIsLogin(false);
     });

@@ -4,7 +4,8 @@ import notImageYet from "../img/not-image-yet.png";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 3px rgb(107, 217, 224) solid;
+  border: 1px rgb(107, 217, 224) solid;
+
   border-radius: 20px;
   width: 200px;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
@@ -13,13 +14,19 @@ const PlaceCard = styled.div`
   animation: color-change 2s infinite;
   @keyframes color-change {
     0% {
-      border: #c1ff6b 1px solid;
+      border-left: #c1ff6b 1px solid;
+
+      border-top: #c1ff6b 1px solid;
     }
     50% {
-      border: #fab4b4 1px solid;
+      border-left: #fab4b4 1px solid;
+
+      border-top: #fab4b4 1px solid;
     }
     100% {
-      border: #46ffff 1px solid;
+      border-left: #46ffff 1px solid;
+
+      border-top: #46ffff 1px solid;
     }
   }
   &:hover {

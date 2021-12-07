@@ -13,6 +13,7 @@ const FixedComp = styled.div`
 `;
 const DivRow = styled.div`
   display: flex;
+
   justify-content: space-evenly;
 `;
 const DivColumn = styled.div`

@@ -4,22 +4,24 @@ import { useRecoilValue, useRecoilState } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
 
 import notImageYet from "../../../img/not-image-yet.png";
-import { placelist, nowlocation, pickpoint } from "../../../recoil/recoil";
+import { placelist, nowlocation, pickpoint, usersaddress, isClickedNowLocation } from "../../../recoil/recoil";
 import "../kakao-map.css";
 import { cat1_name } from "../../../location-data";
 import HomeRightbar from "../../Home-Rightbar/Home-Rightbar-index";
 import HomeRightBtn from "../../Home-RightBtn/HomeRightBtn-index";
 import { Styled } from "./style.js";
 
-const HomeMap = ({ defaultPosition }) => {
+const HomeMap = () => {
   const kakao = window.kakao;
-
+  const [add, setAdd] = useRecoilState(usersaddress);
   const [placeList, setPlaceList] = useRecoilState(placelist);
+  const nowLoc = useRecoilValue(nowlocation);
   // const [add, setAdd] = useState({ area: "", sigg: "", address: "" });
   const [count, setCount] = useState(0); //1번만시작하게함
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
   const [place, setPlace] = useState("");
+  const [clickedNowLocationBtn, setClickedNowLocationBtn] = useRecoilState(isClickedNowLocation);
 
   //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
 
@@ -33,13 +35,19 @@ const HomeMap = ({ defaultPosition }) => {
   const [sigg, setSigg] = useState(""); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
-  const [level, setLevel] = useState(7);
-
+  const [level, setLevel] = useState(15);
+  //!
+  const [wtm, setWtm] = useState({ x: 0, y: 0 });
   // console.log("클릭한지점", pickPoint);
   /**
    *! 장소 검색시 실행되는 함수 serachPlace
    * @param keyword 검색어
    */
+  // useEffect(() => {
+  //   // 좌표계 변환 객체를 생성합니다
+
+  // }, [pickpoint]);
+
   const searchPlace = (keyword) => {
     setCount(0);
     setPending(true);
@@ -76,7 +84,26 @@ const HomeMap = ({ defaultPosition }) => {
     // e.target.value=''
   };
 
+  // useEffect(() => {
+  //   // if (wtm.x === 0 || wtm.y === 0) return null;
+  //   axios
+  //     .get(
+  //       `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84&output_coord=WTM`,
+  //       {
+  //         headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setWtm({ x: res.data.documents[0].x, y: res.data.documents[0].y });
+  //     })
+
+  //     .catch((err) => console.log(err));
+  // }, [pickPoint]);
   useEffect(() => {
+    // ! 평면좌표
+    // if (wtm.x === 0 || wtm.y === 0) return null;
+    console.log("평면좌표", wtm);
+
     // * 지도의 한 점 클릭시 그 클릭한 점의 좌표 반경 10km의 관광지들의 좌표 전송
 
     // !이건 내 좌표 반경 10km에 있는 관광지 좌표따오는거
@@ -99,7 +126,7 @@ const HomeMap = ({ defaultPosition }) => {
             MobileOS: "ETC",
             MobileApp: "TourAPI3.0_Guide",
             //! 관광지 개수
-            numOfRows: 50,
+            numOfRows: 20,
             // areaCode:33,
             // sigunguCode:7,
             //! contentTypeId : 12:관광지,14:문화시설,15:행사,25:여행코스,28:레포츠,32:숙박,38:쇼핑,39:식당,
@@ -121,7 +148,7 @@ const HomeMap = ({ defaultPosition }) => {
         { "content-type": "application/json" }
       )
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         // console.log(res.data.response.body.items.item);
         let list = res.data.response.body.items.item;
         //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소,컨텐트id],..]
@@ -140,6 +167,7 @@ const HomeMap = ({ defaultPosition }) => {
   useEffect(() => {
     // * 위의 useEffect에서 받아온 좌표들을 지도에 노란색 마커로 표시
     // console.log("effect");
+    //!위경도 -> 평면좌표
 
     const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     const options = {
@@ -243,6 +271,25 @@ const HomeMap = ({ defaultPosition }) => {
       // 마커 위에 인포윈도우를 표시합니다
       infowindowCenter.open(map, markerCenter);
     });
+    console.log("약ㅁ니아루미ㅏㄴㅇ");
+    //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
+    if (clickedNowLocationBtn) {
+      axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84`,
+          { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
+        )
+        .then((res) => res.data.documents[0].address)
+        .then((address) => {
+          // console.log(address)
+          setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
+          console.log(add);
+        })
+        .then(setClickedNowLocationBtn(false))
+        //   .then(res=>console.log(meetingPlace))
+        .catch((err) => console.log(err)); //
+    }
+    //!! 맵을 클릭시 주소변경
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       //* 내위치마커에 infowindow 생성
 
@@ -255,20 +302,20 @@ const HomeMap = ({ defaultPosition }) => {
       // setCenterPosition([latlng.getLat(),latlng.getLng()])
 
       // ?  좌표를 주소로 변환 -> 버튼 클릭시 onClick이벤트를 통해 91번줄로 이동
-      //! 왠지 주소쓸일 없을듯 우선 남겨놈
-      // axios
-      //   .get(
-      //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
-      //     { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
-      //   )
-      //   .then((res) => res.data.documents[0].address)
-      //   .then((address) => {
-      //     // console.log(address)
-      //     setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-      //     console.log(add);
-      //   })
-      //   //   .then(res=>console.log(meetingPlace))
-      //   .catch((err) => console.log(err)); //237줄에 console.log(meetingPlace)있음.
+
+      axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
+          { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
+        )
+        .then((res) => res.data.documents[0].address)
+        .then((address) => {
+          // console.log(address)
+          setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
+          console.log(add);
+        })
+        //   .then(res=>console.log(meetingPlace))
+        .catch((err) => console.log(err)); //
     });
     setMap(map);
     setPending(false);

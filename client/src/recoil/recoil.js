@@ -1,11 +1,10 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
-//
 
-//! 유저 주소
+//! 유저 주소 - Home.js에서 사용
 export const usersaddress = atom({
-  key: "nowlocation",
-  default: { add: "", sigg: "", addr: "" },
+  key: "usersaddress",
+  default: { area: "", sigg: "", addr: "" },
 });
 
 export const placelist = atom({
@@ -61,9 +60,14 @@ export const userInfo = atom({
   key: "userInfo",
   default: null,
 });
-
+//!pickpoint바뀔때마다 바뀌는 값
 export const defaultposition = atom({
   key: "defaultPosition",
+  default: { lat: 0, lon: 0 },
+});
+//! 현재위치 버튼때 필요한 값, 새로고침될때빼고는 안바뀐다.
+export const nowlocation = atom({
+  key: "nowlocation",
   default: { lat: 0, lon: 0 },
 });
 
@@ -111,11 +115,11 @@ export const editcommentMode = atom({
   default: false,
 });
 
-// ! 위치기반 API
+// ! 위치기반 API -> 지도위 나타나는 좌표 바꾸는거. 지도 클릭한효과랑 같음
 export const pickpoint = selector({
   key: "pickpoint",
   get: ({ get }) => {
-    console.log(get(defaultposition).lat, get(defaultposition).lon);
+    // console.log(get(defaultposition).lat, get(defaultposition).lon);
     return [get(defaultposition).lat, get(defaultposition).lon];
   },
   set: ({ set }, arr) => {
@@ -126,6 +130,11 @@ export const pickpoint = selector({
 export const token = atom({
   key: "token",
   default: "",
+});
+// ! 현재위치 클릭
+export const isClickedNowLocation = atom({
+  key: "isClickedNowLocation",
+  default: false,
 });
 
 // ! 위치기반 API
@@ -144,20 +153,20 @@ export const setLo = selector({
         .then((res) => res.data.documents[0].address)
         .then((address) => {
           // console.log(address)
-          console.log({
-            area: address.region_1depth_name,
-            sigg: address.region_2depth_name,
-            address: address.address_name,
-          });
+          // console.log({
+          //   area: address.region_1depth_name,
+          //   sigg: address.region_2depth_name,
+          //   address: address.address_name,
+          // });
           return { area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name };
         })
         //   .then(res=>console.log(meetingPlace))
         .catch((err) => console.log(err))
     ); //237줄에 console.log(meetingPlace)있음.
   },
+});
 //유저 정보를 수정해야 한다면...
 export const infoEdit = atom({
   key: "infoEdit",
   default: "",
-
 });

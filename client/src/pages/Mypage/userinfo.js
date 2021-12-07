@@ -127,7 +127,7 @@ dotenv.config();
 //회원수정, 로그아웃시켜줘야힘.
 
 const UserInfo = ({ accessToken, isLogout, props }) => {
-  const [userinfo, setUserInfo] = useRecoilState(userInfo);
+  const [info, setInfo] = useState(userInfo);
 
   const [imgUrl, setImgUrl] = useState("");
   const [inputUsername, setInputUsername] = useState("");
@@ -144,22 +144,23 @@ const UserInfo = ({ accessToken, isLogout, props }) => {
 
   useEffect(() => {
     axios
-      .get("https://localhost:3000/user/info", { withCredentials: true })
-
+      .get("https://localhost:80/user/info", { withCredentials: true })
       .then((res) => {
-        if (!res.data) {
-          alert("로그인모달창으로 갑니다");
-        } else {
-          const { imgUrl, inputUsername, inputEmail } = res.data.data.userInfo;
+        console.log(res.data.data.userInfo.email);
 
-          setImgUrl(imgUrl);
-          setInputUsername(inputUsername);
-          setInputEmail(inputEmail);
-          props.accessToken(res.data.Info);
-        }
-      });
-  }, [accessToken]);
+        setInfo(res.data.data.userInfo);
 
+        // const { , inputUsername, inputEmail } = res.data.data.userInfo;
+        // setInputEmail(inputEmail);
+        // setImgUrl(imgUrl);
+        // setInputUsername(inputUsername);
+
+        // props.accessToken(res.data.Info);
+      })
+      .then();
+  }, []);
+  console.log(info);
+  // console.log(inputEmail, imgUrl, inputUsername);
   //정보를 바로 받아온다면...?
 
   //app.js에서 login인인 상태에서 mypage로 들어온다.
@@ -226,7 +227,7 @@ const UserInfo = ({ accessToken, isLogout, props }) => {
       // const token = JSON.parse(localStorage.getItem("token"));
       axios
         .put(
-          "https://localhost:3000/mypage",
+          "https://localhost:80/mypage",
           {
             // email: inputUsername,
             nickname: userInfo.nikename,
@@ -252,7 +253,7 @@ const UserInfo = ({ accessToken, isLogout, props }) => {
   //회원탈퇴
   const deleteHandler = () => {
     axios
-      .delete(`http://localhost:4000/user/mypage`, {
+      .delete(`http://localhost:80/user/mypage`, {
         headers: {
           authorization: accessToken,
           "Content-Type": "application/json",
@@ -268,7 +269,7 @@ const UserInfo = ({ accessToken, isLogout, props }) => {
       })
       .catch((err) => console.log(err));
   };
-
+  console.log(info);
   return (
     <Body>
       <MenuBar>
@@ -297,21 +298,14 @@ const UserInfo = ({ accessToken, isLogout, props }) => {
           }}
         ></Content> */}
 
-              <div type="text" placeholder={inputEmail} value={inputEmail}>
-                여기 이메일 고정
-              </div>
-              <div>닉네임</div>
-              <input type="text" placeholder={inputUsername} value={inputUsername} onChange={handleInputUsername} />
+              {/* <input type="text">{info.email}</input> */}
+              <div>이메일</div>
+              <input type="text" placeholder={info.email} onChange={handleInputUsername} />
               {/* <input type="text" placeholder="email" value={inputEmail} onChange={handleInputEmail} /> */}
               <div>비밀번호</div>
-              <input type="password" placeholder="password" value={InputPassword} onChange={handleInputPassword} />
+              <input type="password" value={InputPassword} onChange={handleInputPassword} />
               <div>비밀번호 확인</div>
-              <input
-                type="password"
-                placeholder="password confirm"
-                value={InputNewPassword}
-                onChange={handleInputNewPassword}
-              />
+              <input type="password" value={InputNewPassword} onChange={handleInputNewPassword} />
               <button className="btn edit" onClick={saveBtnHandler()}>
                 저장
               </button>

@@ -123,52 +123,6 @@ export const pickpoint = selector({
   },
 });
 
-export const getPlace = selector({
-  key: "getPlace",
-  get: async () => {
-    return navigator.geolocation.watchPosition(
-      async (position) => {
-        // console.log("여기 돼?");
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        // console.log(isLoading);
-
-        const response = await axios.get(
-          `http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}`,
-          {
-            params: {
-              MobileOS: "ETC",
-              MobileApp: "TourAPI3.0_Guide",
-              //! 관광지 개수
-              numOfRows: 50,
-              // areaCode:33,
-              // sigunguCode:7,
-              //! contentTypeId : 12:관광지,14:문화시설,15:행사,25:여행코스,28:레포츠,32:숙박,38:쇼핑,39:식당,
-              contentTypeId: 12,
-              // * 대분류 : 인문
-              // cat1:'A02',
-              //* 중분류 : 역사지구
-              // cat2:'A0201',
-              //*좌표,반경
-              mapX: lon, //lon
-              mapY: lat, //lat
-              //! 반경 몇m??
-              radius: 10000,
-              //*
-              arrange: "A",
-              listYN: "Y",
-            },
-          },
-          { "content-type": "application/json" }
-        );
-        const placeList = await response.data;
-        console.log(placeList);
-        return placeList;
-      },
-      (err) => alert("위치권한을 허용해주세요")
-    );
-  },
-});
 export const token = atom({
   key: "token",
   default: "",

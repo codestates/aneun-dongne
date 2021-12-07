@@ -155,6 +155,7 @@ export const setLo = selector({
         .catch((err) => console.log(err))
     ); //237줄에 console.log(meetingPlace)있음.
   },
+});
 //유저 정보를 수정해야 한다면...
 export const infoEdit = atom({
   key: "infoEdit",

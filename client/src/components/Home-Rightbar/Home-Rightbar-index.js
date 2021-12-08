@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Styled } from "./style";
 import { cat1_name, cat2_name } from "../../location-data";
-<<<<<<< HEAD
-import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
-function HomeRightbar({ area, sigg, areaIdx, changeArea, changeSigg, handleSearch, searchPlace, place }) {
-=======
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { loading, defaultposition, usersaddress, pickpoint, setLo } from "../../recoil/recoil";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
@@ -60,7 +56,6 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
 
   // },[pickPoint])
 
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
   return (
     <div>
       <Styled.MapRightBar>
@@ -80,15 +75,11 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
               })}
             </Styled.SearchLocation>
           </Styled.SearchBar>
-<<<<<<< HEAD
-          <Styled.SearchKeyWord placeholder="ex) 가을, 놀이공원"></Styled.SearchKeyWord>
-=======
           <Styled.SearchKeyWord placeholder="ex) 가을, 놀이공원">
             {keywordDummy.map((el, idx) => {
               return <option key={idx}>{el}</option>;
             })}
           </Styled.SearchKeyWord>
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
 
           <Styled.SearchPlace
             type="text"
@@ -99,13 +90,9 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
               if (e.key === "Enter") searchPlace(place);
             }}
           ></Styled.SearchPlace>
-<<<<<<< HEAD
-          <Styled.SearchBtn onClick={() => searchPlace(place)}>검색</Styled.SearchBtn>
-=======
           <Styled.SearchBtn onClick={() => searchPlace(place)}>
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
         </Styled.SearchWrapper>
         <HomeRightBtn />
       </Styled.MapRightBar>

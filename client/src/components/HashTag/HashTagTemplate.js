@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 const KeyWordBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
-  padding: 30px;
+  display: flex;
+  justify-content: center;
+  /* background-color: red; */
+  flex-wrap: wrap;
+  /* padding: 20px; */
   height: 100%;
-
+  /* justify-content: space-evenly; */
   /* background-color: pink; */
 
   /* background-color: white; */
@@ -45,7 +44,7 @@ const KeyWord = styled.span`
   }
 `;
 
-function HashTagTemplate({ keywordDummy }) {
+function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
   return (
     <>
       <KeyWordBox>

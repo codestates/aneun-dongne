@@ -110,9 +110,7 @@ export const Styled = {
     /* background: white; */
     width: 60px;
     height: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
+    margin: 40px auto;
     cursor: pointer;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: all 0.1s ease-in-out;

@@ -1,15 +1,36 @@
 import React from "react";
 import styled from "styled-components";
-import notImageYet from "../images/not-image-yet.png";
+import notImageYet from "../img/not-image-yet.png";
+import HashTagTemplate from "./HashTag/HashTagTemplate";
 const PlaceCard = styled.div`
   margin: auto;
-  margin-top: 3rem;
+  margin-top: 40px;
   border: 1px rgb(107, 217, 224) solid;
+
   border-radius: 20px;
-  width: 17rem;
+  width: 300px;
+  /* height: 275px; */
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: box-shadow 0.1s, transform 0.1s;
   text-decoration: inherit;
+  animation: color-change 2s infinite;
+  @keyframes color-change {
+    0% {
+      border-left: #c1ff6b 1px solid;
+
+      border-top: #c1ff6b 1px solid;
+    }
+    50% {
+      border-left: #fab4b4 1px solid;
+
+      border-top: #fab4b4 1px solid;
+    }
+    100% {
+      border-left: #46ffff 1px solid;
+
+      border-top: #46ffff 1px solid;
+    }
+  }
   &:hover {
     transform: scale(1.1);
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -49,6 +70,7 @@ function PlaceCards({ title, img, addr1, onClick }) {
   return (
     <PlaceCard onClick={onClick}>
       <div className="place-cards">
+        <HashTagTemplate keywordDummy={keywordDummy} />
         {img ? <img src={img} /> : <img src={notImageYet} />}
         <div className="place-cards-title">
           <div>{`[${addr1}] `}</div>
@@ -60,9 +82,11 @@ function PlaceCards({ title, img, addr1, onClick }) {
 }
 
 function PropsEqual(prev, next) {
-  console.log(prev.img === next.img);
+  // console.log(prev.img === next.img);
   return prev.img === next.img;
 }
 // console.log(React.memo(PlaceCards, PropsEqual));
 export const MemoCards = React.memo(PlaceCards, PropsEqual);
 // export default React.memo(PlaceCards, PropsEqual);
+
+const keywordDummy = ["#산책하기좋은", "#절"];

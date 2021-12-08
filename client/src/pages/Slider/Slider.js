@@ -34,6 +34,8 @@ const Button = styled.div`
 const Sliderimgbox = styled.div`
   margin-bottom: 30px;
   display: flex;
+  background-color: aqua;
+  /* justify-content: center; */
 `;
 
 const Side = styled.div`
@@ -76,8 +78,8 @@ export const MenuButton = styled.button`
 export const TitleView = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: row;
-
+  /* flex-direction: row; */
+  justify-content: center;
   /* justify-content: center */
   /* justify-content: center; */
   /* flex-direction: column; */
@@ -86,10 +88,10 @@ export const TitleView = styled.div`
   } */
 
   .title {
-    margin-left: 25vw;
+    /* margin-left: 25vw;
     margin-right: 50px;
     margin-bottom: 400px;
-    margin-top: 400px;
+    margin-top: 400px; */
     position: absolute;
     display: flex;
     justify-content: center;

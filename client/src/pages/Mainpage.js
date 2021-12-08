@@ -245,6 +245,7 @@ function Mainpage() {
         <TitleEndView>
           <div className="title">나와 어울리는 장소로 떠날 준비가 되셨나요?</div>
           <MenuButton onClick={ToHome}>시작하기</MenuButton>
+          {/* <img src={} muted autoPlay loop playsInline /> */}
         </TitleEndView>
       </Body>
     </>

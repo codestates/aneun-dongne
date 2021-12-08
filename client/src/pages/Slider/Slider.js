@@ -9,115 +9,109 @@ import img4 from "../../img/korea02.jpg";
 import img5 from "../../img/korea05.jpg";
 import img6 from "../../img/korea06.jpg";
 
-const Imgbox = styled.div`
-  width: 100%;
-  height: 1000px;
-  overflow: hidden;
-`;
-
-const Prevbutton = styled.div`
-  position: absolute;
-  z-index: 2;
-  background: none;
-  border: none;
-  font-size: 3rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: white;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  padding: 0 0.5rem;
-  background-color: #ffffff78;
-`;
-
-const Nextbutton = styled.div`
-  position: absolute;
-  z-index: 2;
-  background: none;
-  border: none;
-  font-size: 3rem;
-  top: 60%;
-  transform: translateY(-50%);
-  color: white;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  padding: 0 0.5rem;
-  background-color: #ffffff78;
-`;
-
-const Sliderimgbox = styled.div`
-  margin-bottom: 50px;
-  display: flex;
-`;
-
-// const Side = styled.div`
-//   text-align: center;
-//   margin: 50px;
-//   margin-bottom: 0px;
-//   margin-top: 0px;
-//   margin-left: 0px;
-//   margin-right: 0px;
-// `;
-
-export const TitleView = styled.div`
-  display: center;
-
-  .title {
-    position: fixed;
-    top: 40%;
-    right: 20%;
-    left: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    font-weight: bold;
-
-    background-color: #fdfeff21;
-    border-radius: 20px;
-    border: 5px white;
-    border-style: solid;
-    color: black;
-    /* width: 700px; */
-    height: 80px;
-  }
-  .start-button {
-    display: flex;
-    justify-content: center;
-    font-size: 2rem;
-    position: fixed;
-    color: white;
-    width: 150px;
-    height: 60px;
-    border-style: none;
-    border-radius: 50px;
-    top: 55%;
-    right: 45%;
-    left: 45%;
-    background-color: #00ccff;
-    align-items: center;
-
-    transition: all 0.3s;
-    cursor: pointer;
-
-    :hover {
-      background-color: #6af4aa;
-
-      transition: all 0.3s;
-    }
-  }
-`;
-
 export const Body = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
 `;
+const Imgbox = styled.div`
+  width: 100%;
+  height: 850px;
+  overflow: hidden;
+`;
 
-export default function Slider(props) {
-  const [{ img1 }, { img2 }, { img3 }, { img4 }, { img5 }, { img6 }] = imgdummy;
+// const Button = styled.div`
+//   all: unset;
+//   padding: 20px 20px;
+//   margin: 10px;
+//   align-items: flex-end;
+//   font-size: 1rem;
+//   font-weight: bold;
+//   color: #88bfff;
+//   border-radius: 50px;
+//   border: 2px solid #88bfff;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: #88bfff;
+//     color: #fff;
+//   }
+// `;
 
-  const [imgdummy, setImgdummy] = useState(0);
+const Sliderimgbox = styled.div`
+  margin-bottom: 30px;
+  display: flex;
+
+  /* justify-content: center; */
+`;
+
+const Side = styled.div`
+  text-align: center;
+`;
+const MenuButton = styled.button`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  color: white;
+  width: 150px;
+  height: 50px;
+  border-style: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-left: 44vw;
+  margin-right: 500px;
+  border-radius: 25px;
+  margin-top: 450px;
+  background-color: #90bef9c7;
+  :hover {
+    background-color: #a2f8cade;
+    transition: all 0.3s;
+  }
+`;
+
+export const TitleButton = styled.button`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  width: 700px;
+  height: 100px;
+  border-style: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  top: -25%;
+  margin-left: 28vw;
+  border: 3px solid;
+  border-radius: 20px;
+  margin-top: 500px;
+
+  background-color: #90bef9c7;
+  :hover {
+    background-color: #a2f8cade;
+    transition: all 0.3s;
+  }
+`;
+
+export const TitleView = styled.div`
+  .title {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: bold;
+    background-color: #f0f9ff99;
+    border-radius: 20px;
+    width: 700px;
+    height: 70px;
+  }
+`;
+
+export default function Slider() {
   const [newPhoto, setnewPhoto] = useState(0);
   const slideRef = useRef(null);
   const lastphoto = 5;
@@ -137,6 +131,7 @@ export default function Slider(props) {
       setnewPhoto(newPhoto + 1);
     }
   };
+  setTimeout(() => NextBtn(), 5000);
 
   useEffect(() => {
     slideRef.current.style.transition = "all 0.6s ease-in-out";
@@ -152,66 +147,39 @@ export default function Slider(props) {
     <Body>
       <Imgbox>
         <Sliderimgbox ref={slideRef}>
-          {/* <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <button className="start-button" onClick={ToHome}>
-              시작하기
-            </button>
-          </TitleView>
-          <Slide img={img1} /> */}
-
-          {props.map((props) => (
-            <div>
-              <TitleView>
-                <div className="title">어디론가 놀러가고 싶으신가요?</div>
-                <button className="start-button" onClick={ToHome}>
-                  시작하기
-                </button>
-              </TitleView>
-              <Slide img={imgdummy} />
-            </div>
-          ))}
-
-          {/* <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <button className="start-button" onClick={ToHome}>
-              시작하기
-            </button>
-          </TitleView>
-          <Slide img={img2} /> */}
-
-          {/* <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
-          </TitleView>
-
-          <Slide img={img3} />
-
           <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
+            <TitleButton onClick={ToHome}>어디론가 놀러가고 싶으신가요?</TitleButton>
+            <MenuButton onClick={ToHome}>start</MenuButton>
+          </TitleView>
+          <Slide img={img1} />
+          <TitleView>
+            <TitleButton onClick={ToHome}>우리 동네를 둘러볼까요?</TitleButton>
+            <MenuButton onClick={ToHome}>start</MenuButton>
+          </TitleView>
+          <Slide img={img2} />
+          <TitleView>
+            <TitleButton onClick={ToHome}>내가 아는 곳을 다시 보고 싶다면?</TitleButton>
+            <MenuButton onClick={ToHome}>start</MenuButton>
+          </TitleView>
+          <Slide img={img3} />
+          <TitleView>
+            <TitleButton onClick={ToHome}>오늘은 특별한 곳을 가고 싶다면?</TitleButton>
+            <MenuButton onClick={ToHome}>start</MenuButton>
           </TitleView>
           <Slide img={img4} />
-
           <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
+            <TitleButton onClick>나만 아는 곳으로 가고 싶다면?</TitleButton>
+            <MenuButton onClick={ToHome}>start</MenuButton>
           </TitleView>
           <Slide img={img5} />
-
           <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
+            <TitleButton onClick>인기있는 관광지로 가볼까요?</TitleButton>
+            <MenuButton onClick={ToHome}>start</MenuButton>
           </TitleView>
-          <Slide img={img6} /> */}
+          <Slide img={img6} />
         </Sliderimgbox>
-        <Prevbutton className="prev" onClick={PrevBtn}>
-          &#60;
-        </Prevbutton>
-
-        <Nextbutton className="next" onClick={NextBtn}>
-          &#62;
-        </Nextbutton>
+        <Side>{/* <Button onClick={PrevBtn}>Prev</Button>
+          <Button onClick={NextBtn}>Next</Button> */}</Side>
       </Imgbox>
     </Body>
   );

@@ -3,19 +3,19 @@ import styled from "styled-components";
 
 export const TagsInput = styled.div`
   z-index: 999;
-  /* background-color: red; */
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 48px;
-  width: 480px;
+  width: 320px;
 
   border-radius: 6px;
   > #tags {
     display: flex;
     /* display: inline-block; */
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
     padding: 0;
     margin: 8px 0 0 0;
   }

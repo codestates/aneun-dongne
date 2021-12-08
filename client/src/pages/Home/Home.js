@@ -5,7 +5,7 @@ import HomeMap from "../../components/kakao-map/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList";
 import HashTagList from "../../components/HashTag/HashTagList";
 import { useRecoilState } from "recoil";
-import { loading, defaultposition, usersaddress } from "../../recoil/recoil";
+import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
 import Loading from "../../components/Loading";
 
 const FixedComp = styled.div`
@@ -32,6 +32,7 @@ const DivColumnSecond = styled.div`
 `;
 
 function Home() {
+  const [nowLocation, setNowLocation] = useRecoilState(nowlocation);
   const [isLoading, setIsLoading] = useRecoilState(loading);
   const [add, setAdd] = useRecoilState(usersaddress);
   const [pending, setPending] = useState(false);
@@ -44,7 +45,7 @@ function Home() {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         // console.log(isLoading);
-
+        setNowLocation({ lat, lon });
         setDefaultPosition({ lat, lon });
         console.log(isLoading);
         axios
@@ -55,7 +56,7 @@ function Home() {
             return res.data.documents[0].address;
           })
           .then((address) => {
-            console.log(address);
+            // console.log(address);
             setAdd({
               area: address.region_1depth_name,
               sigg: address.region_2depth_name,
@@ -87,7 +88,7 @@ function Home() {
         ) : (
           <DivRow>
             <DivColumn>
-              <HomeMap defaultPosition={defaultPosition} />
+              <HomeMap />
             </DivColumn>
             <DivColumnSecond>
               {/* <HashTagList /> */}

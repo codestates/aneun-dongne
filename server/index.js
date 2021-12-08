@@ -1,13 +1,11 @@
 require("dotenv").config();
-const fs = require("fs");
-const https = require("https");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const db = require("./models");
 
 const app = express();
-const PORT = process.env.HTTPS_PORT || 80;
+const PORT = 80;
 const controllers = require("./controllers");
 
 app.use(express.json());
@@ -15,15 +13,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: [
-      // 클라이언트 s3 주소
-      "https://localhost:3000",
-      "http://localhost:3000",
-      "https://aneun-dongne.ml",
-      "http://aneun-dongne.ml",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: true,
     credentials: true,
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
   })
 );
 app.use(cookieParser());
@@ -46,17 +38,7 @@ app.get("/", (req, res) => {
 });
 
 let server;
-if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
-  const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
-  const certificate = fs.readFileSync(__dirname + "/cert.pem", "utf8");
-  const credentials = { key: privateKey, cert: certificate };
-
-  server = https.createServer(credentials, app);
-  server.listen(PORT, () => console.log("https server runnning"));
-} else {
-  server = app.listen(PORT, () => console.log("http server runnning"));
-}
-
+server = app.listen(PORT, () => console.log("http server runnning"));
 module.exports = server;
 
 // open api를 이용해 데이터를 한번에 받아와 db에 저장하는 로직

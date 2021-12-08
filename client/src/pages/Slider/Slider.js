@@ -11,98 +11,100 @@ import img6 from "../../img/korea06.jpg";
 
 const Imgbox = styled.div`
   width: 100%;
-  height: 1300px;
+  height: 1000px;
   overflow: hidden;
 `;
 
-const Button = styled.div`
-  all: unset;
-  padding: 20px 20px;
-  margin: 10px;
-  align-items: flex-end;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #88bfff;
-  border-radius: 50px;
-  border: 2px solid #88bfff;
-  cursor: pointer;
-  &:hover {
-    background-color: #88bfff;
-    color: #fff;
-  }
-`;
-const Sliderimgbox = styled.div`
-  margin-bottom: 30px;
-  display: flex;
-  background-color: aqua;
-  /* justify-content: center; */
-`;
-
-const Side = styled.div`
-  text-align: center;
-`;
-export const MenuButton = styled.button`
-  /* margin-left: 25vw;
-  margin-right: 50px;
-  margin-bottom: 400px;
-  margin-top: 400px;
+const Prevbutton = styled.div`
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
-
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
+  z-index: 2;
+  background: none;
+  border: none;
+  font-size: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: white;
-  width: 150px;
-  height: 50px;
-  border-style: none;
   cursor: pointer;
-  transition: all 0.3s;
-  margin-left: 43vw;
-  margin-right: 350px;
-  border-radius: 25px;
-  margin-top: 150px;
-  background-color: #00ccff;
-
-  :hover {
-    background-color: #6af4aa;
-
-    transition: all 0.3s;
-  }
+  border-radius: 0.25rem;
+  padding: 0 0.5rem;
+  background-color: #ffffff78;
 `;
+
+const Nextbutton = styled.div`
+  position: absolute;
+  z-index: 2;
+  background: none;
+  border: none;
+  font-size: 3rem;
+  top: 60%;
+  transform: translateY(-50%);
+  color: white;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  padding: 0 0.5rem;
+  background-color: #ffffff78;
+`;
+
+const Sliderimgbox = styled.div`
+  margin-bottom: 50px;
+  display: flex;
+`;
+
+// const Side = styled.div`
+//   text-align: center;
+//   margin: 50px;
+//   margin-bottom: 0px;
+//   margin-top: 0px;
+//   margin-left: 0px;
+//   margin-right: 0px;
+// `;
 
 export const TitleView = styled.div`
-  display: flex;
-  align-items: center;
-  /* flex-direction: row; */
-  justify-content: center;
-  /* justify-content: center */
-  /* justify-content: center; */
-  /* flex-direction: column; */
-  /* img {
-    width: 100%;
-  } */
+  display: center;
 
   .title {
-    /* margin-left: 25vw;
-    margin-right: 50px;
-    margin-bottom: 400px;
-    margin-top: 400px; */
-    position: absolute;
+    position: fixed;
+    top: 40%;
+    right: 20%;
+    left: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 3rem;
     font-weight: bold;
 
-    background-color: #f0f9ff99;
+    background-color: #fdfeff21;
     border-radius: 20px;
-    width: 700px;
-    height: 70px;
+    border: 5px white;
+    border-style: solid;
+    color: black;
+    /* width: 700px; */
+    height: 80px;
+  }
+  .start-button {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    position: fixed;
+    color: white;
+    width: 150px;
+    height: 60px;
+    border-style: none;
+    border-radius: 50px;
+    top: 55%;
+    right: 45%;
+    left: 45%;
+    background-color: #00ccff;
+    align-items: center;
+
+    transition: all 0.3s;
+    cursor: pointer;
+
+    :hover {
+      background-color: #6af4aa;
+
+      transition: all 0.3s;
+    }
   }
 `;
 
@@ -112,7 +114,10 @@ export const Body = styled.div`
   flex-direction: column;
 `;
 
-export default function Slider() {
+export default function Slider(props) {
+  const [{ img1 }, { img2 }, { img3 }, { img4 }, { img5 }, { img6 }] = imgdummy;
+
+  const [imgdummy, setImgdummy] = useState(0);
   const [newPhoto, setnewPhoto] = useState(0);
   const slideRef = useRef(null);
   const lastphoto = 5;
@@ -147,42 +152,67 @@ export default function Slider() {
     <Body>
       <Imgbox>
         <Sliderimgbox ref={slideRef}>
-          <TitleView>
+          {/* <TitleView>
+            <div className="title">어디론가 놀러가고 싶으신가요?</div>
+            <button className="start-button" onClick={ToHome}>
+              시작하기
+            </button>
+          </TitleView>
+          <Slide img={img1} /> */}
+
+          {props.map((props) => (
+            <div>
+              <TitleView>
+                <div className="title">어디론가 놀러가고 싶으신가요?</div>
+                <button className="start-button" onClick={ToHome}>
+                  시작하기
+                </button>
+              </TitleView>
+              <Slide img={imgdummy} />
+            </div>
+          ))}
+
+          {/* <TitleView>
+            <div className="title">어디론가 놀러가고 싶으신가요?</div>
+            <button className="start-button" onClick={ToHome}>
+              시작하기
+            </button>
+          </TitleView>
+          <Slide img={img2} /> */}
+
+          {/* <TitleView>
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <MenuButton onClick={ToHome}>시작하기</MenuButton>
           </TitleView>
-          <Slide img={img1} />
-          <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
-          </TitleView>
-          <Slide img={img2} />
-          <TitleView>
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
-          </TitleView>
+
           <Slide img={img3} />
+
           <TitleView>
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <MenuButton onClick={ToHome}>시작하기</MenuButton>
           </TitleView>
           <Slide img={img4} />
+
           <TitleView>
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <MenuButton onClick={ToHome}>시작하기</MenuButton>
           </TitleView>
           <Slide img={img5} />
+
           <TitleView>
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <MenuButton onClick={ToHome}>시작하기</MenuButton>
           </TitleView>
-          <Slide img={img6} />
+          <Slide img={img6} /> */}
         </Sliderimgbox>
-        <Side>
-          <Button onClick={PrevBtn}>Prev</Button>
-          <Button onClick={NextBtn}>Next</Button>
-        </Side>
-      </Imgbox>{" "}
+        <Prevbutton className="prev" onClick={PrevBtn}>
+          &#60;
+        </Prevbutton>
+
+        <Nextbutton className="next" onClick={NextBtn}>
+          &#62;
+        </Nextbutton>
+      </Imgbox>
     </Body>
   );
 }

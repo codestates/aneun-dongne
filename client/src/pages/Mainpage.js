@@ -228,7 +228,6 @@ function Mainpage() {
           <div className="peopleTitle">
             우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>-강OO</p>
           </div>
-
           <img src="/people2.png" />
           <div className="peopleTitle">
             가고싶은 곳을 정하기 어려울 때 좋아요! <p>-최OO</p>

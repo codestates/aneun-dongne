@@ -127,6 +127,10 @@ export const token = atom({
   key: "token",
   default: "",
 });
+export const infoEdit = atom({
+  key: "infoEdit",
+  default: "",
+});
 
 // ! 위치기반 API
 
@@ -155,9 +159,4 @@ export const setLo = selector({
         .catch((err) => console.log(err))
     ); //237줄에 console.log(meetingPlace)있음.
   },
-//유저 정보를 수정해야 한다면...
-export const infoEdit = atom({
-  key: "infoEdit",
-  default: "",
-
 });

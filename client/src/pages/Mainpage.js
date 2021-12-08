@@ -164,20 +164,28 @@ export const TitleEndView = styled.div`
   }
 `;
 
-export const MainImage = styled.div`
-  > img {
-    height: 100vh;
-
-    cursor: pointer;
-  }
+export const PopularContainer = styled.div`
+  position: static;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
 `;
 
 export const Image = styled.div`
   display: flex;
   img {
     width: 1000px;
-    height: 650px;
+    height: 500px;
     object-fit: cover;
+  }
+`;
+
+export const VideoContainer = styled.div`
+  width: 300px;
+  height: 300px;
+  & img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
   }
 `;
 
@@ -206,10 +214,16 @@ function Mainpage() {
 
         <TitleFirstView>
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
-          <Image>
-            <img src="/mapclick.png" />
-          </Image>
+
+          <VideoContainer>
+            <Image>
+              <img src="/mapclick.png" />
+            </Image>
+            {/* gif 추가예정 */}
+            {/* <img src={} muted autoPlay loop playsInline /> */}
+          </VideoContainer>
         </TitleFirstView>
+
         <TitleSecondView>
           <div className="title">저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.</div>
           <Image>
@@ -245,7 +259,6 @@ function Mainpage() {
         <TitleEndView>
           <div className="title">나와 어울리는 장소로 떠날 준비가 되셨나요?</div>
           <MenuButton onClick={ToHome}>시작하기</MenuButton>
-          {/* <img src={} muted autoPlay loop playsInline /> */}
         </TitleEndView>
       </Body>
     </>

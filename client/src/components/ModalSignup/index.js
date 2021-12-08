@@ -72,7 +72,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
     // `${process.env.REACT_APP_API_URL}/user/signup`
     axios
       .post(
-        "http://localhost:80/user/signup",
+        "https://localhost:80/user/signup",
         {
           nickname,
           email,

@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import MapInRoom from "../../components/kakao-map/MapInRoom/MapInRoom-index";
-import notImageYet from "../../images/not-image-yet.png";
+import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
-import KeyWordTemplate from "../../components/HashTag/KeyWordTemplate";
+import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
-import { useRecoilValue } from "recoil";
-import { mycomments } from "../../recoil/recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { defaultcomments, loginState, loginModal } from "../../recoil/recoil";
+
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
-  const myComments = useRecoilValue(mycomments);
+  // const [updateComment, setUpdateComment] = useRecoilState(updatecomment);
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
   const [imgURL, setImgURL] = useState("");
@@ -21,8 +22,14 @@ function DetailPage({ match }) {
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
+  //로긴모달창,로긴상태
+  const isLogin = useRecoilValue(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
+  //기존댓글
+  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
+
   useEffect(() => {
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     window.scrollTo(0, 0);
@@ -69,9 +76,10 @@ function DetailPage({ match }) {
         // ?
       });
   }, [pathname]);
-
-  // console.log(pageURL);
-  // console.log(title, placeAddr, imgURL);
+  useEffect(() => {
+    //axios.get
+    //새로고침=>전체댓글을 받는다. => 리코일전체댓글을 바꾼다. 오케이
+  }, []);
 
   const overView = overview.replace(/(<([^>]+)>)/gi, "");
   let FirstOverView = overView.slice(0, 130);
@@ -82,24 +90,34 @@ function DetailPage({ match }) {
     setReadMore(!readMore);
   };
 
+  // useEffect(() => {
+  //   if (updateComment) {
+
+  //   }
+  //   setUpdateComment(false);
+  // }, [updatecomment]);
   //! 이 글에 내가 좋아요를 눌렀는지 싫었는지도 DB에 저장해야할듯
   //! 초기화 안되게
   const LikeHandler = () => {
+    if (!isLogin) {
+      setIsLoginOpen(true);
+    }
     setLikeOrNot(!likeOrNot);
     //좋아요한 상태면 -1
     if (likeOrNot) setLike(like - 1);
     else setLike(like + 1);
   };
+
   return (
     <>
       <Styled.Div>
-        <Styled.Address>{placeAddr}</Styled.Address>
         <Styled.Title>{title}</Styled.Title>
         {pageURL ? (
-          <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title}`}>
+          <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title} 홈페이지`}>
             홈페이지로 이동
           </Styled.PageURL>
         ) : null}
+        {/* 여기도 사진 넘기기기능 넣자. */}
         {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src={notImageYet} />}
         {overView ? (
           // !이거 css로 할수있대 나중에 ㄱ
@@ -114,19 +132,20 @@ function DetailPage({ match }) {
             </Styled.CutDownBtn>
           </Styled.Overview>
         ) : null}
+
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
-        <KeyWordTemplate keywordDummy={keywordDummy} />
-        <Styled.LikeBtn onClick={LikeHandler}>
-          <i class={likeOrNot ? "fas fa-heart" : "hide"}></i>
-          <i class={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
-        </Styled.LikeBtn>
-        <CommentTemplate commentDummy={commentDummy}></CommentTemplate>
-        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
-        {myComments.map((el, idx) => {
-          return <div key={idx}>{el}</div>;
-        })}
-        {/*  내가 쓰는 댓글들이 들아갈 공간 */}
-        <MyComment></MyComment>
+        <Styled.Wrapper>
+          <HashTagTemplate keywordDummy={keywordDummy} />
+
+          <Styled.LikeBtn onClick={LikeHandler}>
+            <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
+            <i className={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
+          </Styled.LikeBtn>
+
+          <MyComment></MyComment>
+          <CommentTemplate commentDummy={defaultComment}></CommentTemplate>
+        </Styled.Wrapper>
+        {/* 새로고침할때마다 get으로 전체댓글 얻으면 수정되든 삭제되든 괜찮음, defaultComment에 넣기만 하면 된다. */}
       </Styled.Div>
     </>
   );
@@ -135,28 +154,3 @@ function DetailPage({ match }) {
 export default DetailPage;
 
 const keywordDummy = ["#왕릉", "#공원"];
-
-const commentDummy = [
-  {
-    img: "/people1.png",
-    nickname: "류준열",
-    comment: "안녕하세요",
-    keyword: [
-      "안녕하세요",
-      "감사해요",
-      "잘있어요",
-      "다시만나요",
-      "여기 더보기버튼을 만들어볼게요",
-      "아침해가뜨면",
-      "매일같은사람들과",
-    ],
-    data: "2021-12-03", //형식 모르겠음 db보고 결정
-  },
-  {
-    img: "/people2.png",
-    nickname: "윤해용",
-    comment: "팀장이에요",
-    keyword: ["안녕하세요", "감사해요", "잘있어요", "다시만나요"],
-    data: "2021-12-03", //형식 모르겠음 db보고 결정
-  },
-];

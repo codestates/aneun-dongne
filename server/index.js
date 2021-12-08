@@ -1,11 +1,17 @@
 require("dotenv").config();
+const fs = require("fs");
+const https = require("https");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const { sequelize } = require("./models/index");
 
 const app = express();
+
 const PORT = 4000;
+
+// const HTTPS_PORT = 80;
+
 const controllers = require("./controllers");
 
 app.use(express.json());
@@ -15,7 +21,9 @@ app.use(
   cors({
     origin: [
       // 클라이언트 s3 주소
+      "https://localhost:3000",
       "http://localhost:3000",
+      "https://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
       "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -39,8 +47,17 @@ sequelize
     console.error(err);
   });
 
-const server = app.listen(PORT, () => {
-  console.log(`server listening on ${PORT}`);
-});
+let server;
+
+if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
+  const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
+  const certificate = fs.readFileSync(__dirname + "/cert.pem", "utf8");
+  const credentials = { key: privateKey, cert: certificate };
+
+  server = https.createServer(credentials, app);
+  server.listen(HTTPS_PORT, () => console.log("https server runnning"));
+} else {
+  server = app.listen(HTTPS_PORT, () => console.log("http server runnning"));
+}
 
 module.exports = server;

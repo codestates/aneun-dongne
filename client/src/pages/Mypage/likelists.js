@@ -17,7 +17,7 @@ function Likelists() {
   const [inputPostId, setInputPostId] = useState(""); // 선택한 게시글의 id
   const [show, setShow] = useState([]); // 전체 게시글
 
-  const ClickLikeList = () => {
+  const ClickLikeList = (e) => {
     axios
       .get(
         `http://localhost:3000/mypage/likelists`,
@@ -37,11 +37,11 @@ function Likelists() {
       <div>좋아요 한 목록</div>
       <div
         classname="list"
-        onClick={() => {
-          ClickLikeList();
+        onClick={(e) => {
+          ClickLikeList(e);
         }}
       />
     </>
   );
 }
-export default likelists;
+export default Likelists;

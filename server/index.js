@@ -5,7 +5,9 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const db = require("./models");
-
+// const { upload } = require("./upload");
+const { upload } = require("./upload");
+// const { update } = require("../update");
 const app = express();
 const HTTPS_PORT = 80;
 const controllers = require("./controllers");
@@ -27,10 +29,14 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.get("/user/info", controllers.auth);
+
+app.get("/user/info", controllers.auth.get);
+app.put("/user/info", upload.single("image"), controllers.auth.put);
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
+
 app.post("/signout", controllers.signout);
+app.post("/home/bookmark", upload.single("image"), controllers.bookmark);
 
 db.sequelize
   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행

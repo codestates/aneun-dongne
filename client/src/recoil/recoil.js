@@ -58,7 +58,15 @@ export const loginModal = atom({
 });
 export const userInfo = atom({
   key: "userInfo",
-  default: null,
+  default: {
+    email: "",
+    createdAt: "",
+    nickname: "",
+    updatedAt: "",
+    user_area: "",
+    user_sigg: "",
+    user_image_path: "",
+  },
 });
 //!pickpoint바뀔때마다 바뀌는 값
 export const defaultposition = atom({

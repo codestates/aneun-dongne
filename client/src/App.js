@@ -15,7 +15,8 @@ import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 import Slider from "./pages/Slider/Slider";
-import Mypage from "./pages/Mypage/userinfo";
+import Mypage from "./pages/Mypage/Userinfo";
+import Likelists from "./pages/Mypage/Likelists";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -71,9 +72,9 @@ const App = () => {
           아닐 경우에는 로그인 모달창이 뜨게 함.*/}
           {/* {isLogin ? <Mypage info={info} accessToken={accessToken} /> : <Home info={info} />} */}
           <Mypage />
-          {/* </Route>
+        </Route>
         <Route exact path="/mypage/likelists">
-          <Likelist /> */}
+          <Likelists />
         </Route>
         {/* <Commentlist />
           <Visted /> */}

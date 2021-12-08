@@ -7,12 +7,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      visited_user_id: {
-        type: Sequelize.INTEGER,
-      },
-      visited_post_contentid: {
-        type: Sequelize.INTEGER,
+        validate: { min: 1 },
       },
       visited_area: {
         type: Sequelize.STRING,
@@ -21,16 +16,22 @@ module.exports = {
         type: Sequelize.STRING,
       },
       visited_mapx: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(25, 20),
       },
       visited_mapy: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(25, 20),
       },
       visited_memo: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       visited_memo_image_path: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
+      },
+      visited_wtmx: {
+        type: Sequelize.DECIMAL(50, 30),
+      },
+      visited_wtmy: {
+        type: Sequelize.DECIMAL(50, 30),
       },
       createdAt: {
         allowNull: false,

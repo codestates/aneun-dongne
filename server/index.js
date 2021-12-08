@@ -5,7 +5,7 @@ const express = require("express");
 const { sequelize } = require("./models/index");
 
 const app = express();
-const PORT = 80;
+const PORT = 4000;
 const controllers = require("./controllers");
 
 app.use(express.json());
@@ -23,19 +23,21 @@ app.use(
   })
 );
 app.use(cookieParser());
+// const commentRouter = require("./router/commentRouter");
+// app.use("/comment", commentRouter);
 app.get("/user/info", controllers.auth);
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
 app.post("/signout", controllers.signout);
 
-// sequelize
-//   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
-//   .then(() => {
-//     console.log("데이터베이스 연결 성공");
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
+sequelize
+  .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
+  .then(async () => {
+    console.log("데이터베이스 연결 성공");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 const server = app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);

@@ -7,12 +7,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      like_user_id: {
-        type: Sequelize.INTEGER,
-      },
-      like_post_contentid: {
-        type: Sequelize.INTEGER,
+        validate: { min: 1 },
       },
       createdAt: {
         allowNull: false,

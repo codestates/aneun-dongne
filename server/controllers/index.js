@@ -4,4 +4,5 @@ module.exports = {
   signin: require("./users/signin"),
   signout: require("./users/signout"),
   home: require("./home"),
+  // comment: require("./comment"),
 };

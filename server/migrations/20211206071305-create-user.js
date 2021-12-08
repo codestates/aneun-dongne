@@ -1,14 +1,31 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Hashtags", {
+    await queryInterface.createTable("Users", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        validate: { min: 1 },
       },
-      hashtag_name: {
+      nickname: {
+        type: Sequelize.STRING,
+      },
+      user_sigg: {
+        type: Sequelize.STRING,
+      },
+      user_area: {
+        type: Sequelize.STRING,
+      },
+      email: {
+        type: Sequelize.STRING,
+        unique: true,
+      },
+      password: {
+        type: Sequelize.STRING,
+      },
+      user_image_path: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -22,6 +39,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Hashtags");
+    await queryInterface.dropTable("Users");
   },
 };

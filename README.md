@@ -2,7 +2,7 @@
 
 <h3>우리 동네 매력을 발견하는 관광지 추천 서비스, 아는동네</h3>
 
-<h3><a href="aneun-dongne.ml">아는동네 바로가기</a></h3>
+<h3><a href="https://aneun-dongne.ml">아는동네 바로가기</a></h3>
 
 </br>
 

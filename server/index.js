@@ -12,9 +12,9 @@ const { upload } = require("./upload");
 
 const app = express();
 
-const PORT = 4000;
+// const PORT = 4000;
 
-// const HTTPS_PORT = 80;
+const HTTP_PORT = 80;
 
 const controllers = require("./controllers");
 
@@ -47,14 +47,14 @@ app.post("/user/login", controllers.signin);
 app.post("/signout", controllers.signout);
 app.post("/home/bookmark", upload.single("image"), controllers.bookmark);
 
-sequelize
-  .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
-  .then(async () => {
-    console.log("데이터베이스 연결 성공");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// sequelize
+//   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
+//   .then(async () => {
+//     console.log("데이터베이스 연결 성공");
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
@@ -63,9 +63,9 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const credentials = { key: privateKey, cert: certificate };
 
   server = https.createServer(credentials, app);
-  server.listen(HTTPS_PORT, () => console.log("https server runnning"));
+  server.listen(HTTP_PORT, () => console.log("https server runnning"));
 } else {
-  server = app.listen(HTTPS_PORT, () => console.log("http server runnning"));
+  server = app.listen(HTTP_PORT, () => console.log("http server runnning"));
 }
 
 module.exports = server;

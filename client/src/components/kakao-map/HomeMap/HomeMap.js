@@ -51,6 +51,7 @@ const HomeMap = ({ defaultPosition }) => {
 
         const firstItem = result[0];
         const { x, y } = firstItem;
+        //!
         const moveLatLng = new kakao.maps.LatLng(y, x);
 
         // console.log(moveLatLng.La)
@@ -76,6 +77,10 @@ const HomeMap = ({ defaultPosition }) => {
   };
 
   useEffect(() => {
+    // ! 평면좌표
+
+    // console.log("평면좌표", wtm);
+
     // * 지도의 한 점 클릭시 그 클릭한 점의 좌표 반경 10km의 관광지들의 좌표 전송
 
     // !이건 내 좌표 반경 10km에 있는 관광지 좌표따오는거
@@ -242,6 +247,25 @@ const HomeMap = ({ defaultPosition }) => {
       // 마커 위에 인포윈도우를 표시합니다
       infowindowCenter.open(map, markerCenter);
     });
+
+    // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
+    if (clickedNowLocationBtn) {
+      axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84`,
+          { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
+        )
+        .then((res) => res.data.documents[0].address)
+        .then((address) => {
+          // console.log(address)
+          setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
+          console.log(add);
+        })
+        .then(setClickedNowLocationBtn(false))
+        //   .then(res=>console.log(meetingPlace))
+        .catch((err) => console.log(err)); //
+    }
+    //!! 맵을 클릭시 주소변경
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       //* 내위치마커에 infowindow 생성
 

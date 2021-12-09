@@ -49,7 +49,7 @@ const MoveToTopBtn = styled.button`
   }
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   text-decoration: none;
   color: black;
 `;

@@ -7,8 +7,10 @@ import { Styled } from "./style";
 import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { StyledLink } from "../PlaceList";
 const Header = ({ handleResponseSuccess }) => {
+  const history = useHistory();
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -65,7 +67,8 @@ const Header = ({ handleResponseSuccess }) => {
       //로긴상태 해제
       setIsLogin(false);
     });
-    console.log(isLogin);
+
+    history.push("/");
     // console.log(cookies);
   };
 
@@ -134,9 +137,11 @@ const Header = ({ handleResponseSuccess }) => {
                 <div className="mainpage-button" onClick={logoutHandler}>
                   Log Out
                 </div>
-                <div className="mainpage-button" onClick={openSignupModalHandler}>
-                  My Page
-                </div>
+                {/* 나중에 밑줄뜨는거 처리해야함*/}
+                <StyledLink to="/mypage">
+                  <div className="mainpage-button">My Page</div>
+                  {/* <div className="mainpage-button">My Page</div> */}
+                </StyledLink>
               </>
             )}
           </div>

@@ -4,7 +4,11 @@ const https = require("https");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const { sequelize } = require("./models/index");
+const db = require("./models");
+// const { upload } = require("./upload");
+const { upload } = require("./upload");
+// const { update } = require("../update");
+// const { sequelize } = require("./models/index");
 
 const app = express();
 
@@ -26,17 +30,22 @@ app.use(
       "https://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
       "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
 );
 app.use(cookieParser());
+
+app.get("/user/info", controllers.auth.get);
+app.patch("/user/info", upload.single("image"), controllers.auth.patch);
 // const commentRouter = require("./router/commentRouter");
 // app.use("/comment", commentRouter);
-app.get("/user/info", controllers.auth);
+
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
+
 app.post("/signout", controllers.signout);
+app.post("/home/bookmark", upload.single("image"), controllers.bookmark);
 
 sequelize
   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행

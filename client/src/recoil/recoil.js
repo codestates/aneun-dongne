@@ -84,7 +84,15 @@ export const loginModal = atom({
 });
 export const userInfo = atom({
   key: "userInfo",
-  default: null,
+  default: {
+    email: "",
+    createdAt: "",
+    nickname: "",
+    updatedAt: "",
+    user_area: "",
+    user_sigg: "",
+    user_image_path: "",
+  },
 });
 //!pickpoint바뀔때마다 바뀌는 값
 export const defaultposition = atom({
@@ -196,3 +204,31 @@ export const infoEdit = atom({
   key: "infoEdit",
   default: "",
 });
+
+// ! 프사 변경
+// export const changeProfile = selector({
+//   key: "changeProfile",
+//   get: async ({ get }) => {
+//     return (
+//       axios
+//         .get(
+//           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${get(pickpoint)[1]}&y=${
+//             get(pickpoint)[0]
+//           }&input_coord=WGS84`,
+//           { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
+//         )
+//         .then((res) => res.data.documents[0].address)
+//         .then((address) => {
+//           // console.log(address)
+//           // console.log({
+//           //   area: address.region_1depth_name,
+//           //   sigg: address.region_2depth_name,
+//           //   address: address.address_name,
+//           // });
+//           return { area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name };
+//         })
+//         //   .then(res=>console.log(meetingPlace))
+//         .catch((err) => console.log(err))
+//     ); //237줄에 console.log(meetingPlace)있음.
+//   },
+// });

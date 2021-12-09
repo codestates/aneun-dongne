@@ -58,7 +58,7 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>
-
+            {/* //!지역을 선택하세요 추가 - 서버에 null이나 undefined 보내주기. */}
             <Styled.SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
               {cat2_name[areaIdx + 1].map((el, idx) => {
                 return <option key={idx}>{el}</option>;

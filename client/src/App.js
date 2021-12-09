@@ -14,11 +14,11 @@ import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
-import Slider from "./pages/Slider/Slider";
+// import Slider from "./pages/Slider/Slider";
 import MyPage from "./pages/Mypage/MyPage";
 import Likelists from "./pages/Mypage/Likelists";
 import Commentlists from "./pages/Mypage/Commentlists";
-import UserInfo from "./pages/Mypage/UserInfo";
+import UserInfoPage from "./pages/Mypage/UserInfoPage";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -63,7 +63,7 @@ const App = () => {
       <Header handleResponseSuccess={handleResponseSuccess} />
       <Switch>
         <Route exact path="/">
-          <Slider />
+          {/* <Slider /> */}
           <Mainpage />
         </Route>
         <Route exact path="/home">
@@ -71,7 +71,7 @@ const App = () => {
         </Route>
         <Route exact path="/mypage">
           {/* UserInfo는 한페이지안에 메뉴바, 내용 다있는 컴퍼넌트 */}
-          <UserInfo />
+          <UserInfoPage />
           {/* MyPage는 메뉴바랑 내용이랑 분리되어 있는 컴퍼넌트 */}
           {/* <MyPage /> */}
         </Route>

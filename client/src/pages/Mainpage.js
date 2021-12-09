@@ -8,8 +8,8 @@ import { placelist, loginState } from "../recoil/recoil";
 
 export const Body = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 `;
 
 export const Button = styled.div`
@@ -34,7 +34,7 @@ export const Button = styled.div`
 `;
 
 export const MenuButton = styled.button`
-  position: absolute;
+  /* position: absolute; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,8 +45,8 @@ export const MenuButton = styled.button`
   border-style: none;
   cursor: pointer;
   transition: all 0.3s;
-  margin-left: 350px;
-  margin-right: 350px;
+  /* margin-left: 350px;
+  margin-right: 350px; */
   border-radius: 25px;
   margin-top: 10px;
   background-color: #00ccff;
@@ -188,6 +188,18 @@ export const VideoContainer = styled.div`
     border-radius: 8px;
   }
 `;
+export const TitleMainView = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    position: relative;
+    width: 100%;
+  }
+  .main-title {
+    position: absolute;
+  }
+`;
 
 function Mainpage() {
   const placeList = useRecoilValue(placelist);
@@ -204,13 +216,25 @@ function Mainpage() {
           </video> */
   }
   console.log("로긴되었나요", isLogin);
+
   return (
     <>
       <Body>
-        {/* <TitleView>
-          <div className="title">어디론가 놀러가고 싶으신가요?</div>
-          <MenuButton onClick={ToHome}>시작하기</MenuButton>
-        </TitleView> */}
+        <TitleMainView>
+          <img
+            src={
+              "https://user-images.githubusercontent.com/77098060/126061940-83ac21bc-9a61-4dd1-bf26-d3bba3495f5e.gif"
+            }
+            muted
+            autoPlay
+            loop
+            playsInline
+          />
+          <div className="main-title">
+            <div className="title">어디론가 놀러가고 싶으신가요?</div>
+            <MenuButton onClick={ToHome}>시작하기</MenuButton>
+          </div>
+        </TitleMainView>
 
         <TitleFirstView>
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
@@ -220,10 +244,8 @@ function Mainpage() {
               <img src="/mapclick.png" />
             </Image>
             {/* gif 추가예정 */}
-            {/* <img src={} muted autoPlay loop playsInline /> */}
           </VideoContainer>
         </TitleFirstView>
-
         <TitleSecondView>
           <div className="title">저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.</div>
           <Image>

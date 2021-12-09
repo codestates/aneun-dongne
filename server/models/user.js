@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      //!id넣으면 안되는건지??
       nickname: DataTypes.STRING,
       user_sigg: DataTypes.STRING,
       user_area: DataTypes.STRING,

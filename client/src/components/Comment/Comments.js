@@ -9,8 +9,8 @@ import MyHashTag from "../HashTag/MyHashTag";
 const Comment = styled.div`
   position: relative;
   display: flex;
-  border: 1px red solid;
-  height: 200px;
+  /* border: 1px red solid; */
+  /* height: 200px; */
   border-radius: 20px;
   margin-top: 10px;
   margin-bottom: 40px;
@@ -27,77 +27,63 @@ const Comment = styled.div`
     width: 100%;
   }
 `;
-const Profile = styled.div`
-  position: relative;
-  /* background-color: red; */
-  width: 80px;
-  height: 140px;
-  margin: 40px;
-`;
+const Profile = styled.div``;
 const ProfileImg = styled.img`
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  /* background-color: white; */
+
+  background-color: white;
 `;
 
 const NickName = styled.span`
-  /* background-color: yellowgreen; */
-  position: absolute;
-  bottom: 5px;
+  background-color: yellowgreen;
+
   text-align: center;
-  width: 100%;
 `;
 
 const ContentBox = styled.div`
-  /* background-color: yellow; */
-
-  margin-top: 20px;
-  position: relative;
-  width: 400px;
-  height: 140px;
+  background-color: yellow;
 `;
 
 const Content = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 10px;
-  width: 370px;
-  height: 60px;
-  padding-left: 10px;
-  padding-right: 10px;
-  /* border: 1px gray solid; */
-  /* background-color: whitesmoke; */
+  display: flex;
+  flex-wrap: wrap;
+
+  background-color: whitesmoke;
 `;
 
 const ContentInput = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 10px;
-  width: 460px;
-  height: 80px;
-  padding-left: 10px;
-  padding-right: 10px;
+  display: flex;
+  flex-wrap: wrap;
 
+  > #commentRead {
+    display: flex;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    word-break: keep-all;
+  }
+  > #comment-change {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 370px;
+    height: 70px;
+  }
   > input,
   div {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    background-color: whitesmoke;
+
     width: 370px;
-    height: 60px;
+
     padding-left: 10px;
     padding-right: 10px;
   }
 
   .change-comment,
   .complete-change {
-    position: absolute;
-    /* top: -20px; */
-    right: -20px;
+    z-index: 999;
+
     border: none;
-    background-color: rgb(192, 251, 255);
+
     background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
@@ -123,11 +109,8 @@ const ContentInput = styled.div`
 
   .delete-comment,
   .get-back {
-    position: absolute;
-    top: 60px;
-    right: -20px;
     border: none;
-    background-color: rgb(192, 251, 255);
+
     background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
@@ -153,20 +136,11 @@ const ContentInput = styled.div`
 `;
 
 const HashTagWrapper = styled.div`
-  /* display: flex; */
-  position: absolute;
-  /* background-color: pink; */
-
+  /* margin-top: 100px; */
   width: 370px;
-  height: 40px;
-  bottom: 0px;
-  left: 10px;
+
   white-space: nowrap;
   border: none;
-  /* overflow-y: scroll; */
-
-  /* overflow: auto; */
-  /* white-space: nowrap; */
 `;
 const Date = styled.div`
   position: absolute;
@@ -270,12 +244,12 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
           ) : (
             <ContentInput>
               {!editMode ? (
-                <div id="commentRead" name="comment">
+                <div id="comment-read" name="comment">
                   {comment}
                 </div>
               ) : (
-                <input
-                  id="commentChange"
+                <textarea
+                  id="comment-change"
                   type="text"
                   value={comment} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
                   onChange={(e) => ChangeHandler(e)}
@@ -314,7 +288,11 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
             </ContentInput>
           )}
           <HashTagWrapper>
-            {editMode ? <MyHashTag tags={tags} setTags={setTags} /> : <OthersHashTag initialTags={initialTags} />}
+            {editMode ? (
+              <MyHashTag tags={tags} setTags={setTags} uuid={uuid} />
+            ) : (
+              <OthersHashTag initialTags={initialTags} uuid={uuid} />
+            )}
           </HashTagWrapper>
         </ContentBox>
         <Date>작성날짜 : {date}</Date>

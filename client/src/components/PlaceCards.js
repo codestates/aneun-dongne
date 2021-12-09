@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import notImageYet from "../img/not-image-yet.png";
+import HashTagTemplate from "./HashTag/HashTagTemplate";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
   border: 1px rgb(107, 217, 224) solid;
 
   border-radius: 20px;
-  width: 200px;
+  width: 300px;
+  /* height: 275px; */
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: box-shadow 0.1s, transform 0.1s;
   text-decoration: inherit;
@@ -47,7 +49,7 @@ const PlaceCard = styled.div`
   }
   .place-cards > img {
     width: 80%;
-    height: 150px;
+    height: 200px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
@@ -68,6 +70,7 @@ function PlaceCards({ title, img, addr1, onClick }) {
   return (
     <PlaceCard onClick={onClick}>
       <div className="place-cards">
+        <HashTagTemplate keywordDummy={keywordDummy} />
         {img ? <img src={img} /> : <img src={notImageYet} />}
         <div className="place-cards-title">
           <div>{`[${addr1}] `}</div>
@@ -85,3 +88,5 @@ function PropsEqual(prev, next) {
 // console.log(React.memo(PlaceCards, PropsEqual));
 export const MemoCards = React.memo(PlaceCards, PropsEqual);
 // export default React.memo(PlaceCards, PropsEqual);
+
+const keywordDummy = ["#산책하기좋은", "#절"];

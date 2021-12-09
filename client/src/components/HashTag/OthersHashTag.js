@@ -1,20 +1,20 @@
-import { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 export const TagsInput = styled.div`
-  z-index: 999;
+  /* z-index: 995; */
 
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 48px;
-  width: 480px;
+  width: 400px;
 
-  border-radius: 6px;
   > #tags {
+    /* background-color: red; */
     display: flex;
-    /* display: inline-block; */
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
+    /* width: 700px; */
     padding: 0;
     margin: 8px 0 0 0;
   }
@@ -72,20 +72,38 @@ export const TagsInput = styled.div`
   }
 `;
 
-const OthersHashTag = ({ initialTags }) => {
+const ReadMoreBtn = styled.button`
+  border: blue 1px solid;
+  z-index: 999;
+  border: none;
+  /* background: transparent; */
+  width: 50px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+`;
+const CutDownBtn = styled.button`
+  border: blue 1px solid;
+  z-index: 999;
+  border: none;
+  /* background: transparent; */
+  width: 50px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+`;
+
+const OthersHashTag = ({ initialTags, uuid }) => {
   // const [tags, setTags] = useState(initialTags);
+  const tagInput = useRef(null);
 
   return (
     <>
-      <TagsInput>
+      <TagsInput ref={tagInput} id="outer-box">
         <div id="tags">
-          {initialTags
-            ? initialTags.map((tag, index) => (
-                <div key={index} className="tag">
-                  {tag}
-                </div>
-              ))
-            : null}
+          {initialTags.map((tag, index) => (
+            <div key={index} className="tag">
+              {tag}
+            </div>
+          ))}
         </div>
       </TagsInput>
     </>

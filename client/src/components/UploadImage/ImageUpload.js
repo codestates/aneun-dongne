@@ -8,7 +8,7 @@ function ImageUpload({ placeImage, setPlaceImage }) {
   function inputFileHandler(inputValue, setPlaceImage) {
     const image = inputValue.current.files;
     setPlaceImage(image[0]);
-    console.log(placeImage);
+    console.log(image[0]);
   }
 
   function inputBtn(e, inputValue) {
@@ -29,6 +29,9 @@ function ImageUpload({ placeImage, setPlaceImage }) {
         type="file"
         onChange={(e) => inputFileHandler(inputValue, setPlaceImage)}
       />
+      <span>
+        <i className="fas fa-edit"></i>
+      </span>
       {placeImage ? (
         <div
           className="img_preview"

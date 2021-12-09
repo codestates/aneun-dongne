@@ -2,100 +2,36 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import dotenv from "dotenv";
 import { userInfo, loginState, loginModal } from "../../recoil/recoil";
 import hamtori from "../../img/hamtori.png";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
-export const Body = styled.div`
-  /* position: relative; */
-  font-size: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  margin-top: 73px;
-`;
-export const MenuBar = styled.div`
-  margin: 0px 50px 0 10px;
-  background: white;
-  box-shadow: rgb(180 180 180) -1px 1px 8px;
-  border-radius: 20px;
-  width: 300px;
-  height: 100%;
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  /* padding: 100px; */
-  /* z-index: 9; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #8ea1da;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(192, 251, 255, 1) 0,
-    rgba(192, 251, 255, 0.5) 60%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-  > img {
-    margin: 30px;
-    width: 170px;
-    height: 170px;
-    border-radius: 100%;
-    cursor: pointer;
-  }
-  > input {
-    border: none;
-    align-items: center;
-  }
-  > .menu-img {
-    /* background-color: red; */
-    margin-top: 40%;
-    /* margin-right: 50%; */
-    width: 100px;
-    height: 100px;
-  }
-  > h2 {
-    margin-top: 20px;
-    /* background: red; */
-  }
-`;
-const ButtonList = styled.div`
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  > button {
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 1.3em;
-    padding: 10px;
-    margin-top: 20px;
-    border: none;
-    /* background-color: #8ea1da; */
-    transition: all 0.5s ease;
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-`;
+import Menubar from "./Menubar";
 
-export const UserInfopage = styled.div`
+const UserInfopage = styled.div`
   top: 0;
   margin-left: 300px;
   /* width: 100%; */
   /* height: 100%; */
   /* border: 1px gray solid; */
+
   /* background-color: yellowgreen; */
   display: flex;
   justify-content: center;
 `;
-export const View = styled.div`
+const View = styled.div`
   margin-top: 40px;
+
   width: 60%;
+
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-self: center;
+
   /* background: yellow; */
+
   .btn-exit {
     margin: 20px auto;
     width: 80px;
@@ -116,25 +52,7 @@ export const View = styled.div`
     transform: scale(1.1);
   }
 `;
-const Viewcontent = styled.div`
-  margin: 0px 0px 0 340px;
-  background-color: yellow;
-  border-radius: 10px;
-  width: 200px;
-  padding: 30px;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  > input {
-    /* background-color: red; */
-  }
-`;
 
-export const UserProfilePage = styled.div`
-  width: 500px;
-  height: 500px;
-  /* background: yellow; */
-`;
 // export const ProfileImg = styled.img`
 //   margin: 30px;
 //   width: 170px;
@@ -142,12 +60,13 @@ export const UserProfilePage = styled.div`
 //   border-radius: 100%;
 //   cursor: pointer;
 // `;
-export const ContentBox = styled.div`
+const ContentBox = styled.div`
   margin-top: 40px;
   margin-left: 10%;
   width: 100%;
   /* display: flex; */
   /* flex-direction: column; */
+
   > form {
     display: flex;
     flex-direction: column;
@@ -179,6 +98,7 @@ export const ContentBox = styled.div`
   }
   > form .userinfo-each-label input {
     /* background: yellow; */
+
     font-size: 1.2rem;
     width: 80%;
     border-left: none;
@@ -207,9 +127,11 @@ export const ContentBox = styled.div`
     transition: all 0.5s ease;
     border-radius: 20px;
   }
+
   button:hover {
     transform: scale(1.1);
   }
+
   button:active {
     transform: scale(1.1);
   }
@@ -220,13 +142,12 @@ const ImgDiv = styled.div`
   height: 200px;
   margin: 10px auto;
 `;
-dotenv.config();
 
 //회원수정, 로그아웃시켜줘야힘.
 
-const UserInfo = () => {
+function UserInfoPage({ imgUrl, setImgUrl }) {
   const [info, setInfo] = useRecoilState(userInfo);
-  const [imgUrl, setImgUrl] = useState("");
+  //   const [imgUrl, setImgUrl] = useState("");
   const [inputUsername, setInputUsername] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
@@ -236,8 +157,8 @@ const UserInfo = () => {
   const [nickname, setNickname] = useState("");
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
-  const [formPhotoData, setFormPhotoData] = useState(null);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
+
   // const [PasswordErr, setPasswordErr] = useState("");
   // const [passwordError, setPasswordError] = useState("");
   // const [passwordCheckError, setPasswordCheckError] = useState("");
@@ -252,7 +173,7 @@ const UserInfo = () => {
       .get("https://localhost:80/user/info", { withCredentials: true })
       .then((res) => {
         console.log(res.data.data.userInfo);
-
+        console.log(typeof res.data.data.userInfo.user_image_path);
         setInfo(res.data.data.userInfo);
         if (res.data.data.userInfo.user_image_path) {
           console.log(res.data.data.userInfo.user_image_path);
@@ -326,16 +247,16 @@ const UserInfo = () => {
   // const accessTokenRequest = () => {
 
   //파일변경
-  const handleChangeFile = (e) => {
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      const url = reader.result;
-      if (url) {
-        setImgUrl(url.toString());
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  // const handleChangeFile = (e) => {
+  //   let reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     const url = reader.result;
+  //     if (url) {
+  //       setImgUrl(url.toString());
+  //     }
+  //   };
+  //   reader.readAsDataURL(e.target.files[0]);
+  // };
 
   //닉네임변경
   const handleInputUsername = (e) => {
@@ -427,22 +348,9 @@ const UserInfo = () => {
       })
       .catch((err) => console.log(err));
   };
-  // console.log(info);
+  console.log(nickname);
   return (
-    <Body>
-      <MenuBar>
-        <div className="menu-img">
-          <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
-        </div>
-        <h2>{nickname}</h2>
-        <ButtonList>
-          <button>프로필수정</button>
-          <button>좋아요 한 관광지</button>
-          <button>내가 쓴 리뷰</button>
-          <button>내가 가본 곳</button>
-        </ButtonList>
-      </MenuBar>
-
+    <div>
       <UserInfopage>
         <View>
           <ImgDiv>
@@ -494,7 +402,8 @@ const UserInfo = () => {
           </button>
         </View>
       </UserInfopage>
-    </Body>
+    </div>
   );
-};
-export default UserInfo;
+}
+
+export default UserInfoPage;

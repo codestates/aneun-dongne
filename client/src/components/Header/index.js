@@ -8,6 +8,7 @@ import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil"
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
+import { StyledLink } from "../PlaceList";
 const Header = ({ handleResponseSuccess }) => {
   const history = useHistory();
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -137,9 +138,10 @@ const Header = ({ handleResponseSuccess }) => {
                   Log Out
                 </div>
                 {/* 나중에 밑줄뜨는거 처리해야함*/}
-                <Link to="/mypage">
+                <StyledLink to="/mypage">
                   <div className="mainpage-button">My Page</div>
-                </Link>
+                  {/* <div className="mainpage-button">My Page</div> */}
+                </StyledLink>
               </>
             )}
           </div>

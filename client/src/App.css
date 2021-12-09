@@ -7,19 +7,7 @@
   display: none !important;
 }
 
+/* 마이페이지 사이드바에 변경버튼 안보이게하는거 */
 .menu-img i {
   display: none;
 }
-
-/* 
-<MenuBar>
-        <div className="menu-img">
-          <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
-        </div>
-        <ButtonList>
-          <button>프로필수정</button>
-          <button>좋아요 한 관광지</button>
-          <button>내가 쓴 리뷰</button>
-          <button>내가 가본 곳</button>
-        </ButtonList>
-</MenuBar> */

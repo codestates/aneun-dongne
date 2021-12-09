@@ -3,10 +3,20 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import dotenv from "dotenv";
+
 import { userInfo } from "../../recoil/recoil";
 
-require("dotenv").config();
+const Body = styled.div`
+  top: 0;
+  margin-left: 300px;
+  /* width: 100%; */
+  /* height: 100%; */
+  /* border: 1px gray solid; */
+
+  /* background-color: yellowgreen; */
+  display: flex;
+  justify-content: center;
+`;
 
 function Likelists() {
   const [userinfo, setUserInfo] = useRecoilState(userInfo); //유저 정보 확인
@@ -25,8 +35,8 @@ function Likelists() {
         { "content-type": "application/json", withCredentials: true }
       )
       .then((res) => console.log(res));
-    setSeletedLike(e.target.value);
-    setInputPostId(e.target.value);
+    // setSeletedLike(e.target.value);
+    // setInputPostId(e.target.value);
   };
   useEffect(() => {
     ClickLikeList();
@@ -34,13 +44,15 @@ function Likelists() {
 
   return (
     <>
-      <div>좋아요 한 목록</div>
-      <div
-        classname="list"
-        onClick={(e) => {
-          ClickLikeList(e);
-        }}
-      />
+      <Body>
+        <div>좋아요 한 목록</div>
+        <div
+          classname="list"
+          onClick={(e) => {
+            ClickLikeList(e);
+          }}
+        />
+      </Body>
     </>
   );
 }

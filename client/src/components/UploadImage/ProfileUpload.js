@@ -19,18 +19,22 @@ const EditProfile = styled.div`
 `;
 
 function ProfileUpload({ imgUrl, setImgUrl }) {
+  useEffect(() => {
+    window.URL.revokeObjectURL(imgUrl);
+  }, []); //url사용후 메모리 누수 제거하기
   const inputValue = useRef(null);
-  const [img, setImg] = useState(""); //이 컴퍼넌트안에서만 사용하는 이미지.
-  const [pending, setPending] = useState(false);
+  // const [img, setImg] = useState(""); //이 컴퍼넌트안에서만 사용하는 이미지.
+  // const [pending, setPending] = useState(false);
   function inputFileHandler(inputValue, setImgUrl) {
     const image = inputValue.current.files;
-    setImg(image[0]);
-    console.log(image[0]);
+    console.log(image);
+    setImgUrl(image[0]);
+    console.log(typeof image[0]);
   }
 
   function inputBtn(e, inputValue) {
     e.preventDefault();
-    setPending(true);
+    // setPending(true);
     console.log("hi");
     inputValue.current.click();
   }
@@ -38,8 +42,7 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   // function inputImageHandler(){
   //     const image = imgUrl.current.files
   // }
-
-  //프사없을시 랜덤프사
+  console.log(typeof imgUrl);
   console.log(imgUrl);
   return (
     <div className="profile-upload-box">
@@ -48,15 +51,21 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
         className="input-blind"
         ref={inputValue}
         type="file"
-        onChange={(e) => inputFileHandler(inputValue, imgUrl)}
+        onChange={(e) => inputFileHandler(inputValue, setImgUrl)}
       />
       {/* imgUrl에 데이터일때, 파일일때 */}
-      {/* <ImgDiv
-        onClick={(e) => inputBtn(e, inputValue)}
-        style={{ backgroundImage: `url('${URL.createObjectURL(img)}')` }}
-      ></ImgDiv> */}
-
-      <ImgDiv photo={imgUrl || hamtori} onClick={(e) => inputBtn(e, inputValue)}></ImgDiv>
+      {typeof imgUrl === "object" ? (
+        <ImgDiv
+          onClick={(e) => inputBtn(e, inputValue)}
+          style={{ backgroundImage: `url('${URL.createObjectURL(imgUrl)}')` }}
+        ></ImgDiv>
+      ) : (
+        <ImgDiv
+          // photo={imgUrl || hamtori}
+          onClick={(e) => inputBtn(e, inputValue)}
+          style={{ backgroundImage: `url(${imgUrl})` }}
+        ></ImgDiv>
+      )}
 
       {/* {imgUrl ? (
         <ImgDiv

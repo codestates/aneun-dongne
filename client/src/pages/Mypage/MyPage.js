@@ -1,65 +1,89 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useHistory, Route, Link, Switch } from "react-router-dom";
-import axios from "axios";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import dotenv from "dotenv";
-import { userInfo, loginState, loginModal } from "../../recoil/recoil";
-import hamtori from "../../img/hamtori.png";
-import ProfileUpload from "../../components/UploadImage/ProfileUpload";
-import Menubar from "./Menubar";
-import UserInfoPage from "./UserInfoPage";
-// import Likelists from "./likelists";
-// import Commentlists from "./commentlists";
-const Body = styled.div`
-  /* position: relative; */
-  font-size: 1.2rem;
-  display: flex;
-  flex-direction: column;
+import React, { useEffect, useRef } from "react";
+import { Route, Switch } from "react-router-dom";
+import { Styled } from "./style";
+import { useLocation } from "react-router-dom";
 
-  margin-top: 73px;
-`;
+import Profile from "../../components/Profile/Profile";
+import MyLike from "../../components/MyLike/MyLike";
+import MyReview from "../../components/MyReview/MyReview";
+import MyVisited from "../../components/MyVisited/MyVisited";
 
 const MyPage = () => {
-  const [info, setInfo] = useRecoilState(userInfo);
-  const [imgUrl, setImgUrl] = useState("");
-  const [inputUsername, setInputUsername] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-  const [inputNewPassword, setInputNewPassword] = useState("");
-  const [inputCheckPassword, setInputCheckPassword] = useState("");
-  const [confirmMessage, setConfirmMessage] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [isDelete, setIsDelete] = useState(false);
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const setIsLoginOpen = useSetRecoilState(loginModal);
+  const { pathname } = useLocation();
 
-  const history = useHistory();
+  const navMenu = useRef();
 
   useEffect(() => {
-    //! 우선 적음 나중에 지우게되도
-    axios
-      .get("https://localhost:80/user/info", { withCredentials: true })
-      .then((res) => {
-        console.log(res.data.data.userInfo);
-        console.log(typeof res.data.data.userInfo.user_image_path);
-        setInfo(res.data.data.userInfo);
-        if (res.data.data.userInfo.user_image_path) {
-          console.log(res.data.data.userInfo.user_image_path);
-          setImgUrl(res.data.data.userInfo.user_image_path);
-          setNickname(res.data.data.userInfo.nickname);
-        }
-      })
-      .then();
-  }, []);
+    navEffectHandler();
+  });
+
+  const navEffectHandler = () => {
+    for (let i = 0; i < navMenu.current.childNodes.length; i++) {
+      navMenu.current.childNodes[i].childNodes[0].classList.remove("focused");
+    }
+    switch (pathname) {
+      case "/mypage":
+        navMenu.current.childNodes[0].childNodes[0].classList.add("focused");
+        break;
+      case "/mypage/comments":
+        navMenu.current.childNodes[1].childNodes[0].classList.add("focused");
+        break;
+      case "/mypage/like":
+        navMenu.current.childNodes[2].childNodes[0].classList.add("focused");
+        break;
+      case "/mypage/visited":
+        navMenu.current.childNodes[3].childNodes[0].classList.add("focused");
+        break;
+      default:
+        return;
+    }
+  };
 
   return (
-    <Body>
-      <Menubar imgUrl={imgUrl} setImgUrl={setImgUrl} nickname={nickname} />
-      {/* !! 여기에 Router Switch 쓰려고 했는데, App.js에 Switch가 있어서 뭔가 안되는것같네요..
-      그런데 App.js에서 라우터뜨면 전체페이지가 리렌더링될텐데 */}
-      <UserInfoPage imgUrl={imgUrl} setImgUrl={setImgUrl} />
-    </Body>
+    <>
+      <Styled.Body>
+        <nav className="menu-bar">
+          <div className="profile">
+            <div className="profile-image">
+              <img src="/snowman.png" />
+            </div>
+            <div className="profile-name">guest33</div>
+          </div>
+          <ul className="link-container" ref={navMenu}>
+            <li className="link-wrapper">
+              <Styled.Link to="/mypage">프로필 수정</Styled.Link>
+            </li>
+            <li className="link-wrapper">
+              <Styled.Link to="/mypage/comments">좋아요 한 관광지</Styled.Link>
+            </li>
+            <li className="link-wrapper">
+              <Styled.Link to="/mypage/like">내가 쓴 리뷰</Styled.Link>
+            </li>
+            <li className="link-wrapper">
+              <Styled.Link to="/mypage/visited">내가 가본 곳</Styled.Link>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="page-container">
+          <Switch>
+            <Route exact path="/mypage">
+              <Profile />
+            </Route>
+            <Route exact path="/mypage/comments">
+              <MyLike />
+            </Route>
+            <Route exact path="/mypage/like">
+              <MyReview />
+            </Route>
+            <Route exact path="/mypage/visited">
+              <MyVisited />
+            </Route>
+          </Switch>
+        </div>
+      </Styled.Body>
+    </>
   );
 };
+
 export default MyPage;

@@ -299,14 +299,41 @@
 //   }
 // ]
 
-const { Like } = require("./models");
+// const { Like } = require("./models");
 
-Like.findAndCountAll({
-  raw: true,
-  where: {
-    like_user_id: 1,
-    like_post_contentid: 126508,
-  },
-}).then((data) => {
-  console.log(data);
-});
+// Like.findAndCountAll({
+//   raw: true,
+//   where: {
+//     like_user_id: 1,
+//     like_post_contentid: 126508,
+//   },
+// }).then((data) => {
+//   console.log(data);
+// });
+
+// const { Post } = require("./models");
+// const axios = require("axios");
+
+// Post.findAll({
+//   raw: true,
+// }).then((data) => {
+//   for (let i = 992; i < 1992; i++) {
+//     (function (x) {
+//       setTimeout(function () {
+//         axios
+//           .get(
+//             `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}&contentTypeId=12&contentId=${data[i].post_contentid}&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json`
+//           )
+//           .then((response) => {
+//             Post.update(
+//               {
+//                 post_content: response.data.response.body.items.item.overview,
+//                 post_homepage_path: response.data.response.body.items.item.homepage,
+//               },
+//               { where: { post_contentid: data[i].post_contentid } }
+//             );
+//           });
+//       }, 200 * x);
+//     })(i);
+//   }
+// });

@@ -40,6 +40,20 @@ const deleteLike = async (userId, contentId) => {
 };
 
 module.exports = {
+  getLikeCount: async (req, res) => {
+    const accessTokenData = isAuthorized(req);
+    const { id } = accessTokenData;
+    const { contentId } = req.params;
+    if (!accessTokenData) {
+      await res.status(200).json({
+        data: await getLikeCount(0, contentId),
+      });
+    } else {
+      await res.status(200).json({
+        data: await getLikeCount(id, contentId),
+      });
+    }
+  },
   addLike: async (req, res) => {
     const accessTokenData = isAuthorized(req);
     const { id } = accessTokenData;

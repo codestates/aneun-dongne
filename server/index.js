@@ -14,7 +14,7 @@ const app = express();
 
 // const PORT = 4000;
 
-const HTTPS_PORT = 80;
+const HTTPS_PORT = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -37,7 +37,7 @@ app.use(cookieParser());
 const controllers = require("./controllers");
 
 // app.get("/home", controllers.home);
-// app.get("/post", controllers.postDetails);
+app.get("/post", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
@@ -53,6 +53,7 @@ app.post("/comment", controllers.createComment);
 app.patch("/comment", controllers.updateComment);
 app.delete("/comment", controllers.deleteComment);
 
+app.get("/like", controllers.getLikeCount);
 app.post("/like", controllers.addLike);
 app.delete("/like", controllers.deleteLike);
 

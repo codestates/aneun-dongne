@@ -55,8 +55,7 @@ module.exports = {
   deleteComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
     const { id } = accessTokenData;
-    const { contentId } = req.params;
-    const { commentId } = req.body;
+    const { contentId, commentId } = req.params;
     if (!accessTokenData) {
       // return res.status(401).send("no token in req.headers['authorization']");
       return res.status(400).json({ data: null, message: "invalid access token" });

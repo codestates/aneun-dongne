@@ -55,7 +55,7 @@ module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
         }
         delete result[i]["Likes.like_user_id"];
       }
-      result.splice(50);
+      result.splice(100);
     })
     .catch((err) => console.log(err));
   return result;

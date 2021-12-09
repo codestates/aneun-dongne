@@ -15,10 +15,10 @@ import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 import Slider from "./pages/Slider/Slider";
-import Mypage from "./pages/Mypage/MyPage";
+import MyPage from "./pages/Mypage/MyPage";
 import Likelists from "./pages/Mypage/Likelists";
 import Commentlists from "./pages/Mypage/Commentlists";
-import UserInfo from "./pages/Mypage/Userinfo";
+import UserInfo from "./pages/Mypage/UserInfo";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -70,10 +70,10 @@ const App = () => {
           <Home info={info} />
         </Route>
         <Route exact path="/mypage">
-          {/* app.js에서 login인인 상태에서 mypage로 들어온다.
-          아닐 경우에는 로그인 모달창이 뜨게 함.*/}
-          {/* {isLogin ? <Mypage info={info} accessToken={accessToken} /> : <Home info={info} />} */}
+          {/* UserInfo는 한페이지안에 메뉴바, 내용 다있는 컴퍼넌트 */}
           <UserInfo />
+          {/* MyPage는 메뉴바랑 내용이랑 분리되어 있는 컴퍼넌트 */}
+          {/* <MyPage /> */}
         </Route>
         <Route exact path="/mapage/likelist">
           <Likelists />

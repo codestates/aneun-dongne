@@ -24,14 +24,14 @@ app.use(
       "https://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
       "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
 );
 app.use(cookieParser());
 
 app.get("/user/info", controllers.auth.get);
-app.put("/user/info", upload.single("image"), controllers.auth.put);
+app.patch("/user/info", upload.single("image"), controllers.auth.patch);
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
 

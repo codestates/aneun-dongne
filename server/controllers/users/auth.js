@@ -11,7 +11,7 @@ module.exports = {
       res.status(200).json({ data: { userInfo: accessTokenData }, message: "ok" });
     }
   },
-  put: async (req, res) => {
+  patch: async (req, res) => {
     console.log("리코그바디, auth.put", req.file);
 
     if (req.body.password !== req.body.checkPassword) {

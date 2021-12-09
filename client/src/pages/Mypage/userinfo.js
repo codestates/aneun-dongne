@@ -36,13 +36,7 @@ export const MenuBar = styled.div`
     rgba(192, 251, 255, 0.5) 60%,
     rgba(255, 255, 255, 0.1) 100%
   );
-  > img {
-    margin: 30px;
-    width: 170px;
-    height: 170px;
-    border-radius: 100%;
-    cursor: pointer;
-  }
+
   > input {
     border: none;
     align-items: center;
@@ -53,6 +47,14 @@ export const MenuBar = styled.div`
     /* margin-right: 50%; */
     width: 100px;
     height: 100px;
+  }
+  > .menu-img img {
+    /* margin: 30px; */
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+
+    /* cursor: pointer; */
   }
   > h2 {
     margin-top: 20px;
@@ -81,10 +83,7 @@ const ButtonList = styled.div`
 export const UserInfopage = styled.div`
   top: 0;
   margin-left: 300px;
-  /* width: 100%; */
-  /* height: 100%; */
-  /* border: 1px gray solid; */
-  /* background-color: yellowgreen; */
+
   display: flex;
   justify-content: center;
 `;
@@ -226,7 +225,8 @@ dotenv.config();
 
 const UserInfo = () => {
   const [info, setInfo] = useRecoilState(userInfo);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState(""); //<input type="fiile">의 영향을 받는다.
+  const [prevImg, setPrevImg] = useState(""); //DB에만 영향을 받는다.
   const [inputUsername, setInputUsername] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
@@ -238,6 +238,7 @@ const UserInfo = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [formPhotoData, setFormPhotoData] = useState(null);
+
   // const [PasswordErr, setPasswordErr] = useState("");
   // const [passwordError, setPasswordError] = useState("");
   // const [passwordCheckError, setPasswordCheckError] = useState("");
@@ -257,15 +258,9 @@ const UserInfo = () => {
         if (res.data.data.userInfo.user_image_path) {
           console.log(res.data.data.userInfo.user_image_path);
           setImgUrl(res.data.data.userInfo.user_image_path);
+          setPrevImg(res.data.data.userInfo.user_image_path);
           setNickname(res.data.data.userInfo.nickname);
         }
-
-        // const { , inputUsername, inputEmail } = res.data.data.userInfo;
-        // setInputEmail(inputEmail);
-        // setImgUrl(imgUrl);
-        // setInputUsername(inputUsername);
-
-        // props.accessToken(res.data.Info);
       })
       .then();
   }, []);
@@ -294,19 +289,21 @@ const UserInfo = () => {
     // formData.append("")
 
     axios
-      .put(`https://localhost:80/user/info`, formData, { withCredentials: true })
+      .patch(`https://localhost:80/user/info`, formData, { withCredentials: true })
       .then((res) => {
         if (res.status === 400) {
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
           return;
         }
-
-        console.log(res.data.data.nickname);
-
+        //! 이미지를 db값을 안넣고, <input text='file'>에서 가져온값을 넣고있습니다..
+        //!
+        console.log(res.data.data);
+        setPrevImg(res.data.data.user_image_path);
         return res.data.data.nickname;
       })
       .then((name) => {
         setNickname(name);
+
         console.log(name);
       })
       .catch((err) => console.log(err));
@@ -315,36 +312,22 @@ const UserInfo = () => {
     console.log(nickname);
   }, [nickname]);
 
-  // console.log(inputEmail, imgUrl, inputUsername);
-  //정보를 바로 받아온다면...?
-
-  //app.js에서 login인인 상태에서 mypage로 들어온다.
-  //아닐 경우에는 로그인 모달창이 뜨게 함.
-
-  //로그인 상태를 recoil에서 true로 가져온다.
-
-  // const accessTokenRequest = () => {
-
-  //파일변경
-  const handleChangeFile = (e) => {
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      const url = reader.result;
-      if (url) {
-        setImgUrl(url.toString());
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  //   //파일변경
+  //   const handleChangeFile = (e) => {
+  //     let reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const url = reader.result;
+  //       if (url) {
+  //         setImgUrl(url.toString());
+  //       }
+  //     };
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   };
 
   //닉네임변경
   const handleInputUsername = (e) => {
     setInputUsername(e.target.value);
   };
-  //이메일변경불가
-  // const handleInputEmail = (e) => {
-  //   setInputEmail(e.target.value);
-  // };
 
   //비밀번호변경//유효성검사추가해야함
   const handleInputPassword = (e) => {
@@ -373,12 +356,6 @@ const UserInfo = () => {
       return;
     }
   };
-
-  // useEffect(() => {
-  //   axios.post("http://localhost:3000/mypage").then((res) => {
-  //     console.log(res);
-  //   });
-  // }, []);
 
   const saveBtnHandler = () => {
     if (!validePassword || !handleEdit) {
@@ -432,7 +409,8 @@ const UserInfo = () => {
     <Body>
       <MenuBar>
         <div className="menu-img">
-          <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
+          {/* <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} /> */}
+          <img src={prevImg}></img>
         </div>
         <h2>{nickname}</h2>
         <ButtonList>

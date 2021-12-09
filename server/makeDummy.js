@@ -160,3 +160,15 @@
 
 // join table에 데이터 넣는 로직
 // require("dotenv").config();
+
+const { Like } = require("./models");
+
+Like.findAndCountAll({
+  raw: true,
+  where: {
+    like_user_id: 1,
+    like_post_contentid: 126508,
+  },
+}).then((data) => {
+  console.log(data);
+});

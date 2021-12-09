@@ -21,6 +21,13 @@ const aa = async () => {
 
 aa();
 
+// const bb = async () => {
+//   console.log("bb");
+//   console.log(await getCommentHashtagData(1, 126508));
+// };
+
+// bb();
+
 //comment_id, comment_user_id, comment_post_contentid, comment_content, comment_tags_arr
 // updateCommentHashtagData(1, 1, 126508, "아이들과 견학하기 좋은 곳이예요.", ["가을", "데이트"]);
 // createCommentHashtagData(1, 2360786, "공기가 맑아요.", ["가을"]);

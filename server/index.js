@@ -12,8 +12,6 @@ const PORT = 4000;
 
 // const HTTPS_PORT = 80;
 
-const controllers = require("./controllers");
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -26,26 +24,38 @@ app.use(
       "https://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
       "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
 );
 app.use(cookieParser());
-// const commentRouter = require("./router/commentRouter");
-// app.use("/comment", commentRouter);
+
+const controllers = require("./controllers");
+
+app.get("/home", controllers.home);
+app.get("/post", controllers.postDetails);
+
 app.get("/user/info", controllers.auth);
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
 app.post("/signout", controllers.signout);
 
-sequelize
-  .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
-  .then(async () => {
-    console.log("데이터베이스 연결 성공");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+app.get("/comment", controllers.readComments);
+app.post("/comment", controllers.createComment);
+app.patch("/comment", controllers.updateComment);
+app.delete("/comment", controllers.deleteComment);
+
+app.post("/like", controllers.addLike);
+app.delete("/like", controllers.deleteLike);
+
+// sequelize
+//   .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
+//   .then(async () => {
+//     console.log("데이터베이스 연결 성공");
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 let server;
 

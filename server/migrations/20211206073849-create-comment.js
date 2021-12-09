@@ -1,15 +1,19 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Hashtags", {
-      hashtag_id: {
+    await queryInterface.createTable("Comments", {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        validate: { min: 1 },
       },
-      hashtag_name: {
-        type: Sequelize.STRING,
+      comment_content: {
+        type: Sequelize.TEXT,
+      },
+      comment_tags: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -22,6 +26,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Hashtags");
+    await queryInterface.dropTable("Comments");
   },
 };

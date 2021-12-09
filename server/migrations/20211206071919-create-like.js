@@ -1,33 +1,25 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Comments", {
-      comment_id: {
+    await queryInterface.createTable("Likes", {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        validate: { min: 1 },
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-      },
-      post_contentid: {
-        type: Sequelize.INTEGER,
-      },
-      comment_content: {
-        type: Sequelize.STRING,
-      },
-      comment_createdAt: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      comment_updatedAt: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Comments");
+    await queryInterface.dropTable("Likes");
   },
 };

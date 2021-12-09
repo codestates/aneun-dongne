@@ -34,6 +34,24 @@ export const placeimg = atom({
   default: "",
 });
 
+export const sendPlaceinfo = selector({
+  key: "sendPlaceInfo",
+  get: ({ get }) => {
+    return {
+      img: get(placeimg),
+      location: get(placelocation),
+      title: get(placetitle),
+      address: get(placeaddress),
+    };
+  },
+  set: ({ set }, img, location, title, address) => {
+    set(placeimg, img);
+    set(placetitle, title);
+    set(placelocation, location);
+    set(placeaddress, address);
+  },
+});
+
 //! 로딩state
 export const loading = atom({
   key: "loading",
@@ -44,6 +62,14 @@ export const loading = atom({
 export const isSavepositionOpen = atom({
   key: "isSavepositionOpen",
   default: false,
+});
+
+export const locations = atom({
+  key: "location",
+  default: {
+    lat: 36,
+    lon: 127,
+  },
 });
 
 //! 로긴

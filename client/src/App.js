@@ -31,7 +31,7 @@ const App = () => {
   const isAuthenticated = async () => {
     // `${process.env.REACT_APP_API_URL}/user/info`
     await axios
-      .get("https://localhost:4000/user/info", {
+      .get("https://localhost:80/user/info", {
         headers: {
           // Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",

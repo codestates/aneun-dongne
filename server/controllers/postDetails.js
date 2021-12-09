@@ -102,7 +102,7 @@ const bb = async () => {
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
-  const { userId } = accessTokenData;
+  const { id } = accessTokenData;
   const { post_contentid } = req.params;
 
   if (!accessTokenData) {
@@ -117,7 +117,7 @@ module.exports = async (req, res) => {
   } else {
     await updatePostData(post_contentid)
       .then(async () => {
-        res.status(200).json(await getPostData(userId, post_contentid));
+        res.status(200).json(await getPostData(id, post_contentid));
       })
       .catch((err) => {
         console.log(err);

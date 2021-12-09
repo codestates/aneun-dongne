@@ -221,7 +221,13 @@ function Mainpage() {
     <>
       <Body>
         <TitleMainView>
-          <img src={} muted autoPlay loop playsInline />
+          <img
+            src="https://user-images.githubusercontent.com/77098060/126061940-83ac21bc-9a61-4dd1-bf26-d3bba3495f5e.gif"
+            muted
+            autoPlay
+            loop
+            playsInline
+          />
           <div className="main-title">
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <MenuButton onClick={ToHome}>시작하기</MenuButton>

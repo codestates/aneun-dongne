@@ -10,60 +10,60 @@ const { isAuthorized } = require("./tokenFunctions");
 module.exports = {
   readComments: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { userId } = accessTokenData;
-    const { post_contentid } = req.params;
+    const { id } = accessTokenData;
+    const { contentId } = req.params;
     if (!accessTokenData) {
       await res.status(200).json({
-        data: await getCommentHashtagData(0, post_contentid),
+        data: await getCommentHashtagData(0, contentId),
       });
     } else {
       await res.status(200).json({
-        data: await getCommentHashtagData(userId, post_contentid),
+        data: await getCommentHashtagData(id, contentId),
       });
     }
   },
   createComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { userId } = accessTokenData;
-    const { post_contentid } = req.params;
-    const { comment_content, hash_name } = req.body;
+    const { id } = accessTokenData;
+    const { contentId } = req.params;
+    const { commentContent, tagsArr } = req.body;
     if (!accessTokenData) {
       // return res.status(401).send("no token in req.headers['authorization']");
       await res.status(400).json({ data: null, message: "invalid access token" });
     } else {
-      await createCommentHashtagData(userId, post_contentid, comment_content, hash_name);
+      await createCommentHashtagData(id, contentId, commentContent, tagsArr);
       await res.status(200).json({
-        data: await getCommentHashtagData(userId, post_contentid),
+        data: await getCommentHashtagData(id, contentId),
       });
     }
   },
   updateComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { userId } = accessTokenData;
-    const { post_contentid } = req.params;
-    const { comment_id, comment_content, hash_name } = req.body;
+    const { id } = accessTokenData;
+    const { contentId } = req.params;
+    const { commentId, commentContent, tagsArr } = req.body;
     if (!accessTokenData) {
       // return res.status(401).send("no token in req.headers['authorization']");
       return res.status(400).json({ data: null, message: "invalid access token" });
     } else {
-      await updateCommentHashtagData(comment_id, userId, post_contentid, comment_content, hash_name);
+      await updateCommentHashtagData(commentId, id, contentId, commentContent, tagsArr);
       await res.status(200).json({
-        data: await getCommentHashtagData(userId, post_contentid),
+        data: await getCommentHashtagData(id, contentId),
       });
     }
   },
   deleteComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { userId } = accessTokenData;
-    const { post_contentid } = req.params;
-    const { comment_id } = req.body;
+    const { id } = accessTokenData;
+    const { contentId } = req.params;
+    const { commentId } = req.body;
     if (!accessTokenData) {
       // return res.status(401).send("no token in req.headers['authorization']");
       return res.status(400).json({ data: null, message: "invalid access token" });
     } else {
-      await deleteCommentData(comment_id, userId, post_contentid);
+      await deleteCommentData(commentId, id, contentId);
       await res.status(200).json({
-        data: await getCommentHashtagData(userId, post_contentid),
+        data: await getCommentHashtagData(id, contentId),
       });
     }
   },

@@ -16,8 +16,8 @@ import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 // import Slider from "./pages/Slider/Slider";
 import MyPage from "./pages/Mypage/MyPage";
-import Likelists from "./pages/Mypage/Likelists";
-import Commentlists from "./pages/Mypage/Commentlists";
+import Likelists from "./pages/Mypage/likelists";
+import Commentlists from "./pages/Mypage/commentlists";
 import UserInfoPage from "./pages/Mypage/UserInfoPage";
 
 const App = () => {
@@ -31,7 +31,7 @@ const App = () => {
   const isAuthenticated = async () => {
     // `${process.env.REACT_APP_API_URL}/user/info`
     await axios
-      .get("https://localhost:80/user/info", {
+      .get("https://localhost:4000/user/info", {
         headers: {
           // Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",

@@ -147,7 +147,7 @@ const ImgDiv = styled.div`
 
 function UserInfoPage({ imgUrl, setImgUrl }) {
   const [info, setInfo] = useRecoilState(userInfo);
-  //   const [imgUrl, setImgUrl] = useState("");
+  // const [imgUrl, setImgUrl] = useState("");
   const [inputUsername, setInputUsername] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");

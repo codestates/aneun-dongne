@@ -165,7 +165,12 @@ export const token = atom({
   key: "token",
   default: "",
 });
-// ! 현재위치 클릭
+
+export const infoEdit = atom({
+  key: "infoEdit",
+  default: "",
+});
+  
 export const isClickedNowLocation = atom({
   key: "isClickedNowLocation",
   default: false,
@@ -199,11 +204,7 @@ export const setLo = selector({
     ); //237줄에 console.log(meetingPlace)있음.
   },
 });
-//유저 정보를 수정해야 한다면...
-export const infoEdit = atom({
-  key: "infoEdit",
-  default: "",
-});
+
 
 // ! 프사 변경
 // export const changeProfile = selector({

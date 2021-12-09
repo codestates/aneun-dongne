@@ -60,6 +60,7 @@ const HomeMap = () => {
 
         const firstItem = result[0];
         const { x, y } = firstItem;
+        //!
         const moveLatLng = new kakao.maps.LatLng(y, x);
 
         // console.log(moveLatLng.La)
@@ -102,7 +103,7 @@ const HomeMap = () => {
   useEffect(() => {
     // ! 평면좌표
 
-    console.log("평면좌표", wtm);
+    // console.log("평면좌표", wtm);
 
     // * 지도의 한 점 클릭시 그 클릭한 점의 좌표 반경 10km의 관광지들의 좌표 전송
 
@@ -271,7 +272,7 @@ const HomeMap = () => {
       infowindowCenter.open(map, markerCenter);
     });
 
-    //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
+    // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
     if (clickedNowLocationBtn) {
       axios
         .get(

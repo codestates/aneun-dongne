@@ -161,6 +161,144 @@
 // join table에 데이터 넣는 로직
 // require("dotenv").config();
 
+// data: [
+//   {
+//     id: 1,
+//     visited_address: DataTypes.STRING, //도로명주소....? string type
+//     visited_mapx: DataTypes.DECIMAL(25, 20), // ex) '127.122442582700000' 좌표는 전부 올림픽공원
+//     visited_mapy: DataTypes.DECIMAL(25, 20), // ex) '37.519445638600000' DECIMAL 타입은 일단 console엔 스트링으로 나옴
+//     visited_memo: DataTypes.TEXT, //string type
+//     visited_title: DataTypes.STRING, //string type 만약 제목을 넣는다면 ....?
+//     visited_memo_image_path: DataTypes.TEXT, //string type
+//     visited_wtmx: DataTypes.DECIMAL(50, 30), //'210824.233575990740000000000000000000'
+//     visited_wtmy: DataTypes.DECIMAL(50, 30), //'446669.384806420650000000000000000000' 올림픽공원 좌표
+//     visited_post_contentid: DataTypes.INTEGER, //126532 int type 관광지가 아닐 경우 null이 될 수도 있음
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   },
+//   {},
+//   {},
+// ];
+
+// [
+//   {
+//     id: 6925,
+//     post_addr1: "서울특별시 송파구 올림픽로 424",
+//     post_addr2: "(방이동)",
+//     post_areacode: 1,
+//     post_contentid: 126532,
+//     post_contenttypeid: 12,
+//     post_firstimage: "http://tong.visitkorea.or.kr/cms/resource/39/2650439_image2_1.jpg",
+//     post_firstimage2: "http://tong.visitkorea.or.kr/cms/resource/39/2650439_image3_1.jpg",
+//     post_mapx: "127.12244258270000000000",
+//     post_mapy: "37.51944563860000000000",
+//     post_sigungucode: 18,
+//     post_title: "올림픽공원",
+//     post_wtmx: "210824.233575990740000000000000000000",
+//     post_wtmy: "446669.384806420650000000000000000000",
+//     post_tags: null,
+//     distance: 0,
+//     "Likes.likeCount": 2,
+//     isLiked: true,
+//   },
+//   {
+//     id: 4817,
+//     post_addr1: "서울특별시 송파구 올림픽로 424",
+//     post_addr2: null,
+//     post_areacode: 1,
+//     post_contentid: 127525,
+//     post_contenttypeid: 12,
+//     post_firstimage: "http://tong.visitkorea.or.kr/cms/resource/14/1567814_image2_1.jpg",
+//     post_firstimage2: "http://tong.visitkorea.or.kr/cms/resource/14/1567814_image3_1.jpg",
+//     post_mapx: "127.12297582370000000000",
+//     post_mapy: "37.52098713620000000000",
+//     post_sigungucode: 18,
+//     post_title: "서울 몽촌토성",
+//     post_wtmx: "210871.149799955540000000000000000000",
+//     post_wtmy: "446840.533233923840000000000000000000",
+//     post_tags: null,
+//     distance: 177.46243632929102,
+//     "Likes.likeCount": 0,
+//     isLiked: true,
+//   },
+//   {
+//     id: 6927,
+//     post_addr1: "서울특별시 송파구 올림픽로 424",
+//     post_addr2: "(방이동)",
+//     post_areacode: 1,
+//     post_contentid: 2758192,
+//     post_contenttypeid: 12,
+//     post_firstimage: "http://tong.visitkorea.or.kr/cms/resource/88/2770088_image2_1.jpg",
+//     post_firstimage2: "http://tong.visitkorea.or.kr/cms/resource/88/2770088_image3_1.jpg",
+//     post_mapx: "127.12297582370000000000",
+//     post_mapy: "37.52098713620000000000",
+//     post_sigungucode: 18,
+//     post_title: "올림픽공원들꽃마루",
+//     post_wtmx: "210871.149799955540000000000000000000",
+//     post_wtmy: "446840.533233923840000000000000000000",
+//     post_tags: null,
+//     distance: 177.46243632929102,
+//     "Likes.likeCount": 0,
+//     isLiked: true,
+//   },
+// ];
+
+// {
+// 	"placeList"
+// 	//[{visited_area:'충청북도',
+// 	//visited_memo_image_path:'"./image/dafault_profile.jpg"',
+// 	//visited_memo:'와~~신나',
+// 	//mapX:'128',
+// 	//mapY:'37',
+// 	//visited_created_at:2021-08-23
+// 	},...]
+//     }
+
+// data : [
+//   {
+//     comments: {
+//       id: 1,
+//       comment_content: '아이들과 견학하기 좋은 곳이예요.',
+//       comment_tags: '가을,데이트',
+//       comment_post_contentid: 126508,
+//       createdAt: 2021-12-06T12:17:34.000Z,
+//       updatedAt: 2021-12-07T16:03:14.000Z,
+//       editable: true
+//     },
+//     user: {
+//       nickname: '2',
+//       user_image_path: 'https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/1639034041074_%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-07-29%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%209.52.14.png'
+//     }
+//   },
+//   {
+//     comments: {
+//       id: 2,
+//       comment_content: '가까워서 좋아요.',
+//       comment_tags: '데이트,공원,산책하기좋은',
+//       comment_post_contentid: 126508,
+//       createdAt: 2021-12-06T12:17:34.000Z,
+//       updatedAt: 2021-12-06T12:17:34.000Z,
+//       editable: true
+//     },
+//     user: {
+//       nickname: '할로할로',
+//       user_image_path: 'https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/1638973791038_%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-07-26%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%209.12.40.png'
+//     }
+//   },
+//   {
+//     comments: {
+//       id: 3,
+//       comment_content: '야경이 예뻐요.',
+//       comment_tags: '데이트,가을',
+//       comment_post_contentid: 126508,
+//       createdAt: 2021-12-06T12:17:34.000Z,
+//       updatedAt: 2021-12-06T12:17:34.000Z,
+//       editable: true
+//     },
+//     user: { nickname: 'user3', user_image_path: null }
+//   }
+// ]
+
 const { Like } = require("./models");
 
 Like.findAndCountAll({

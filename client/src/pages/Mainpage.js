@@ -164,20 +164,28 @@ export const TitleEndView = styled.div`
   }
 `;
 
-export const MainImage = styled.div`
-  > img {
-    height: 100vh;
-
-    cursor: pointer;
-  }
+export const PopularContainer = styled.div`
+  position: static;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
 `;
 
 export const Image = styled.div`
   display: flex;
   img {
     width: 1000px;
-    height: 650px;
+    height: 500px;
     object-fit: cover;
+  }
+`;
+
+export const VideoContainer = styled.div`
+  width: 300px;
+  height: 300px;
+  & img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
   }
 `;
 
@@ -206,10 +214,16 @@ function Mainpage() {
 
         <TitleFirstView>
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
-          <Image>
-            <img src="/mapclick.png" />
-          </Image>
+
+          <VideoContainer>
+            <Image>
+              <img src="/mapclick.png" />
+            </Image>
+            {/* gif 추가예정 */}
+            {/* <img src={} muted autoPlay loop playsInline /> */}
+          </VideoContainer>
         </TitleFirstView>
+
         <TitleSecondView>
           <div className="title">저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.</div>
           <Image>
@@ -228,7 +242,6 @@ function Mainpage() {
           <div className="peopleTitle">
             우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>-강OO</p>
           </div>
-
           <img src="/people2.png" />
           <div className="peopleTitle">
             가고싶은 곳을 정하기 어려울 때 좋아요! <p>-최OO</p>

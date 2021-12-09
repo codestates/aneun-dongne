@@ -16,9 +16,9 @@ import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 import Slider from "./pages/Slider/Slider";
 import MyPage from "./pages/Mypage/MyPage";
-import Likelists from "./pages/Mypage/Likelists";
-import Commentlists from "./pages/Mypage/Commentlists";
-import UserInfo from "./pages/Mypage/UserInfo";
+import Likelists from "./pages/Mypage/likelists";
+import Commentlists from "./pages/Mypage/commentlists";
+import UserInfo from "./pages/Mypage/userinfo";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);

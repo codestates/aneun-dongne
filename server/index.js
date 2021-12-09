@@ -8,13 +8,13 @@ const db = require("./models");
 // const { upload } = require("./upload");
 const { upload } = require("./upload");
 // const { update } = require("../update");
-// const { sequelize } = require("./models/index");
+const { sequelize } = require("./models/index");
 
 const app = express();
 
 const PORT = 4000;
 
-// const HTTPS_PORT = 80;
+const HTTPS_PORT = 80;
 
 const controllers = require("./controllers");
 

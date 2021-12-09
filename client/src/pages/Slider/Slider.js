@@ -131,7 +131,24 @@ export default function Slider() {
       setnewPhoto(newPhoto + 1);
     }
   };
-  setTimeout(() => NextBtn(), 5000);
+
+  // setTimeout(() => NextBtn(), 5000);
+
+  useEffect(() => {
+    let mounted = true;
+
+    setTimeout(() => {
+      // mounted 상태일 때 실행하려는 함수를 리턴한다.
+      if (mounted) {
+        return NextBtn();
+      }
+    }, 5000);
+
+    // 컴포넌트가 unmount될 때 실행되는 함수로 이 시점에 mounted 변수를 false로 설정해준다.
+    return () => {
+      mounted = false;
+    };
+  });
 
   useEffect(() => {
     slideRef.current.style.transition = "all 0.6s ease-in-out";
@@ -142,7 +159,7 @@ export default function Slider() {
   const ToHome = () => {
     history.push("/home");
   };
-
+  console.log(typeof ToHome);
   return (
     <Body>
       <Imgbox>
@@ -178,8 +195,10 @@ export default function Slider() {
           </TitleView>
           <Slide img={img6} />
         </Sliderimgbox>
-        <Side>{/* <Button onClick={PrevBtn}>Prev</Button>
-          <Button onClick={NextBtn}>Next</Button> */}</Side>
+        <Side>
+          {/* <Button onClick={PrevBtn}>Prev</Button>
+          <Button onClick={NextBtn}>Next</Button> */}
+        </Side>
       </Imgbox>
     </Body>
   );

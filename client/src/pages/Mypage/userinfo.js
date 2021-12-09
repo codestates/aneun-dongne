@@ -226,7 +226,9 @@ dotenv.config();
 const UserInfo = () => {
   const [info, setInfo] = useRecoilState(userInfo);
   const [imgUrl, setImgUrl] = useState(""); //<input type="fiile">의 영향을 받는다.
-  const [prevImg, setPrevImg] = useState(""); //DB에만 영향을 받는다.
+  const [prevImg, setPrevImg] = useState(
+    "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png"
+  ); //DB에만 영향을 받는다.
   const [inputUsername, setInputUsername] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
@@ -250,7 +252,7 @@ const UserInfo = () => {
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
     axios
-      .get("https://localhost:80/user/info", { withCredentials: true })
+      .get("https://localhost:80/user/info", { "Content-Type": "application/json", withCredentials: true })
       .then((res) => {
         console.log(res.data.data.userInfo);
 

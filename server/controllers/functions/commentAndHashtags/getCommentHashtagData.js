@@ -18,6 +18,7 @@ module.exports = async (userId, contentId) => {
         //res.status(400).json({message: "Comments do not exist"})
         //return "Comments do not exist";
       }
+
       onlyCommentData = data;
     })
     .catch((err) => console.log(err));

@@ -9,14 +9,14 @@ const db = require("./models");
 const { upload } = require("./upload");
 // const { update } = require("../update");
 const { sequelize } = require("./models/index");
-
+const controllers = require("./controllers");
 const app = express();
 
-const PORT = 4000;
+// const PORT = 4000;
 
 const HTTPS_PORT = 80;
 
-const controllers = require("./controllers");
+// const controllers = require("./controllers");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,10 +36,11 @@ app.use(
 );
 app.use(cookieParser());
 
-app.get("/user/info", controllers.auth.get);
-app.patch("/user/info", upload.single("image"), controllers.auth.patch);
-// const commentRouter = require("./router/commentRouter");
-// app.use("/comment", commentRouter);
+// app.get("/home", controllers.home);
+// app.get("/post", controllers.postDetails);
+
+app.get("/user/info", controllers.getAuth);
+app.patch("/user/info", upload.single("image"), controllers.updateAuth);
 
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
@@ -47,14 +48,13 @@ app.post("/user/login", controllers.signin);
 app.post("/signout", controllers.signout);
 app.post("/home/bookmark", upload.single("image"), controllers.bookmark);
 
-sequelize
-  .sync({ force: false }) // 이 코드 발견 시 시퀄라이즈 실행
-  .then(async () => {
-    console.log("데이터베이스 연결 성공");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+app.get("/comment/:contentId", controllers.readComments);
+app.post("/comment/:contentId", controllers.createComment);
+app.patch("/comment/:contentId", controllers.updateComment);
+app.delete("/comment/:contentId", controllers.deleteComment);
+
+app.post("/like", controllers.addLike);
+app.delete("/like", controllers.deleteLike);
 
 let server;
 

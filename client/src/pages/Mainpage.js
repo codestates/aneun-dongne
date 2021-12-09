@@ -222,9 +222,7 @@ function Mainpage() {
       <Body>
         <TitleMainView>
           <img
-            src={
-              "https://user-images.githubusercontent.com/77098060/126061940-83ac21bc-9a61-4dd1-bf26-d3bba3495f5e.gif"
-            }
+            src="https://user-images.githubusercontent.com/77098060/126061940-83ac21bc-9a61-4dd1-bf26-d3bba3495f5e.gif"
             muted
             autoPlay
             loop

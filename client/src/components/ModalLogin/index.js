@@ -49,7 +49,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       })
       .then(() => {
         // console.log(accessToken);
-        // handleResponseSuccess();
+        handleResponseSuccess();
       })
       .catch(() => {
         setErrorMessage(message.loginError);

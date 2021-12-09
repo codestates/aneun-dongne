@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import OthersHashTag from "../HashTag/OthersHashTag";
+
 import { useRecoilState } from "recoil";
 import { defaultcomments } from "../../recoil/recoil";
 import MyComment from "./MyComment";
-import MyHashTag from "../HashTag/MyHashTag";
+import EditableHashTag from "../HashTag/EditableHashTag";
+import axios from "axios";
+import OnlyReadHashTag from "../HashTag/OnlyReadHashTag";
 
 const Comment = styled.div`
   position: relative;
@@ -30,7 +32,8 @@ const Comment = styled.div`
 const Profile = styled.div``;
 const ProfileImg = styled.img`
   border-radius: 50%;
-
+  width: 50px;
+  height: 50px;
   background-color: white;
 `;
 
@@ -148,7 +151,7 @@ const Date = styled.div`
   right: 10px;
 `;
 
-function Comments({ uuid, img, nickname, text, initialTags, date, commentId, editable }) {
+function Comments({ uuid, img, nickname, text, initialTags, date, commentId, editable, contentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
 
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
@@ -159,23 +162,22 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
   const [tags, setTags] = useState(initialTags);
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
-
+  // console.log(initialTags);
   useEffect(() => {
     //text,initialTags초기화
     setComment(text);
     setTags(initialTags);
   }, [text, initialTags]);
   useEffect(() => {
-    console.log("위", text);
+    // console.log("위", text);
     setPrevComment(text);
   }, []);
 
-  const username = "김코딩";
   //! 이것도 서버에서하래 유저권한 관련된건 다 서버에서 토큰이랑 비교후 결정
   // const editable = nickname === username; //
 
   function getCommentId(e) {
-    e.preventDefault(); //필요한가?
+    // e.preventDefault(); //필요한가?
     setClickedBtn(e.target.className);
   }
 
@@ -190,12 +192,30 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
       changeComment();
     }
   }, [clickedBtn]);
+  // console.log(tags.map((el) => el.substr(0, el.length - 1)));
 
   // 댓글 삭제요청 보내는 함수
   function deleteComment() {
-    if (commentId === undefined) console.log("삭제하려는 댓글이 존재하지 않습니다."); //숫자라서 정확하기 명시해야함
+    axios
+      .delete(
+        `https://localhost:80/comment/${contentId}`,
 
-    console.log(clickedBtn, commentId);
+        //! axios에선 params지만 express에선 req.query래요.
+        //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
+        { params: { commentId: uuid }, withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        let arr = res.data.data.map((el) => {
+          console.log(el.comments.comment_tags.split(","));
+          console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
+          return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+        });
+        console.log(arr);
+        setDefaultComment(arr);
+      });
+
+    // console.log(clickedBtn, commentId);
     //axios : 전체배열 다시 받아서 전체댓글recoil 바꾼다.
 
     setClickedBtn("");
@@ -203,22 +223,35 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
   function changeComment() {
     setPrevComment(comment);
     setEditMode(true);
+    console.log(editMode);
   }
   function completeChange() {
-    if (commentId === undefined) console.log("수정하려는 댓글이 존재하지 않습니다.");
     console.log(tags, comment);
-    setDefaultComment([
-      ...defaultComment.slice(0, uuid),
-      { ...defaultComment[uuid], ...{ tags: tags, text: comment } },
-      ...defaultComment.slice(uuid + 1),
-    ]);
+    const body = {
+      commentId: uuid,
+      commentContent: comment,
+      tagsArr: tags,
+    };
+    axios
+      .patch(`https://localhost:80/comment/${contentId}`, body, {
+        headers: { "content-type": "application/json" },
+        withCredentials: true,
+      })
+      .then((res) => {
+        // console.log(res.data.data);
+        let arr = res.data.data.map((el) => {
+          console.log(el.comments.comment_tags.split(","));
+          console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
+          return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+        });
+        console.log(arr);
+        setDefaultComment(arr);
+      });
 
     if (editMode) console.log("수정완료");
     else console.log("댓글수정 클릭");
 
     setEditMode(false);
-
-    // console.log(clickedBtn, commentId);
 
     setClickedBtn("");
   }
@@ -227,7 +260,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
     setComment(e.target.value);
   };
   useEffect(() => {
-    console.log("아래", prevComment);
+    // console.log("아래", prevComment);
     setComment(prevComment);
     setEditMode(false);
   }, [changeOrNot]);
@@ -251,7 +284,8 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
                 <textarea
                   id="comment-change"
                   type="text"
-                  value={comment} //defaultValue로 하면 버그생겨서 콘솔에러떠도 우선 value로 함.
+                  // value={comment}
+                  defaultValue={prevComment}
                   onChange={(e) => ChangeHandler(e)}
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
@@ -277,7 +311,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
                 </button>
               )}
               {!editMode ? (
-                <button className="delete-comment" onClick={(e) => getCommentId(e)}>
+                <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
                   댓글삭제
                 </button>
               ) : (
@@ -288,10 +322,17 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
             </ContentInput>
           )}
           <HashTagWrapper>
-            {editMode ? (
-              <MyHashTag tags={tags} setTags={setTags} uuid={uuid} />
+            {/* 편집못함? -> 읽기만가능한해시태그 안에 props로 다른사람의 해시태그 전달
+            편집가능? -> 수정못함? : 읽기만가능한 해시태그안에 props로 나의 해시태그 전달
+            편집가능? -? 수정가능? : 수정가능한 해시태그  */}
+            {editable ? (
+              editMode ? (
+                <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
+              ) : (
+                <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
+              )
             ) : (
-              <OthersHashTag initialTags={initialTags} uuid={uuid} />
+              <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />
             )}
           </HashTagWrapper>
         </ContentBox>

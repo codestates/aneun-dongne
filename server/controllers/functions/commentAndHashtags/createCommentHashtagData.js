@@ -128,34 +128,3 @@ module.exports = async (comment_user_id, comment_post_contentid, comment_content
   ); //새 해시태그 정보를 포스트 테이블에 업데이트
   // return comment;
 };
-
-//포스트쪽 해시태그 2개 구하는 로직
-
-// let raw = ["a", "t", "b", "c", "d", "a", "b", "t", "h", "a", "t", "y", "t"];
-
-// let obj = {};
-// raw.forEach((x) => {
-//   obj[x] = (obj[x] || 0) + 1;
-// });
-
-// let arr = [["a"], ["t"], ["b"], ["c"], ["d"], ["h"], ["y"]]; // map 함수로 arr.split(",") 이용 allTagsOfComments = arr
-
-// let obj = { a: 3, b: 2, c: 1, d: 1, t: 4, h: 1, y: 1 };
-
-// for (let i = 0; i < arr.length; i++) {
-//   allTagsOfComments[i].push(obj[arr[i]]);
-//   allTagsOfComments[i].push(i);
-// }
-
-// allTagsOfComments.sort((a, b) => {
-//   let cntA = a[1];
-//   let cntB = b[1];
-//   let idxA = a[2];
-//   let idxB = b[2];
-
-//   if (cntA > cntB) return -1;
-//   if (cntA < cntB) return 1;
-//   if (idxA > idxB) return 1;
-//   if (idxA < idxB) return -1;
-//   return 0;
-// });

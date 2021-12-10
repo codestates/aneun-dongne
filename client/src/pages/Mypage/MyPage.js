@@ -9,8 +9,8 @@ import hamtori from "../../img/hamtori.png";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 import Menubar from "./Menubar";
 import UserInfoPage from "./UserInfoPage";
-import Likelists from "./likelists";
-import Commentlists from "./commentlists";
+import Likelists from "./Likelists";
+import Commentlists from "./Commentlists";
 const Body = styled.div`
   /* position: relative; */
   font-size: 1.2rem;

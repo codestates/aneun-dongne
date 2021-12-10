@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import Review from "./Review";
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import { placelist, loginState } from "../recoil/recoil";
+
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+AOS.init();
 
 export const Body = styled.div`
   position: relative;
@@ -12,53 +18,34 @@ export const Body = styled.div`
   flex-direction: column; */
 `;
 
-export const Button = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-
-  .upload-btn {
-    cursor: pointer;
-    width: 100px;
-    height: 50px;
-    background-color: blue;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cancel {
-    background-color: gray;
-  }
-`;
-
-export const MenuButton = styled.button`
+export const StartButton = styled.button`
   /* position: absolute; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
   color: white;
-  width: 100px;
-  height: 50px;
+  width: 180px;
+  height: 70px;
   border-style: none;
   cursor: pointer;
   transition: all 0.3s;
   /* margin-left: 350px;
   margin-right: 350px; */
-  border-radius: 25px;
-  margin-top: 10px;
-  background-color: #00ccff;
+  border: 1px solid rgb(194, 194, 194);
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: transparent;
 
   :hover {
     background-color: #6af4aa;
-
     transition: all 0.3s;
   }
 `;
 
-export const TitleFirstView = styled.div`
+export const PopularTitleView = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +58,7 @@ export const TitleFirstView = styled.div`
   }
 `;
 
-export const TitleSecondView = styled.div`
+export const FocusTitleView = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,18 +69,9 @@ export const TitleSecondView = styled.div`
     font-size: 2.5rem;
     font-weight: bold;
   }
-  .PageTitle {
-    margin-top: 50px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    > img {
-      width: 10px;
-      height: 10px;
-      cursor: pointer;
-    }
-  }
 `;
-export const TitleThirdView = styled.div`
+
+export const DiyTitleView = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,19 +82,19 @@ export const TitleThirdView = styled.div`
     font-size: 2.5rem;
     font-weight: bold;
   }
-  .PageTitle {
-    margin-top: 50px;
-    font-size: 1.5rem;
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+
+  .title {
+    font-size: 2.5rem;
     font-weight: bold;
-    > img {
-      width: 10px;
-      height: 10px;
-      cursor: pointer;
-    }
-  }
+  } */
 `;
 
-export const TitlePeopleView = styled.div`
+export const PeopleTitleView = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,7 +125,7 @@ export const TitleEndView = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 50vh;
-  background-color: #88bfff;
+  background-color: rgb(57 57 57);
 
   .title {
     position: absolute;
@@ -156,6 +134,7 @@ export const TitleEndView = styled.div`
     align-items: center;
     font-size: 2rem;
     font-weight: bold;
+    color: white;
     margin-bottom: 170px;
     /* background-color: #f0f9ff99; */
     border-radius: 20px;
@@ -164,14 +143,16 @@ export const TitleEndView = styled.div`
   }
 `;
 
-export const PopularContainer = styled.div`
-  position: static;
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
-`;
+// export const PopularContainer = styled.div`
+//   position: static;
+//   margin-bottom: 1rem;
+//   font-size: 2.5rem;
+// `;
 
 export const Image = styled.div`
   display: flex;
+  justify-content: center;
+  margin-top: 100px;
   img {
     width: 1000px;
     height: 500px;
@@ -180,15 +161,15 @@ export const Image = styled.div`
 `;
 
 export const VideoContainer = styled.div`
-  width: 300px;
-  height: 300px;
-  & img {
+  /* width: 500px;
+  height: 300px; */
+  img {
     width: 100%;
     object-fit: cover;
     border-radius: 8px;
   }
 `;
-export const TitleMainView = styled.div`
+export const MainTitleView = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -198,6 +179,9 @@ export const TitleMainView = styled.div`
   }
   .main-title {
     position: absolute;
+    font-size: 3rem;
+    font-family: fantasy;
+    color: white;
   }
 `;
 
@@ -220,9 +204,9 @@ function Mainpage() {
   return (
     <>
       <Body>
-        <TitleMainView>
+        <MainTitleView>
           <img
-            src="https://user-images.githubusercontent.com/77098060/126061940-83ac21bc-9a61-4dd1-bf26-d3bba3495f5e.gif"
+            src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
             muted
             autoPlay
             loop
@@ -230,35 +214,66 @@ function Mainpage() {
           />
           <div className="main-title">
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
-            <MenuButton onClick={ToHome}>시작하기</MenuButton>
+            <StartButton onClick={ToHome}>시작하기</StartButton>
           </div>
-        </TitleMainView>
+        </MainTitleView>
 
-        <TitleFirstView>
+        <PopularTitleView className="populartitle" data-aos="fade-up" data-aos-duration="1000">
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
 
           <VideoContainer>
             <Image>
               <img src="/mapclick.png" />
+
+              <img
+                src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
+                muted
+                autoPlay
+                loop
+                playsInline
+              />
             </Image>
-            {/* gif 추가예정 */}
           </VideoContainer>
-        </TitleFirstView>
-        <TitleSecondView>
+        </PopularTitleView>
+
+        <FocusTitleView className="focustitle" data-aos="fade-up" data-aos-duration="1000">
           <div className="title">저희는 여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있습니다.</div>
-          <Image>
-            <img src="/mapimgpeople.png" />
-          </Image>
-        </TitleSecondView>
-        <TitleThirdView>
+          <VideoContainer>
+            <Image>
+              <img
+                src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
+                muted
+                autoPlay
+                loop
+                playsInline
+              />
+              <img src="/mapimgpeople.png" />
+            </Image>
+          </VideoContainer>
+        </FocusTitleView>
+
+        <DiyTitleView className="diytitle" data-aos="fade-up" data-aos-duration="1000">
           <div className="title">그곳이 어디라도 간직하고 싶다면 내가 서있는 바로 그곳을 저장할 수 있어요.</div>
-          <Image>
-            <img src="/likedlistimg.png" />
-          </Image>
-        </TitleThirdView>
-        <TitlePeopleView>
-          <div className="title">유저들의 후기</div>
-          <img src="/people3.png" />
+          <VideoContainer>
+            <Image>
+              <img src="/likeimg.png" />
+              <img
+                src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
+                muted
+                autoPlay
+                loop
+                playsInline
+              />
+            </Image>
+          </VideoContainer>
+        </DiyTitleView>
+
+        <PeopleTitleView className="peopletitle" data-aos="fade-up" data-aos-duration="1000">
+          <div className="title" data-aos="fade-up" data-aos-duration="1000">
+            유저들의 후기
+          </div>
+          <Review />
+          {/* <img src="/people3.png" />
           <div className="peopleTitle">
             우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>-강OO</p>
           </div>
@@ -274,11 +289,12 @@ function Mainpage() {
           <img src="/people4.png" />
           <div className="peopleTitle">
             동네를 산책하는 재미가 생겼어요!! <p>-박OO-</p>
-          </div>
-        </TitlePeopleView>
+          </div> */}
+        </PeopleTitleView>
+
         <TitleEndView>
           <div className="title">나와 어울리는 장소로 떠날 준비가 되셨나요?</div>
-          <MenuButton onClick={ToHome}>시작하기</MenuButton>
+          <StartButton onClick={ToHome}>시작하기</StartButton>
         </TitleEndView>
       </Body>
     </>

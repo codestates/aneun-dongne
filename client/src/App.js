@@ -15,7 +15,7 @@ import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
-import MyPage from "./pages/Mypage/Mypage";
+import Mypage from "./pages/MyPage/MyPage";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -67,7 +67,7 @@ const App = () => {
         </Route>
         <Route exact path="/mypage">
           <BrowserRouter>
-            <MyPage />
+            <Mypage />
           </BrowserRouter>
         </Route>
 

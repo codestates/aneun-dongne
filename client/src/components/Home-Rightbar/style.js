@@ -11,11 +11,7 @@ export const Styled = {
     margin-left: 10px;
     margin-top: 10px;
 
-<<<<<<< HEAD
-    width: 700px;
-=======
     width: 600px;
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     /* height: 130px; */
 
     /* &:hover {
@@ -28,31 +24,19 @@ export const Styled = {
       left: 0;
       width: 100%;
     } */
-<<<<<<< HEAD
-    > p {
-      margin-top: 10px;
-      margin-left: 10px;
-=======
 
     > p {
       margin: 2% auto;
 
       text-align: center;
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     }
   `,
   SearchWrapper: styled.div`
     height: 40px;
-<<<<<<< HEAD
-
-    display: flex;
-    justify-content: space-evenly;
-=======
     width: 550px;
     margin: auto;
     display: flex;
     /* justify-content: space-around; */
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     height: 50px;
   `,
   // 도|시군구
@@ -62,10 +46,6 @@ export const Styled = {
     width: 50%;
     height: 100%;
     background-color: white;
-<<<<<<< HEAD
-=======
-
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     /* background-color: red; */
     border: none;
     /* border: 1px pink solid; */
@@ -78,11 +58,7 @@ export const Styled = {
     /* margin-right: 5%; */
     display: flex;
     padding: 5px;
-<<<<<<< HEAD
-    width: 180px;
-=======
     width: 300px;
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     height: 40px;
     border-radius: 5px;
     border: 1px gray solid;
@@ -102,14 +78,9 @@ export const Styled = {
   SearchKeyWord: styled.select`
     /* margin-top: 5px;
     margin-bottom: 5px;
-<<<<<<< HEAD
-    margin-left: 5px;
-    width: 180px;
-=======
     margin-left: 5px; */
     margin: 5px 2% 5px 2%;
     width: 130px;
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     height: 40px;
     background-color: white;
     background-image: linear-gradient(
@@ -159,12 +130,8 @@ export const Styled = {
     border: 1px gray solid;
     /* margin-top: 5px;
     margin-bottom: 5px;
-<<<<<<< HEAD
-    margin-left: 5px;
-=======
     margin-left: 5px; */
     margin: 5px 2% 5px 2%;
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     width: 180px;
     height: 40px;
     background-color: white;
@@ -188,11 +155,7 @@ export const Styled = {
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 5px;
-<<<<<<< HEAD
-    width: 100px;
-=======
     width: 80px;
->>>>>>> 3578960e3d76426118ac25c61c6f9cfa6846370a
     height: 40px;
     background-color: rgb(192, 251, 255);
     background-image: linear-gradient(

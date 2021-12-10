@@ -200,7 +200,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   function deleteComment() {
     axios
       .delete(
-        `https://localhost:4000/comment/${contentId}`,
+        `${Process.env.REACT_APP_API_URL}/comment/${contentId}`,
 
         //! axios에선 params지만 express에선 req.query래요.
         //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
@@ -232,7 +232,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
       tagsArr: tags, //해시태그
     };
     axios
-      .patch(`https://localhost:80/comment/${contentId}`, body, {
+      .patch(`${Process.env.REACT_APP_API_URL}comment/${contentId}`, body, {
         headers: { "content-type": "application/json" },
         withCredentials: true,
       })

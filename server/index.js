@@ -12,7 +12,7 @@ const { upload } = require("./upload");
 const controllers = require("./controllers");
 const app = express();
 
-const PORT = 3605;
+const PORT = 3065;
 
 // const controllers = require("./controllers");
 

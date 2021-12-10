@@ -42,7 +42,7 @@ const ModalSavePosition = () => {
     console.log("폼데이터imag", formData.get("image"));
     // headers: { "content-type": "multipart/form-data" },
     axios
-      .post(`https://localhost:4000/home/bookmark`, formData, { withCredentials: true })
+      .post(`${process.env.REACT_APP_API_URL}home/bookmark`, formData, { withCredentials: true })
 
       .then((res) => {
         console.log(res.data.message);

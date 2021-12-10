@@ -11,7 +11,7 @@ import { Link, useHistory } from "react-router-dom";
 import { StyledLink } from "../PlaceList";
 const Header = ({ handleResponseSuccess }) => {
   const history = useHistory();
-  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+  // const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
@@ -27,6 +27,12 @@ const Header = ({ handleResponseSuccess }) => {
   const closeLoginModalHandler = (e) => {
     if (isLoginOpen) {
       setIsLoginOpen(false);
+    }
+  };
+
+  const closeLogoutModalHandler = (e) => {
+    if (isSignupOpen) {
+      setIsSignupOpen(false);
     }
   };
 
@@ -94,7 +100,11 @@ const Header = ({ handleResponseSuccess }) => {
           <>
             <Styled.ModalBackdrop onClick={closeSignupModalHandler}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalSignup handleResponseSuccess={handleResponseSuccess} ToLoginModal={ToLoginModal} />
+                <ModalSignup
+                  handleResponseSuccess={handleResponseSuccess}
+                  ToLoginModal={ToLoginModal}
+                  closeLogoutModalHandler={closeLogoutModalHandler}
+                />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>

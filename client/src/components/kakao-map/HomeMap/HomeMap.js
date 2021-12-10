@@ -161,7 +161,6 @@ const HomeMap = () => {
   //     .catch((err) => console.log(err));
   //   // }
   // }, [pickPoint]); //! pickPoint가 바뀔때마다, 즉 지도를 클릭할때마다 실행.
-  // ?
 
   // !
   useEffect(() => {

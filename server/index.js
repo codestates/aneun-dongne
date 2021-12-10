@@ -57,7 +57,6 @@ app.post("/like", controllers.addLike);
 app.delete("/like", controllers.deleteLike);
 
 let server;
-
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
   const certificate = fs.readFileSync(__dirname + "/cert.pem", "utf8");

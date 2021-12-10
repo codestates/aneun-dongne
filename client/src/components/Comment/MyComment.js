@@ -30,7 +30,7 @@ const Comment = styled.div`
 `;
 const Profile = styled.div`
   position: relative;
-  /* background-color: red; */
+  background-color: red;
   width: 80px;
   height: 140px;
   margin: 40px;
@@ -44,7 +44,7 @@ const ProfileImg = styled.img`
 `;
 
 const NickName = styled.span`
-  /* background-color: yellowgreen; */
+  background-color: yellowgreen;
   position: absolute;
   bottom: 5px;
   text-align: center;

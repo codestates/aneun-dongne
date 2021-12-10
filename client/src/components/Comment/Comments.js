@@ -29,40 +29,89 @@ const Comment = styled.div`
     width: 100%;
   }
 `;
-const Profile = styled.div``;
+const Profile = styled.div`
+  position: relative;
+  background-color: red;
+  display: flex;
+  width: 80px;
+  height: 140px;
+  margin: 40px;
+`;
 const ProfileImg = styled.img`
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
+  position: absolute;
   background-color: white;
 `;
 
 const NickName = styled.span`
   background-color: yellowgreen;
-
+  position: absolute;
+  bottom: 5px;
   text-align: center;
+  width: 100%;
 `;
 
 const ContentBox = styled.div`
   background-color: yellow;
+  margin-top: 30px;
+  position: relative;
+  width: 480px;
+  /* height: 140px; */
+  > button {
+    position: absolute;
+    right: -10px;
+    top: 20px;
+    width: 80px;
+    border: none;
+    height: 40px;
+    background-color: rgb(192, 251, 255);
+    background-image: linear-gradient(
+      to right bottom,
+      rgba(255, 255, 255, 0.9) 0,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    transition: all 0.5s ease;
+    border-radius: 20px;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  button:active {
+    transform: scale(1.1);
+  }
 `;
 
 const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
+  line-height: 1em;
+  word-break: break-all;
+  /* position: absolute; */
+  top: 0;
+  left: 10px;
+  width: 370px;
+  height: 70px;
+  padding-left: 10px;
+  padding-right: 10px;
 
-  background-color: whitesmoke;
+  background-color: skyblue;
 `;
 
 const ContentInput = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
 
-  > #commentRead {
-    display: flex;
-    flex-wrap: wrap;
+  > #comment-read {
     word-wrap: break-word;
-    word-break: keep-all;
+    background-color: green;
+    > span {
+      /* background-color: blueviolet; */
+    }
   }
   > #comment-change {
     display: flex;
@@ -140,8 +189,15 @@ const ContentInput = styled.div`
 
 const HashTagWrapper = styled.div`
   /* margin-top: 100px; */
+  /* position: absolute; */
+  background-color: red;
   width: 370px;
 
+  /* bottom: 0; */
+  /* top: 75px; */
+  /* margin-top: 75px; */
+  left: 10px;
+  padding-right: 10px;
   white-space: nowrap;
   border: none;
 `;
@@ -279,7 +335,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
             <ContentInput>
               {!editMode ? (
                 <div id="comment-read" name="comment">
-                  {comment}
+                  <span>{comment}</span>
                 </div>
               ) : (
                 <textarea
@@ -337,7 +393,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
             )}
           </HashTagWrapper>
         </ContentBox>
-        <Date>작성날짜 : {date}</Date>
+        {/* <Date>작성날짜 : {date}</Date> */}
       </Comment>
     </>
   );

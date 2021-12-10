@@ -1,41 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import HomeMap from "../../components/kakao-map/HomeMap/HomeMap";
+import HomeMap from "../../components/kakao-map/HomeMap";
 import PlaceList from "../../components/PlaceList";
-import HashTagList from "../../components/HashTag/HashTagList";
+import KeyWordsList from "../../components/HashTag/Home-KeyWordsList";
 import { useRecoilState } from "recoil";
-import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
-import Loading from "../../components/Loading";
+import { loading, defaultposition, nowlocation } from "../../recoil/recoil";
 
 const FixedComp = styled.div`
-  margin-top: 73px;
-`;
-const DivRow = styled.div`
-  display: flex;
-
-  justify-content: space-evenly;
-`;
-const DivColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-`;
-const DivColumnSecond = styled.div`
-  display: flex;
-
-  flex-direction: column;
-  align-content: center;
-  /* border: 1px gray solid; */
-  position: absolute;
-  right: 3%;
+  position: relative;
+  margin-top: 80px;
 `;
 
 function Home() {
-  const [nowLocation, setNowLocation] = useRecoilState(nowlocation);
   const [isLoading, setIsLoading] = useRecoilState(loading);
-  const [add, setAdd] = useRecoilState(usersaddress);
-  const [pending, setPending] = useState(false);
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
   // * 현재위치 받는 useEffect
   const getPosition = () => {
@@ -45,56 +23,31 @@ function Home() {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         // console.log(isLoading);
-        setNowLocation({ lat, lon });
+
         setDefaultPosition({ lat, lon });
-        // console.log(isLoading);
-        axios
-          .get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`, {
-            headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-          })
-          .then((res) => {
-            return res.data.documents[0].address;
-          })
-          .then((address) => {
-            // console.log(address);
-            setAdd({
-              area: address.region_1depth_name,
-              sigg: address.region_2depth_name,
-              address: address.address_name,
-            });
-          })
-          //   .then(res=>console.log(meetingPlace))
-          .catch((err) => console.log(err)); //237줄에 console.log(meetingPlace)있음.
-        // console.log(isLoading);
         setIsLoading(false);
+        // console.log(isLoading);
       },
       (err) => alert("위치권한을 허용해주세요")
     );
   };
   useEffect(() => {
     // console.log("이건돼?");
-
     getPosition();
-    // console.log(add);
-
-    // // console.log(defaultPosition);
-  }, [add]);
+    // console.log(defaultPosition);
+  });
 
   return (
     <>
       <FixedComp>
+        <KeyWordsList />
         {isLoading ? (
-          <Loading />
+          <div>로딩인디케이터 만들면 여기 넣기</div>
         ) : (
-          <DivRow>
-            <DivColumn>
-              <HomeMap />
-            </DivColumn>
-            <DivColumnSecond>
-              {/* <HashTagList /> */}
-              <PlaceList />
-            </DivColumnSecond>
-          </DivRow>
+          <>
+            <HomeMap defaultPosition={defaultPosition} />
+            <PlaceList />
+          </>
         )}
       </FixedComp>
     </>

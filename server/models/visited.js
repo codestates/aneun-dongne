@@ -9,22 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Visited.belongsTo(models.User, { foreignKey: "visited_user_id" });
-      Visited.belongsTo(models.Post, { foreignKey: "visited_post_contentid", targetKey: "post_contentid" });
     }
   }
   Visited.init(
     {
+      user_id: DataTypes.INTEGER,
+      post_contentid: DataTypes.INTEGER,
       visited_area: DataTypes.STRING,
       visited_sigg: DataTypes.STRING,
-      visited_mapx: DataTypes.DECIMAL(25, 20),
-      visited_mapy: DataTypes.DECIMAL(25, 20),
-      visited_memo: DataTypes.TEXT,
-      visited_memo_image_path: DataTypes.TEXT,
-      visited_wtmx: DataTypes.DECIMAL(50, 30),
-      visited_wtmy: DataTypes.DECIMAL(50, 30),
-      visited_post_contentid: DataTypes.INTEGER,
-      visited_user_id: DataTypes.INTEGER,
+      visited_mapx: DataTypes.INTEGER,
+      visited_mapy: DataTypes.INTEGER,
+      visited_memo: DataTypes.STRING,
+      visited_memo_image_path: DataTypes.STRING,
     },
     {
       sequelize,

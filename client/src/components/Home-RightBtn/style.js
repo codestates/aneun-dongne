@@ -5,8 +5,8 @@ export const Styled = {
   RightBtn: styled.button`
     border-radius: 5px;
     position: relative;
-    /* left: -10px;
-    bottom: 20px; */
+    left: -10px;
+    bottom: 20px;
     background-color: rgb(192, 251, 255);
     background-image: linear-gradient(
       to right bottom,
@@ -16,7 +16,7 @@ export const Styled = {
     );
     height: 40px;
     width: 100px;
-
+    margin-top: 30px;
     border: none;
     cursor: pointer;
     perspective: 230px;
@@ -54,8 +54,8 @@ export const Styled = {
   `,
   RightBtnBox: styled.div`
     display: flex;
-    justify-content: space-evenly;
-    margin: 10px 0 10px 0px;
+    flex-direction: column;
+    padding-left: 0;
   `,
 };
 

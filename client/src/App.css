@@ -3,11 +3,3 @@
   margin: 0;
   padding: 0;
 }
-.hide {
-  display: none !important;
-}
-
-/* 마이페이지 사이드바에 변경버튼 안보이게하는거 */
-.menu-img i {
-  display: none;
-}

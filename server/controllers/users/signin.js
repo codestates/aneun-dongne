@@ -2,6 +2,7 @@ const { User } = require("../../models");
 const { generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 
 module.exports = (req, res) => {
+  // TODO: 로그인 정보를 통해 사용자 인증 후 토큰 전달
   const { email, password } = req.body;
   User.findOne({
     where: {
@@ -10,13 +11,11 @@ module.exports = (req, res) => {
     },
   })
     .then((data) => {
-      console.log("하이하이하이", data);
       if (!data) {
         res.status(404).send("invalid user");
       } else {
         delete data.dataValues.password;
         const accessToken = generateAccessToken(data.dataValues);
-
         res.cookie("jwt", accessToken);
         sendAccessToken(res, accessToken);
       }

@@ -1,0 +1,16 @@
+/* !나중에 관심사분리할게요! */
+.profile-upload-box {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  /* display: flex; */
+
+  flex-direction: column;
+  /* background-color: yellow; */
+  /* margin-top: 30px; */
+}
+.profile-upload-box .input-blind {
+  display: none;
+}
+
+/* 이게 클릭하면 이미지 업로드창뜨는거  */

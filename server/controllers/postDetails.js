@@ -1,7 +1,6 @@
 const { User, Post, Like } = require("../models");
 const axios = require("axios");
 require("dotenv").config();
-const { isAuthorized } = require("./tokenFunctions");
 
 // node ./controllers/postDetails.js
 
@@ -38,7 +37,7 @@ const updatePostData = async (contentId) => {
   // 포스트를 찾아서 내용 및 홈페이지가 없을 경우 api요청해서 db에 넣고 있을 경우 넣지 않음
 };
 
-const getPostData = async (userId, contentId) => {
+const getPostData = async (contentId) => {
   let result = {};
 
   await Post.findOne({
@@ -72,56 +71,27 @@ const getPostData = async (userId, contentId) => {
     .catch((err) => console.log(err));
   //데이터가 바뀌어서 다시 호출, result에 포스트 데이터 추가
 
-  await Like.findAndCountAll({
-    where: {
-      like_post_contentid: contentId,
-    },
-  })
-    .then((data) => {
-      result.likeCount = data.count;
-      result.isLiked = false;
-      for (let i = 0; i < data.rows.length; i++) {
-        if (data.rows[i].like_user_id === userId) {
-          result.isLiked = true;
-        }
-      }
-    })
-    .catch((err) => console.log(err));
-  //result에 Like 관련 내용 추가
   return result;
 };
 
-const bb = async () => {
-  console.log("bb");
-  await updatePostData(126537).then(async () => {
-    console.log(await getPostData(1, 126537));
-  });
-};
+// const bb = async () => {
+//   console.log("bb");
+//   await updatePostData(126537).then(async () => {
+//     console.log(await getPostData(126537));
+//   });
+// };
 
 // bb();
 
 module.exports = async (req, res) => {
-  const accessTokenData = isAuthorized(req);
-  const { id } = accessTokenData;
-  const { post_contentid } = req.params;
+  const { contentId } = req.params;
 
-  if (!accessTokenData) {
-    await updatePostData(post_contentid)
-      .then(async () => {
-        res.status(200).json(await getPostData(0, post_contentid));
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(400).json({ message: "unsufficent request" });
-      });
-  } else {
-    await updatePostData(post_contentid)
-      .then(async () => {
-        res.status(200).json(await getPostData(id, post_contentid));
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(400).json({ message: "unsufficent request" });
-      });
-  }
+  await updatePostData(contentId)
+    .then(async () => {
+      res.status(200).json(await getPostData(contentId));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "unsufficent request" });
+    });
 };

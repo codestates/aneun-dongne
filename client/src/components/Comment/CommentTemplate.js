@@ -7,26 +7,27 @@ const CommentWrapper = styled.div`
   /* border: 1px gray solid; */
 `;
 
-function CommentTemplate({ commentDummy }) {
+function CommentTemplate({ commentDummy, contentId }) {
   console.log(commentDummy);
   return (
     <>
       <CommentWrapper>
         {commentDummy.map((comment, idx) => {
-          // console.log(comment.tags);
+          console.log(comment);
           if (comment.text === "\n") return null;
           // if (comment.text === "") alert("내용을 입력해주세요");
           return (
             <div key={idx}>
               <Comments
-                uuid={idx}
-                img={comment.img}
-                nickname={comment.nickname}
-                text={comment.text}
-                initialTags={comment.tags}
-                date={comment.date}
-                commentId={idx}
-                editable={comment.editable}
+                uuid={comment[0].id}
+                img={comment[0].user_image_path}
+                nickname={comment[0].nickname}
+                text={comment[0].comment_content}
+                initialTags={comment[0].comment_tags}
+                date={comment[0].comment_createdAt}
+                commentId={comment[0].comment_post_contentid}
+                editable={comment[0].editable}
+                contentId={contentId}
               ></Comments>
             </div>
           );

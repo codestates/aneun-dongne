@@ -8,7 +8,7 @@ import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { defaultcomments, loginState, loginModal } from "../../recoil/recoil";
+import { defaultcomments, loginState, loginModal, deleteCommentmode } from "../../recoil/recoil";
 
 function DetailPage({ match }) {
   const { id } = match.params;
@@ -31,7 +31,8 @@ function DetailPage({ match }) {
   const [defaultComment, setDefaultComment] = useState([]);
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
-
+  //댓글지웠는지?
+  const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   useEffect(() => {
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     //   window.scrollTo(0, 0);
@@ -79,20 +80,39 @@ function DetailPage({ match }) {
   console.log(contentId);
   useEffect(() => {
     axios.get(`https://localhost:80/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
-      console.log(res.data.data);
-      console.log(res.data.userinfo);
+      console.log("겟요청 첨에온거", res.data);
+      // console.log(res.data.data);
+      // console.log(res.data.userinfo);
       // let arr = res.data.data;
       let arr = res.data.data.map((el) => {
         // console.log(el.comments.comment_tags.split(","));
-        console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
+
         return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
       });
+      console.log("매핑한거", arr);
       setDefaultComment(arr);
       setUserinfo(res.data.userinfo);
     });
-
-    //새로고침=>전체댓글을 받는다. => 리코일전체댓글을 바꾼다. 오케이
   }, []);
+  // 댓글이 지워졌을때도 겟요청한다 . => useEffect를 꼭 두개만들어야하는걸까
+  useEffect(() => {
+    axios.get(`https://localhost:80/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
+      console.log("겟요청 첨에온거", res.data);
+      // console.log(res.data.data);
+      // console.log(res.data.userinfo);
+      // let arr = res.data.data;
+      let arr = res.data.data.map((el) => {
+        // console.log(el.comments.comment_tags.split(","));
+
+        return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+      });
+      console.log("매핑한거", arr);
+      setDefaultComment(arr);
+      setUserinfo(res.data.userinfo);
+    });
+    setDeleteOrNot(false);
+  }, [deleteOrNot]);
+
   useEffect(() => {
     console.log(defaultComment);
   }, [defaultComment]);

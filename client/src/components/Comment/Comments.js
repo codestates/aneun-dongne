@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
 import { useRecoilState } from "recoil";
-import { defaultcomments } from "../../recoil/recoil";
+import { defaultcomments, deleteCommentmode } from "../../recoil/recoil";
 import MyComment from "./MyComment";
 import EditableHashTag from "../HashTag/EditableHashTag";
 import axios from "axios";
@@ -151,7 +151,7 @@ const Date = styled.div`
   right: 10px;
 `;
 
-function Comments({ uuid, img, nickname, text, initialTags, date, commentId, editable, contentId }) {
+function Comments({ uuid, img, nickname, text, initialTags, date, editable, contentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
 
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
@@ -162,6 +162,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
   const [tags, setTags] = useState(initialTags);
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
+  const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   // console.log(initialTags);
   useEffect(() => {
     //text,initialTags초기화
@@ -178,6 +179,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
 
   function getCommentId(e) {
     // e.preventDefault(); //필요한가?
+    //누른 버튼의 className으로 실행되는 함수가 결정된다.
     setClickedBtn(e.target.className);
   }
 
@@ -213,11 +215,8 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
         });
         console.log(arr);
         setDefaultComment(arr);
+        setDeleteOrNot(true);
       });
-
-    // console.log(clickedBtn, commentId);
-    //axios : 전체배열 다시 받아서 전체댓글recoil 바꾼다.
-
     setClickedBtn("");
   }
   function changeComment() {
@@ -228,9 +227,9 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
   function completeChange() {
     console.log(tags, comment);
     const body = {
-      commentId: uuid,
-      commentContent: comment,
-      tagsArr: tags,
+      commentId: uuid, //댓글아뒤
+      commentContent: comment, //댓글내용
+      tagsArr: tags, //해시태그
     };
     axios
       .patch(`https://localhost:80/comment/${contentId}`, body, {
@@ -238,7 +237,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data.data);
         let arr = res.data.data.map((el) => {
           console.log(el.comments.comment_tags.split(","));
           console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
@@ -260,10 +258,13 @@ function Comments({ uuid, img, nickname, text, initialTags, date, commentId, edi
     setComment(e.target.value);
   };
   useEffect(() => {
-    // console.log("아래", prevComment);
     setComment(prevComment);
     setEditMode(false);
+    setClickedBtn("");
   }, [changeOrNot]);
+  useEffect(() => {
+    console.log(editMode);
+  }, [editMode]);
   return (
     <>
       <Comment>

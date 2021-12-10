@@ -139,8 +139,8 @@ export const defaultcomments = atom({
 });
 
 //! 댓글 수정신호
-export const editcommentMode = atom({
-  key: "editcommentMode",
+export const deleteCommentmode = atom({
+  key: "deleteCommentMode",
   default: false,
 });
 

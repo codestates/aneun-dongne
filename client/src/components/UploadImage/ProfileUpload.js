@@ -20,8 +20,9 @@ const EditProfile = styled.div`
 
 function ProfileUpload({ imgUrl, setImgUrl }) {
   useEffect(() => {
+    //언마운트시 메모리 누수 제거하기
     return () => window.URL.revokeObjectURL(imgUrl);
-  }, []); //url사용후 메모리 누수 제거하기
+  }, []);
   const inputValue = useRef(null);
   // const [img, setImg] = useState(""); //이 컴퍼넌트안에서만 사용하는 이미지.
   // const [pending, setPending] = useState(false);

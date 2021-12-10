@@ -66,7 +66,7 @@ module.exports = {
     const { id } = accessTokenData;
     const { contentId } = req.params;
     const { commentId } = req.query;
-
+    console.log("파람,쿼리", req.params, req.query);
     if (!accessTokenData) {
       // return res.status(401).send("no token in req.headers['authorization']");
       return res.status(400).json({ data: null, message: "invalid access token" });

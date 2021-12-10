@@ -157,7 +157,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       tagsArr: tags,
     };
     axios.post(`https://localhost:80/comment/${contentId}`, body, { withCredentials: true }).then((res) => {
-      console.log(res.data.data);
+      console.log("가공전", res.data.data);
       let arr = res.data.data.map((el) => {
         // console.log(el.comments.comment_tags.split(","));
         console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);

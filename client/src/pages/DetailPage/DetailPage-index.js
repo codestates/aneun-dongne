@@ -34,6 +34,7 @@ function DetailPage({ match }) {
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   useEffect(() => {
+    //! 관광지 axios 쓸 자리
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     //   window.scrollTo(0, 0);
     //   axios
@@ -93,25 +94,8 @@ function DetailPage({ match }) {
       setDefaultComment(arr);
       setUserinfo(res.data.userinfo);
     });
-  }, []);
-  // 댓글이 지워졌을때도 겟요청한다 . => useEffect를 꼭 두개만들어야하는걸까
-  useEffect(() => {
-    axios.get(`https://localhost:80/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
-      console.log("겟요청 첨에온거", res.data);
-      // console.log(res.data.data);
-      // console.log(res.data.userinfo);
-      // let arr = res.data.data;
-      let arr = res.data.data.map((el) => {
-        // console.log(el.comments.comment_tags.split(","));
-
-        return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
-      });
-      console.log("매핑한거", arr);
-      setDefaultComment(arr);
-      setUserinfo(res.data.userinfo);
-    });
     setDeleteOrNot(false);
-  }, [deleteOrNot]);
+  }, [, deleteOrNot]);
 
   useEffect(() => {
     console.log(defaultComment);

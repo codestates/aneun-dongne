@@ -1,86 +1,76 @@
-const { User, Post, HashTag, Like, Comment, sequelize, Sequelize } = require("../../models");
-// const axios = require("axios");
+const getByHashtagOrTitle = require("../functions/homeSearch/getByHashtagOrTitle");
+const getByXYOrHashtagOrTitle = require("../functions/homeSearch/getByXYOrHashtagOrTitle");
+const getByAreaOrHashtagOrTitle = require("../functions/homeSearch/getByAreaOrHashtagOrTitle");
+
 require("dotenv").config();
 
 // node ./controllers/home/home.js
+// 로그아웃한 상태로 홈 화면에 들어오면 유저id가 필요한 함수의 id부분을 0처리한다 아이디가 0인 유저는 없어서
+// 시퀄라이즈로 서치할 때 tag, searchWord는 ""로 바꾸는데 빈 스트링을 검색하면 데이터가 전원 다 뜨기 때문 : 필터링 없는 전체 데이터 검색
 
-//pickpoint 찍으면 반경 구하는 로직
-const clientwtmx = 210824.23357599074;
-const clientwtmy = 446669.38480642065;
+module.exports = async (req, res) => {
+  const accessTokenData = isAuthorized(req);
+  const { id } = accessTokenData;
+  const { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
 
-const radius = 1000;
+  if (tag === null) {
+    tag = "";
+  }
+  if (searchWord === null) {
+    searchWord = "";
+  }
 
-const userId = 2;
-
-// Post.findAll로 데이터 불러와서 모든 데이터에 대해 하나하나 post_hashtag 정해주는 로직
-// comment도 불러와야 한다
-
-const getPlaceList = async (userId, radius, clientwtmx, clientwtmy) => {
-  let result = [];
-  Post.findAll({
-    raw: true,
-    attributes: [
-      "id",
-      "post_addr1",
-      "post_addr2",
-      "post_areacode",
-      "post_contentid",
-      "post_contenttypeid",
-      "post_firstimage",
-      "post_firstimage2",
-      "post_mapx",
-      "post_mapy",
-      "post_sigungucode",
-      "post_title",
-      "post_wtmx",
-      "post_wtmy",
-      "post_tags",
-      [
-        sequelize.fn(
-          "ST_Distance",
-          sequelize.fn("POINT", sequelize.col("post_wtmx"), sequelize.col("post_wtmy")),
-          sequelize.fn("POINT", clientwtmx, clientwtmy)
-        ),
-        "distance",
-      ], // ('post_mapy', 'post_mapx') 와 (clientMapy, clientMapx) 사이의 거리를 구하고 그것을 'distance'이름으로 할당
-    ],
-    include: [
-      {
-        model: Like,
-        attributes: [[sequelize.literal("COUNT(`Likes`.`id`)"), "likeCount"], "like_user_id"],
-      },
-    ],
-    group: "post_contentid",
-    order: [[sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"]],
-    where: sequelize.where(
-      sequelize.fn(
-        "ST_Distance",
-        sequelize.fn("POINT", sequelize.col("post_wtmx"), sequelize.col("post_wtmy")),
-        sequelize.fn("POINT", clientwtmx, clientwtmy)
-      ),
-      { [Sequelize.Op.lte]: radius }
-    ),
-  })
-    .then((data) => {
-      // console.log(data);
-      // select Posts.post_contentid, Count(Likes.id) as likeCount
-      // from Posts join Likes on Posts.post_contentid = Likes.like_post_contentid
-      // where Posts.post_contentid in ( 126508,126532) group by
-      // Posts.post_contentid order by likeCount;
-      for (let i = 0; i < data.length; i++) {
-        data[i].isLiked = false;
-        if (data[i]["Likes.like_user_id"] === userId) {
-          data[i].isLiked = true;
-        }
-        delete data[i]["Likes.like_user_id"];
-      }
-
-      // console.log(data);
-      result = data;
-
-      // console.log(result.length);
-    })
-    .catch((err) => console.log(err));
+  if (!accessTokenData) {
+    if (areacode === undefined) {
+      //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
+      await res.status(200).json({
+        data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
+      });
+    } else if (areacode === null) {
+      //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
+      await res.status(200).json({
+        data: await getByHashtagOrTitle(0, tag, searchWord),
+      });
+    } else {
+      //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
+      await res.status(200).json({
+        data: await getByAreaOrHashtagOrTitle(0, areacode, sigungucode, tag, searchWord),
+      });
+    }
+  } else {
+    if (areacode === undefined) {
+      await res.status(200).json({
+        data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
+      });
+    } else if (areacode === null) {
+      await res.status(200).json({
+        data: await getByHashtagOrTitle(id, tag, searchWord),
+      });
+    } else {
+      await res.status(200).json({
+        data: await getByAreaOrHashtagOrTitle(id, areacode, sigungucode, tag, searchWord),
+      });
+    }
+  }
 };
 
-module.exports = async (req, res) => {};
+// data : [{
+//   id: 4836,
+//   post_addr1: '서울특별시 종로구 우정국로 59',
+//   post_addr2: '(견지동)',
+//   post_areacode: 1,
+//   post_contentid: 250358,
+//   post_contenttypeid: 12,
+//   post_firstimage: 'http://tong.visitkorea.or.kr/cms/resource/51/1568051_image2_1.jpg',
+//   post_firstimage2: 'http://tong.visitkorea.or.kr/cms/resource/51/1568051_image3_1.jpg',
+//   post_mapx: '126.98257598170000000000',
+//   post_mapy: '37.57442562470000000000',
+//   post_sigungucode: 23,
+//   post_title: '서울 우정총국',
+//   post_wtmx: '198460.803952026620000000000000000000',
+//   post_wtmy: '452764.597922417800000000000000000000',
+//   post_tags: null,
+//   distance: 693.7826450251167,
+//   'Likes.likeCount': 0,
+//   isLiked: false
+// },]

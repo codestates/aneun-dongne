@@ -12,6 +12,7 @@ module.exports = {
   //Post
   postDetails: require("./postDetails"),
   //Like
+  getLikeCount: require("./like").getLikeCount,
   addLike: require("./like").addLike,
   deleteLike: require("./like").deleteLike,
   //Comment

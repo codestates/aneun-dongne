@@ -37,7 +37,7 @@ app.use(
 app.use(cookieParser());
 
 // app.get("/home", controllers.home);
-// app.get("/post", controllers.postDetails);
+app.get("/post", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
@@ -53,6 +53,7 @@ app.post("/comment/:contentId", controllers.createComment);
 app.patch("/comment/:contentId", controllers.updateComment);
 app.delete("/comment/:contentId", controllers.deleteComment);
 
+app.get("/like", controllers.getLikeCount);
 app.post("/like", controllers.addLike);
 app.delete("/like", controllers.deleteLike);
 

@@ -8,6 +8,8 @@ import MyLike from "../../components/MyLike/MyLike";
 import MyReview from "../../components/MyReview/MyReview";
 import MyVisited from "../../components/MyVisited/MyVisited";
 
+// TODO SPA에서 새로고침을 하면 흰 화면이 뜬다. 해결하기!
+
 const MyPage = () => {
   const { pathname } = useLocation();
 

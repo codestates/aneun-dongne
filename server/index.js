@@ -14,7 +14,6 @@ const app = express();
 
 // const PORT = 4000;
 
-const controllers = require("./controllers");
 const HTTPS_PORT = 80;
 
 app.use(express.json());

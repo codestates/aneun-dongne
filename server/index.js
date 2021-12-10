@@ -14,7 +14,7 @@ const app = express();
 
 // const PORT = 4000;
 
-const HTTPS_PORT = 80;
+const HTTPS_PORT = 3065;
 
 // const controllers = require("./controllers");
 
@@ -23,13 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: [
-      // 클라이언트 s3 주소
-      "https://localhost:3000",
-      "http://localhost:3000",
-      "https://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
-      "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
-    ],
+    origin: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })

@@ -196,11 +196,14 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   }, [clickedBtn]);
   // console.log(tags.map((el) => el.substr(0, el.length - 1)));
 
+  // `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
+  // `https://localhost:80/comment/${contentId}`,
+
   // 댓글 삭제요청 보내는 함수
   function deleteComment() {
     axios
       .delete(
-        `https://localhost:80/comment/${contentId}`,
+        `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
 
         //! axios에선 params지만 express에선 req.query래요.
         //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
@@ -231,8 +234,11 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
       commentContent: comment, //댓글내용
       tagsArr: tags, //해시태그
     };
+
+    // `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
+    // `https://localhost:80/comment/${contentId}`
     axios
-      .patch(`https://localhost:80/comment/${contentId}`, body, {
+      .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: { "content-type": "application/json" },
         withCredentials: true,
       })

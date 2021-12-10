@@ -79,8 +79,10 @@ function DetailPage({ match }) {
     //     });
   }, [pathname]);
   console.log(contentId);
+  // `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
+  // `https://localhost:80/comment/${contentId}`
   useEffect(() => {
-    axios.get(`https://localhost:80/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
       console.log("겟요청 첨에온거", res.data);
       // console.log(res.data.data);
       // console.log(res.data.userinfo);

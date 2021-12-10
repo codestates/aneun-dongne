@@ -24,10 +24,11 @@ const App = () => {
   const accessToken = useRecoilValue(token);
 
   const history = useHistory();
-
+  // `${process.env.REACT_APP_API_URL}/user/info`,
+  // "https://localhost:80/user/info",
   const isAuthenticated = async () => {
     await axios
-      .get("https://localhost:80/user/info", {
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           // Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",

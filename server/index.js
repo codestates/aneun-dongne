@@ -12,9 +12,7 @@ const { sequelize } = require("./models/index");
 const controllers = require("./controllers");
 const app = express();
 
-// const PORT = 4000;
-
-const HTTPS_PORT = 80;
+const HTTPS_PORT = 4000;
 
 // const controllers = require("./controllers");
 
@@ -36,7 +34,7 @@ app.use(
 );
 app.use(cookieParser());
 
-// app.get("/home", controllers.home);
+app.get("/home", controllers.home);
 app.get("/post", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);

@@ -1,7 +1,8 @@
 const { isAuthorized, generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 const { User } = require("../../models");
 module.exports = {
-  get: (req, res) => {
+  get: async (req, res) => {
+    console.log("AUTH 겟 토큰", req);
     const accessTokenData = isAuthorized(req);
     console.log("토큰도착", accessTokenData);
 

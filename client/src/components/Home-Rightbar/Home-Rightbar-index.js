@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Styled } from "./style";
 import { cat1_name, cat2_name } from "../../location-data";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { loading, defaultposition, usersaddress, pickpoint, setLo } from "../../recoil/recoil";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
 import Loading from "../Loading";
@@ -10,41 +10,51 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
   const [sigg, setSigg] = useState(""); //메인페이지에서 넘어오면 userAddress[1]넣기
   const [add, setAdd] = useRecoilState(usersaddress);
-  const [pending, setPending] = useState(true);
-  const pickPoint = useRecoilValue(pickpoint);
-  //! const loc = useRecoilValueLoadable(setLo);
+  const loc = useRecoilValueLoadable(setLo);
 
   const changeArea = (area) => {
-    // console.log(area);
-
-    setArea(area);
-
-    setAreaIdx(cat1_name.indexOf(area));
+    console.log(area);
     searchPlace(area);
+    setArea(area);
+    setAreaIdx(cat1_name.indexOf(area));
   };
   const changeSigg = (sigg) => {
+    console.log(area, sigg);
     searchPlace(`${area} ${sigg}`);
     setSigg(sigg);
-
     setLevel(8);
   };
-
-  //! 위의 chnageArea,changeSigg 들이랑 분리시켜야함
-  useEffect(() => {
-    setArea(add.area);
-
-    setPending(!pending);
-  }, [add.area]);
   // useEffect(() => {
   //   console.log(add);
 
   //   setArea(add.area);
+  //   setSigg(add.sigg);
+  //   console.log(pickPoint);
   // }, [add]);
   useEffect(() => {
-    if (cat1_name.indexOf(area) >= 0) setAreaIdx(cat1_name.indexOf(add.area));
-    setSigg(add.sigg);
-    // console.log("인덱스", area, sigg, areaIdx);
-  }, [pending]);
+    console.log("hi");
+    setArea(loc.contents.area);
+  }, [loc]);
+  useEffect(() => {
+    console.log(cat1_name.indexOf(area));
+    if (cat1_name.indexOf(area) >= 0) setAreaIdx(cat1_name.indexOf(area));
+    console.log(area, sigg, areaIdx);
+    setSigg(loc.contents.sigg);
+  }, [area]);
+
+  if (loc.state === "loading") {
+    console.log("로딩");
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+  console.log(loc);
+
+  // useEffect(()=>{
+
+  // },[pickPoint])
 
   return (
     <div>
@@ -84,7 +94,7 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>
         </Styled.SearchWrapper>
-        <HomeRightBtn pending={pending} setPending={setPending} />
+        <HomeRightBtn />
       </Styled.MapRightBar>
     </div>
   );

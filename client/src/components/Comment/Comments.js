@@ -232,7 +232,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
       tagsArr: tags, //해시태그
     };
     axios
-      .patch(`${process.env.REACT_APP_API_URL}comment/${contentId}`, body, {
+      .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: { "content-type": "application/json" },
         withCredentials: true,
       })

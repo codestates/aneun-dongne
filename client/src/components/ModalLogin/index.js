@@ -34,7 +34,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
     // `${process.env.REACT_APP_API_URL}/user/login`,
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL}user/login`,
+        `${process.env.REACT_APP_API_URL}/user/login`,
         {
           email,
           password,

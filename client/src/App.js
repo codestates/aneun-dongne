@@ -71,9 +71,6 @@ const App = () => {
           </BrowserRouter>
         </Route>
 
-        {/* <Commentlist />
-          <Visted /> */}
-
         <Route exact path="/detailpage/:id" component={DetailPage}></Route>
         {/* <Redirect from="*" to="/" /> */}
       </Switch>

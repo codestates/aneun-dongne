@@ -9,6 +9,7 @@ import { placelist, loginState } from "../recoil/recoil";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Footer from "../components/Footer/Footer";
 
 AOS.init();
 
@@ -296,6 +297,7 @@ function Mainpage() {
           <div className="title">나와 어울리는 장소로 떠날 준비가 되셨나요?</div>
           <StartButton onClick={ToHome}>시작하기</StartButton>
         </TitleEndView>
+        <Footer />
       </Body>
     </>
   );

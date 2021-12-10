@@ -31,7 +31,7 @@ const Comment = styled.div`
 `;
 const Profile = styled.div`
   position: relative;
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   width: 80px;
   height: 140px;
@@ -42,11 +42,11 @@ const ProfileImg = styled.img`
   width: 80px;
   height: 80px;
   position: absolute;
-  background-color: white;
+  /* background-color: white; */
 `;
 
 const NickName = styled.span`
-  background-color: yellowgreen;
+  /* background-color: yellowgreen; */
   position: absolute;
   bottom: 5px;
   text-align: center;
@@ -54,7 +54,7 @@ const NickName = styled.span`
 `;
 
 const ContentBox = styled.div`
-  background-color: yellow;
+  /* background-color: yellow; */
   margin-top: 30px;
   position: relative;
   width: 480px;
@@ -99,18 +99,19 @@ const Content = styled.div`
   padding-left: 10px;
   padding-right: 10px;
 
-  background-color: skyblue;
+  /* background-color: skyblue; */
 `;
 
 const ContentInput = styled.div`
-  /* display: flex; */
+  display: flex;
+  padding: 10px;
+  /* border: 1px gray solid; */
   /* flex-wrap: wrap; */
-
+  /* background-color: burlywood; */
   > #comment-read {
     word-wrap: break-word;
-    background-color: green;
+    /* background-color: green; */
     > span {
-      /* background-color: blueviolet; */
     }
   }
   > #comment-change {
@@ -122,14 +123,26 @@ const ContentInput = styled.div`
   }
   > input,
   div {
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
 
     width: 370px;
 
     padding-left: 10px;
     padding-right: 10px;
   }
+`;
 
+const BtnWrapper = styled.div`
+  width: 370px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  > button {
+    margin: 10px 0 10px 0;
+    background-color: rgb(192, 251, 255);
+  }
   .change-comment,
   .complete-change {
     z-index: 999;
@@ -190,7 +203,7 @@ const ContentInput = styled.div`
 const HashTagWrapper = styled.div`
   /* margin-top: 100px; */
   /* position: absolute; */
-  background-color: red;
+  /* background-color: red; */
   width: 370px;
 
   /* bottom: 0; */
@@ -354,27 +367,30 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
                 />
               )}
               {!editMode ? (
-                <button
-                  className="change-comment"
-                  onClick={(e) => {
-                    getCommentId(e);
-                  }}
-                >
-                  수정하기
-                </button>
+                <BtnWrapper>
+                  <button
+                    className="change-comment"
+                    onClick={(e) => {
+                      getCommentId(e);
+                    }}
+                  >
+                    수정하기
+                  </button>
+
+                  <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
+                    댓글삭제
+                  </button>
+                </BtnWrapper>
               ) : (
-                <button className="complete-change" onClick={(e) => getCommentId(e)}>
-                  수정완료
-                </button>
-              )}
-              {!editMode ? (
-                <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
-                  댓글삭제
-                </button>
-              ) : (
-                <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
-                  수정취소
-                </button>
+                <BtnWrapper>
+                  <button className="complete-change" onClick={(e) => getCommentId(e)}>
+                    수정완료
+                  </button>
+
+                  <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
+                    수정취소
+                  </button>
+                </BtnWrapper>
               )}
             </ContentInput>
           )}

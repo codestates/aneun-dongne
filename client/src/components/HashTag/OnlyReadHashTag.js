@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const TagsInput = styled.div`
   /* z-index: 995; */
-  background-color: blue;
+  /* background-color: blue; */
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -11,7 +11,7 @@ export const TagsInput = styled.div`
   width: 400px;
 
   > #tags {
-    background-color: purple;
+    /* background-color: purple; */
     display: flex;
     flex-wrap: wrap;
     max-width: 400px;

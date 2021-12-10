@@ -10,7 +10,7 @@ module.exports = async (comment_user_id, comment_post_contentid, comment_content
     comment_content: comment_content, //필수
     comment_tags: String(comment_tags_arr), // []면 ""로 등록됨
   }); //함수 실행하자마자 먼저 댓글 정보 등록
-
+  console.log("으악", comment_tags_arr);
   if (comment_tags_arr.length > 0) {
     // 해시태그를 하나라도 달았을 경우
     for (const tag of comment_tags_arr) {

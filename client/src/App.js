@@ -16,8 +16,9 @@ import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 // import Slider from "./pages/Slider/Slider";
 import MyPage from "./pages/Mypage/MyPage";
-import Likelists from "./pages/Mypage/likelists";
-import Commentlists from "./pages/Mypage/commentlists";
+import Likelists from "./pages/Mypage/Likelists";
+import Commentlists from "./pages/Mypage/Commentlists";
+import UserInfo from "./pages/Mypage/Userinfo";
 import UserInfoPage from "./pages/Mypage/UserInfoPage";
 
 const App = () => {
@@ -71,7 +72,7 @@ const App = () => {
         </Route>
         <Route exact path="/mypage">
           {/* UserInfo는 한페이지안에 메뉴바, 내용 다있는 컴퍼넌트 */}
-          <UserInfoPage />
+          <UserInfo />
           {/* MyPage는 메뉴바랑 내용이랑 분리되어 있는 컴퍼넌트 */}
           {/* <MyPage /> */}
         </Route>

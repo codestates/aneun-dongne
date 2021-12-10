@@ -8,10 +8,25 @@ import { placelist, placeaddress, placelocation, placeimg, placetitle } from "..
 import { Link } from "react-router-dom";
 
 const PlaceLists = styled.div`
-  height: 100vh;
+  /* height: 100vh; */
+
+  @media (min-width: 1040px) {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @media (min-width: 1360px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1730px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 40px;
   text-decoration-line: none;
+  margin-left: 30px;
 `;
 const MoveToTopBtn = styled.button`
   border-radius: 70%;
@@ -34,7 +49,7 @@ const MoveToTopBtn = styled.button`
   }
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   text-decoration: none;
   color: black;
 `;

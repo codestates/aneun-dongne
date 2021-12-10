@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Post.hasMany(models.Comment, { foreignKey: "comment_post_contentid", sourceKey: "post_contentid" });
+      Post.hasMany(models.Visited, { foreignKey: "visited_post_contentid", sourceKey: "post_contentid" });
+      Post.hasMany(models.Like, { foreignKey: "like_post_contentid", sourceKey: "post_contentid" });
+      Post.belongsToMany(models.Hashtag, {
+        through: "post_hashtag",
+        foreignKey: "ph_post_contentid",
+        sourceKey: "post_contentid",
+      });
     }
   }
   Post.init(
@@ -24,14 +32,19 @@ module.exports = (sequelize, DataTypes) => {
       post_createdtime: DataTypes.INTEGER,
       post_firstimage: DataTypes.STRING,
       post_firstimage2: DataTypes.STRING,
-      post_mapx: DataTypes.INTEGER,
-      post_mapy: DataTypes.INTEGER,
+      post_mapx: DataTypes.DECIMAL(25, 20),
+      post_mapy: DataTypes.DECIMAL(25, 20),
       post_mlevel: DataTypes.INTEGER,
       post_modifiedtime: DataTypes.INTEGER,
       post_readcount: DataTypes.INTEGER,
       post_sigungucode: DataTypes.INTEGER,
       post_title: DataTypes.STRING,
       post_zipcode: DataTypes.INTEGER,
+      post_wtmx: DataTypes.DECIMAL(50, 30),
+      post_wtmy: DataTypes.DECIMAL(50, 30),
+      post_content: DataTypes.TEXT,
+      post_tags: DataTypes.STRING,
+      post_homepage_path: DataTypes.TEXT,
     },
     {
       sequelize,

@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import ModalLogin from "../ModalLogin";
 import ModalSignup from "../ModalSignup";
-
+import { withCookies, Cookies, useCookies } from "react-cookie";
 import { Styled } from "./style";
-import { isSavepositionOpen } from "../../recoil/recoil";
+import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
-
+import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
+import { StyledLink } from "../PlaceList";
 const Header = ({ handleResponseSuccess }) => {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const history = useHistory();
+  // const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+  const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
       setIsLoginOpen(false);
@@ -22,6 +27,12 @@ const Header = ({ handleResponseSuccess }) => {
   const closeLoginModalHandler = (e) => {
     if (isLoginOpen) {
       setIsLoginOpen(false);
+    }
+  };
+
+  const closeLogoutModalHandler = (e) => {
+    if (isSignupOpen) {
+      setIsSignupOpen(false);
     }
   };
 
@@ -56,7 +67,16 @@ const Header = ({ handleResponseSuccess }) => {
       setIsSignupOpen(true);
     }
   };
-  // console.log(isSavePositionOpen);
+  const logoutHandler = () => {
+    console.log("hi");
+    axios.post(`${process.env.REACT_APP_API_URL}signout`, {}, { withCredentials: true }).then((res) => {
+      //로긴상태 해제
+      setIsLogin(false);
+    });
+
+    history.push("/");
+    // console.log(cookies);
+  };
 
   return (
     <>
@@ -80,7 +100,11 @@ const Header = ({ handleResponseSuccess }) => {
           <>
             <Styled.ModalBackdrop onClick={closeSignupModalHandler}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalSignup handleResponseSuccess={handleResponseSuccess} ToLoginModal={ToLoginModal} />
+                <ModalSignup
+                  handleResponseSuccess={handleResponseSuccess}
+                  ToLoginModal={ToLoginModal}
+                  closeLogoutModalHandler={closeLogoutModalHandler}
+                />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>
@@ -99,17 +123,37 @@ const Header = ({ handleResponseSuccess }) => {
         ) : null}
       </Styled.ModalContainer>
 
-      {/* 지금 홈화면 인지 아닌지 상태로 */}
       <Styled.HeaderContainer>
         <div className="header-wrapper">
-          <div id="logo">아는 test 동네</div>
+          <Link to="/">
+            {/* <div id="logo">아는동네</div> */}
+            <img
+              src="https://media.discordapp.net/attachments/912244672578089002/912920442157805678/E53C1906-3AF2-4061-AFD3-E6E7A131BDCE.jpeg"
+              id="logo"
+            ></img>
+          </Link>
           <div className="header-button-wrapper">
-            <div className="mainpage-button" onClick={openLoginModalHandler}>
-              login
-            </div>
-            <div className="mainpage-button" onClick={openSignupModalHandler}>
-              Sign Up
-            </div>
+            {!isLogin ? (
+              <>
+                <div className="mainpage-button" onClick={openLoginModalHandler}>
+                  login
+                </div>
+                <div className="mainpage-button" onClick={openSignupModalHandler}>
+                  Sign Up
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="mainpage-button" onClick={logoutHandler}>
+                  Log Out
+                </div>
+                {/* 나중에 밑줄뜨는거 처리해야함*/}
+                <StyledLink to="/mypage">
+                  <div className="mainpage-button">My Page</div>
+                  {/* <div className="mainpage-button">My Page</div> */}
+                </StyledLink>
+              </>
+            )}
           </div>
         </div>
       </Styled.HeaderContainer>

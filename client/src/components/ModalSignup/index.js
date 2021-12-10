@@ -6,7 +6,7 @@ import { message } from "../../message";
 
 import { Styled } from "../ModalSignup/style";
 
-const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
+const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHandler }) => {
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     email: "",
@@ -72,7 +72,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
 
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/user/signup`,
+        `${process.env.REACT_APP_API_URL}user/signup`,
         {
           nickname,
           email,
@@ -84,6 +84,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal }) => {
         }
       )
       .then(() => {
+        closeLogoutModalHandler();
         handleResponseSuccess();
       });
   };

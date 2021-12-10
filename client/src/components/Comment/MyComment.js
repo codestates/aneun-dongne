@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import MyHashTag from "../HashTag/MyHashTag";
-import { useRecoilState } from "recoil";
-import { mycomments } from "../../recoil/recoil";
+import EditableHashTag from "../HashTag/EditableHashTag";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { defaultcomments, updatecomment, loginState, loginModal } from "../../recoil/recoil";
+import axios from "axios";
 const CommentWrapper = styled.div`
   width: 100%;
 `;
 const Comment = styled.div`
   position: relative;
   display: flex;
-  border: 1px gray solid;
-  height: 200px;
-  margin: 10px;
+  /* border: 1px red solid; */
+  /* height: 200px; */
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  box-shadow: 4px 4px 4px rgb(85, 85, 85);
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    color: black;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+  }
+  &:hover:after {
+    left: 0;
+    width: 100%;
+  }
 `;
 const Profile = styled.div`
   position: relative;
@@ -36,14 +51,14 @@ const NickName = styled.span`
   width: 100%;
 `;
 
-const ContentBox = styled.div`
-  margin-top: 40px;
+const ContentBox = styled.form`
+  margin-top: 30px;
   position: relative;
   width: 480px;
-  height: 140px;
+  /* height: 140px; */
   > button {
     position: absolute;
-    right: 10px;
+    right: -10px;
     top: 20px;
     width: 80px;
     border: none;
@@ -68,69 +83,124 @@ const ContentBox = styled.div`
   }
 `;
 
-const Content = styled.input`
+const Content = styled.textarea`
+  display: flex;
+  flex-wrap: wrap;
   position: absolute;
-  top: 10px;
+  top: 0;
   left: 10px;
   width: 370px;
-  height: 60px;
+  height: 70px;
   padding-left: 10px;
   padding-right: 10px;
 `;
 
 const HashTagWrapper = styled.div`
   /* display: flex; */
-  position: absolute;
+  /* position: absolute; */
   /* background-color: pink; */
   width: 370px;
-  height: 50px;
-  bottom: 10px;
+  /* height: 60px; */
+  top: 75px;
+  margin-top: 75px;
   left: 10px;
+  /* padding-left: 10px; */
+  padding-right: 10px;
+
   white-space: nowrap;
   border: none;
+  border: 1px gray solid;
 `;
 const Date = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   right: 10px;
 `;
 
-function MyComment() {
+function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
+  const [pending, setPending] = useState(false);
   const [something, setSomething] = useState("");
-  const [myComments, setMyComments] = useRecoilState(mycomments);
+  const [text, setText] = useState("");
+  const [count, setCount] = useState(0);
+  const [tags, setTags] = useState([]);
+  // const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
+  //로긴모달창,로긴상태
+  const isLogin = useRecoilValue(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
+  const date = new window.Date();
   const writeSomething = (e) => {
     setSomething(e.target.value);
   };
 
-  const registerMyComment = (something) => {
-    console.log(something);
+  const registerMyComment = (e) => {
+    e.preventDefault();
+    if (!isLogin) {
+      setIsLoginOpen(true);
+      return;
+    }
+    if (something === "") {
+      alert("내용을 입력해주세요");
+      return;
+    }
+    //------------
+    //이게 응답이라고 생각
+    // const myComment = {
+    //   img: "/people3.png", //유저 프로필
+    //   nickname: "김코딩", //유저닉네임
+    //   text: "",
+    //   tags: [],
+    //   date: "DB에서 날라오겠지", //현재날짜
+    //   editable: true,
+    // };
+    let body = {
+      commentContent: something,
+      tagsArr: tags,
+    };
+    axios.post(`${process.env.REACT_APP_API_URL}comment/${contentId}`, body, { withCredentials: true }).then((res) => {
+      console.log("가공전", res.data.data);
+      let arr = res.data.data.map((el) => {
+        // console.log(el.comments.comment_tags.split(","));
+        console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
+        return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+      });
+      setDefaultComment(arr);
+    });
+
+    //------------
+    // setDefaultComment(defaultComment.concat(body)); 왜 일케하면 memo되고 밑에꺼로하면 안됨
+
+    // setDefaultComment([body].concat(defaultComment)); -> DB가 대신함
+    // setPending(true);
+    setTags([]);
     setSomething("");
-    setMyComments([...myComments, [something]]);
   };
 
-  useEffect(() => {}, []);
   return (
     <CommentWrapper>
       <Comment>
         <Profile>
-          <ProfileImg src="/people3.png"></ProfileImg>
-          <NickName>김코딩</NickName>
+          <ProfileImg src={userinfo.user_image_path}></ProfileImg>
+          <NickName>{userinfo.nickname}</NickName>
         </Profile>
         <ContentBox>
           <Content
             type="text"
             value={something}
+            placeholder="댓글을 입력하슈"
             onChange={(e) => writeSomething(e)}
             onKeyUp={(e) => {
-              if (e.key === "Enter") registerMyComment(something);
+              if (e.key === "Enter") {
+                registerMyComment(e);
+                e.target.value = "";
+              }
             }}
           ></Content>
-          <button onClick={() => registerMyComment(something)}>작성하기</button>
+
           <HashTagWrapper>
-            <MyHashTag initialTags={[]} />
+            <EditableHashTag tags={tags} setTags={setTags} />
           </HashTagWrapper>
+          <button onClick={registerMyComment}>작성하기</button>
         </ContentBox>
-        <Date>작성날짜 : {`DB에서 시간날라오겠지`}</Date>
       </Comment>
     </CommentWrapper>
   );

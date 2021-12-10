@@ -1,28 +1,64 @@
 import styled from "styled-components";
 
 export const Styled = {
+  //전체 박스
+  MapRightBar: styled.div`
+    display: flex;
+    flex-direction: column;
+    border: 1px rgb(192, 251, 255) solid;
+    /* border: 1px red solid; */
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+
+    width: 600px;
+    /* height: 130px; */
+
+    /* &:hover {
+      color: black;
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      transform: scale(1.1);
+    }
+    &:hover:after {
+      left: 0;
+      width: 100%;
+    } */
+
+    > p {
+      margin: 2% auto;
+
+      text-align: center;
+    }
+  `,
+  SearchWrapper: styled.div`
+    height: 40px;
+    width: 550px;
+    margin: auto;
+    display: flex;
+    /* justify-content: space-around; */
+    height: 50px;
+  `,
   // 도|시군구
   SearchLocation: styled.select`
-    margin-bottom: 5px;
     margin-right: 5px;
     margin-left: 5px;
-    width: 80%;
+    width: 50%;
     height: 100%;
     background-color: white;
-    /* border:gray 1px solid; */
+    /* background-color: red; */
     border: none;
-
+    /* border: 1px pink solid; */
     //중앙선 더 오른쪽으로 옮기고 싶은데 잘안된다..
     border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
   `,
   //도|시군구를 감싸고있는 div
   SearchBar: styled.div`
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 5px;
+    margin: 5px 2% 5px 2%;
+    /* margin-right: 5%; */
     display: flex;
     padding: 5px;
-    width: 80%;
+    width: 300px;
     height: 40px;
     border-radius: 5px;
     border: 1px gray solid;
@@ -39,12 +75,13 @@ export const Styled = {
     }
   `,
   //키워드 검색
-  SearchKeyWord: styled.input`
-    margin-top: 5px;
+  SearchKeyWord: styled.select`
+    /* margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 5px;
-    width: 80%;
-    height: 100%;
+    margin-left: 5px; */
+    margin: 5px 2% 5px 2%;
+    width: 130px;
+    height: 40px;
     background-color: white;
     background-image: linear-gradient(
       to right bottom,
@@ -60,7 +97,7 @@ export const Styled = {
       position: absolute;
       content: "";
       width: 0;
-      height: 100%;
+      height: 40px;
       top: 0;
       right: 0;
       z-index: -1;
@@ -91,11 +128,12 @@ export const Styled = {
   //장소검색
   SearchPlace: styled.input`
     border: 1px gray solid;
-    margin-top: 5px;
+    /* margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 5px;
-    width: 80%;
-    height: 100%;
+    margin-left: 5px; */
+    margin: 5px 2% 5px 2%;
+    width: 180px;
+    height: 40px;
     background-color: white;
     border: gray 1px solid;
     border-radius: 10px;
@@ -114,11 +152,11 @@ export const Styled = {
   `,
   //검색버튼
   SearchBtn: styled.button`
-    margin-top: 160px;
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin-left: 5px;
-    width: 80%;
-    height: 100%;
+    width: 80px;
+    height: 40px;
     background-color: rgb(192, 251, 255);
     background-image: linear-gradient(
       to right bottom,
@@ -162,31 +200,6 @@ export const Styled = {
     &:hover:after {
       left: 0;
       width: 100%;
-    }
-  `,
-  //전체 박스
-  MapRightBar: styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    border: 1px rgb(192, 251, 255) solid;
-    border-radius: 10px;
-    margin-left: 2rem;
-    bottom: 20px;
-    width: 14rem;
-    padding-left: 1rem;
-    &:hover {
-      color: black;
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transform: scale(1.1);
-    }
-    &:hover:after {
-      left: 0;
-      width: 100%;
-    }
-    > p {
-      margin-top: 10px;
     }
   `,
 };

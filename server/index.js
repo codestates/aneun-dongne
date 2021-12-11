@@ -13,6 +13,7 @@ const controllers = require("./controllers");
 const app = express();
 
 const PORT = 3065;
+// const PORT = 80;
 
 // const controllers = require("./controllers");
 
@@ -63,9 +64,9 @@ app.delete("/like", controllers.deleteLike);
 //   const credentials = { key: privateKey, cert: certificate };
 
 //   server = https.createServer(credentials, app);
-//   server.listen(HTTPS_PORT, () => console.log("https server runnning"));
+//   server.listen(PORT, () => console.log("https server runnning"));
 // } else {
-//   server = app.listen(HTTPS_PORT, () => console.log("http server runnning"));
+//   server = app.listen(PORT, () => console.log("http server runnning"));
 // }
 
 let server;

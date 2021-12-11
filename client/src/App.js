@@ -15,7 +15,7 @@ import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
-import MyPage from "./pages/Mypage/MyPage";
+import MyPage from "./pages/MyPage/MyPage";
 import Footer from "./components/Footer/Footer";
 import Loading from "./components/Loading";
 
@@ -29,7 +29,7 @@ const App = () => {
 
   const isAuthenticated = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}user/info`, {
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           // Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const App = () => {
         console.log("홈으로 가잔");
         setInfo(res.data.data.userInfo);
         setIsLogin(true);
-        history.push("/home");
+        // history.push("/home");
       });
   };
   //쿠키안에 jwt 있는지 보고 로긴상태결정
@@ -70,7 +70,7 @@ const App = () => {
         </Route>
         <Route exact path="/mypage">
           <BrowserRouter>
-            <Mypage />
+            <MyPage />
           </BrowserRouter>
         </Route>
 

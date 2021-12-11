@@ -1,70 +1,9 @@
 import React from "react";
 import { Styled } from "./styled";
-import "./footer.css";
+
 function Footer() {
   return (
     <>
-      <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-row">
-            <div className="footer-col">
-              <h4>About</h4>
-              <ul>
-                <li>
-                  <a href="https://github.com/codestates/Bryta" target="_blank" rel="noopener noreferrer">
-                    Repository
-                  </a>
-                </li>
-                <li>
-                  <a href="https://github.com/codestates/Bryta/wiki" target="_blank" rel="noopener noreferrer">
-                    Wiki
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <div className="footer-logo">
-                <img
-                  className="footer-logo-img"
-                  alt="icon"
-                  src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-                />
-                <div className="footer-logo-text">아는 동네</div>
-              </div>
-            </div>
-            <div className="footer-col">
-              <h4>Team members</h4>
-              <ul>
-                <li>
-                  <a
-                    href="https://github.com/ehdgusdl9177"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="teammember"
-                  >
-                    윤해용
-                  </a>
-                </li>
-                <li>
-                  <a href="https://github.com/tjddmsdl2056" target="_blank" rel="noopener noreferrer">
-                    남경화
-                  </a>
-                </li>
-                <li>
-                  <a href="https://github.com/kimdlzp" target="_blank" rel="noopener noreferrer">
-                    류준열
-                  </a>
-                </li>
-                <li>
-                  <a href="https://github.com/11210111" target="_blank" rel="noopener noreferrer">
-                    손승이
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
       <Styled.Body>
         <Styled.Side>
           <div className="footer-logo-text">아는 동네</div>

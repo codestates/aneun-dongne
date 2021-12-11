@@ -8,15 +8,11 @@ import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { defaultcomments, loginState, loginModal, deleteCommentmode } from "../../recoil/recoil";
-import { contentid, getlike, likeNum, likeorNot } from "../../recoil/aysnc-detailpage";
+import { loginState, loginModal, deleteCommentmode } from "../../recoil/recoil";
 
 function DetailPage({ match }) {
   const { id } = match.params;
-  // const contentId = parseInt(id, 10);
-  const getLike = useRecoilValueLoadable(getlike);
-  const [contentId, setContentId] = useRecoilState(contentid);
-  setContentId(parseInt(id, 10));
+  const contentId = parseInt(id, 10);
 
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
@@ -142,16 +138,8 @@ function DetailPage({ match }) {
     // if (likeOrNot) setLike(like - 1);
     // else setLike(like + 1);
     //!---
-    console.log(like, likeOrNot);
   };
-  if (getLike.state === "loading") {
-    return null;
-  }
 
-  // const like = 3;
-  // const likeOrNot = true;
-  setLike(getLike.contents.likeCount);
-  setLikeOrNot(getLike.contents.likeOrNot);
   return (
     <>
       <Styled.Div>

@@ -183,6 +183,7 @@ export const MainTitleView = styled.div`
     width: 100%;
   }
   .main-title {
+    margin-top: 10%;
     position: absolute;
     font-size: 3rem;
     font-family: fantasy;

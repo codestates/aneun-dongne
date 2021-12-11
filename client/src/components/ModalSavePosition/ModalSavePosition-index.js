@@ -67,9 +67,7 @@ const ModalSavePosition = () => {
     <>
       <Styled.FormContainer>
         <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
-          <span>
-            <i className="fas fa-times"></i>
-          </span>
+          <i className="fas fa-times"></i>
         </Styled.CloseBtn>
         <form id="form-id" onSubmit={updateInfoRequest}>
           <h3>이미지</h3>

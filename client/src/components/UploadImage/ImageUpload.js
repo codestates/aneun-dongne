@@ -29,9 +29,7 @@ function ImageUpload({ placeImage, setPlaceImage }) {
         type="file"
         onChange={(e) => inputFileHandler(inputValue, setPlaceImage)}
       />
-      <span>
-        <i className="fas fa-edit"></i>
-      </span>
+
       {placeImage ? (
         <div
           className="img_preview"
@@ -41,6 +39,9 @@ function ImageUpload({ placeImage, setPlaceImage }) {
       ) : (
         <div className="img_preview" onClick={(e) => inputBtn(e, inputValue)}></div>
       )}
+      <span>
+        <i className="fas fa-edit" onClick={(e) => inputBtn(e, inputValue)}></i>
+      </span>
     </div>
   );
 }

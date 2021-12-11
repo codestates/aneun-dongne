@@ -40,29 +40,48 @@ const Div = styled.div`
   //! 발자국로딩
   display: flex;
   flex-direction: column;
-
+width:600px;
+height:300px;
   justify-content: center;
-  /* background-color: red; */
+  background-color: red;
+  position:relative;
   margin: 300px 300px 300px 300px;
   p {
     font-size: 2rem;
     width: 500px;
     margin: 30px auto;
-    /* background-color: red; */
+    background-color: blue;
     text-align: center;
+    transition: all 0.5s ease-in-out;
+    animation: move 1s linear infinite alternate;
+    
+    @keyframes move {
+      0% {
+        margin-left:20px
+        /* margin-left: 0; */
+      }
+      100% {
+        margin-right:20px;
+        /* margin-left: 20px; */
+      }
+     
   }
   img {
     margin: 50px;
     width: 100px;
     height: 100px;
+    position:relative;
   }
   #footer-logo-img1 {
     animation: blink 4s ease-in-out infinite;
     /* animation-delay: 1.7s; */
+    position:absolute;
+    
+    
     @keyframes blink {
       10% {
         opacity: 1;
-        /* margin-left: 0; */
+        
       }
       25% {
         opacity: 0;
@@ -155,10 +174,6 @@ const Div = styled.div`
 function Loading() {
   return (
     <Div>
-      {/* <div className="loadingBox"> */}
-      {/* <div className="circle"></div> */}
-      {/* </div> */}
-
       <p>잠시만 기다려주세요</p>
       <div>
         <img

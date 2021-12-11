@@ -109,6 +109,7 @@ function DetailPage({ match }) {
   useEffect(() => {
     axios.get(`https://localhost:80/like/${contentId}}`, { withCredentials: "true" }).then((res) => {
       const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
+      console.log(like);
       setLike(like.likeCount);
       setLikeOrNot(like.likeOrNot);
     });

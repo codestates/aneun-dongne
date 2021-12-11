@@ -15,10 +15,7 @@ import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
-import MyPage from "./pages/Mypage/MyPage";
-import Footer from "./components/Footer/Footer";
 import Loading from "./components/Loading";
-import UserInfo from "./pages/Mypage/UserInfo";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -63,18 +60,27 @@ const App = () => {
       <Header handleResponseSuccess={handleResponseSuccess} />
       <Switch>
         <Route exact path="/">
-          <Mainpage />
-          {/* <Loading /> */}
+          {/* <Mainpage /> */}
+          <Loading />
         </Route>
         <Route exact path="/home">
           <Home info={info} />
         </Route>
         <Route exact path="/mypage">
-          <BrowserRouter>
-            {/* <MyPage /> */}
-            <UserInfo />
-          </BrowserRouter>
+          {/* UserInfo는 한페이지안에 메뉴바, 내용 다있는 컴퍼넌트 */}
+          {/* <UserInfo /> */}
+          {/* MyPage는 메뉴바랑 내용이랑 분리되어 있는 컴퍼넌트 */}
+          {/* <MyPage /> */}
         </Route>
+        <Route exact path="/mapage/likelist">
+          {/* <Likelists /> */}
+        </Route>
+        <Route exact path="/mapage/my-comment">
+          {/* <Commentlists /> */}
+        </Route>
+
+        {/* <Commentlist />
+          <Visted /> */}
 
         <Route exact path="/detailpage/:id" component={DetailPage}></Route>
         {/* <Redirect from="*" to="/" /> */}

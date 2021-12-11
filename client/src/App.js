@@ -70,7 +70,7 @@ const App = () => {
         </Route>
         <Route exact path="/mypage">
           <BrowserRouter>
-            <MyPage />
+            <Mypage />
           </BrowserRouter>
         </Route>
 

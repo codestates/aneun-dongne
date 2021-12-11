@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const TagsInput = styled.div`
   /* z-index: 995; */
-
+  /* background-color: blue; */
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -11,17 +11,21 @@ export const TagsInput = styled.div`
   width: 400px;
 
   > #tags {
-    /* background-color: red; */
+    /* background-color: purple; */
     display: flex;
     flex-wrap: wrap;
-    /* width: 700px; */
+    max-width: 400px;
+
     padding: 0;
     margin: 8px 0 0 0;
   }
   .tag {
-    width: auto;
-    height: 25px;
-    display: flex;
+    overflow: hidden;
+    /* word-wrap: break-word; */
+    text-overflow: ellipsis;
+    /* max-width: 200; */
+    height: auto;
+    /* display: flex; */
     align-items: center;
     justify-content: center;
     padding: 0 8px;
@@ -31,6 +35,7 @@ export const TagsInput = styled.div`
     margin: 0 8px 8px 0;
     border: 1px solid rgb(192, 251, 255);
     background-color: rgb(192, 251, 255);
+    max-width: 400px;
     background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
@@ -44,7 +49,7 @@ export const TagsInput = styled.div`
     position: absolute;
     content: "";
     width: 0;
-    height: 100%;
+    height: auto;
     top: 0;
     right: 0;
     z-index: -1;
@@ -61,6 +66,7 @@ export const TagsInput = styled.div`
     transition: all 0.3s ease;
   }
   .tag:hover {
+    //
     color: black;
     transform: scale(1.1);
   }

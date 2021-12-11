@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import HomeMap from "../../components/kakao-map/HomeMap/HomeMap";
+import HomeMap from "../../components/Map/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList";
 import HashTagList from "../../components/HashTag/HashTagList";
 import { useRecoilState } from "recoil";

@@ -15,7 +15,9 @@ import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
-import Mypage from "./pages/MyPage/MyPage";
+import MyPage from "./pages/Mypage/MyPage";
+import Footer from "./components/Footer/Footer";
+import Loading from "./components/Loading";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -27,7 +29,7 @@ const App = () => {
 
   const isAuthenticated = async () => {
     await axios
-      .get("https://localhost:80/user/info", {
+      .get(`${process.env.REACT_APP_API_URL}user/info`, {
         headers: {
           // Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -61,6 +63,7 @@ const App = () => {
       <Switch>
         <Route exact path="/">
           <Mainpage />
+          {/* <Loading /> */}
         </Route>
         <Route exact path="/home">
           <Home info={info} />

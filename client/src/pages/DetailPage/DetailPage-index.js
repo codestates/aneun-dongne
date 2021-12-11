@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import MapInRoom from "../../components/kakao-map/MapInRoom/MapInRoom-index";
+import MapInRoom from "../../components/Map/MapInRoom/MapInRoom-index";
 import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
@@ -80,7 +80,7 @@ function DetailPage({ match }) {
   }, [pathname]);
   console.log(contentId);
   useEffect(() => {
-    axios.get(`https://localhost:80/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}comment/${contentId}`, { withCredentials: "true" }).then((res) => {
       console.log("겟요청 첨에온거", res.data);
       // console.log(res.data.data);
       // console.log(res.data.userinfo);

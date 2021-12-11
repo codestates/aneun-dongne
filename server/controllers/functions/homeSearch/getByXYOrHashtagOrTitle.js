@@ -36,7 +36,10 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
       },
     ],
     group: "post_contentid",
-    order: [[sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"]],
+    order: [
+      [sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"],
+      ["post_readcount", "DESC"],
+    ],
     where: sequelize.where(
       sequelize.fn(
         "ST_Distance",

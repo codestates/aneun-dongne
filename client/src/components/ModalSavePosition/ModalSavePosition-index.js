@@ -42,7 +42,7 @@ const ModalSavePosition = () => {
     console.log("폼데이터imag", formData.get("image"));
     // headers: { "content-type": "multipart/form-data" },
     axios
-      .post(`https://localhost:80/home/bookmark`, formData, { withCredentials: true })
+      .post(`${process.env.REACT_APP_API_URL}home/bookmark`, formData, { withCredentials: true })
 
       .then((res) => {
         console.log(res.data.message);
@@ -67,9 +67,7 @@ const ModalSavePosition = () => {
     <>
       <Styled.FormContainer>
         <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
-          <span>
-            <i className="fas fa-times"></i>
-          </span>
+          <i className="fas fa-times"></i>
         </Styled.CloseBtn>
         <form id="form-id" onSubmit={updateInfoRequest}>
           <h3>이미지</h3>

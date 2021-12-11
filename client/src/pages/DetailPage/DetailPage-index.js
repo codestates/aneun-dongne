@@ -7,7 +7,7 @@ import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState, loginModal, deleteCommentmode } from "../../recoil/recoil";
 
 function DetailPage({ match }) {
@@ -29,8 +29,8 @@ function DetailPage({ match }) {
   //기존댓글
 
   const [defaultComment, setDefaultComment] = useState([]);
-  const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
-  const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
+  const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
+  const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
 
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
@@ -106,6 +106,13 @@ function DetailPage({ match }) {
     // });
   }, [, deleteOrNot]);
 
+  useEffect(() => {
+    axios.get(`https://localhost:80/like/${contentId}}`, { withCredentials: "true" }).then((res) => {
+      const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
+      setLike(like.likeCount);
+      setLikeOrNot(like.likeOrNot);
+    });
+  }, []);
   useEffect(() => {
     console.log(defaultComment);
   }, [defaultComment]);

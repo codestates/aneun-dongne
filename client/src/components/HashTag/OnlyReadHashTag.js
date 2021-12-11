@@ -78,25 +78,6 @@ export const TagsInput = styled.div`
   }
 `;
 
-const ReadMoreBtn = styled.button`
-  border: blue 1px solid;
-  z-index: 999;
-  border: none;
-  /* background: transparent; */
-  width: 50px;
-  margin-bottom: 1rem;
-  cursor: pointer;
-`;
-const CutDownBtn = styled.button`
-  border: blue 1px solid;
-  z-index: 999;
-  border: none;
-  /* background: transparent; */
-  width: 50px;
-  margin-bottom: 1rem;
-  cursor: pointer;
-`;
-
 const OnlyReadHashTag = ({ initialTags, uuid }) => {
   // const [tags, setTags] = useState(initialTags);
   const tagInput = useRef(null);
@@ -110,7 +91,7 @@ const OnlyReadHashTag = ({ initialTags, uuid }) => {
             if (tag.length === 0) return;
             return (
               <div key={index} className="tag">
-                {tag}
+                {"#" + tag}
               </div>
             );
           })}

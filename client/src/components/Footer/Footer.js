@@ -104,12 +104,12 @@ function Footer() {
               </span>
             </div>
             <div className="info-icon">
-              <i className="far fa-envelope"></i>
+              {/* <i className="far fa-envelope"></i>
               <span>
                 <a href="https://github.com/codestates/aneun-dongne" target="_blank" rel="noopener noreferrer">
                   Email
                 </a>
-              </span>
+              </span> */}
             </div>
           </div>
           <div className="user-info">
@@ -126,12 +126,12 @@ function Footer() {
               </span>
             </div>
             <div className="info-icon">
-              <i className="far fa-envelope"></i>
+              {/* <i className="far fa-envelope"></i>
               <span>
                 <a href="hwahwa7879@gmail.com" target="_blank" rel="noopener noreferrer">
                   hwahwa7879@gmail.com
                 </a>
-              </span>
+              </span> */}
             </div>
           </div>
           <div className="user-info">
@@ -148,12 +148,12 @@ function Footer() {
               </span>
             </div>
             <div className="info-icon">
-              <i className="far fa-envelope"></i>
+              {/* <i className="far fa-envelope"></i>
               <span>
                 <a href="https://github.com/codestates/aneun-dongne" target="_blank" rel="noopener noreferrer">
                   Email
                 </a>
-              </span>
+              </span> */}
             </div>
           </div>
           <div className="user-info">
@@ -170,12 +170,12 @@ function Footer() {
               </span>
             </div>
             <div className="info-icon">
-              <i className="far fa-envelope"></i>
+              {/* <i className="far fa-envelope"></i>
               <span>
                 <a href="https://github.com/codestates/aneun-dongne" target="_blank" rel="noopener noreferrer">
                   Email
                 </a>
-              </span>
+              </span> */}
             </div>
           </div>
         </Styled.User>

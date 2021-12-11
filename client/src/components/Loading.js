@@ -2,17 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const Div = styled.div`
+  height: 100vh;
   //! 동그라미 로딩
   /* loading */
-  /* .loadingBox {
-    position: relative;
-    bottom: 0;
+  .loadingBox {
+    /* position: relative; */
+    /* bottom: 0; */
 
-    margin: 300px auto;
+    /* margin: 300px auto; */
   }
   .loadingBox h1 {
     text-align: center;
-    margin-top: 100px;
+    /* margin-top: 100px; */
   }
   .loadingBox .circle {
     margin-left: auto;
@@ -36,7 +37,7 @@ const Div = styled.div`
     to {
       transform: translate(-50%, -50%) rotate(360deg);
     }
-  } */
+  }
   //! 발자국로딩
   display: flex;
   flex-direction: column;
@@ -45,11 +46,21 @@ const Div = styled.div`
   /* background-color: red; */
   margin: 300px 300px 300px 300px;
   p {
+    /* background-color: blue; */
     font-size: 2rem;
-    width: 500px;
-    margin: 30px auto;
+    width: 100%;
+    margin: 30px 0;
     /* background-color: red; */
     text-align: center;
+    animation: move 1s ease-in-out infinite alternate;
+    @keyframes move {
+      0% {
+        margin-left: 10px;
+      }
+      100% {
+        margin-left: 0px;
+      }
+    }
   }
   img {
     margin: 50px;
@@ -60,7 +71,7 @@ const Div = styled.div`
     animation: blink 4s ease-in-out infinite;
     /* animation-delay: 1.7s; */
     @keyframes blink {
-      10% {
+      0% {
         opacity: 1;
         /* margin-left: 0; */
       }
@@ -80,6 +91,8 @@ const Div = styled.div`
     }
   }
   #footer-logo-img2 {
+    /* margin-left: 200px; */
+    margin-bottom: 100px;
     animation: blink2 4s ease-in-out infinite;
     /* animation-delay: 2s; */
     @keyframes blink2 {
@@ -87,7 +100,9 @@ const Div = styled.div`
         opacity: 0;
         /* margin-left: 0; */
       }
-      25% {
+      35% {
+        /* margin-left: 100px; */
+        /* margin-bottom: 100px; */
         opacity: 1;
         /* margin-left: 20px; */
       }
@@ -128,6 +143,7 @@ const Div = styled.div`
     }
   }
   #footer-logo-img4 {
+    margin-bottom: 100px;
     animation: blink4 4s ease-in-out infinite;
     /* animation-delay: 2s; */
 
@@ -155,11 +171,14 @@ const Div = styled.div`
 function Loading() {
   return (
     <Div>
-      {/* <div className="loadingBox"> */}
-      {/* <div className="circle"></div> */}
-      {/* </div> */}
+      <div className="loadingBox">
+        <div className="circle"></div>
+      </div>
 
       <p>잠시만 기다려주세요</p>
+
+      <hr />
+      <hr />
       <div>
         <img
           className="footer-logo-img"
@@ -186,6 +205,7 @@ function Loading() {
           alt="icon"
           src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
         />
+        <p>잠시만 기다려주세요</p>
       </div>
     </Div>
   );

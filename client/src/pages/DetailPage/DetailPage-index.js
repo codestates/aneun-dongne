@@ -13,9 +13,11 @@ import { contentid, getlike, likeNum, likeorNot } from "../../recoil/aysnc-detai
 
 function DetailPage({ match }) {
   const { id } = match.params;
-  const contentId = parseInt(id, 10);
+  // const contentId = parseInt(id, 10);
+  const getLike = useRecoilValueLoadable(getlike);
+  const [contentId, setContentId] = useRecoilState(contentid);
+  setContentId(parseInt(id, 10));
 
-  // const [updateComment, setUpdateComment] = useRecoilState(updatecomment);
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
@@ -29,14 +31,15 @@ function DetailPage({ match }) {
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   //기존댓글
-  // const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
+
   const [defaultComment, setDefaultComment] = useState([]);
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
 
-  // console.log(getlike.state);
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
+
+  console.log(contentId);
   useEffect(() => {
     //! 관광지 axios 쓸 자리
     // 페이지 이동시 스크롤 맨 위로 오게한다.
@@ -141,7 +144,14 @@ function DetailPage({ match }) {
     //!---
     console.log(like, likeOrNot);
   };
+  if (getLike.state === "loading") {
+    return null;
+  }
 
+  // const like = 3;
+  // const likeOrNot = true;
+  setLike(getLike.contents.likeCount);
+  setLikeOrNot(getLike.contents.likeOrNot);
   return (
     <>
       <Styled.Div>

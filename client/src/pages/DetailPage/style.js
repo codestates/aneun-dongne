@@ -105,11 +105,15 @@ export const Styled = {
     cursor: pointer;
   `,
   LikeBtn: styled.button`
+    display: flex;
+
+    /* background: red; */
+
     border: 1px red solid;
     border-radius: 20px;
     /* background: white; */
     width: 60px;
-    height: 30px;
+    height: 40px;
     margin: 40px auto;
     cursor: pointer;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
@@ -127,6 +131,17 @@ export const Styled = {
 
     &:active {
       transform: scale(1.3);
+    }
+    > i {
+      margin: 12px 3px 10px 15px;
+      /* background: blue; */
+      > span {
+        /* background: purple; */
+        margin: 11px 0px 10px 7px;
+      }
+    }
+    .hide {
+      display: none;
     }
   `,
   Wrapper: styled.div`

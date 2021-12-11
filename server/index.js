@@ -53,9 +53,9 @@ app.post("/comment/:contentId", controllers.createComment);
 app.patch("/comment/:contentId", controllers.updateComment);
 app.delete("/comment/:contentId", controllers.deleteComment);
 
-app.get("/like", controllers.getLikeCount);
-app.post("/like", controllers.addLike);
-app.delete("/like", controllers.deleteLike);
+app.get("/like/:contentId", controllers.getLikeCount);
+app.post("/like/:contentId", controllers.addLike);
+app.delete("/like/:contentId", controllers.deleteLike);
 
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {

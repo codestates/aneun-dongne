@@ -122,33 +122,6 @@ function Footer() {
 
       <Styled.TeamName>
         <h2>Team : TenTen</h2>
-        <div>
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img1"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img2"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img3"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img4"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-        </div>
       </Styled.TeamName>
     </>
   );

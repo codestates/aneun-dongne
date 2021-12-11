@@ -42,13 +42,16 @@ const deleteLike = async (userId, contentId) => {
 module.exports = {
   getLikeCount: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
+
     const { contentId } = req.params;
     if (!accessTokenData) {
-      await res.status(200).json({
+      return res.status(200).json({
+        message: "no user",
         data: await getLikeCount(0, contentId),
       });
-    } else {
+    }
+    const { id } = accessTokenData; //이게 if(!accessTokenData) 뒤에있어야함
+    if (accessTokenData) {
       await res.status(200).json({
         data: await getLikeCount(id, contentId),
       });

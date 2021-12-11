@@ -10,16 +10,23 @@ const { isAuthorized } = require("./tokenFunctions");
 module.exports = {
   readComments: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-
-    const { id } = accessTokenData;
     const { contentId } = req.params;
+    if (!accessTokenData) {
+      return res.status(200).json({
+        message: "no user",
+        data: await getCommentHashtagData(0, contentId),
+        userinfo: {
+          user_image_path:
+            "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png",
+          nickname: "김코딩",
+        },
+      });
+    }
+    const { id } = accessTokenData;
+
     console.log("겟커멘트", accessTokenData);
     const { user_image_path, nickname } = accessTokenData;
-    if (!accessTokenData) {
-      await res.status(200).json({
-        data: await getCommentHashtagData(0, contentId),
-      });
-    } else {
+    if (accessTokenData) {
       await res.status(200).json({
         data: await getCommentHashtagData(id, contentId),
         userinfo: { user_image_path, nickname },

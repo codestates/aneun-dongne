@@ -18,6 +18,7 @@ import Header from "./components/Header";
 import MyPage from "./pages/Mypage/MyPage";
 import Footer from "./components/Footer/Footer";
 import Loading from "./components/Loading";
+import UserInfo from "./pages/Mypage/UserInfo";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -70,7 +71,8 @@ const App = () => {
         </Route>
         <Route exact path="/mypage">
           <BrowserRouter>
-            <MyPage />
+            {/* <MyPage /> */}
+            <UserInfo />
           </BrowserRouter>
         </Route>
 

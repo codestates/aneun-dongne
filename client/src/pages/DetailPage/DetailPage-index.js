@@ -7,12 +7,14 @@ import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { defaultcomments, loginState, loginModal, deleteCommentmode } from "../../recoil/recoil";
+import { contentid, getlike, likeNum, likeorNot } from "../../recoil/aysnc-detailpage";
 
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
+
   // const [updateComment, setUpdateComment] = useRecoilState(updatecomment);
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
@@ -31,6 +33,8 @@ function DetailPage({ match }) {
   const [defaultComment, setDefaultComment] = useState([]);
   const [like, setLike] = useState(77); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(true); //이것도 서버에서 받아와야함
+
+  // console.log(getlike.state);
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   useEffect(() => {
@@ -95,6 +99,12 @@ function DetailPage({ match }) {
       setUserinfo(res.data.userinfo);
     });
     setDeleteOrNot(false);
+
+    // axios.get(`https://localhost:80/like/${contentId}`, { withCredentials: "true" }).then((res) => {
+    //   console.log("조하요", res.data.data.isLiked, res.data.data.likeCount);
+    //   setLikeOrNot(res.data.data.isLiked);
+    //   setLike(res.data.data.likeCount);
+    // });
   }, [, deleteOrNot]);
 
   useEffect(() => {
@@ -120,11 +130,16 @@ function DetailPage({ match }) {
   const LikeHandler = () => {
     if (!isLogin) {
       setIsLoginOpen(true);
+      return;
     }
-    setLikeOrNot(!likeOrNot);
-    //좋아요한 상태면 -1
-    if (likeOrNot) setLike(like - 1);
-    else setLike(like + 1);
+
+    //!---
+    // setLikeOrNot(!likeOrNot);
+    // //좋아요한 상태면 -1
+    // if (likeOrNot) setLike(like - 1);
+    // else setLike(like + 1);
+    //!---
+    console.log(like, likeOrNot);
   };
 
   return (
@@ -157,8 +172,13 @@ function DetailPage({ match }) {
           <HashTagTemplate keywordDummy={keywordDummy} />
 
           <Styled.LikeBtn onClick={LikeHandler}>
-            <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
-            <i className={likeOrNot ? "hide" : "far fa-heart"}>{like}</i>
+            <i className={likeOrNot ? "fas fa-heart" : "hide"}>
+              <span>{like}</span>
+            </i>
+
+            <i className={likeOrNot ? "hide" : "far fa-heart"}>
+              <span>{like}</span>
+            </i>
           </Styled.LikeBtn>
 
           <MyComment

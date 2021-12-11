@@ -30,27 +30,29 @@ const HomeMap = () => {
   const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
 
   //!지역 검색창을 위한 state
-  const [area, setArea] = useState(""); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState(undefined); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(""); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState(undefined); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
-  const [level, setLevel] = useState(12);
-  //!
+  const [level, setLevel] = useState(10);
+  //! 마커 없애는 신호
+  const [markerAway, setMarkerAway] = useState(false);
+  //! 검색했다는 신호
+  const [searched, setSearched] = useState(false);
+  //! 평면좌표
   const [wtm, setWtm] = useState({ x: 0, y: 0 });
   // console.log("클릭한지점", pickPoint);
   /**
    *! 장소 검색시 실행되는 함수 serachPlace
    * @param keyword 검색어
    */
-  // useEffect(() => {
-  //   // 좌표계 변환 객체를 생성합니다
-
-  // }, [pickpoint]);
 
   const searchPlace = (keyword) => {
     setCount(0);
     setPending(true);
+    console.log(keyword);
+
     // const places = new kakao.maps.services.Places()
     const places = new kakao.maps.services.Places();
     //검색
@@ -60,15 +62,28 @@ const HomeMap = () => {
 
         const firstItem = result[0];
         const { x, y } = firstItem;
-        //!
-        const moveLatLng = new kakao.maps.LatLng(y, x);
+        let moveLatLng = {};
 
-        // console.log(moveLatLng.La)
+        // '도'를 선택하면 대한민국 전체를 보여준다. -> 인기 50개 보여주면 좋을것같은데
+        if (keyword === "도") {
+          //충주. 그냥 한국의중심쯤
+          moveLatLng = new kakao.maps.LatLng(37, 128);
+          // setLevel(14);
+        }
+        // '특정지역'을 선택하면 그 곳으로 중심좌표를 옮긴다.
+        else {
+          moveLatLng = new kakao.maps.LatLng(y, x);
+        }
+        console.log(keyword);
+        console.log("중심좌표", moveLatLng);
         map.panTo(moveLatLng);
-        //setPickPoint를 등록하여 클릭한것과 같은 효과를 낸다.
-        setPickPoint([moveLatLng.Ma, moveLatLng.La]);
-        //검색창 빈칸으로 만들기 -> 하면안된다. 검색어 없을때 검색누르면 alert창 나옴
-        // setPlace(' ')
+        //!! setPickPoint를 등록하여 클릭한것과 같은 효과를 낸다.
+        //!!setPickPoint([moveLatLng.Ma, moveLatLng.La]);  -> 이거 주석하면 마커 안나옴.. 이게 마커나오는 기능과의 연결고리임..
+
+        // 마커 없애기
+        setMarkerAway(true);
+        // 검색했다는 신호
+        setSearched(true);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert("검색 결과가 없습니다.");
       } else {
@@ -78,6 +93,26 @@ const HomeMap = () => {
       setPending(false);
     });
   };
+  useEffect(() => {
+    //지역만 선택했을때는 없다?..
+
+    //이건 검색어입력헀을때,
+    if (area === null) {
+      axios.get(`${process.env.REACT_APP_API_URL}/home`, {
+        params: {
+          areacode: null,
+          sigungucode: sigg,
+        },
+        withCredentials: true,
+      });
+    }
+  }, [searched]);
+
+  useEffect(() => {
+    if (level === 14) {
+      //관광지 전체 좋아요 상위 50개 보여주는거 어떨까요
+    }
+  }, [level]);
 
   const handleSearch = (e) => {
     // console.log(e.target.value)
@@ -99,68 +134,41 @@ const HomeMap = () => {
       })
 
       .catch((err) => console.log(err));
+    console.log("평면좌표", wtm);
   }, [pickPoint]);
-  // useEffect(() => {
-  //   // ! 평면좌표
+  useEffect(() => {
+    //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
 
-  //   // console.log("평면좌표", wtm);
-
-  //   // * 지도의 한 점 클릭시 그 클릭한 점의 좌표 반경 10km의 관광지들의 좌표 전송
-
-  //   // !이건 내 좌표 반경 10km에 있는 관광지 좌표따오는거
-
-  //   //!파라미터
-  //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
-  //   //! sigunguCode : 제천:7
-  //   //! cat1(대분류):
-  //   //! cat2(중분류):
-  //   //! cat3(소분류)
-  //   //! areaBased :
-  //   // if(count===0){
-
-  //   setCount(count + 1);
-  //   axios
-  //     .get(
-  //       `http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}`,
-  //       {
-  //         params: {
-  //           MobileOS: "ETC",
-  //           MobileApp: "TourAPI3.0_Guide",
-  //           //! 관광지 개수
-  //           numOfRows: 20,
-  //           // areaCode:33,
-  //           // sigunguCode:7,
-  //           //! contentTypeId : 12:관광지,14:문화시설,15:행사,25:여행코스,28:레포츠,32:숙박,38:쇼핑,39:식당,
-  //           contentTypeId: 12,
-  //           // * 대분류 : 인문
-  //           // cat1:'A02',
-  //           //* 중분류 : 역사지구
-  //           // cat2:'A0201',
-  //           //*좌표,반경
-  //           mapX: pickPoint[1],
-  //           mapY: pickPoint[0],
-  //           //! 반경 몇m??
-  //           radius: 10000,
-  //           //*
-  //           arrange: "A",
-  //           listYN: "Y",
-  //         },
-  //       },
-  //       { "content-type": "application/json" }
-  //     )
-  //     .then((res) => {
-  //       // console.log(res.data.response.body.items.item);
-  //       let list = res.data.response.body.items.item;
-  //       //! list : [[관광지각각의 y좌표,x좌표,제목,썸네일,주소,컨텐트id],..]
-  //       list = list.map((el) => {
-  //         return [Number(el.mapy), Number(el.mapx), el.title, el.firstimage, el.addr1, el.contentid];
-  //       });
-  //       //   dispatch(changePlaceList(list))
-  //       setPlaceList(list); //-> 이걸 PlaceList.js에서 사용한다.
-  //     })
-  //     .catch((err) => console.log(err));
-  //   // }
-  // }, [pickPoint]); //! pickPoint가 바뀔때마다, 즉 지도를 클릭할때마다 실행.
+    console.log(area);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/home`, {
+        params: {
+          areacode: area,
+          sigungucode: sigg,
+          radius: 10000,
+          clientwtmx: wtm.x,
+          clientwtmy: wtm.y,
+          tag: "null", //null로 넣으면 undefined되어서, 문자열로 넣겠음
+          searchWord: "null",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        //!id는 어떤건가요??
+        const list = res.data.data.map((el) => {
+          return [
+            Number(el.post_mapy),
+            Number(el.post_mapx),
+            el.post_title,
+            el.post_firstimage,
+            el.post_addr1,
+            el.post_contentid,
+          ];
+        });
+        setPlaceList(list);
+      });
+  }, [wtm.x, wtm.y]); //! pickPoint가 바뀔때마다, 즉 지도를 클릭할때마다 실행.
 
   // !
   useEffect(() => {
@@ -252,24 +260,30 @@ const HomeMap = () => {
       });
     }
 
-    //내위치 마커의 infowindow -> 파란색마커임,
-    let iwContentCenter = '<div style="padding:5px;">내 위치 <br></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-      // iwPositionCenter = new kakao.maps.LatLng([0, 0]),//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
-      iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다; //인포윈도우 표시 위치입니다
-    // 인포윈도우를 생성합니다
-    let infowindowCenter = new kakao.maps.InfoWindow({
-      // position: iwPositionCenter,//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
-      content: iwContentCenter,
-      removable: iwRemoveable,
-    });
+    if (false) {
+      //어케될지 몰곘네
+      return;
+    } else {
+      //내위치 마커의 infowindow -> 파란색마커임,
+      let iwContentCenter = '<div style="padding:5px;">내 위치 <br></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        // iwPositionCenter = new kakao.maps.LatLng([0, 0]),//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
+        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다; //인포윈도우 표시 위치입니다
+      // 인포윈도우를 생성합니다
 
-    // marker.setMap(map);
+      let infowindowCenter = new kakao.maps.InfoWindow({
+        // position: iwPositionCenter,//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
+        content: iwContentCenter,
+        removable: iwRemoveable,
+      });
 
-    // 중심좌표 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(markerCenter, "click", function () {
-      // 마커 위에 인포윈도우를 표시합니다
-      infowindowCenter.open(map, markerCenter);
-    });
+      // marker.setMap(map);
+
+      // 중심좌표 마커에 클릭이벤트를 등록합니다
+      kakao.maps.event.addListener(markerCenter, "click", function () {
+        // 마커 위에 인포윈도우를 표시합니다
+        infowindowCenter.open(map, markerCenter);
+      });
+    }
 
     // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
     if (clickedNowLocationBtn) {

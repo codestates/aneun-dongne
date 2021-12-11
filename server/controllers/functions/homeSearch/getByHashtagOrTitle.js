@@ -29,7 +29,10 @@ module.exports = async (userId, tag, searchWord) => {
       },
     ],
     group: "post_contentid",
-    order: [[sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"]],
+    order: [
+      [sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"],
+      ["post_readcount", "DESC"],
+    ],
     where: {
       [Sequelize.Op.and]: [
         { post_tags: { [Sequelize.Op.substring]: `${tag}` } },

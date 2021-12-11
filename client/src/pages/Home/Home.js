@@ -6,7 +6,7 @@ import PlaceList from "../../components/PlaceList";
 import HashTagList from "../../components/HashTag/HashTagList";
 import { useRecoilState } from "recoil";
 import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading/Loading";
 
 const FixedComp = styled.div`
   margin-top: 73px;

@@ -4,25 +4,30 @@ import { cat1_name, cat2_name } from "../../location-data";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { loading, defaultposition, usersaddress, pickpoint, setLo } from "../../recoil/recoil";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
-import Loading from "../Loading";
+import Loading from "../Loading/Loading";
 function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
-  const [area, setArea] = useState(""); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState(undefined); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(""); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState(undefined); //메인페이지에서 넘어오면 userAddress[1]넣기
   const [add, setAdd] = useRecoilState(usersaddress);
+  //지도에 찍힌 점(pickpoint)를 지역선택창과 일치시키기 위해 사용
   const loc = useRecoilValueLoadable(setLo);
 
   const changeArea = (area) => {
     console.log(area);
     searchPlace(area);
-    setArea(area);
+    if (area === "도") {
+      setArea("도");
+    } else {
+      setArea(area);
+    }
     setAreaIdx(cat1_name.indexOf(area));
   };
   const changeSigg = (sigg) => {
     console.log(area, sigg);
     searchPlace(`${area} ${sigg}`);
     setSigg(sigg);
-    setLevel(8);
+    setLevel(10);
   };
   // useEffect(() => {
   //   console.log(add);
@@ -70,7 +75,10 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
             </Styled.SearchLocation>
             {/* //!지역을 선택하세요 추가 - 서버에 null이나 undefined 보내주기. */}
             <Styled.SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
-              {cat2_name[areaIdx + 1].map((el, idx) => {
+              {cat2_name[areaIdx].map((el, idx) => {
+                {
+                  /* {cat2_name[0].map((el, idx) => { */
+                }
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>

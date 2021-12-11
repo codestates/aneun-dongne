@@ -16,11 +16,6 @@ module.exports = {
     if (!authorization) {
       return null;
     }
-
-    // const token = authorization.split(" ")[1];
-    // console.log("11111");
-    // console.log("alksdjfl", authorization);
-    // console.log("22222");
     try {
       console.log("해독된 토큰", verify(authorization, process.env.ACCESS_SECRET));
       return verify(authorization, process.env.ACCESS_SECRET);

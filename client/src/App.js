@@ -11,23 +11,25 @@ import { loginState } from "./recoil/recoil";
 import { userInfo } from "./recoil/recoil";
 import { token } from "./recoil/recoil";
 import { withCookies, Cookies, useCookies } from "react-cookie";
+// import Cookies from "universal-cookie";
 import Mainpage from "./pages/Mainpage";
 import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
-import Loading from "./components/Loading";
+import Loading from "./components/Loading/Loading";
+import MyPage from "./pages/Mypage/MyPage";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [info, setInfo] = useRecoilState(userInfo);
   const accessToken = useRecoilValue(token);
-
+  // const cookies = new Cookies();
   const history = useHistory();
 
   const isAuthenticated = async () => {
     await axios
-      .get("https://localhost:80/user/info", {
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           // Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -38,9 +40,11 @@ const App = () => {
         console.log("홈으로 가잔");
         setInfo(res.data.data.userInfo);
         setIsLogin(true);
-        history.push("/home");
+        // history.push("/home");
       });
   };
+
+  console.log(cookies);
   //쿠키안에 jwt 있는지 보고 로긴상태결정
   useEffect(() => {
     if (cookies.jwt) {
@@ -60,17 +64,16 @@ const App = () => {
       <Header handleResponseSuccess={handleResponseSuccess} />
       <Switch>
         <Route exact path="/">
-          {/* <Mainpage /> */}
-          <Loading />
+          <Mainpage />
+          {/* <Loading /> */}
         </Route>
         <Route exact path="/home">
           <Home info={info} />
         </Route>
         <Route exact path="/mypage">
-          {/* UserInfo는 한페이지안에 메뉴바, 내용 다있는 컴퍼넌트 */}
-          {/* <UserInfo /> */}
-          {/* MyPage는 메뉴바랑 내용이랑 분리되어 있는 컴퍼넌트 */}
-          {/* <MyPage /> */}
+          <BrowserRouter>
+            <MyPage />
+          </BrowserRouter>
         </Route>
         <Route exact path="/mapage/likelist">
           {/* <Likelists /> */}

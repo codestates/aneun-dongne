@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import ModalLogin from "../ModalLogin";
 import ModalSignup from "../ModalSignup";
-import { withCookies, Cookies, useCookies } from "react-cookie";
+// import { withCookies, Cookies, useCookies } from "react-cookie";
 import { Styled } from "./style";
 import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { StyledLink } from "../PlaceList";
+import Cookies from "universal-cookie";
 const Header = ({ handleResponseSuccess }) => {
   const history = useHistory();
+  const cookies = new Cookies();
   // const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -69,8 +71,9 @@ const Header = ({ handleResponseSuccess }) => {
   };
   const logoutHandler = () => {
     console.log("hi");
-    axios.post("https://localhost:80/signout", {}, { withCredentials: true }).then((res) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
       //로긴상태 해제
+      cookies.remove();
       setIsLogin(false);
     });
 

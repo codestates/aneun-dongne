@@ -9,6 +9,7 @@ import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState, loginModal, deleteCommentmode } from "../../recoil/recoil";
+import LikeLoading from "../../components/Loading/LikeLoading";
 
 function DetailPage({ match }) {
   const { id } = match.params;
@@ -34,7 +35,8 @@ function DetailPage({ match }) {
 
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
-
+  //로딩창
+  const [likeLoading, setLikeLoading] = useState(false);
   console.log(contentId);
   useEffect(() => {
     //! 관광지 axios 쓸 자리
@@ -83,7 +85,7 @@ function DetailPage({ match }) {
   }, [pathname]);
   console.log(contentId);
   useEffect(() => {
-    axios.get(`https://localhost:80/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
       console.log("겟요청 첨에온거", res.data);
       // console.log(res.data.data);
       // console.log(res.data.userinfo);
@@ -107,12 +109,18 @@ function DetailPage({ match }) {
   }, [, deleteOrNot]);
 
   useEffect(() => {
-    axios.get(`https://localhost:80/like/${contentId}}`, { withCredentials: "true" }).then((res) => {
-      const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
-      console.log(like);
-      setLike(like.likeCount);
-      setLikeOrNot(like.likeOrNot);
-    });
+    // setLikeLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, { withCredentials: "true" })
+      .then((res) => {
+        const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
+        console.log(like);
+        setLike(like.likeCount);
+        setLikeOrNot(like.likeOrNot);
+      })
+      .then((res) => {
+        setLikeLoading(false);
+      });
   }, []);
   useEffect(() => {
     console.log(defaultComment);
@@ -139,15 +147,31 @@ function DetailPage({ match }) {
       setIsLoginOpen(true);
       return;
     }
+    setLikeLoading(true);
+    if (!likeOrNot) {
+      axios.post(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {}, { withCredentials: "true" }).then((res) => {
+        const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
+        console.log(like);
+        setLike(like.likeCount);
 
-    //!---
-    // setLikeOrNot(!likeOrNot);
-    // //좋아요한 상태면 -1
-    // if (likeOrNot) setLike(like - 1);
-    // else setLike(like + 1);
-    //!---
+        setLikeOrNot(like.likeOrNot);
+      });
+    } else {
+      axios.delete(`${process.env.REACT_APP_API_URL}/like/${contentId}`, { withCredentials: "true" }).then((res) => {
+        const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
+
+        setLike(like.likeCount);
+        setLikeOrNot(like.likeOrNot);
+      });
+    }
+    return setTimeout(() => {
+      console.log("hi");
+      setLikeLoading(false);
+      console.log(likeOrNot);
+    }, 2000);
+    setLikeLoading(false);
   };
-
+  console.log("좋아요로딩", likeLoading);
   return (
     <>
       <Styled.Div>
@@ -176,16 +200,19 @@ function DetailPage({ match }) {
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
         <Styled.Wrapper>
           <HashTagTemplate keywordDummy={keywordDummy} />
+          {likeLoading ? (
+            <LikeLoading />
+          ) : (
+            <Styled.LikeBtn onClick={LikeHandler}>
+              <i className={likeOrNot ? "fas fa-heart" : "hide"}>
+                <span>{like}</span>
+              </i>
 
-          <Styled.LikeBtn onClick={LikeHandler}>
-            <i className={likeOrNot ? "fas fa-heart" : "hide"}>
-              <span>{like}</span>
-            </i>
-
-            <i className={likeOrNot ? "hide" : "far fa-heart"}>
-              <span>{like}</span>
-            </i>
-          </Styled.LikeBtn>
+              <i className={likeOrNot ? "hide" : "far fa-heart"}>
+                <span>{like}</span>
+              </i>
+            </Styled.LikeBtn>
+          )}
 
           <MyComment
             userinfo={userinfo}

@@ -2,7 +2,7 @@ const { isAuthorized, generateAccessToken, sendAccessToken } = require("../token
 const { User } = require("../../models");
 module.exports = {
   get: async (req, res) => {
-    console.log("AUTH 겟 토큰", req);
+    console.log("AUTH 겟 토큰", req.cookies);
     const accessTokenData = isAuthorized(req);
     console.log("토큰도착", accessTokenData);
 

@@ -1,6 +1,7 @@
 const { Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
+  console.log("하팅", areacode, sigungucode);
   let result = [];
   await Post.findAll({
     raw: true,
@@ -28,7 +29,10 @@ module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
       },
     ],
     group: "post_contentid",
-    order: [[sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"]],
+    order: [
+      [sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"],
+      ["post_readcount", "DESC"],
+    ],
     where: {
       [Sequelize.Op.and]: [
         { post_tags: { [Sequelize.Op.substring]: `${tag}` } },
@@ -38,7 +42,7 @@ module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
     },
   })
     .then((data) => {
-      // console.log(data);
+      console.log("데이터 잘들어왔니?", data);
       result = data.filter((el) => {
         if (sigungucode === null) {
           return true;

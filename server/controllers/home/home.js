@@ -1,6 +1,7 @@
 const getByHashtagOrTitle = require("../functions/homeSearch/getByHashtagOrTitle");
 const getByXYOrHashtagOrTitle = require("../functions/homeSearch/getByXYOrHashtagOrTitle");
 const getByAreaOrHashtagOrTitle = require("../functions/homeSearch/getByAreaOrHashtagOrTitle");
+const { isAuthorized } = require("../tokenFunctions");
 
 require("dotenv").config();
 
@@ -11,27 +12,39 @@ require("dotenv").config();
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
   const { id } = accessTokenData;
-  const { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
+  //const로 하면 tag, searchWord가 수정이 안되어서 let으로 바꿈
+  let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.query;
+  console.log("널인지보자", areacode, tag, searchWord);
 
-  if (tag === null) {
+  // null을 넣으면 undefined로 들어와서 문자열 null로 넣고 진짜 null 로 바꿨어요->그래도안되네요?
+  // 뭔가 null이 안먹는거같아요.
+  // Object.keys(req.query).forEach((el) => {
+  //   if (req.query[el] === "null") req.query[el] = null;
+  // });
+  console.log("리코그쿼리", tag === "null");
+
+  if (tag === "null") {
+    console.log("돼?");
     tag = "";
   }
-  if (searchWord === null) {
+  if (searchWord === "null") {
     searchWord = "";
   }
-
+  console.log(req.query);
   if (!accessTokenData) {
     if (areacode === undefined) {
       //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
       await res.status(200).json({
         data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
       });
-    } else if (areacode === null) {
+    } else if (areacode === "null") {
       //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
       await res.status(200).json({
         data: await getByHashtagOrTitle(0, tag, searchWord),
       });
-    } else {
+    }
+    // 지역만 선택했을때도 만들어야될것같아요..
+    else {
       //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
       await res.status(200).json({
         data: await getByAreaOrHashtagOrTitle(0, areacode, sigungucode, tag, searchWord),
@@ -40,9 +53,10 @@ module.exports = async (req, res) => {
   } else {
     if (areacode === undefined) {
       await res.status(200).json({
+        // data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
         data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
       });
-    } else if (areacode === null) {
+    } else if (areacode === "null") {
       await res.status(200).json({
         data: await getByHashtagOrTitle(id, tag, searchWord),
       });

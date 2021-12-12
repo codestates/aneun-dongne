@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
 
 import notImageYet from "../../../img/not-image-yet.png";
@@ -39,6 +39,7 @@ const HomeMap = () => {
   //! 마커 없애는 신호
   const [markerAway, setMarkerAway] = useState(false);
   //! 검색했다는 신호
+  const [keyWord, setKeyWord] = useState("");
   const [searched, setSearched] = useState(false);
   //! 평면좌표
   const [wtm, setWtm] = useState({ x: 0, y: 0 });
@@ -58,8 +59,8 @@ const HomeMap = () => {
     //검색
     places.keywordSearch(keyword, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        //
-
+        //검색어를 keyWord상태에 할당한다. -> 검색어를 서버에 전달하기위해
+        setKeyWord(keyword);
         const firstItem = result[0];
         const { x, y } = firstItem;
         let moveLatLng = {};
@@ -136,7 +137,10 @@ const HomeMap = () => {
       .catch((err) => console.log(err));
     console.log("평면좌표", wtm);
   }, [pickPoint]);
+
   useEffect(() => {
+    //! 픽포인트, 반경, 검색어 아예 없을때
+
     //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
 
     console.log(area);

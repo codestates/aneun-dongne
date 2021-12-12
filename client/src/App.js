@@ -17,7 +17,7 @@ import Home from "./pages/Home/Home";
 import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 import Loading from "./components/Loading/Loading";
-import MyPage from "./pages/Mypage/MyPage";
+import MyPage from "./pages/MyPage/MyPage";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);

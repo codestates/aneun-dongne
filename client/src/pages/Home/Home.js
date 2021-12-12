@@ -73,12 +73,14 @@ function Home() {
   };
   useEffect(() => {
     // console.log("이건돼?");
-
+    let mounted = true;
     getPosition();
     // console.log(add);
-
+    return () => {
+      mounted = false;
+    };
     // // console.log(defaultPosition);
-  }, [add]);
+  }, []);
 
   return (
     <>

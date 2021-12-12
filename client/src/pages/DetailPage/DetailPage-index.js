@@ -8,7 +8,7 @@ import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, loginModal, deleteCommentmode } from "../../recoil/recoil";
+import { loginState, loginModal, deleteCommentmode, defaultcomments } from "../../recoil/recoil";
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 function DetailPage({ match }) {
@@ -29,17 +29,38 @@ function DetailPage({ match }) {
   const setIsLoginOpen = useSetRecoilState(loginModal);
   //기존댓글
 
-  const [defaultComment, setDefaultComment] = useState([]);
+  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
 
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   //로딩창
+  const [commentLoading, setCommentLoading] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
-  console.log(contentId);
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     //! 관광지 axios 쓸 자리
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        // console.log(res.data.response.body.items.item);
+        const { post_mapx, post_mapy } = res.data.post;
+        // console.log(mapx, mapy);
+        setPlaceLocation({ lat: post_mapy, lon: post_mapx });
+        setImgURL(res.data.post.post_firstimage);
+        setTitle(res.data.post.post_title);
+        setPlaceAddr(res.data.post.post_addr1);
+        if (res.data.post.post_homepage_path) {
+          setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split('"')[0]);
+          // setPageURL(res.data.response.body.items.item.homepage);
+        }
+        // setOverview(res.data.response.body.items.item.overview);
+        // ?
+      });
     // 페이지 이동시 스크롤 맨 위로 오게한다.
     //   window.scrollTo(0, 0);
     //   axios

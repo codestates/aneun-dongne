@@ -4,12 +4,21 @@ import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
 
 import notImageYet from "../../../img/not-image-yet.png";
-import { placelist, nowlocation, pickpoint, usersaddress, isClickedNowLocation } from "../../../recoil/recoil";
+import {
+  nowlocation,
+  pickpoint,
+  usersaddress,
+  isClickedNowLocation,
+  placelist,
+  setLo,
+  getWTM,
+} from "../../../recoil/recoil";
 import "../kakao-map.css";
 import { cat1_name } from "../../../location-data";
 import HomeRightbar from "../../Home-Rightbar/Home-Rightbar-index";
-import HomeRightBtn from "../../Home-RightBtn/HomeRightBtn-index";
+
 import { Styled } from "./style.js";
+import Loading from "../../Loading/Loading";
 
 const HomeMap = () => {
   const kakao = window.kakao;
@@ -22,7 +31,8 @@ const HomeMap = () => {
   const [map, setMap] = useState(null);
   const [place, setPlace] = useState("");
   const [clickedNowLocationBtn, setClickedNowLocationBtn] = useRecoilState(isClickedNowLocation);
-
+  const loc = useRecoilValueLoadable(setLo);
+  const getWtm = useRecoilValueLoadable(getWTM);
   //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
@@ -42,13 +52,13 @@ const HomeMap = () => {
   const [keyWord, setKeyWord] = useState("");
   const [searched, setSearched] = useState(false);
   //! 평면좌표
-  const [wtm, setWtm] = useState({ x: 0, y: 0 });
+  // const [getPosition, setGetPosition] = useState({ x: 0, y: 0 });
   // console.log("클릭한지점", pickPoint);
   /**
    *! 장소 검색시 실행되는 함수 serachPlace
    * @param keyword 검색어
    */
-
+  const wtm = getWtm.contents;
   const searchPlace = (keyword) => {
     setCount(0);
     setPending(true);
@@ -86,7 +96,8 @@ const HomeMap = () => {
         // 검색했다는 신호
         setSearched(true);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        alert("검색 결과가 없습니다.");
+        // alert("검색 결과가 없습니다.");
+        return;
       } else {
         alert("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
@@ -115,35 +126,29 @@ const HomeMap = () => {
     }
   }, [level]);
 
-  const handleSearch = (e) => {
-    // console.log(e.target.value)
-    setPlace(e.target.value);
-    // e.target.value=''
-  };
   // ! 클릭할때마다 평면좌표 찍어온다.
-  useEffect(() => {
-    // if (wtm.x === 0 || wtm.y === 0) return null;
-    axios
-      .get(
-        `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84&output_coord=WTM`,
-        {
-          headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-        }
-      )
-      .then((res) => {
-        setWtm({ x: res.data.documents[0].x, y: res.data.documents[0].y });
-      })
+  // useEffect(() => {
+  //   // if (wtm.x === 0 || wtm.y === 0) return null;
+  //   axios
+  //     .get(
+  //       `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84&output_coord=WTM`,
+  //       {
+  //         headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setWtm({ x: res.data.documents[0].x, y: res.data.documents[0].y });
+  //     })
 
-      .catch((err) => console.log(err));
-    console.log("평면좌표", wtm);
-  }, [pickPoint]);
+  //     .catch((err) => console.log(err));
+  //   console.log("평면좌표", wtm);
+  // }, [pickPoint]);
 
   useEffect(() => {
     //! 픽포인트, 반경, 검색어 아예 없을때
 
     //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
 
-    console.log(area);
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         params: {
@@ -158,7 +163,7 @@ const HomeMap = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         //!id는 어떤건가요??
         const list = res.data.data.map((el) => {
           return [
@@ -171,21 +176,26 @@ const HomeMap = () => {
           ];
         });
         setPlaceList(list);
+        //구체적으로 어딘갈 찍으면 지도 zoom-in 10
+        setLevel(10);
       });
-  }, [wtm.x, wtm.y]); //! pickPoint가 바뀔때마다, 즉 지도를 클릭할때마다 실행.
+  }, [wtm.x, wtm.y]); //! 평면좌표 바뀔때마다 실행
 
   // !
   useEffect(() => {
     // * 위의 useEffect에서 받아온 좌표들을 지도에 노란색 마커로 표시
     // console.log("effect");
     //!위경도 -> 평면좌표
-
+    // console.log(placeList);
     const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(pickPoint[0], pickPoint[1]), //지도의 중심좌표를 마커로 변경-> 밑의 let markerCenter랑 연결
       level: level, //지도의 레벨(확대, 축소 정도)
     };
+    if (container === null) {
+      return;
+    }
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     //마커가 표시될 위치입니다.
     let markerCenter = new kakao.maps.Marker({
@@ -335,7 +345,7 @@ const HomeMap = () => {
     });
     setMap(map);
     setPending(false);
-  }, [kakao.maps, placeList]);
+  }, [kakao.maps, placeList, level]);
 
   // const changeArea = (area) => {
   //   console.log(area);
@@ -350,6 +360,14 @@ const HomeMap = () => {
   //   setLevel(8);
   // };
   /* margin-top:${(props)=>props.first?'10px':'50px'} */
+  if (loc.state === "loading" && getWtm.state === "loading") {
+    console.log("로딩");
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
   return (
     <Styled.Div>
       <HomeRightbar
@@ -359,13 +377,13 @@ const HomeMap = () => {
         // changeArea={changeArea}
         // changeSigg={changeSigg}
         setLevel={setLevel}
-        handleSearch={handleSearch}
-        searchPlace={searchPlace}
+        // handleSearch={handleSearch}
+        searchCurrentPlace={searchPlace}
         place={place}
         pickPoint={pickPoint}
         setPickPoint={setPickPoint}
       />
-
+      <span>위치 :{add.address} </span>
       <Styled.Map id="map"></Styled.Map>
     </Styled.Div>
   );
@@ -374,6 +392,6 @@ const HomeMap = () => {
 export default HomeMap;
 
 //! 남은거 :
-//! 시군구,도 option에 있는 글자를 지도에 파란마커가 있는 주소와 일치시키기
+
 //! 무한스크롤
 //! css,반응형

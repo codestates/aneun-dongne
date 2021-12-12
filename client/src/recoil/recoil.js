@@ -108,34 +108,7 @@ export const nowlocation = atom({
 // ! 댓글
 export const defaultcomments = atom({
   key: "defaultcomments",
-  default: [
-    {
-      id: 0,
-      user_image_path: "/people1.png",
-      nickname: "류준열",
-      comment_content: "안녕하세요",
-      comment_tags: [
-        "안녕하세요",
-        "감사해요",
-        "잘있어요",
-        "다시만나요",
-        "여기 더보기버튼을 만들어볼게요",
-        "아침해가뜨면",
-        "매일같은사람들과",
-      ],
-      comment_createdAt: "2021-12-03", //형식 모르겠음 db보고 결정
-      editable: false,
-    },
-    {
-      //uuid:0,
-      img: "/people2.png",
-      nickname: "윤해용",
-      text: "팀장이에요",
-      tags: ["해시태그", "스페이스바로", "바꿨어요"],
-      date: "2021-12-03", //형식 모르겠음 db보고 결정
-      editable: false,
-    },
-  ],
+  default: [],
 });
 
 //! 댓글 수정신호
@@ -172,7 +145,56 @@ export const isClickedNowLocation = atom({
 });
 
 // ! 위치기반 API
+export const getWTM = selector({
+  key: "getWTN",
+  get: async ({ get }) => {
+    return (
+      axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
+            get(pickpoint)[0]
+          }&input_coord=WGS84&output_coord=WTM`,
+          {
+            headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+          }
+        )
+        .then((res) => {
+          return { x: res.data.documents[0].x, y: res.data.documents[0].y };
+        })
+        // .then((wtm) => {
+        //   return axios
+        //     .get(`${process.env.REACT_APP_API_URL}/home`, {
+        //       params: {
+        //         radius: 10000,
+        //         clientwtmx: wtm.x,
+        //         clientwtmy: wtm.y,
+        //         tag: "null", //null로 넣으면 undefined되어서, 문자열로 넣겠음
+        //         searchWord: "null",
+        //       },
+        //       withCredentials: true,
+        //     })
+        //     .then((res) => {
+        //       console.log(res.data.data);
+        //       //!id는 어떤건가요??
+        //       const list = res.data.data.map((el) => {
+        //         return [
+        //           Number(el.post_mapy),
+        //           Number(el.post_mapx),
+        //           el.post_title,
+        //           el.post_firstimage,
+        //           el.post_addr1,
+        //           el.post_contentid,
+        //         ];
+        //       });
+        //       console.log(list);
+        //       return list;
+        //     });
+        // })
 
+        .catch((err) => console.log(err))
+    );
+  },
+});
 export const setLo = selector({
   key: "setLo",
   get: async ({ get }) => {

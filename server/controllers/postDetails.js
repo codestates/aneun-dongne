@@ -19,6 +19,8 @@ const updatePostData = async (contentId) => {
     const response = await axios.get(
       `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}&contentTypeId=12&contentId=${contentId}&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json`
     );
+    console.log("이거되니");
+    console.log("오버뷰", response.data.response.body.items.item.overview);
     if (prevPost.post_content === null || prevPost.post_homepage_path === null) {
       await Post.update(
         {

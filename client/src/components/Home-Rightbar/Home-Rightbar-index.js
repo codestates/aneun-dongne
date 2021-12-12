@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { Styled } from "./style";
 import { cat1_name, cat2_name } from "../../location-data";
-import { useRecoilState, useRecoilValueLoadable } from "recoil";
-import { loading, defaultposition, usersaddress, pickpoint, setLo } from "../../recoil/recoil";
+import { useRecoilState } from "recoil";
+import { usersaddress } from "../../recoil/recoil";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
 import Loading from "../Loading/Loading";
-function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
-  const [area, setArea] = useState(undefined); //메인페이지에서 넘어오면 userAddress[0]넣기
+function HomeRightbar({ setLevel, searchCurrentPlace }) {
+  const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(undefined); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [place, setPlace] = useState("");
   const [add, setAdd] = useRecoilState(usersaddress);
-  //지도에 찍힌 점(pickpoint)를 지역선택창과 일치시키기 위해 사용
-  const loc = useRecoilValueLoadable(setLo);
-
+  const [hashtag, setHashtag] = useState("null");
+  // console.log(add);
   const changeArea = (area) => {
     console.log(area);
-    searchPlace(area);
+    // searchPlace(area);
     if (area === "도") {
       setArea("도");
     } else {
@@ -25,42 +26,34 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
   };
   const changeSigg = (sigg) => {
     console.log(area, sigg);
-    searchPlace(`${area} ${sigg}`);
+    // searchPlace(`${area} ${sigg}`);
     setSigg(sigg);
     setLevel(10);
   };
-  // useEffect(() => {
-  //   console.log(add);
-
-  //   setArea(add.area);
-  //   setSigg(add.sigg);
-  //   console.log(pickPoint);
-  // }, [add]);
-  useEffect(() => {
-    console.log("hi");
-    setArea(loc.contents.area);
-  }, [loc]);
-  useEffect(() => {
-    console.log(cat1_name.indexOf(area));
-    if (cat1_name.indexOf(area) >= 0) setAreaIdx(cat1_name.indexOf(area));
-    console.log(area, sigg, areaIdx);
-    setSigg(loc.contents.sigg);
-  }, [area]);
-
-  if (loc.state === "loading") {
-    console.log("로딩");
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  }
-  console.log(loc);
-
-  // useEffect(()=>{
-
-  // },[pickPoint])
-
+  const handleSearch = (e) => {
+    // console.log(e.target.value)
+    setPlace(e.target.value);
+    // e.target.value=''
+  };
+  const searchPlace = (area, sigg, hashtag, keyword) => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/home`, {
+        params: {
+          areacode: area,
+          sigungucode: sigg,
+          radius: 10000,
+          clientwtmx: undefined,
+          clientwtmy: undefined,
+          tag: hashtag,
+          searchWord: keyword,
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setLevel(13);
+        console.log(res);
+      });
+  };
   return (
     <div>
       <Styled.MapRightBar>
@@ -83,7 +76,7 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
               })}
             </Styled.SearchLocation>
           </Styled.SearchBar>
-          <Styled.SearchKeyWord placeholder="ex) 가을, 놀이공원">
+          <Styled.SearchKeyWord value={hashtag} onChange={(e) => setHashtag(e.target.value)} name="hashtag">
             {keywordDummy.map((el, idx) => {
               return <option key={idx}>{el}</option>;
             })}
@@ -95,10 +88,13 @@ function HomeRightbar({ setLevel, handleSearch, searchPlace, place }) {
             onChange={(e) => handleSearch(e)}
             placeholder="ex) 경복궁, 창덕궁"
             onKeyUp={(e) => {
-              if (e.key === "Enter") searchPlace(place);
+              if (e.key === "Enter") {
+                console.log(area);
+                searchPlace(area, sigg, hashtag, place);
+              }
             }}
           ></Styled.SearchPlace>
-          <Styled.SearchBtn onClick={() => searchPlace(place)}>
+          <Styled.SearchBtn onClick={() => searchPlace(area, sigg, hashtag, place)}>
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>
         </Styled.SearchWrapper>

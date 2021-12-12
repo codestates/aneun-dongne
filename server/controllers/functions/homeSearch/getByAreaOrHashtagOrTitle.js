@@ -1,7 +1,7 @@
 const { Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
-  console.log("하팅", areacode, sigungucode);
+  console.log("하팅", areacode, sigungucode, tag, searchWord);
   let result = [];
   await Post.findAll({
     raw: true,

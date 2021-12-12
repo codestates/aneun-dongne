@@ -21,16 +21,14 @@ module.exports = async (req, res) => {
   // Object.keys(req.query).forEach((el) => {
   //   if (req.query[el] === "null") req.query[el] = null;
   // });
-  console.log("리코그쿼리", tag === "null");
 
   if (tag === "null") {
-    console.log("돼?");
     tag = "";
   }
   if (searchWord === "null") {
     searchWord = "";
   }
-  console.log(req.query);
+  console.log("쿼리", req.query);
   if (!accessTokenData) {
     if (areacode === undefined) {
       //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
@@ -52,11 +50,13 @@ module.exports = async (req, res) => {
     }
   } else {
     if (areacode === undefined) {
+      console.log("에이러이코드", areacode);
       await res.status(200).json({
         // data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
         data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
       });
     } else if (areacode === "null") {
+      console.log("아이디", id, "태그", tag, "검색어", searchWord);
       await res.status(200).json({
         data: await getByHashtagOrTitle(id, tag, searchWord),
       });

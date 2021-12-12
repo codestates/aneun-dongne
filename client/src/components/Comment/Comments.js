@@ -7,6 +7,7 @@ import MyComment from "./MyComment";
 import EditableHashTag from "../HashTag/EditableHashTag";
 import axios from "axios";
 import OnlyReadHashTag from "../HashTag/OnlyReadHashTag";
+import LikeLoading from "../Loading/LikeLoading";
 
 const Comment = styled.div`
   position: relative;
@@ -232,6 +233,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
+  //댓글로딩
+  const [commentLoading, setCommentLoading] = useState(false);
+  //
+
   // console.log(initialTags);
   useEffect(() => {
     //text,initialTags초기화
@@ -249,6 +254,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   function getCommentId(e) {
     // e.preventDefault(); //필요한가?
     //누른 버튼의 className으로 실행되는 함수가 결정된다.
+
     setClickedBtn(e.target.className);
   }
 
@@ -266,7 +272,8 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   // console.log(tags.map((el) => el.substr(0, el.length - 1)));
 
   // 댓글 삭제요청 보내는 함수
-  function deleteComment() {
+  async function deleteComment() {
+    setCommentLoading(true);
     axios
       .delete(
         `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
@@ -287,25 +294,29 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         setDeleteOrNot(true);
       });
     setClickedBtn("");
+    setCommentLoading(false);
   }
   function changeComment() {
     setPrevComment(comment);
     setEditMode(true);
     console.log(editMode);
   }
-  function completeChange() {
+  async function completeChange() {
     console.log(tags, comment);
     const body = {
       commentId: uuid, //댓글아뒤
       commentContent: comment, //댓글내용
       tagsArr: tags, //해시태그
     };
+    setCommentLoading(true);
+
     axios
-      .patch(`${process.env.REACT_APP_API_URL}comment/${contentId}`, body, {
+      .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: { "content-type": "application/json" },
         withCredentials: true,
       })
       .then((res) => {
+        console.log("코맨트로딩", commentLoading);
         let arr = res.data.data.map((el) => {
           console.log(el.comments.comment_tags.split(","));
           console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
@@ -321,6 +332,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     setEditMode(false);
 
     setClickedBtn("");
+    setTimeout(() => {
+      console.log(commentLoading);
+      setCommentLoading(false);
+    }, 1000);
   }
   //댓글 바꾸는 함수
   const ChangeHandler = (e) => {
@@ -331,9 +346,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     setEditMode(false);
     setClickedBtn("");
   }, [changeOrNot]);
-  useEffect(() => {
-    console.log(editMode);
-  }, [editMode]);
+  // useEffect(() => {
+
+  // }, [commentLoading]);
+
   return (
     <>
       <Comment>
@@ -342,73 +358,81 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
           <NickName>{nickname}</NickName>
         </Profile>
         <ContentBox>
-          {!editable ? (
-            <Content name="comment">{text}</Content>
+          {commentLoading ? (
+            <div>
+              <LikeLoading />
+            </div>
           ) : (
-            <ContentInput>
-              {!editMode ? (
-                <div id="comment-read" name="comment">
-                  <span>{comment}</span>
-                </div>
+            <>
+              {!editable ? (
+                <Content name="comment">{text}</Content>
               ) : (
-                <textarea
-                  id="comment-change"
-                  type="text"
-                  // value={comment}
-                  defaultValue={prevComment}
-                  onChange={(e) => ChangeHandler(e)}
-                  onKeyUp={(e) => {
-                    if (e.key === "Enter") {
-                      ChangeHandler(e);
-                      setEditMode(false);
-                    }
-                  }}
-                  name="comment"
-                />
-              )}
-              {!editMode ? (
-                <BtnWrapper>
-                  <button
-                    className="change-comment"
-                    onClick={(e) => {
-                      getCommentId(e);
-                    }}
-                  >
-                    수정하기
-                  </button>
+                <ContentInput>
+                  {!editMode ? (
+                    <div id="comment-read" name="comment">
+                      <span>{comment}</span>
+                    </div>
+                  ) : (
+                    <textarea
+                      id="comment-change"
+                      type="text"
+                      // value={comment}
+                      defaultValue={prevComment}
+                      onChange={(e) => ChangeHandler(e)}
+                      onKeyUp={(e) => {
+                        if (e.key === "Enter") {
+                          completeChange();
+                        }
+                      }}
+                      name="comment"
+                    />
+                  )}
+                  {!editMode ? (
+                    <BtnWrapper>
+                      <button
+                        className="change-comment"
+                        onClick={(e) => {
+                          getCommentId(e);
+                        }}
+                      >
+                        수정하기
+                      </button>
 
-                  <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
-                    댓글삭제
-                  </button>
-                </BtnWrapper>
-              ) : (
-                <BtnWrapper>
-                  <button className="complete-change" onClick={(e) => getCommentId(e)}>
-                    수정완료
-                  </button>
+                      <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
+                        댓글삭제
+                      </button>
+                    </BtnWrapper>
+                  ) : (
+                    <BtnWrapper>
+                      <button className="complete-change" onClick={(e) => getCommentId(e)}>
+                        수정완료
+                      </button>
 
-                  <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
-                    수정취소
-                  </button>
-                </BtnWrapper>
+                      <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
+                        수정취소
+                      </button>
+                    </BtnWrapper>
+                  )}
+                </ContentInput>
               )}
-            </ContentInput>
-          )}
-          <HashTagWrapper>
-            {/* 편집못함? -> 읽기만가능한해시태그 안에 props로 다른사람의 해시태그 전달
+              <HashTagWrapper>
+                {/* 편집못함? -> 읽기만가능한해시태그 안에 props로 다른사람의 해시태그 전달
             편집가능? -> 수정못함? : 읽기만가능한 해시태그안에 props로 나의 해시태그 전달
             편집가능? -? 수정가능? : 수정가능한 해시태그  */}
-            {editable ? (
-              editMode ? (
-                <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
-              ) : (
-                <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
-              )
-            ) : (
-              <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />
-            )}
-          </HashTagWrapper>
+                {editable ? (
+                  editMode ? (
+                    <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
+                  ) : (
+                    <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
+                  )
+                ) : (
+                  <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />
+                )}
+              </HashTagWrapper>
+            </>
+          )}
         </ContentBox>
+
         {/* <Date>작성날짜 : {date}</Date> */}
       </Comment>
     </>

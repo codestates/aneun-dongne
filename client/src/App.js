@@ -18,6 +18,7 @@ import DetailPage from "./pages/DetailPage/DetailPage-index";
 import Header from "./components/Header";
 import Loading from "./components/Loading/Loading";
 import MyPage from "./pages/MyPage/MyPage";
+import MyVisited from "./components/MyVisited/MyVisited";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -40,6 +41,8 @@ const App = () => {
         console.log("홈으로 가잔");
         setInfo(res.data.data.userInfo);
         setIsLogin(true);
+
+        window.location.reload();
         // history.push("/home");
       });
   };
@@ -74,6 +77,7 @@ const App = () => {
           <BrowserRouter>
             <MyPage />
           </BrowserRouter>
+          {/* <MyVisited /> */}
         </Route>
         <Route exact path="/mapage/likelist">
           {/* <Likelists /> */}

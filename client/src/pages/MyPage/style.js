@@ -6,6 +6,8 @@ export const Styled = {
     display: flex;
 
     .menu-bar {
+      position: fixed;
+      left: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -41,7 +43,14 @@ export const Styled = {
       font-size: 1.5rem;
     }
 
-    img {
+    /* img {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      object-fit: cover;
+    } */
+
+    .menu-bar > .profile > .profile-image > img {
       width: 100%;
       height: 100%;
       border-radius: 100%;

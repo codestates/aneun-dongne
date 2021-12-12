@@ -45,7 +45,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         console.log(res.data.data.accessToken);
         setAccessToken(res.data.data.accessToken);
         closeLoginModalHandler();
-        //! 서버에서 로그인성공 안하면 헤더버튼도 안바뀜
+        //! 쿠키를 읽는것 외에는 로그인상태를 바꿀 수 없다.
         // setIsLogin(true);
       })
       .then(() => {

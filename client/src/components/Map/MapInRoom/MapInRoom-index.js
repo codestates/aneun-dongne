@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Styled } from "./style";
 
-const MapInRoom = ({ placeLocation, placeAddress, title }) => {
+const MapInRoom = ({ placeLocation, placeAddress, title, navi }) => {
   const { kakao } = window;
   //   console.log("관광지좌표 placeLocation", placeLocation);
   //   console.log("관광지주소 placeAddress", placeAddress);
@@ -44,7 +44,13 @@ const MapInRoom = ({ placeLocation, placeAddress, title }) => {
   }, [placeLocation, title, placeAddress]);
   return (
     <Styled.Div>
-      <Styled.Address>주소 : {placeAddress}</Styled.Address>
+      <Styled.Address>
+        <a href={navi} target="_blank" title={`새창 : ${title}로 가는 길`}>
+          <img src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/navigation.png" />
+        </a>
+        주소 : {placeAddress}
+      </Styled.Address>
+
       <Styled.Map id="map"></Styled.Map>
     </Styled.Div>
   );

@@ -105,7 +105,11 @@ export const nowlocation = atom({
   default: { lat: 0, lon: 0 },
 });
 
-// ! 댓글
+// ! 페이지번호를 리코일에 저장
+export const contentid = atom({
+  key: "contentid",
+  default: 0,
+});
 export const defaultcomments = atom({
   key: "defaultcomments",
   default: [],
@@ -220,4 +224,10 @@ export const setLo = selector({
         .catch((err) => console.log(err))
     ); //237줄에 console.log(meetingPlace)있음.
   },
+});
+
+//! myVisited 모달
+export const visitedModal = atom({
+  key: "visitedModal",
+  default: false,
 });

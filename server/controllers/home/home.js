@@ -11,7 +11,7 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
-  const { id } = accessTokenData;
+
   //const로 하면 tag, searchWord가 수정이 안되어서 let으로 바꿈
   let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.query;
   console.log("널인지보자", areacode, tag, searchWord);
@@ -49,6 +49,7 @@ module.exports = async (req, res) => {
       });
     }
   } else {
+    const { id } = accessTokenData;
     if (areacode === undefined) {
       console.log("에이러이코드", areacode);
       await res.status(200).json({

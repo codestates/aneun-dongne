@@ -14,7 +14,7 @@ import {
   getWTM,
 } from "../../../recoil/recoil";
 import "../kakao-map.css";
-import { cat1_name } from "../../../location-data";
+
 import HomeRightbar from "../../Home-Rightbar/Home-Rightbar-index";
 
 import { Styled } from "./style.js";
@@ -203,6 +203,7 @@ const HomeMap = () => {
       position: map.getCenter(),
       map: map,
     });
+    console.log(placeList);
     // !마커 여러개찍기, placeList:[[관광지1의 y좌표,x좌표,제목,썸네일,주소],[관광지2의 y좌표,x좌표,제목,썸네일,주소],...]
     let positions = [];
     for (let i = 0; i < placeList.length; i++) {

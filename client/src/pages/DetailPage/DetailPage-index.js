@@ -8,8 +8,9 @@ import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, loginModal, deleteCommentmode, defaultcomments } from "../../recoil/recoil";
+import { loginState, loginModal, deleteCommentmode, defaultcomments, contentid } from "../../recoil/recoil";
 import LikeLoading from "../../components/Loading/LikeLoading";
+import NoComment from "../../components/Comment/NoComment";
 
 function DetailPage({ match }) {
   const { id } = match.params;
@@ -22,6 +23,7 @@ function DetailPage({ match }) {
   const [placeAddr, setPlaceAddr] = useState("");
   const [title, setTitle] = useState("");
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
+  const [navi, setNavi] = useState("");
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
   //로긴모달창,로긴상태
@@ -36,7 +38,6 @@ function DetailPage({ match }) {
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   //로딩창
-  const [commentLoading, setCommentLoading] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function DetailPage({ match }) {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data.response.body.items.item);
+        console.log(res.data);
         const { post_mapx, post_mapy } = res.data.post;
         // console.log(mapx, mapy);
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
@@ -58,53 +59,12 @@ function DetailPage({ match }) {
           setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split('"')[0]);
           // setPageURL(res.data.response.body.items.item.homepage);
         }
+        setNavi(`https://map.kakao.com/link/to/${res.data.post.post_title},${post_mapy},${post_mapx}`);
         // setOverview(res.data.response.body.items.item.overview);
         // ?
       });
-    // 페이지 이동시 스크롤 맨 위로 오게한다.
-    //   window.scrollTo(0, 0);
-    //   axios
-    //     .get(
-    //       `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey=W%2B9SSMZKirmvzGAhoiAssJvfD9PYntkIlyMO6niTjMi5nwx%2BrUP%2FiQqrLccqOmuxPU2w7iyFQkUC41ddNiePUg%3D%3D`,
-    //       {
-    //         params: {
-    //           MobileOS: "ETC",
-    //           MobileApp: "TourAPI3.0_Guide",
-    //           areaCode: 33,
-    //           sigunguCode: 7,
-    //           cat1: "A01",
-    //           defaultYN: "Y",
-    //           firstImageYN: "Y",
-    //           areacodeYN: "Y",
-    //           catcodeYN: "Y",
-    //           addrinfoYN: "Y",
-    //           mapinfoYN: "Y",
-    //           overviewYN: "Y",
-    //           contentId: contentId,
-    //           //   contentTypeId:el.contenttypeid
-    //           // pageNo:2,
-    //         },
-    //       },
-    //       { "content-type": "application/json" }
-    //       //withCrentials:'true'는 Access-Control-Allow-Origin :'*'일때 사용하면 안된다.
-    //     )
-    //     .then((res) => {
-    //       // console.log(res.data.response.body.items.item);
-    //       const { mapx, mapy } = res.data.response.body.items.item;
-    //       // console.log(mapx, mapy);
-    //       setPlaceLocation({ lat: mapy, lon: mapx });
-    //       setImgURL(res.data.response.body.items.item.firstimage);
-    //       setTitle(res.data.response.body.items.item.title);
-    //       setPlaceAddr(res.data.response.body.items.item.addr1);
-    //       if (res.data.response.body.items.item.homepage) {
-    //         setPageURL(res.data.response.body.items.item.homepage.split('<a href="')[1].split('"')[0]);
-    //         // setPageURL(res.data.response.body.items.item.homepage);
-    //       }
-    //       setOverview(res.data.response.body.items.item.overview);
-    //       // ?
-    //     });
   }, [pathname]);
-  console.log(contentId);
+  console.log(navi);
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
       console.log("겟요청 첨에온거", res.data);
@@ -121,12 +81,6 @@ function DetailPage({ match }) {
       setUserinfo(res.data.userinfo);
     });
     setDeleteOrNot(false);
-
-    // axios.get(`https://localhost:80/like/${contentId}`, { withCredentials: "true" }).then((res) => {
-    //   console.log("조하요", res.data.data.isLiked, res.data.data.likeCount);
-    //   setLikeOrNot(res.data.data.isLiked);
-    //   setLike(res.data.data.likeCount);
-    // });
   }, [, deleteOrNot]);
 
   useEffect(() => {
@@ -218,7 +172,7 @@ function DetailPage({ match }) {
           </Styled.Overview>
         ) : null}
 
-        <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} />
+        <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
         <Styled.Wrapper>
           <HashTagTemplate keywordDummy={keywordDummy} />
           {likeLoading ? (
@@ -241,7 +195,11 @@ function DetailPage({ match }) {
             defaultComment={defaultComment}
             setDefaultComment={setDefaultComment}
           ></MyComment>
-          <CommentTemplate commentDummy={defaultComment} contentId={contentId}></CommentTemplate>
+          {defaultComment.length === 0 ? (
+            <NoComment />
+          ) : (
+            <CommentTemplate commentDummy={defaultComment} contentId={contentId}></CommentTemplate>
+          )}
         </Styled.Wrapper>
         {/* 새로고침할때마다 get으로 전체댓글 얻으면 수정되든 삭제되든 괜찮음, defaultComment에 넣기만 하면 된다. */}
       </Styled.Div>

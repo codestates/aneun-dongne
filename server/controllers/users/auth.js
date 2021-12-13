@@ -19,6 +19,16 @@ const updateUserInfo = async (newNickname, newEmail, newPassword, imagePath, thu
       console.log("same info exists");
     } else {
       isUserInfoCreated = true;
+      delete save.dataValues.password;
+      const accessToken = generateAccessToken(save.dataValues);
+      res.cookie("jwt", accessToken, {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+        domain: ".aneun-dongne.com",
+        path: "/",
+        secure: true,
+        sameSite: "None",
+      });
+      res.status(200).json({ data: save.dataValues, message: "ok" });
     }
   });
   return isUserInfoCreated;
@@ -129,18 +139,6 @@ module.exports = {
 
           if (!isUserInfoCreated) {
             res.status(400).json({ message: "Same info exists" });
-          } else {
-            const newUserInfo = await getUserInfo(id);
-            const accessToken = generateAccessToken(newUserInfo);
-            await res.cookie("jwt", accessToken, {
-              maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
-              domain: ".aneun-dongne.com",
-              path: "/",
-              secure: true,
-              sameSite: "None",
-            });
-            sendAccessToken(res, accessToken);
-            await res.status(200).json({ data: newUserInfo, message: "ok" });
           }
         }
       }

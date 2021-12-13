@@ -30,7 +30,7 @@ app.use(
 app.use(cookieParser());
 
 app.get("/home", controllers.home);
-app.get("/post", controllers.postDetails);
+app.get("/post/:contentId", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);

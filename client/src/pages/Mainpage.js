@@ -7,7 +7,7 @@ import { Icon } from "react-icons-kit";
 import { angleDoubleDown } from "react-icons-kit/fa/angleDoubleDown";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { placelist, loginState } from "../recoil/recoil";
+import { loginState } from "../recoil/recoil";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -227,7 +227,6 @@ export const MainTitleView = styled.div`
 // `;
 
 function Mainpage() {
-  const placeList = useRecoilValue(placelist);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const history = useHistory();
   const ToHome = () => {

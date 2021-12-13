@@ -10,24 +10,28 @@ const { isAuthorized } = require("./tokenFunctions");
 module.exports = {
   readComments: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-
-    const { id } = accessTokenData;
     const { contentId } = req.params;
-    console.log("겟커멘트", accessTokenData);
-    const { user_image_path, nickname } = accessTokenData;
-    try {
-      if (!accessTokenData) {
-        await res.status(200).json({
-          data: await getCommentHashtagData(0, contentId),
-        });
-      } else {
-        await res.status(200).json({
-          data: await getCommentHashtagData(id, contentId),
-          userinfo: { user_image_path, nickname },
-        });
-      }
-    } catch (err) {
-      res.status(500).json({ message: "server err" });
+
+    // console.log("겟커멘트", accessTokenData);
+    // const { user_image_path, nickname } = accessTokenData;
+
+    if (!accessTokenData) {
+      return res.status(200).json({
+        message: "no user",
+        data: await getCommentHashtagData(0, contentId),
+        userinfo: {
+          user_image_path:
+            "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png",
+          nickname: "김코딩",
+        },
+      });
+    } else {
+      const { id } = accessTokenData;
+      const { user_image_path, nickname } = accessTokenData;
+      await res.status(200).json({
+        data: await getCommentHashtagData(id, contentId),
+        userinfo: { user_image_path, nickname },
+      });
     }
   },
   createComment: async (req, res) => {

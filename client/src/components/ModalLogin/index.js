@@ -6,6 +6,7 @@ import { Styled } from "./style";
 import { message } from "../../message";
 // import Cookies from "universal-cookie";
 import { token, loginState } from "../../recoil/recoil";
+import KakaoLogin from "./KakaoLogin";
 
 const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandler }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -77,6 +78,11 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
           <button type="submit" className="login-button" onClick={handleLogin}>
             로그인
           </button>
+          {/* <button type="submit" className="kakao-login-button" onClick={handleLogin}>
+            카카오톡 로그인
+          </button> */}
+          <KakaoLogin />
+
           <div className="signup-text">아직 회원이 아니신가요?</div>
           <div className="signup-link" onClick={ToSignupModal}>
             회원가입하기

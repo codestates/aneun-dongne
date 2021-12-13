@@ -16,12 +16,13 @@ import {
 import "../kakao-map.css";
 
 import HomeRightbar from "../../Home-Rightbar/Home-Rightbar-index";
-
+import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
 import Loading from "../../Loading/Loading";
 
 const HomeMap = () => {
   const kakao = window.kakao;
+  const history = useHistory();
   const [add, setAdd] = useRecoilState(usersaddress);
   const [placeList, setPlaceList] = useRecoilState(placelist);
   const nowLoc = useRecoilValue(nowlocation);
@@ -41,9 +42,9 @@ const HomeMap = () => {
   const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
 
   //!지역 검색창을 위한 state
-  const [area, setArea] = useState(undefined); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState(0); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(undefined); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState(0); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
   const [level, setLevel] = useState(10);
@@ -149,7 +150,7 @@ const HomeMap = () => {
 
   useEffect(() => {
     //! 픽포인트, 반경, 검색어 아예 없을때
-
+    console.log(typeof area);
     //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
 
     axios
@@ -166,7 +167,7 @@ const HomeMap = () => {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         //!id는 어떤건가요??
         const list = res.data.data.map((el) => {
           return [
@@ -413,7 +414,23 @@ const HomeMap = () => {
       }); // 마커를 표시할 위치
 
       //관광지마커의 infowindow(마우스 올렸을때만)
-      let iwContent = `<div style="padding:5px;">${positions[i].content}<br></div>`,
+      // let iwContent = `<div style="padding:5px;">${positions[i].content}<br></div>`,
+      let iwContent = `<div class="wrap">
+      <div class="info">
+          <div class="title">
+          ${positions[i].content}
+
+          </div>
+          <div class="body">
+              <div class="img">
+                  <img src=${positions[i].img || notImageYet} width="73" height="70">
+             </div>
+              <div class="desc">
+                  <div class="ellipsis">${positions[i].addr}</div>
+              </div>
+          </div>
+      </div>
+ </div>`,
         iwPosition = new kakao.maps.LatLng(positions[i][0], positions[i][1]);
       let infowindow = new kakao.maps.InfoWindow({
         position: iwPosition,
@@ -452,7 +469,8 @@ const HomeMap = () => {
       });
 
       kakao.maps.event.addListener(marker, "click", function () {
-        infowindowOnClick.open(map, marker);
+        // infowindowOnClick.open(map, marker);
+        history.push(`/detailpage/${positions[i].contentId}`);
       });
     }
 

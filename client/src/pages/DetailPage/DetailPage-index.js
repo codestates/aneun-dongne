@@ -24,6 +24,7 @@ function DetailPage({ match }) {
   const [title, setTitle] = useState("");
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
   const [navi, setNavi] = useState("");
+  const [tags, setTags] = useState([]);
   const [readMore, setReadMore] = useState(false);
   const { pathname } = useLocation();
   //로긴모달창,로긴상태
@@ -54,6 +55,7 @@ function DetailPage({ match }) {
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
         setTitle(res.data.post.post_title);
+        setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
         setPlaceAddr(res.data.post.post_addr1);
         if (res.data.post.post_homepage_path) {
           setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split('"')[0]);
@@ -146,7 +148,7 @@ function DetailPage({ match }) {
     // }, 2000);
     await setLikeLoading(false);
   };
-  console.log("좋아요로딩", likeLoading);
+  // console.log("좋아요로딩", likeLoading);
   return (
     <>
       <Styled.Div>
@@ -174,7 +176,7 @@ function DetailPage({ match }) {
 
         <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
         <Styled.Wrapper>
-          <HashTagTemplate keywordDummy={keywordDummy} />
+          <HashTagTemplate keywordDummy={tags} />
           {likeLoading ? (
             <LikeLoading />
           ) : (
@@ -188,7 +190,6 @@ function DetailPage({ match }) {
               </i>
             </Styled.LikeBtn>
           )}
-
           <MyComment
             userinfo={userinfo}
             contentId={contentId}

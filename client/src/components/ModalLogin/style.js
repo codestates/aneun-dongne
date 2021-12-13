@@ -42,10 +42,21 @@ export const Styled = {
     .login-button {
       margin-top: 5px;
       cursor: pointer;
-      width: 150px;
+      width: 250px;
       height: 50px;
       background-color: #00ccff;
       color: white;
+      border-radius: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .kakao-login-button {
+      margin-top: 15px;
+      cursor: pointer;
+      width: 250px;
+      height: 50px;
+      background-color: #fff978;
+      color: black;
       border-radius: 10px;
       font-size: 1.5rem;
       font-weight: bold;
@@ -75,12 +86,21 @@ export const Styled = {
       color: red;
     }
 
-    button {
+    .login-button {
       border: 0;
       transition: all 0.3s;
 
       &:hover {
         background-color: #6af4aa;
+        transition: all 0.3s;
+      }
+    }
+    .kakao-login-button {
+      border: 0;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: yellow;
         transition: all 0.3s;
       }
     }

@@ -3,11 +3,14 @@ module.exports = (req, res) => {
   // console.log("로그아웃 작동");
   // console.log(res);
 
-  res.clearCookie("jwt", {
-    domain: ".aneun-dongne.com",
-    path: "/",
-    secure: true,
-    sameSite: "None",
-  });
+  res.clearCookie(
+    "jwt"
+    // {
+    //   domain: ".aneun-dongne.com",
+    //   path: "/",
+    //   secure: true,
+    //   sameSite: "None",
+    // }
+  );
   res.status(205).send("Logged out successfully");
 };

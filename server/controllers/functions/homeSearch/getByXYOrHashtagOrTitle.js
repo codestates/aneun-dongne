@@ -2,8 +2,10 @@ const { User, Post, HashTag, Like, Comment, sequelize, Sequelize } = require("..
 
 module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord) => {
   let result = [];
+
   await Post.findAll({
     raw: true,
+    // limit: 10,
     attributes: [
       "id",
       "post_addr1",
@@ -52,14 +54,9 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
     .then((data) => {
       // console.log("데이터", data);
       result = data.filter((el) => {
-        // if (tag === "") {
-        // return el.post_title.includes(searchWord);
-        //! ---- 의도하신게 어떤건지 잘 몰라서 우선 제가 반경으로 바꿨어요.
-        if (tag === "" && searchWord === "") {
-          return el.distance < radius;
-        }
-        //! ---------------
-        else if (el.post_tags !== null) {
+        if (tag === "") {
+          return el.post_title.includes(searchWord);
+        } else if (el.post_tags !== null) {
           return el.post_tags.includes(tag) && el.post_title.includes(searchWord);
         } else {
           return false;
@@ -72,8 +69,9 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
         }
         delete result[i]["Likes.like_user_id"];
       }
-      // console.log("리쥴트", result);
+
       result.splice(50);
+      console.log("리쥴트", result);
     })
     .catch((err) => console.log(err));
   return result;

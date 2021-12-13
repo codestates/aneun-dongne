@@ -15,7 +15,13 @@ module.exports = async (req, res) => {
   //const로 하면 tag, searchWord가 수정이 안되어서 let으로 바꿈
   let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.query;
   console.log("널인지보자", areacode, tag, searchWord);
-
+  console.log("쿼리", req.query);
+  areacode = Number(areacode);
+  radius = Number(radius);
+  sigungucode = Number(sigungucode);
+  console.log(typeof areacode);
+  console.log(typeof sigungucode);
+  console.log(typeof radius);
   // null을 넣으면 undefined로 들어와서 문자열 null로 넣고 진짜 null 로 바꿨어요->그래도안되네요?
   // 뭔가 null이 안먹는거같아요.
   // Object.keys(req.query).forEach((el) => {
@@ -28,9 +34,9 @@ module.exports = async (req, res) => {
   if (searchWord === "null") {
     searchWord = "";
   }
-  console.log("쿼리", req.query);
+  console.log("태그", tag);
   if (!accessTokenData) {
-    if (areacode === undefined) {
+    if (areacode === 0) {
       //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
       await res.status(200).json({
         data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
@@ -40,9 +46,7 @@ module.exports = async (req, res) => {
       await res.status(200).json({
         data: await getByHashtagOrTitle(0, tag, searchWord),
       });
-    }
-    // 지역만 선택했을때도 만들어야될것같아요..
-    else {
+    } else {
       //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
       await res.status(200).json({
         data: await getByAreaOrHashtagOrTitle(0, areacode, sigungucode, tag, searchWord),
@@ -50,7 +54,7 @@ module.exports = async (req, res) => {
     }
   } else {
     const { id } = accessTokenData;
-    if (areacode === undefined) {
+    if (areacode === 0) {
       console.log("에이러이코드", areacode);
       await res.status(200).json({
         // data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),

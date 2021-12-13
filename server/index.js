@@ -18,10 +18,10 @@ const PORT = 80;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cookieParser());
 app.use(
   cors({
-    origin: true,
+    origin: ["https://localhost:3000", "http://localhost:3000"],
     // [
     //   // 클라이언트 s3 주소
     //   "https://localhost:3000",
@@ -33,14 +33,13 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
 
 app.get("/home", controllers.home);
 app.get("/post/:contentId", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
-
+app.post("/user/kakaologin", controllers.kakaologin);
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
 

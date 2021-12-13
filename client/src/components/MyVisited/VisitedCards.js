@@ -97,5 +97,5 @@ function VisitedCards({ area, sigg, image, memo }) {
     </PlaceCard>
   );
 }
-
-export default VisitedCards;
+// export default VisitedCards;
+export default React.memo(VisitedCards);

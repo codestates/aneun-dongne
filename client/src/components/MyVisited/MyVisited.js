@@ -95,10 +95,9 @@ const MyVisited = () => {
   useEffect(() => {
     const container = document.querySelector("#map");
     const options = {
-      //!사실 placeLocation은 필요없음
       //!지도의 초기 중심화면 설정
       center: new kakao.maps.LatLng(37, 128),
-      level: 14,
+      level: 14, //지도 줌인 레벨
     };
     if (container === null) {
       return;
@@ -146,7 +145,8 @@ const MyVisited = () => {
           >${positions[i].content}
         </div>
       </div>`,
-        iwPosition = new kakao.maps.LatLng(positions[i][0], positions[i][1]);
+        iwPosition = new kakao.maps.LatLng(positions[i].latlng.Ma, positions[i].latlng.La);
+      console.log(positions[i].latlng.Ma, positions[i].latlng.La);
       let infowindow = new kakao.maps.InfoWindow({
         position: iwPosition,
         content: iwContent,
@@ -158,30 +158,6 @@ const MyVisited = () => {
       kakao.maps.event.addListener(marker, "mouseout", function () {
         infowindow.close();
       });
-      //관광지 마커 클릭하면 정보나오기
-      // ! 여기 홈페이지 주소도 넣어줘야함. 백엔드에 요구하기. 위치기반url에는 홈페이지 응답으로 안준다.
-      // let onClickContent = `<div class="wrap">
-      //                <div class="info">
-      //                    <div class="title">
-      //                    ${positions[i].content}
-
-      //                    </div>
-      //                    <div class="body">
-      //                        <div class="img">
-      //                            <img src=${positions[i].img || notImageYet} width="73" height="70">
-      //                       </div>
-      //                        <div class="desc">
-      //                            <div class="ellipsis">${positions[i].addr}</div>
-      //                        </div>
-      //                    </div>
-      //                </div>
-      //           </div>`,
-      //   iwRemoveable = true;
-      // let infowindowOnClick = new kakao.maps.InfoWindow({
-      //   position: iwPosition,
-      //   content: onClickContent,
-      //   removable: iwRemoveable,
-      // });
 
       kakao.maps.event.addListener(marker, "click", function () {
         // infowindowOnClick.open(map, marker);

@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
 
-import { valid } from "../../validator";
-import { message } from "../../message";
 import { Styled } from "./style";
 function ModalVisited() {
   return (

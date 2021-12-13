@@ -94,11 +94,7 @@ export const userInfo = atom({
     user_image_path: "",
   },
 });
-//!pickpoint바뀔때마다 바뀌는 값
-export const defaultposition = atom({
-  key: "defaultPosition",
-  default: { lat: 0, lon: 0 },
-});
+
 //! 현재위치 버튼때 필요한 값, 새로고침될때빼고는 안바뀐다.
 export const nowlocation = atom({
   key: "nowlocation",
@@ -119,6 +115,11 @@ export const defaultcomments = atom({
 export const deleteCommentmode = atom({
   key: "deleteCommentMode",
   default: false,
+});
+//!pickpoint바뀔때마다 바뀌는 값
+export const defaultposition = atom({
+  key: "defaultPosition",
+  default: { lat: 0, lon: 0 },
 });
 
 // ! 위치기반 API -> 지도위 나타나는 좌표 바꾸는거. 지도 클릭한효과랑 같음
@@ -152,51 +153,24 @@ export const isClickedNowLocation = atom({
 export const getWTM = selector({
   key: "getWTN",
   get: async ({ get }) => {
-    return (
-      axios
-        .get(
-          `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
-            get(pickpoint)[0]
-          }&input_coord=WGS84&output_coord=WTM`,
-          {
-            headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-          }
-        )
-        .then((res) => {
-          return { x: res.data.documents[0].x, y: res.data.documents[0].y };
-        })
-        // .then((wtm) => {
-        //   return axios
-        //     .get(`${process.env.REACT_APP_API_URL}/home`, {
-        //       params: {
-        //         radius: 10000,
-        //         clientwtmx: wtm.x,
-        //         clientwtmy: wtm.y,
-        //         tag: "null", //null로 넣으면 undefined되어서, 문자열로 넣겠음
-        //         searchWord: "null",
-        //       },
-        //       withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //       console.log(res.data.data);
-        //       //!id는 어떤건가요??
-        //       const list = res.data.data.map((el) => {
-        //         return [
-        //           Number(el.post_mapy),
-        //           Number(el.post_mapx),
-        //           el.post_title,
-        //           el.post_firstimage,
-        //           el.post_addr1,
-        //           el.post_contentid,
-        //         ];
-        //       });
-        //       console.log(list);
-        //       return list;
-        //     });
-        // })
-
-        .catch((err) => console.log(err))
+    const result = await axios.get(
+      `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
+        get(pickpoint)[0]
+      }&input_coord=WGS84&output_coord=WTM`,
+      {
+        headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+      }
     );
+    await setTimeout(() => {
+      const hi = "hi";
+      console.log(hi);
+    }, 1000);
+    const data = await { x: result.data.documents[0].x, y: result.data.documents[0].y };
+    // .then((res) => {
+    //   return { x: res.data.documents[0].x, y: res.data.documents[0].y };
+    // })
+    // .catch((err) => console.log(err));
+    return data;
   },
 });
 export const setLo = selector({

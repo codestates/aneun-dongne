@@ -22,7 +22,7 @@ const Body = styled.div`
   margin-left: 30px;
   /* background: yellow; */
   > .visited-cards-list {
-    border: 1px gray solid;
+    /* border: 1px gray solid; */
     margin: 15px;
   }
 `;
@@ -46,4 +46,4 @@ function VisitedList({ placeList }) {
   );
 }
 
-export default VisitedList;
+export default React.memo(VisitedList);

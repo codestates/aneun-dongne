@@ -117,12 +117,12 @@ function DetailPage({ match }) {
   // }, [updatecomment]);
   //! 이 글에 내가 좋아요를 눌렀는지 싫었는지도 DB에 저장해야할듯
   //! 초기화 안되게
-  const LikeHandler = () => {
+  const LikeHandler = async () => {
     if (!isLogin) {
       setIsLoginOpen(true);
       return;
     }
-    setLikeLoading(true);
+    await setLikeLoading(true);
     if (!likeOrNot) {
       axios.post(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {}, { withCredentials: "true" }).then((res) => {
         const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
@@ -139,12 +139,12 @@ function DetailPage({ match }) {
         setLikeOrNot(like.likeOrNot);
       });
     }
-    return setTimeout(() => {
-      console.log("hi");
-      setLikeLoading(false);
-      console.log(likeOrNot);
-    }, 2000);
-    setLikeLoading(false);
+    // return setTimeout(() => {
+    //   console.log("hi");
+    //   setLikeLoading(false);
+    //   console.log(likeOrNot);
+    // }, 2000);
+    await setLikeLoading(false);
   };
   console.log("좋아요로딩", likeLoading);
   return (

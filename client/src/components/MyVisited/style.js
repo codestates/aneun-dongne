@@ -6,8 +6,10 @@ export const Styled = {
   `,
 
   Div: styled.div`
+    /* background: red; */
+    margin-left: 20px;
     position: relative;
-    width: 700px;
+    width: 500px;
     margin-top: 30px;
     margin-bottom: 50px;
     margin-left: auto;
@@ -28,9 +30,11 @@ export const Styled = {
     }
   `,
   Map: styled.div`
-    width: 600px; //px로 할까요?? 작은모니터 큰모니터 생각하느라 괜히사소한거에 걱정되네요 ㅋㅋ
-    height: 400px;
+    width: 480px;
+    height: 300px;
     border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
     /* margin: auto; */
     margin-bottom: 1rem;
   `,

@@ -273,8 +273,8 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
 
   // 댓글 삭제요청 보내는 함수
   async function deleteComment() {
-    setCommentLoading(true);
-    axios
+    await setCommentLoading(true);
+    await axios
       .delete(
         `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
 
@@ -294,7 +294,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         setDeleteOrNot(true);
       });
     setClickedBtn("");
-    setCommentLoading(false);
+    await setCommentLoading(false);
   }
   function changeComment() {
     setPrevComment(comment);
@@ -308,9 +308,9 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
       commentContent: comment, //댓글내용
       tagsArr: tags, //해시태그
     };
-    setCommentLoading(true);
+    await setCommentLoading(true);
 
-    axios
+    await axios
       .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: { "content-type": "application/json" },
         withCredentials: true,
@@ -332,10 +332,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     setEditMode(false);
 
     setClickedBtn("");
-    setTimeout(() => {
-      console.log(commentLoading);
-      setCommentLoading(false);
-    }, 1000);
+    await setCommentLoading(false);
   }
   //댓글 바꾸는 함수
   const ChangeHandler = (e) => {

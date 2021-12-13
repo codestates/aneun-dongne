@@ -20,7 +20,7 @@ const MyLike = () => {
   //포스트 정보가 들어오는 곳
   const handleLikePage = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/mypage/likelists/${contentId}`, {
+      .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         withCredentials: "true",
       })
       .then((res) => {

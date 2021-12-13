@@ -10,20 +10,18 @@ const { isAuthorized } = require("./tokenFunctions");
 module.exports = {
   readComments: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     console.log("겟커멘트", accessTokenData);
-    const { user_image_path, nickname } = accessTokenData;
     try {
       if (!accessTokenData) {
         await res.status(200).json({
           data: await getCommentHashtagData(0, contentId),
         });
       } else {
+        const { id } = accessTokenData;
         await res.status(200).json({
           data: await getCommentHashtagData(id, contentId),
-          userinfo: { user_image_path, nickname },
+          suserinfo: { user_image_path, nickname },
         });
       }
     } catch (err) {
@@ -32,7 +30,6 @@ module.exports = {
   },
   createComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     const { commentContent, tagsArr } = req.body;
     console.log("포스트커맨드", req.body);
@@ -41,6 +38,7 @@ module.exports = {
         // return res.status(401).send("no token in req.headers['authorization']");
         await res.status(400).json({ data: null, message: "invalid access token" });
       } else {
+        const { id } = accessTokenData;
         await createCommentHashtagData(id, contentId, commentContent, tagsArr);
         await res.status(200).json({
           data: await getCommentHashtagData(id, contentId),
@@ -52,7 +50,6 @@ module.exports = {
   },
   updateComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     const { commentId, commentContent, tagsArr } = req.body;
     try {
@@ -60,6 +57,7 @@ module.exports = {
         // return res.status(401).send("no token in req.headers['authorization']");
         return res.status(400).json({ data: null, message: "invalid access token" });
       } else {
+        const { id } = accessTokenData;
         console.log("패치커맨드", req.body);
         await updateCommentHashtagData(commentId, id, contentId, commentContent, tagsArr);
         await res.status(200).json({
@@ -74,7 +72,6 @@ module.exports = {
     console.log(req.cookies);
     console.log("커맨드 제거 ", req.query);
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     const { commentId } = req.query;
     console.log("파람,쿼리", req.params, req.query);
@@ -83,6 +80,7 @@ module.exports = {
         // return res.status(401).send("no token in req.headers['authorization']");
         return res.status(400).json({ data: null, message: "invalid access token" });
       } else {
+        const { id } = accessTokenData;
         await deleteCommentData(commentId, id, contentId);
         await res.status(200).json({
           data: await getCommentHashtagData(id, contentId),

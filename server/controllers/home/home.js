@@ -1,6 +1,7 @@
 const getByHashtagOrTitle = require("../functions/homeSearch/getByHashtagOrTitle");
 const getByXYOrHashtagOrTitle = require("../functions/homeSearch/getByXYOrHashtagOrTitle");
 const getByAreaOrHashtagOrTitle = require("../functions/homeSearch/getByAreaOrHashtagOrTitle");
+const { isAuthorized } = require("../tokenFunctions");
 
 require("dotenv").config();
 
@@ -10,47 +11,74 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
-  const { id } = accessTokenData;
-  const { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
+  let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
 
-  if (tag === null) {
+  // 입력 안 했을 경우
+  // pickpoint  params { tag, searchWord : ""  areacode="null", sigungucode="null"}
+  // word {areacode=0, sigungucode=0, tag, searchWord : ""}: 돋보기검색버튼
+  radius = Number(radius);
+
+  if (tag === "null") {
     tag = "";
   }
-  if (searchWord === null) {
+  if (searchWord === "null") {
     searchWord = "";
   }
+  if (areacode !== "null") {
+    areacode = Number(areacode);
+  }
+  if (sigungucode !== "null") {
+    sigungucode = Number(sigungucode);
+  }
 
-  if (!accessTokenData) {
-    if (areacode === undefined) {
-      //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
-      await res.status(200).json({
-        data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
-      });
-    } else if (areacode === null) {
-      //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
-      await res.status(200).json({
-        data: await getByHashtagOrTitle(0, tag, searchWord),
-      });
+  try {
+    if (!accessTokenData) {
+      if (areacode === "null") {
+        //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
+        const { clientwtmx, clientwtmy } = req.params;
+        await res.status(200).json({
+          data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
+        });
+      } else {
+        const { areacode, sigungucode } = req.params;
+        if (areacode === 0) {
+          //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
+          await res.status(200).json({
+            data: await getByHashtagOrTitle(0, tag, searchWord),
+          });
+        } else {
+          //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
+          await res.status(200).json({
+            data: await getByAreaOrHashtagOrTitle(0, areacode, sigungucode, tag, searchWord),
+          });
+        }
+      }
+
     } else {
-      //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
-      await res.status(200).json({
-        data: await getByAreaOrHashtagOrTitle(0, areacode, sigungucode, tag, searchWord),
-      });
+      const { id } = accessTokenData;
+      if (areacode === "null") {
+        //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
+        const { clientwtmx, clientwtmy } = req.params;
+        await res.status(200).json({
+          data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
+        });
+      } else {
+        const { areacode, sigungucode } = req.params;
+        if (areacode === 0) {
+          //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
+          await res.status(200).json({
+            data: await getByHashtagOrTitle(id, tag, searchWord),
+          });
+        } else {
+          //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
+          await res.status(200).json({
+            data: await getByAreaOrHashtagOrTitle(id, areacode, sigungucode, tag, searchWord),
+          });
+        }
+      }
     }
-  } else {
-    if (areacode === undefined) {
-      await res.status(200).json({
-        data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
-      });
-    } else if (areacode === null) {
-      await res.status(200).json({
-        data: await getByHashtagOrTitle(id, tag, searchWord),
-      });
-    } else {
-      await res.status(200).json({
-        data: await getByAreaOrHashtagOrTitle(id, areacode, sigungucode, tag, searchWord),
-      });
-    }
+  } catch (err) {
+    res.status(500).json({ message: "server err" });
   }
 };
 

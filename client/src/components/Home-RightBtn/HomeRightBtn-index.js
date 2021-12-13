@@ -18,14 +18,14 @@ function HomeRightBtn({ pending, setPending }) {
   const [add, setAdd] = useRecoilState(usersaddress);
   const loc = useRecoilValueLoadable(setLo);
   const [clickedNowLocationBtn, setClickedNowLocationBtn] = useRecoilState(isClickedNowLocation);
-  const openSavePositionModalHandler = () => {
+  const openModalHandler = () => {
     setIsSavePositionOpen(true);
   };
 
   return (
     <>
       <Styled.RightBtnBox>
-        <Styled.RightBtn onClick={openSavePositionModalHandler}>현재위치 저장</Styled.RightBtn>
+        <Styled.RightBtn onClick={openModalHandler}>현재위치 저장</Styled.RightBtn>
         <Styled.RightBtn>내가 가본 곳</Styled.RightBtn>
         <Styled.RightBtn
           onClick={() => {

@@ -44,11 +44,7 @@ function Footer() {
             </div>
             <div className="info-icon">
               <i className="far fa-envelope"></i>
-              <span>
-                <a href="https://github.com/codestates/aneun-dongne" target="_blank" rel="noopener noreferrer">
-                  Email
-                </a>
-              </span>
+              <span>haeyong9701@gmail.com</span>
             </div>
           </div>
           <div className="user-info">
@@ -66,11 +62,7 @@ function Footer() {
             </div>
             <div className="info-icon">
               <i className="far fa-envelope"></i>
-              <span>
-                <a href="hwahwa7879@gmail.com" target="_blank" rel="noopener noreferrer">
-                  hwahwa7879@gmail.com
-                </a>
-              </span>
+              <span>hwahwa7879@gmail.com</span>
             </div>
           </div>
           <div className="user-info">
@@ -88,11 +80,7 @@ function Footer() {
             </div>
             <div className="info-icon">
               <i className="far fa-envelope"></i>
-              <span>
-                <a href="https://github.com/codestates/aneun-dongne" target="_blank" rel="noopener noreferrer">
-                  Email
-                </a>
-              </span>
+              <span>ryu9663@naver.com</span>
             </div>
           </div>
           <div className="user-info">
@@ -110,11 +98,7 @@ function Footer() {
             </div>
             <div className="info-icon">
               <i className="far fa-envelope"></i>
-              <span>
-                <a href="https://github.com/codestates/aneun-dongne" target="_blank" rel="noopener noreferrer">
-                  Email
-                </a>
-              </span>
+              <span>sonsiee2@gmail.com</span>
             </div>
           </div>
         </Styled.User>
@@ -122,33 +106,6 @@ function Footer() {
 
       <Styled.TeamName>
         <h2>Team : TenTen</h2>
-        <div>
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img1"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img2"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img3"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-          <img
-            className="footer-logo-img"
-            id="footer-logo-img4"
-            alt="icon"
-            src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
-          />
-        </div>
       </Styled.TeamName>
     </>
   );

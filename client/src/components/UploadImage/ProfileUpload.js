@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import hamtori from "../../img/hamtori.png";
+// import hamtori from "../../img/hamtori.png";
 import "./profileUpload.css";
 import styled from "styled-components";
 

@@ -94,54 +94,32 @@ export const userInfo = atom({
     user_image_path: "",
   },
 });
-//!pickpoint바뀔때마다 바뀌는 값
-export const defaultposition = atom({
-  key: "defaultPosition",
-  default: { lat: 0, lon: 0 },
-});
+
 //! 현재위치 버튼때 필요한 값, 새로고침될때빼고는 안바뀐다.
 export const nowlocation = atom({
   key: "nowlocation",
   default: { lat: 0, lon: 0 },
 });
 
-// ! 댓글
+// ! 페이지번호를 리코일에 저장
+export const contentid = atom({
+  key: "contentid",
+  default: 0,
+});
 export const defaultcomments = atom({
   key: "defaultcomments",
-  default: [
-    {
-      id: 0,
-      user_image_path: "/people1.png",
-      nickname: "류준열",
-      comment_content: "안녕하세요",
-      comment_tags: [
-        "안녕하세요",
-        "감사해요",
-        "잘있어요",
-        "다시만나요",
-        "여기 더보기버튼을 만들어볼게요",
-        "아침해가뜨면",
-        "매일같은사람들과",
-      ],
-      comment_createdAt: "2021-12-03", //형식 모르겠음 db보고 결정
-      editable: false,
-    },
-    {
-      //uuid:0,
-      img: "/people2.png",
-      nickname: "윤해용",
-      text: "팀장이에요",
-      tags: ["해시태그", "스페이스바로", "바꿨어요"],
-      date: "2021-12-03", //형식 모르겠음 db보고 결정
-      editable: false,
-    },
-  ],
+  default: [],
 });
 
 //! 댓글 수정신호
 export const deleteCommentmode = atom({
   key: "deleteCommentMode",
   default: false,
+});
+//!pickpoint바뀔때마다 바뀌는 값
+export const defaultposition = atom({
+  key: "defaultPosition",
+  default: { lat: 0, lon: 0 },
 });
 
 // ! 위치기반 API -> 지도위 나타나는 좌표 바꾸는거. 지도 클릭한효과랑 같음
@@ -172,7 +150,29 @@ export const isClickedNowLocation = atom({
 });
 
 // ! 위치기반 API
-
+export const getWTM = selector({
+  key: "getWTN",
+  get: async ({ get }) => {
+    const result = await axios.get(
+      `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
+        get(pickpoint)[0]
+      }&input_coord=WGS84&output_coord=WTM`,
+      {
+        headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+      }
+    );
+    await setTimeout(() => {
+      const hi = "hi";
+      console.log(hi);
+    }, 1000);
+    const data = await { x: result.data.documents[0].x, y: result.data.documents[0].y };
+    // .then((res) => {
+    //   return { x: res.data.documents[0].x, y: res.data.documents[0].y };
+    // })
+    // .catch((err) => console.log(err));
+    return data;
+  },
+});
 export const setLo = selector({
   key: "setLo",
   get: async ({ get }) => {
@@ -198,4 +198,10 @@ export const setLo = selector({
         .catch((err) => console.log(err))
     ); //237줄에 console.log(meetingPlace)있음.
   },
+});
+
+//! myVisited 모달
+export const visitedModal = atom({
+  key: "visitedModal",
+  default: false,
 });

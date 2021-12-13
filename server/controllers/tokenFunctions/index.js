@@ -9,23 +9,22 @@ module.exports = {
     res.json({ data: { accessToken }, message: "ok" });
   },
   isAuthorized: (req) => {
-    console.log("이거봐라 쿠키", req.cookies);
-    // const authorization = req.headers["authorization"].split(" ")[1];
-    const authorization = req.cookies.jwt;
-    console.log("토큰함수 토큰", authorization);
+    const authorization = req.headers["cookie"];
     if (!authorization) {
       return null;
     }
 
-    // const token = authorization.split(" ")[1];
-    // console.log("11111");
-    // console.log("alksdjfl", authorization);
-    // console.log("22222");
+    let token = authorization;
+
+    if (authorization.split(" ")[1]) {
+      token = authorization.split(" ")[0].slice(4, authorization.split(" ")[0].length - 1);
+    } else {
+      token = authorization.slice(4);
+    }
+
     try {
-      console.log("해독된 토큰", verify(authorization, process.env.ACCESS_SECRET));
-      return verify(authorization, process.env.ACCESS_SECRET);
+      return verify(token, process.env.ACCESS_SECRET);
     } catch (err) {
-      console.log("에러", err);
       return null;
     }
   },

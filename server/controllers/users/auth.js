@@ -2,9 +2,9 @@ const { isAuthorized, generateAccessToken, sendAccessToken } = require("../token
 const { User } = require("../../models");
 module.exports = {
   get: async (req, res) => {
-    console.log("AUTH 겟 토큰", req);
+    // console.log("AUTH 겟 토큰", req);
     const accessTokenData = isAuthorized(req);
-    console.log("토큰도착", accessTokenData);
+    // console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
@@ -13,7 +13,7 @@ module.exports = {
     }
   },
   patch: async (req, res) => {
-    console.log("리코그바디, auth.put", req.file);
+    // console.log("리코그바디, auth.put", req.file);
 
     if (req.body.password !== req.body.checkPassword) {
       return res.status(400).send({ message: "type your password again" });
@@ -35,7 +35,7 @@ module.exports = {
 
     // console.log(image, nickname, email, password, newPassword);
 
-    console.log(req.cookies);
+    // console.log(req.cookies);
 
     const validUser = await User.findOne({
       where: {
@@ -62,7 +62,7 @@ module.exports = {
       } else {
         //프사 있을때
         image = req.file.location; //링크를 DB에 넣기위한 값
-        console.log("바꿀이미지", image);
+        // console.log("바꿀이미지", image);
       }
       User.update(
         {
@@ -74,7 +74,7 @@ module.exports = {
         { where: { email: email } }
       )
         .then((result) => {
-          console.log("Result", result);
+          // console.log("Result", result);
           // const accessToken = generateAccessToken(data.dataValues);
           User.findOne({
             where: {
@@ -82,7 +82,7 @@ module.exports = {
               password: newPassword,
             },
           }).then((data) => {
-            console.log("하이하이하이", data);
+            // console.log("하이하이하이", data);
             if (!data) {
               res.status(400).send("invalid user");
             } else {
@@ -98,7 +98,7 @@ module.exports = {
         })
         .catch((err) => {
           //아마 서버에러겠죠??
-          console.log(err);
+          // console.log(err);
           res.status(500).json({ message: "server errorr" });
         });
 

@@ -16,8 +16,13 @@ module.exports = (req, res) => {
       } else {
         delete data.dataValues.password;
         const accessToken = generateAccessToken(data.dataValues);
-
-        res.cookie("jwt", accessToken);
+        res.cookie("jwt", accessToken, {
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          // domain: ".aneun-dongne.com", (배포)
+          path: "/",
+          secure: true,
+          sameSite: "None",
+        });
         sendAccessToken(res, accessToken);
       }
     })

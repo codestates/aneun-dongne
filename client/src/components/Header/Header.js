@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import ModalLogin from "../ModalLogin";
-import ModalSignup from "../ModalSignup";
-
+import ModalLogin from "../ModalLogin/ModalLogin";
+import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
 import { isSavepositionOpen, loginState, loginModal, visitedModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
@@ -13,7 +12,6 @@ import ModalVisited from "../ModalVisited/ModalVisited";
 
 const Header = ({ handleResponseSuccess }) => {
   const history = useHistory();
-
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);

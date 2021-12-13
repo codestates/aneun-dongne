@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 
 import axios from "axios";
 import "./App.css";
@@ -11,14 +10,9 @@ import { loginState } from "./recoil/recoil";
 
 import { token, loading, userInfo } from "./recoil/recoil";
 import { withCookies, Cookies, useCookies } from "react-cookie";
-// import Cookies from "universal-cookie";
-import Mainpage from "./pages/Mainpage";
-import Home from "./pages/Home/Home";
-import DetailPage from "./pages/DetailPage/DetailPage-index";
-import Header from "./components/Header";
-import Loading from "./components/Loading/Loading";
-import MyPage from "./pages/MyPage/MyPage";
-import MyVisited from "./components/MyVisited/MyVisited";
+
+import { Mainpage, Home, MyPage, DetailPage } from "./pages";
+import Header from "./components/Header/Header";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -44,9 +38,7 @@ const App = () => {
         console.log("홈으로 가잔");
         setInfo(res.data.data.userInfo);
         setIsLogin(true);
-
         window.location.reload();
-        // history.push("/home");
       });
   };
 
@@ -102,33 +94,11 @@ const App = () => {
   return (
     <>
       <Header handleResponseSuccess={handleResponseSuccess} />
-      <Switch>
-        <Route exact path="/">
-          <Mainpage />
-          {/* <Loading /> */}
-        </Route>
-        <Route exact path="/home">
-          <Home info={info} />
-        </Route>
-        <Route exact path="/mypage">
-          <BrowserRouter>
-            <MyPage />
-          </BrowserRouter>
-          {/* <MyVisited /> */}
-        </Route>
-        <Route exact path="/mapage/likelist">
-          {/* <Likelists /> */}
-        </Route>
-        <Route exact path="/mapage/my-comment">
-          {/* <Commentlists /> */}
-        </Route>
-
-        {/* <Commentlist />
-          <Visted /> */}
-
-        <Route exact path="/detailpage/:id" component={DetailPage}></Route>
-        {/* <Redirect from="*" to="/" /> */}
-      </Switch>
+      <Route exact path="/" component={Mainpage} />
+      <Route exact path="/home" component={Home} />
+      <Route path="/mypage" component={MyPage} />
+      <Route exact path="/detailpage/:id" component={DetailPage} />
+      {/* <Redirect from="*" to="/" /> */}
     </>
   );
 };

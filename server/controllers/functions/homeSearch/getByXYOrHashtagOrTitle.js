@@ -1,4 +1,4 @@
-const { User, Post, HashTag, Like, Comment, sequelize, Sequelize } = require("../../../models");
+const { User, Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord) => {
   let result = [];

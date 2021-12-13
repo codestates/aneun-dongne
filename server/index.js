@@ -1,17 +1,18 @@
 require("dotenv").config();
-const fs = require("fs");
-const https = require("https");
+const fs = require("fs"); //!!
+const https = require("https"); //!!
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
+// const { upload } = require("./upload");
 // const db = require("./models");
-
-const { upload } = require("./upload");
 // const { update } = require("../update");
 // const { sequelize } = require("./models/index");
 const controllers = require("./controllers");
+const upload = require("./controllers/upload-image");
 const app = express();
 
+// const PORT = 3065; (배포)
 const PORT = 80;
 
 // const controllers = require("./controllers");
@@ -21,14 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ["https://localhost:3000", "http://localhost:3000"],
-    // [
-    //   // 클라이언트 s3 주소
-    //   "https://localhost:3000",
-    //   "http://localhost:3000",
-    //   "https://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
-    //   "http://tenten-deploy.s3-website.ap-northeast-2.amazonaws.com",
-    // ],
+    origin: ["https://localhost:3000", "http://localhost:3000", "https://aneun-dongne.com", "http://aneun-dongne.com"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
@@ -39,7 +33,17 @@ app.get("/post/:contentId", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
+
+app.get("/mypage/likelists", controllers.myLikes);
+app.get("/mypage/commentlists", controllers.myComments);
+
+app.get("/visited", controllers.readVisiteds);
+app.post("/visited", upload.single("image"), controllers.createVisited);
+app.patch("/visited", upload.single("image"), controllers.updateVisited);
+app.delete("/visited", controllers.deleteVisited);
+
 app.post("/user/kakaologin", controllers.kakaologin);
+
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
 
@@ -67,6 +71,7 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   server = app.listen(PORT, () => console.log("http server runnning"));
 }
 
+// (배포)
 // let server;
 // server = app.listen(PORT, () => console.log("http server runnning"));
-module.exports = server;
+// module.exports = server;

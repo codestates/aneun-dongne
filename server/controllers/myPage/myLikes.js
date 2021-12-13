@@ -56,11 +56,11 @@ const getMyLikes = async (userId) => {
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
-  const { id } = accessTokenData;
   try {
     if (!accessTokenData) {
       await res.status(400).json({ data: null, message: "invalid access token" });
     } else {
+      const { id } = accessTokenData;
       await res.status(200).json({
         data: await getMyLikes(id),
       });

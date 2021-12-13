@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const Styled = {
@@ -43,13 +43,6 @@ export const Styled = {
       font-size: 1.5rem;
     }
 
-    /* img {
-      width: 100%;
-      height: 100%;
-      border-radius: 100%;
-      object-fit: cover;
-    } */
-
     .menu-bar > .profile > .profile-image > img {
       width: 100%;
       height: 100%;
@@ -71,13 +64,9 @@ export const Styled = {
     .page-container {
       margin-top: 75px;
     }
-
-    .focused {
-      color: #172a71;
-    }
   `,
 
-  Link: styled(Link)`
+  NavLink: styled(NavLink)`
     text-decoration: none;
     font-size: 1.5rem;
     color: #96a3b6;

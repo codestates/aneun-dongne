@@ -17,6 +17,9 @@ AOS.init();
 
 export const Body = styled.div`
   position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  /* overflow-x: visible; */
   /* display: flex;
   flex-direction: column; */
 `;
@@ -54,6 +57,7 @@ export const PopularTitleView = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  margin-top: 10%;
 
   .title {
     font-size: 2.5rem;
@@ -157,17 +161,32 @@ export const TitleEndView = styled.div`
 export const Image = styled.div`
   display: flex;
   justify-content: center;
+
   margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
   img {
-    width: 1000px;
-    height: 500px;
+    width: 30%;
+    height: 30%;
+
     object-fit: cover;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .play {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
   }
 `;
 
 export const VideoContainer = styled.div`
   /* width: 500px;
   height: 300px; */
+  width: 50%;
+
   img {
     width: 100%;
     object-fit: cover;
@@ -210,6 +229,11 @@ export const MainTitleView = styled.div`
         transform: translateY(0px);
       }
     }
+    :hover {
+      cursor: pointer;
+      color: #6af4aa;
+      transition: all 0.3s;
+    }
   }
 
   /* i {
@@ -233,12 +257,13 @@ function Mainpage() {
     history.push("/home");
   };
 
-  //첫화면에 영상을 넣을 시 추가
-  {
-    /* <video video height="180" width="288" controls autoplay>
-            <source src="/Main.mp4" type="video/mp4" />
-          </video> */
-  }
+  const ToScrollBottom = (e) => {
+    window.scroll({
+      top: 800,
+
+      behavior: "smooth",
+    });
+  };
 
   console.log("로긴되었나요", isLogin);
 
@@ -251,7 +276,7 @@ function Mainpage() {
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <StartButton onClick={ToHome}>시작하기</StartButton>
             <div className="icon">
-              <Icon size={"100"} icon={angleDoubleDown} />
+              <Icon size={"100"} icon={angleDoubleDown} onClick={ToScrollBottom} />
             </div>
           </div>
         </MainTitleView>
@@ -264,6 +289,7 @@ function Mainpage() {
               <img src="/mapclick.png" />
 
               <img
+                className="play"
                 src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
                 muted
                 autoPlay
@@ -279,6 +305,7 @@ function Mainpage() {
           <VideoContainer>
             <Image>
               <img
+                className="play"
                 src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
                 muted
                 autoPlay
@@ -296,6 +323,7 @@ function Mainpage() {
             <Image>
               <img src="/likeimg.png" />
               <img
+                className="play"
                 src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
                 muted
                 autoPlay

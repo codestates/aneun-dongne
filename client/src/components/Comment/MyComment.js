@@ -91,8 +91,7 @@ const Content = styled.textarea`
   left: 10px;
   width: 370px;
   height: 70px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 10px;
 `;
 
 const HashTagWrapper = styled.div`
@@ -156,7 +155,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       commentContent: something,
       tagsArr: tags,
     };
-    axios.post(`${process.env.REACT_APP_API_URL}comment/${contentId}`, body, { withCredentials: true }).then((res) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, { withCredentials: true }).then((res) => {
       console.log("가공전", res.data.data);
       let arr = res.data.data.map((el) => {
         // console.log(el.comments.comment_tags.split(","));
@@ -186,7 +185,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
           <Content
             type="text"
             value={something}
-            placeholder="댓글을 입력하슈"
+            placeholder="여러분의 소중한 댓글을 입력해주세요"
             onChange={(e) => writeSomething(e)}
             onKeyUp={(e) => {
               if (e.key === "Enter") {

@@ -1,6 +1,7 @@
 const getByHashtagOrTitle = require("../functions/homeSearch/getByHashtagOrTitle");
 const getByXYOrHashtagOrTitle = require("../functions/homeSearch/getByXYOrHashtagOrTitle");
 const getByAreaOrHashtagOrTitle = require("../functions/homeSearch/getByAreaOrHashtagOrTitle");
+const { isAuthorized } = require("../tokenFunctions");
 
 require("dotenv").config();
 
@@ -10,12 +11,13 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
-  const { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
+  let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
 
   // 입력 안 했을 경우
   // pickpoint  params { tag, searchWord : ""  areacode="null", sigungucode="null"}
   // word {areacode=0, sigungucode=0, tag, searchWord : ""}: 돋보기검색버튼
   radius = Number(radius);
+
   if (tag === "null") {
     tag = "";
   }
@@ -51,6 +53,7 @@ module.exports = async (req, res) => {
           });
         }
       }
+
     } else {
       const { id } = accessTokenData;
       if (areacode === "null") {

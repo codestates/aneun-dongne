@@ -2,8 +2,10 @@ const { User, Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord) => {
   let result = [];
+
   await Post.findAll({
     raw: true,
+    // limit: 10,
     attributes: [
       "id",
       "post_addr1",
@@ -50,6 +52,7 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
     ),
   })
     .then((data) => {
+      // console.log("데이터", data);
       result = data.filter((el) => {
         if (tag === "") {
           return el.post_title.includes(searchWord);
@@ -68,7 +71,7 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
       }
 
       result.splice(50);
-      // console.log(result);
+      console.log("리쥴트", result);
     })
     .catch((err) => console.log(err));
   return result;

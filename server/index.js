@@ -5,21 +5,21 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 // const db = require("./models");
-// const { upload } = require("./upload");
-// const { upload } = require("./upload");
 // const { update } = require("../update");
 // const { sequelize } = require("./models/index");
 const controllers = require("./controllers");
 const upload = require("./controllers/upload-image");
 const app = express();
 
-const PORT = 3065;
+// const PORT = 3065;
+const PORT = 80;
+
 
 // const controllers = require("./controllers");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cookieParser());
 app.use(
   cors({
     origin: ["https://aneun-dongne.com", "http://aneun-dongne.com", "http://localhost:3000"],
@@ -27,7 +27,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
 
 app.get("/home", controllers.home);
 app.get("/post/:contentId", controllers.postDetails);
@@ -42,6 +41,8 @@ app.get("/visited", controllers.readVisiteds);
 app.post("/visited", upload.single("image"), controllers.createVisited);
 app.patch("/visited", upload.single("image"), controllers.updateVisited);
 app.delete("/visited", controllers.deleteVisited);
+
+app.post("/user/kakaologin", controllers.kakaologin);
 
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);

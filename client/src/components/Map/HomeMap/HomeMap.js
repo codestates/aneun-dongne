@@ -42,9 +42,9 @@ const HomeMap = () => {
   const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
 
   //!지역 검색창을 위한 state
-  const [area, setArea] = useState(0); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(0); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
   const [level, setLevel] = useState(10);

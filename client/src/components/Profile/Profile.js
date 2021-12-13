@@ -143,16 +143,19 @@ const ImgDiv = styled.div`
 
 //회원수정, 로그아웃시켜줘야힘.
 
-function Profile({ imgUrl, setImgUrl }) {
+function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname }) {
   const [info, setInfo] = useRecoilState(userInfo);
   //   const [imgUrl, setImgUrl] = useState("");
+  // const [prevImg, setPrevImg] = useState(
+  //   "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png"
+  // ); //DB에만 영향을 받는다.
   const [inputUsername, setInputUsername] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputCheckPassword, setInputCheckPassword] = useState("");
   const [confirmMessage, setConfirmMessage] = useState("");
-  const [nickname, setNickname] = useState("");
+  // const [nickname, setNickname] = useState("");
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -162,33 +165,30 @@ function Profile({ imgUrl, setImgUrl }) {
   // const [passwordCheckError, setPasswordCheckError] = useState("");
 
   // console.log(imgUrl);
-
+  console.log(imgUrl);
   const history = useHistory();
   // console.log(info);
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
-    axios
-      .get("https://localhost:80/user/info", { withCredentials: true })
-      .then((res) => {
-        console.log(res.data.data.userInfo);
-        console.log(typeof res.data.data.userInfo.user_image_path);
-        setInfo(res.data.data.userInfo);
-        if (res.data.data.userInfo.user_image_path) {
-          console.log(res.data.data.userInfo.user_image_path);
-          setImgUrl(res.data.data.userInfo.user_image_path);
-          setNickname(res.data.data.userInfo.nickname);
-        }
+    axios.get("https://localhost:80/user/info", { withCredentials: true }).then((res) => {
+      console.log(res.data.data.userInfo);
+      console.log(typeof res.data.data.userInfo.user_image_path);
+      setInfo(res.data.data.userInfo);
+      if (res.data.data.userInfo.user_image_path) {
+        console.log(res.data.data.userInfo.user_image_path);
+        setImgUrl(res.data.data.userInfo.user_image_path);
+        setNickname(res.data.data.userInfo.nickname);
+      }
 
-        // const { , inputUsername, inputEmail } = res.data.data.userInfo;
-        // setInputEmail(inputEmail);
-        // setImgUrl(imgUrl);
-        // setInputUsername(inputUsername);
+      // const { , inputUsername, inputEmail } = res.data.data.userInfo;
+      // setInputEmail(inputEmail);
+      // setImgUrl(imgUrl);
+      // setInputUsername(inputUsername);
 
-        // props.accessToken(res.data.Info);
-      })
-      .then();
+      // props.accessToken(res.data.Info);
+    });
   }, []);
-
+  console.log(imgUrl);
   const editInfo = (e) => {
     e.preventDefault();
     // 토큰만료시 컷
@@ -201,6 +201,7 @@ function Profile({ imgUrl, setImgUrl }) {
     // if(!imgUrl){
     //   formData.append("image", imgUrl);
     // }
+
     if (imgUrl) {
       formData.append("image", imgUrl);
       console.log(imgUrl);
@@ -211,23 +212,22 @@ function Profile({ imgUrl, setImgUrl }) {
     formData.append("checkPassword", inputCheckPassword);
     formData.append("newPassword", inputNewPassword);
     // formData.append("")
+    console.log(formData.get("image"));
 
     axios
-      .put(`https://localhost:80/user/info`, formData, { withCredentials: true })
+      .patch(`https://localhost:80/user/info`, formData, { "Content-Type": "application/json", withCredentials: true })
       .then((res) => {
         if (res.status === 400) {
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
           return;
         }
 
-        console.log(res.data.data.nickname);
+        console.log(res.data);
+        setImgUrl(res.data.data.user_image_path);
+        setPrevImg(res.data.data.user_image_path);
+        setNickname(res.data.data.nickname);
+      })
 
-        return res.data.data.nickname;
-      })
-      .then((name) => {
-        setNickname(name);
-        console.log(name);
-      })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
@@ -303,7 +303,7 @@ function Profile({ imgUrl, setImgUrl }) {
     if (!validePassword || !handleEdit) {
       // const token = JSON.parse(localStorage.getItem("token"));
       axios
-        .put(
+        .patch(
           "https://localhost:80/mypage",
           {
             // email: inputUsername,
@@ -335,6 +335,7 @@ function Profile({ imgUrl, setImgUrl }) {
           // authorization: accessToken,
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       })
       .then((res) => {
         console.log("탈퇴가 될지...", res);

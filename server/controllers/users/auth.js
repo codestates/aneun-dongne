@@ -1,3 +1,14 @@
+// 승이님 update를 안쓰고 createfind를 쓰는 이유를 아까 듣고 저도 이걸로 어떻게든 해보려고 했는데
+// 결국에는 console.log('same info exists')로 가더라구요.
+// 우선은 전에 만들었던 update 이용하는 patch 메소드를
+// subAuth.js에 만들어서 쓰고 있어요. 이거 완성되면 setAuth.js 지우실필요 없이
+// 컨트롤러에  updateAuth: require("./users/subAuth").patch 만 바꾸시면 될 것 같아요.
+// 그리고 피그마에는 이메일도 바꾸는걸로 되어있는데, 이메일은 안바꾸는걸로 바뀌었어요. 말씀을 못드렸네요
+// 당연히 다 아시겠지만 오해소지를 줄이려고 세세한것까지 다 말씀드려요
+// 이메일값은 바꾸지 않고 닉넴, 비번, 프사만 바뀌어요
+// 클라이언트에서 전달하는 req 는 req.file이랑 req.body는 nickname,email,password,checkPassword,newPassword 이에요
+// 클라이언트에서 확인하고 싶으시다면 /src/components/Profile/Profile.js에 있는 axios.patch를 보시면 돼요
+//
 const { isAuthorized, generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 const { User } = require("../../models");
 

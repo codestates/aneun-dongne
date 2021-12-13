@@ -1,4 +1,9 @@
 const { Visited, User, Sequelize } = require("../../models");
+const { generateAccessToken, sendAccessToken, isAuthorized } = require("../tokenFunctions");
+const multer = require("multer");
+const upload = multer({ dest: "./upload" });
+const path = require("path");
+const fs = require("fs");
 
 // 포스트 contentId를 가지고 모든 댓글 목록 불러오기
 
@@ -42,13 +47,16 @@ const deleteMyVisited = async (userId, visitedId) => {
 
 const getMyVisiteds = async (userId) => {
   let result = [];
+
   await Visited.findAll({
     raw: true,
     where: { visited_user_id: userId },
     order: [["createdAt", "DESC"]],
   }).then((data) => {
+    console.log("여기봐라", data);
     result = data;
   });
+
   return result;
 };
 
@@ -74,6 +82,7 @@ module.exports = {
   },
   createVisited: async (req, res) => {
     const accessTokenData = isAuthorized(req);
+
     try {
       if (!accessTokenData) {
         await res.status(400).json({ data: null, message: "invalid access token" });
@@ -106,6 +115,7 @@ module.exports = {
         }
       }
     } catch (err) {
+      console.log("여기서 에러뜸 외래키못찾는대", err);
       res.status(500).json({ message: "server err" });
     }
   },

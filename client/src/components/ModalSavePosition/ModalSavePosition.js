@@ -42,7 +42,7 @@ const ModalSavePosition = () => {
     console.log("폼데이터imag", formData.get("image"));
     // headers: { "content-type": "multipart/form-data" },
     axios
-      .post(`${process.env.REACT_APP_API_URL}/home/bookmark`, formData, { withCredentials: true })
+      .post(`${process.env.REACT_APP_API_URL}/visited`, formData, { withCredentials: true })
 
       .then((res) => {
         console.log(res.data.message);
@@ -91,7 +91,7 @@ const ModalSavePosition = () => {
               }}
             />
           </div>
-          <div className="alert-box">{errorMessage.memo}</div>
+          {/* <div className="alert-box">{errorMessage.memo}</div> */}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <button type="submit" className="save-position-button">
             저장

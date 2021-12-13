@@ -4,7 +4,7 @@ import ModalLogin from "../ModalLogin/ModalLogin";
 import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
 import { isSavepositionOpen, loginState, loginModal, visitedModal } from "../../recoil/recoil";
-import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
+import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { StyledLink } from "../PlaceList";

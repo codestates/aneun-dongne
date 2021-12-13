@@ -205,3 +205,10 @@ export const visitedModal = atom({
   key: "visitedModal",
   default: false,
 });
+
+//! 마이페이지
+
+export const imgUrl = atom({
+  key: "imgUrl",
+  default: "",
+});

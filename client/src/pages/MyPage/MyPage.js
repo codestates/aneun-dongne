@@ -9,11 +9,11 @@ import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 const MyPage = ({ match }) => {
   const [info, setInfo] = useRecoilState(userInfo);
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState("/snowman.png");
   const [nickname, setNickname] = useState("");
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-
+  const [prevImg, setPrevImg] = useState("/snowman.png");
   const activeStyle = {
     color: "#172a71",
   };
@@ -25,6 +25,7 @@ const MyPage = ({ match }) => {
       setNickname(res.data.data.userInfo.nickname);
       if (res.data.data.userInfo.user_image_path) {
         setImgUrl(res.data.data.userInfo.user_image_path);
+        setPrevImg(res.data.data.userInfo.user_image_path);
       }
     });
   }, []);
@@ -35,7 +36,7 @@ const MyPage = ({ match }) => {
         <nav className="menu-bar">
           <div className="profile">
             <div className="profile-image">
-              <img src="/snowman.png" />
+              <img src={prevImg} />
             </div>
             <div className="profile-name">{nickname}</div>
           </div>
@@ -69,7 +70,13 @@ const MyPage = ({ match }) => {
           <Route exact path={`${match.url}/visited`} component={MyVisited} />
           <Route exact path={`${match.url}/comments`} component={MyReview} />
           <Route exact path={`${match.url}/profile`}>
-            <Profile imgUrl={imgUrl} setImgUrl={setImgUrl} />
+            <Profile
+              imgUrl={imgUrl}
+              setImgUrl={setImgUrl}
+              prevImg={prevImg}
+              setPrevImg={setPrevImg}
+              setNickname={setNickname}
+            />
           </Route>
         </div>
       </Styled.Body>

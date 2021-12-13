@@ -91,8 +91,7 @@ const Content = styled.textarea`
   left: 10px;
   width: 370px;
   height: 70px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 10px;
 `;
 
 const HashTagWrapper = styled.div`
@@ -179,14 +178,14 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     <CommentWrapper>
       <Comment>
         <Profile>
-          <ProfileImg src={userinfo.user_image_path}></ProfileImg>
+          <ProfileImg src={userinfo.user_image_path} />
           <NickName>{userinfo.nickname}</NickName>
         </Profile>
         <ContentBox>
           <Content
             type="text"
             value={something}
-            placeholder="댓글을 입력하슈"
+            placeholder="여러분의 소중한 댓글을 입력해주세요"
             onChange={(e) => writeSomething(e)}
             onKeyUp={(e) => {
               if (e.key === "Enter") {

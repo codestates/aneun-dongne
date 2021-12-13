@@ -72,7 +72,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
 
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}user/signup`,
+        `${process.env.REACT_APP_API_URL}/user/signup`,
         {
           nickname,
           email,

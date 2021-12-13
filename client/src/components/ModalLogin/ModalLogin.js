@@ -4,8 +4,9 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { withCookies, Cookies, useCookies } from "react-cookie";
 import { Styled } from "./style";
 import { message } from "../../message";
-
+// import Cookies from "universal-cookie";
 import { token, loginState } from "../../recoil/recoil";
+import KakaoLogin from "./KakaoLogin";
 
 const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandler }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -17,7 +18,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
   });
   const [errorMessage, setErrorMessage] = useState("");
   const { email, password } = loginInfo;
-
+  // const cookies = new Cookies();
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
@@ -30,11 +31,11 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       setErrorMessage(message.loginPassword);
       return;
     }
-    //http://localhost:3065
+    //http://localhost:3065/
     // `${process.env.REACT_APP_API_URL}/user/login`,
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL}user/login`,
+        `${process.env.REACT_APP_API_URL}/user/login`,
         {
           email,
           password,
@@ -42,10 +43,11 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         { "Content-Type": "application/json", withCredentials: true }
       )
       .then((res) => {
-        console.log(res);
-        // setAccessToken(res.data.data.accessToken);
+        console.log(res.data.data.accessToken);
+        setAccessToken(res.data.data.accessToken);
         closeLoginModalHandler();
-        setIsLogin(true);
+        //! 쿠키를 읽는것 외에는 로그인상태를 바꿀 수 없다.
+        // setIsLogin(true);
       })
       .then(() => {
         // console.log(accessToken);
@@ -76,6 +78,11 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
           <button type="submit" className="login-button" onClick={handleLogin}>
             로그인
           </button>
+          {/* <button type="submit" className="kakao-login-button" onClick={handleLogin}>
+            카카오톡 로그인
+          </button> */}
+          <KakaoLogin />
+
           <div className="signup-text">아직 회원이 아니신가요?</div>
           <div className="signup-link" onClick={ToSignupModal}>
             회원가입하기

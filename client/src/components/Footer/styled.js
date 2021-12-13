@@ -14,13 +14,13 @@ export const Styled = {
   Side: styled.div`
     /* border: 1px gray solid; */
     /* background-color: skyblue; */
+    min-width: 200px;
     border-right: 1px rgb(192, 251, 255) solid;
     display: flex;
     flex-direction: column;
     width: 30%;
 
     .footer-logo {
-      /* background-color: orange; */
       display: flex;
       flex-direction: row;
       justify-content: space-around;
@@ -43,10 +43,10 @@ export const Styled = {
       letter-spacing: 0.1em;
       transition: all 0.3s ease;
 
-      &:hover {
+      /* &:hover {
         color: rgb(21, 225, 240);
         padding-left: 10px;
-      }
+      } */
     }
 
     .side-col {
@@ -80,7 +80,7 @@ export const Styled = {
   `,
   User: styled.div`
     display: flex;
-    width: 100%;
+    /* width: 100%; */
     justify-content: space-evenly;
     /* margin-left: auto;
     margin-right: auto; */
@@ -103,10 +103,10 @@ export const Styled = {
       padding: 15px 0 15px 0;
       border-radius: 20px;
       transition: all 0.3s ease;
-      &:hover {
+      /* &:hover {
         color: rgb(21, 225, 240);
         padding-left: 10px;
-      }
+      } */
     }
     > .user-info .user-job {
       /* border: 1px gray solid; */
@@ -124,14 +124,17 @@ export const Styled = {
       padding: 15px 0 15px 0;
       border-radius: 20px;
       transition: all 0.3s ease;
-      &:hover {
+      /* &:hover {
         color: rgb(21, 225, 240);
         padding-left: 10px;
-      }
+      } */
     }
     > .user-info .info-icon {
-      padding: 10px;
+      padding: 15px 10px 15px 10px;
       display: flex;
+      margin: 10px;
+
+      height: 50px;
       /* justify-content: space-evenly; */
 
       /* border: 1px gray solid; */
@@ -139,11 +142,16 @@ export const Styled = {
         padding-right: 10px;
       }
     }
-    a {
+    a,
+    span {
+      width: 200px;
       transition: all 0.3s ease;
       text-decoration: none;
       color: gray;
     }
+    /* span:hover {
+      color: rgb(21, 225, 240);
+    } */
     .user-info .info-icon a:hover {
       color: rgb(21, 225, 240);
       padding-left: 10px;
@@ -164,102 +172,6 @@ export const Styled = {
       margin: 0 50px;
       width: 60px;
       height: 30px;
-    }
-    #footer-logo-img1 {
-      animation: blink 6s ease-in-out infinite;
-      animation-delay: 1s;
-      @keyframes blink {
-        10% {
-          opacity: 1;
-          /* margin-left: 0; */
-        }
-        25% {
-          opacity: 0;
-          /* margin-left: 20px; */
-        }
-        50% {
-          opacity: 0;
-        }
-        75% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
-    }
-
-    #footer-logo-img2 {
-      animation: blink2 6s ease-in-out infinite;
-      animation-delay: 2s;
-      @keyframes blink2 {
-        0% {
-          opacity: 0;
-          /* margin-left: 0; */
-        }
-        25% {
-          opacity: 1;
-          /* margin-left: 20px; */
-        }
-        50% {
-          opacity: 0;
-        }
-        75% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
-    }
-    #footer-logo-img3 {
-      animation: blink3 6s ease-in-out infinite;
-      animation-delay: 2s;
-
-      @keyframes blink3 {
-        0% {
-          opacity: 0;
-          /* margin-left: 0; */
-        }
-        25% {
-          opacity: 0;
-          /* margin-left: 20px; */
-        }
-        50% {
-          opacity: 1;
-        }
-
-        75% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
-    }
-    #footer-logo-img4 {
-      animation: blink4 6s ease-in-out infinite;
-      animation-delay: 2s;
-
-      @keyframes blink4 {
-        0% {
-          opacity: 0;
-          /* margin-left: 0; */
-        }
-        25% {
-          opacity: 0;
-          /* margin-left: 20px; */
-        }
-        50% {
-          opacity: 0;
-        }
-        75% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
     }
   `,
 };

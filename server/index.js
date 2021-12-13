@@ -1,39 +1,48 @@
 require("dotenv").config();
-const fs = require("fs");
-const https = require("https");
+const fs = require("fs"); //!!
+const https = require("https"); //!!
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
-// const db = require("./models");
 // const { upload } = require("./upload");
-const { upload } = require("./upload");
+// const db = require("./models");
 // const { update } = require("../update");
 // const { sequelize } = require("./models/index");
 const controllers = require("./controllers");
+const upload = require("./controllers/upload-image");
 const app = express();
 
-// const PORT = 3065;
+// const PORT = 3065; (배포)
 const PORT = 80;
 
 // const controllers = require("./controllers");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://aneun-dongne.com", "http://aneun-dongne.com"],
+    origin: ["https://localhost:3000", "http://localhost:3000", "https://aneun-dongne.com", "http://aneun-dongne.com"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
 );
-app.use(cookieParser());
 
 app.get("/home", controllers.home);
 app.get("/post/:contentId", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
+
+app.get("/mypage/likelists", controllers.myLikes);
+app.get("/mypage/commentlists", controllers.myComments);
+
+app.get("/visited", controllers.readVisiteds);
+app.post("/visited", upload.single("image"), controllers.createVisited);
+app.patch("/visited", upload.single("image"), controllers.updateVisited);
+app.delete("/visited", controllers.deleteVisited);
+
+app.post("/user/kakaologin", controllers.kakaologin);
 
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
@@ -46,9 +55,9 @@ app.post("/comment/:contentId", controllers.createComment);
 app.patch("/comment/:contentId", controllers.updateComment);
 app.delete("/comment/:contentId", controllers.deleteComment);
 
-app.get("/like", controllers.getLikeCount);
-app.post("/like", controllers.addLike);
-app.delete("/like", controllers.deleteLike);
+app.get("/like/:contentId", controllers.getLikeCount);
+app.post("/like/:contentId", controllers.addLike);
+app.delete("/like/:contentId", controllers.deleteLike);
 
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
@@ -62,6 +71,7 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   server = app.listen(PORT, () => console.log("http server runnning"));
 }
 
+// (배포)
 // let server;
 // server = app.listen(PORT, () => console.log("http server runnning"));
 // module.exports = server;

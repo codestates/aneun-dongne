@@ -10,15 +10,15 @@ module.exports = (req, res) => {
     },
   })
     .then((data) => {
-      console.log("하이하이하이", data);
+      // console.log("하이하이하이", data);
       if (!data) {
         res.status(404).send("invalid user");
       } else {
         delete data.dataValues.password;
         const accessToken = generateAccessToken(data.dataValues);
         res.cookie("jwt", accessToken, {
-          maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
-          domain: ".aneun-dongne.com",
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          // domain: ".aneun-dongne.com", (배포)
           path: "/",
           secure: true,
           sameSite: "None",

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Styled = {
   Div: styled.div`
+    position: relative;
     width: 700px;
     margin-top: 30px;
     margin-bottom: 50px;
@@ -33,5 +34,26 @@ export const Styled = {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 15px;
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    > a {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 3px;
+    }
+    > a img {
+      width: 30px;
+      height: 30px;
+      text-decoration: none;
+      color: black;
+      border-radius: 10px;
+      opacity: 0.8;
+      &:hover {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
   `,
 };

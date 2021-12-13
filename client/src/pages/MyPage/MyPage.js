@@ -1,45 +1,33 @@
-import React, { useEffect, useRef } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route } from "react-router-dom";
 import { Styled } from "./style";
-import { useLocation } from "react-router-dom";
+import { userInfo, loginState, loginModal } from "../../recoil/recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import axios from "axios";
 
-import Profile from "../../components/Profile/Profile";
-import MyLike from "../../components/MyLike/MyLike";
-import MyReview from "../../components/MyReview/MyReview";
-import MyVisited from "../../components/MyVisited/MyVisited";
+import { Profile, MyLike, MyReview, MyVisited } from ".";
 
-// TODO SPA에서 새로고침을 하면 흰 화면이 뜬다. 해결하기!
+const MyPage = ({ match }) => {
+  const [info, setInfo] = useRecoilState(userInfo);
+  const [imgUrl, setImgUrl] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
 
-const MyPage = () => {
-  const { pathname } = useLocation();
-
-  const navMenu = useRef();
+  const activeStyle = {
+    color: "#172a71",
+  };
 
   useEffect(() => {
-    navEffectHandler();
-  });
-
-  const navEffectHandler = () => {
-    for (let i = 0; i < navMenu.current.childNodes.length; i++) {
-      navMenu.current.childNodes[i].childNodes[0].classList.remove("focused");
-    }
-    switch (pathname) {
-      case "/mypage":
-        navMenu.current.childNodes[0].childNodes[0].classList.add("focused");
-        break;
-      case "/mypage/comments":
-        navMenu.current.childNodes[1].childNodes[0].classList.add("focused");
-        break;
-      case "/mypage/like":
-        navMenu.current.childNodes[2].childNodes[0].classList.add("focused");
-        break;
-      case "/mypage/visited":
-        navMenu.current.childNodes[3].childNodes[0].classList.add("focused");
-        break;
-      default:
-        return;
-    }
-  };
+    //! 우선 적음 나중에 지우게되도
+    axios.get("https://localhost:80/user/info", { withCredentials: true }).then((res) => {
+      setInfo(res.data.data.userInfo);
+      setNickname(res.data.data.userInfo.nickname);
+      if (res.data.data.userInfo.user_image_path) {
+        setImgUrl(res.data.data.userInfo.user_image_path);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -49,39 +37,40 @@ const MyPage = () => {
             <div className="profile-image">
               <img src="/snowman.png" />
             </div>
-            <div className="profile-name">guest33</div>
+            <div className="profile-name">{nickname}</div>
           </div>
-          <ul className="link-container" ref={navMenu}>
+          <ul className="link-container">
             <li className="link-wrapper">
-              <Styled.Link to="/mypage">프로필 수정</Styled.Link>
+              <Styled.NavLink to={`${match.url}/like`} activeStyle={activeStyle}>
+                좋아요 한 관광지
+              </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.Link to="/mypage/comments">좋아요 한 관광지</Styled.Link>
+              <Styled.NavLink to={`${match.url}/visited`} activeStyle={activeStyle}>
+                내가 가본 곳
+              </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.Link to="/mypage/like">내가 쓴 리뷰</Styled.Link>
+              <Styled.NavLink to={`${match.url}/comments`} activeStyle={activeStyle}>
+                내가 쓴 리뷰
+              </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.Link to="/mypage/visited">내가 가본 곳</Styled.Link>
+              <Styled.NavLink to={`${match.url}/profile`} activeStyle={activeStyle}>
+                프로필 수정
+              </Styled.NavLink>
             </li>
           </ul>
         </nav>
 
         <div className="page-container">
-          <Switch>
-            <Route exact path="/mypage">
-              <Profile />
-            </Route>
-            <Route exact path="/mypage/comments">
-              <MyLike />
-            </Route>
-            <Route exact path="/mypage/like">
-              <MyReview />
-            </Route>
-            <Route exact path="/mypage/visited">
-              <MyVisited />
-            </Route>
-          </Switch>
+          <Route exact path={match.url} component={MyLike} />
+          <Route exact path={`${match.url}/like`} component={MyLike} />
+          <Route exact path={`${match.url}/visited`} component={MyVisited} />
+          <Route exact path={`${match.url}/comments`} component={MyReview} />
+          <Route exact path={`${match.url}/profile`}>
+            <Profile imgUrl={imgUrl} setImgUrl={setImgUrl} />
+          </Route>
         </div>
       </Styled.Body>
     </>

@@ -310,3 +310,13 @@
 // }).then((data) => {
 //   console.log(data);
 // });
+
+const { Post, Sequelize } = require("./models");
+
+Post.findAll({
+  raw: true,
+  limit: 10,
+  where: { post_addr1: { [Sequelize.Op.substring]: `성남` } },
+}).then((data) => {
+  console.log(data);
+});

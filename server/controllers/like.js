@@ -43,18 +43,19 @@ module.exports = {
   getLikeCount: async (req, res) => {
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
-    if (!accessTokenData) {
-      return res.status(200).json({
-        message: "no user",
-        data: await getLikeCount(0, contentId),
-      });
-    }
-
-    if (accessTokenData) {
-      const { id } = accessTokenData; //이게 if(!accessTokenData) 뒤에있어야함
-      await res.status(200).json({
-        data: await getLikeCount(id, contentId),
-      });
+    try {
+      if (!accessTokenData) {
+        await res.status(200).json({
+          data: await getLikeCount(0, contentId),
+        });
+      } else {
+        const { id } = accessTokenData;
+        await res.status(200).json({
+          data: await getLikeCount(id, contentId),
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "server err" });
     }
   },
   addLike: async (req, res) => {
@@ -67,7 +68,6 @@ module.exports = {
         await res.status(400).json({ data: null, message: "invalid access token" });
       } else {
         const { id } = accessTokenData;
-
         await addLike(id, contentId);
         await res.status(200).json({
           data: await getLikeCount(id, contentId),

@@ -11,22 +11,12 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
+  let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
 
-  //const로 하면 tag, searchWord가 수정이 안되어서 let으로 바꿈
-  let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.query;
-  console.log("널인지보자", areacode, tag, searchWord);
-  console.log("쿼리", req.query);
-  areacode = Number(areacode);
+  // 입력 안 했을 경우
+  // pickpoint  params { tag, searchWord : ""  areacode="null", sigungucode="null"}
+  // word {areacode=0, sigungucode=0, tag, searchWord : ""}: 돋보기검색버튼
   radius = Number(radius);
-  sigungucode = Number(sigungucode);
-  console.log(typeof areacode);
-  console.log(typeof sigungucode);
-  console.log(typeof radius);
-  // null을 넣으면 undefined로 들어와서 문자열 null로 넣고 진짜 null 로 바꿨어요->그래도안되네요?
-  // 뭔가 null이 안먹는거같아요.
-  // Object.keys(req.query).forEach((el) => {
-  //   if (req.query[el] === "null") req.query[el] = null;
-  // });
 
   if (tag === "null") {
     tag = "";
@@ -34,42 +24,61 @@ module.exports = async (req, res) => {
   if (searchWord === "null") {
     searchWord = "";
   }
-  console.log("태그", tag);
-  if (!accessTokenData) {
-    if (areacode === 0) {
-      //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
-      await res.status(200).json({
-        data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
-      });
-    } else if (areacode === "null") {
-      //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
-      await res.status(200).json({
-        data: await getByHashtagOrTitle(0, tag, searchWord),
-      });
+  if (areacode !== "null") {
+    areacode = Number(areacode);
+  }
+  if (sigungucode !== "null") {
+    sigungucode = Number(sigungucode);
+  }
+
+  try {
+    if (!accessTokenData) {
+      if (areacode === "null") {
+        //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
+        const { clientwtmx, clientwtmy } = req.params;
+        await res.status(200).json({
+          data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
+        });
+      } else {
+        const { areacode, sigungucode } = req.params;
+        if (areacode === 0) {
+          //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
+          await res.status(200).json({
+            data: await getByHashtagOrTitle(0, tag, searchWord),
+          });
+        } else {
+          //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
+          await res.status(200).json({
+            data: await getByAreaOrHashtagOrTitle(0, areacode, sigungucode, tag, searchWord),
+          });
+        }
+      }
+
     } else {
-      //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
-      await res.status(200).json({
-        data: await getByAreaOrHashtagOrTitle(0, areacode, sigungucode, tag, searchWord),
-      });
+      const { id } = accessTokenData;
+      if (areacode === "null") {
+        //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
+        const { clientwtmx, clientwtmy } = req.params;
+        await res.status(200).json({
+          data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
+        });
+      } else {
+        const { areacode, sigungucode } = req.params;
+        if (areacode === 0) {
+          //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
+          await res.status(200).json({
+            data: await getByHashtagOrTitle(id, tag, searchWord),
+          });
+        } else {
+          //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
+          await res.status(200).json({
+            data: await getByAreaOrHashtagOrTitle(id, areacode, sigungucode, tag, searchWord),
+          });
+        }
+      }
     }
-  } else {
-    const { id } = accessTokenData;
-    if (areacode === 0) {
-      console.log("에이러이코드", areacode);
-      await res.status(200).json({
-        // data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
-        data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
-      });
-    } else if (areacode === "null") {
-      console.log("아이디", id, "태그", tag, "검색어", searchWord);
-      await res.status(200).json({
-        data: await getByHashtagOrTitle(id, tag, searchWord),
-      });
-    } else {
-      await res.status(200).json({
-        data: await getByAreaOrHashtagOrTitle(id, areacode, sigungucode, tag, searchWord),
-      });
-    }
+  } catch (err) {
+    res.status(500).json({ message: "server err" });
   }
 };
 

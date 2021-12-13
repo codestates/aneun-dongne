@@ -10,21 +10,32 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
-  const { areacode, sigungucode, clientwtmx, clientwtmy, tag, searchWord } = req.params;
+  const { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
 
-  // if (tag === null) {
-  //   tag = "";
-  // }
-  // if (searchWord === null) {
-  //   searchWord = "";
-  // }
+  // 입력 안 했을 경우
+  // pickpoint  params { tag, searchWord : ""  areacode="null", sigungucode="null"}
+  // word {areacode=0, sigungucode=0, tag, searchWord : ""}: 돋보기검색버튼
+  radius = Number(radius);
+  if (tag === "null") {
+    tag = "";
+  }
+  if (searchWord === "null") {
+    searchWord = "";
+  }
+  if (areacode !== "null") {
+    areacode = Number(areacode);
+  }
+  if (sigungucode !== "null") {
+    sigungucode = Number(sigungucode);
+  }
+
   try {
     if (!accessTokenData) {
-      if (!areacode) {
+      if (areacode === "null") {
         //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
         const { clientwtmx, clientwtmy } = req.params;
         await res.status(200).json({
-          data: await getByXYOrHashtagOrTitle(0, 10000, clientwtmx, clientwtmy, tag, searchWord),
+          data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
         });
       } else {
         const { areacode, sigungucode } = req.params;
@@ -42,11 +53,11 @@ module.exports = async (req, res) => {
       }
     } else {
       const { id } = accessTokenData;
-      if (!areacode) {
+      if (areacode === "null") {
         //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
         const { clientwtmx, clientwtmy } = req.params;
         await res.status(200).json({
-          data: await getByXYOrHashtagOrTitle(id, 10000, clientwtmx, clientwtmy, tag, searchWord),
+          data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
         });
       } else {
         const { areacode, sigungucode } = req.params;

@@ -43,7 +43,7 @@ module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
     .then((data) => {
       // console.log(data);
       result = data.filter((el) => {
-        if (sigungucode === 0) {
+        if (sigungucode === "null") {
           return true;
         } else if (sigungucode === el.post_sigungucode) {
           return true;

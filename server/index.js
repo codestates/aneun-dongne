@@ -4,6 +4,7 @@ const https = require("https"); //!!
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
+// const { upload } = require("./upload");
 // const db = require("./models");
 // const { update } = require("../update");
 // const { sequelize } = require("./models/index");
@@ -11,9 +12,8 @@ const controllers = require("./controllers");
 const upload = require("./controllers/upload-image");
 const app = express();
 
-// const PORT = 3065;
+// const PORT = 3065; (배포)
 const PORT = 80;
-
 
 // const controllers = require("./controllers");
 
@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://aneun-dongne.com", "http://aneun-dongne.com", "http://localhost:3000"],
+    origin: ["https://localhost:3000", "http://localhost:3000", "https://aneun-dongne.com", "http://aneun-dongne.com"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
@@ -71,6 +71,7 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   server = app.listen(PORT, () => console.log("http server runnning"));
 }
 
+// (배포)
 // let server;
 // server = app.listen(PORT, () => console.log("http server runnning"));
-module.exports = server;
+// module.exports = server;

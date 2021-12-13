@@ -57,7 +57,7 @@ module.exports = {
   get: async (req, res) => {
     console.log("AUTH 겟 토큰", req.headers);
     const accessTokenData = isAuthorized(req);
-    console.log("토큰도착", accessTokenData);
+    // console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
@@ -66,6 +66,23 @@ module.exports = {
     }
   },
   patch: async (req, res) => {
+    // console.log("리코그바디, auth.put", req.file);
+    // 확인용 => password,email
+    // 변경용 => nickname,password,newPassword, image
+    // if (req.file !== undefined) {
+    //   //링크를 DB에 넣기 위한 값
+    //   image = req.file.location;
+    // } else {
+    //   //! 없으면 기본 프사들어가는데 이걸 회원가입에서 그냥 기본값으로 해야할듯
+    //   //! image =
+    //   //! "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+    // }
+
+    //요청바디에서 유저정보 획득
+
+    // console.log(image, nickname, email, password, newPassword);
+
+    // console.log(req.cookies);
     console.log("리코그바디, auth.put", req.file);
     console.log("AUTH 겟 토큰", req.headers);
 

@@ -17,8 +17,8 @@ module.exports = (req, res) => {
         delete data.dataValues.password;
         const accessToken = generateAccessToken(data.dataValues);
         res.cookie("jwt", accessToken, {
-          maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
-          domain: ".aneun-dongne.com",
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          // domain: ".aneun-dongne.com", (배포)
           path: "/",
           secure: true,
           sameSite: "None",

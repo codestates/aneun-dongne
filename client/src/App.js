@@ -12,7 +12,7 @@ import { token } from "./recoil/recoil";
 import { withCookies, Cookies, useCookies } from "react-cookie";
 
 import { Mainpage, Home, MyPage, DetailPage } from "./pages";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);

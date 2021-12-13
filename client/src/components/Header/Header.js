@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import ModalLogin from "../ModalLogin";
-import ModalSignup from "../ModalSignup";
-import { withCookies, Cookies, useCookies } from "react-cookie";
+import ModalLogin from "../ModalLogin/ModalLogin";
+import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
 import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
@@ -11,7 +10,6 @@ import { Link, useHistory } from "react-router-dom";
 import { StyledLink } from "../PlaceList";
 const Header = ({ handleResponseSuccess }) => {
   const history = useHistory();
-  // const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);

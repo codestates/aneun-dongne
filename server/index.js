@@ -35,6 +35,9 @@ app.get("/post", controllers.postDetails);
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
 
+app.get("/mypage/likelists", controllers.myLikes);
+app.get("/mypage/commentlists", controllers.myComments);
+
 app.get("/visited", controllers.readVisiteds);
 app.post("/visited", upload.single("image"), controllers.createVisited);
 app.patch("/visited", upload.single("image"), controllers.updateVisited);

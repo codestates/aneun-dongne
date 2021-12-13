@@ -25,4 +25,7 @@ module.exports = {
   createVisited: require("./myPage/myVisiteds").createVisited,
   updateVisited: require("./myPage/myVisiteds").updateVisited,
   deleteVisited: require("./myPage/myVisiteds").deleteVisited,
+  //MyPage
+  myLikes: require("./myPage/myLikes"),
+  myComments: require("./myPage/myComments"),
 };

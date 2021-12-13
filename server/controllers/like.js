@@ -42,7 +42,6 @@ const deleteLike = async (userId, contentId) => {
 module.exports = {
   getLikeCount: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     try {
       if (!accessTokenData) {
@@ -50,6 +49,7 @@ module.exports = {
           data: await getLikeCount(0, contentId),
         });
       } else {
+        const { id } = accessTokenData;
         await res.status(200).json({
           data: await getLikeCount(id, contentId),
         });
@@ -60,13 +60,13 @@ module.exports = {
   },
   addLike: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     try {
       if (!accessTokenData) {
         // return res.status(401).send("no token in req.headers['authorization']");
         await res.status(400).json({ data: null, message: "invalid access token" });
       } else {
+        const { id } = accessTokenData;
         await addLike(id, contentId);
         await res.status(200).json({
           data: await getLikeCount(id, contentId),
@@ -78,13 +78,13 @@ module.exports = {
   },
   deleteLike: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     try {
       if (!accessTokenData) {
         // return res.status(401).send("no token in req.headers['authorization']");
         return res.status(400).json({ data: null, message: "invalid access token" });
       } else {
+        const { id } = accessTokenData;
         await deleteLike(id, contentId);
         await res.status(200).json({
           data: await getLikeCount(id, contentId),

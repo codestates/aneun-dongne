@@ -1,62 +1,3 @@
-// const { Post } = require("./models");
-// const axios = require("axios");
-
-// Post.findAll({
-//   raw: true,
-// })
-//   .then((data) => {
-//     for (let i = 1974; i < 2974; i++) {
-//       (function (x) {
-//         setTimeout(function () {
-//           axios
-//             .get(
-//               `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}&contentTypeId=12&contentId=${data[i].post_contentid}&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json`
-//             )
-//             .then((response) => {
-//               Post.update(
-//                 {
-//                   post_content: response.data.response.body.items.item.overview,
-//                   post_homepage_path: response.data.response.body.items.item.homepage,
-//                 },
-//                 { where: { post_contentid: data[i].post_contentid } }
-//               );
-//             });
-//         }, 200 * x);
-//       })(i);
-//     }
-//   })
-//   .catch((err) => console.log(err));
-
-// Post.findAll({
-//   raw: true,
-//   // limit: 300,
-//   order: [["id"]],
-//   // where: { post_areacode: 1 },
-// })
-//   .then((data) => {
-//     // console.log(data);
-//     for (let i = 2630; i < 3130; i++) {
-//       (function (x) {
-//         setTimeout(function () {
-//           axios
-//             .get(
-//               `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}&contentTypeId=12&contentId=${data[x].post_contentid}&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json`
-//             )
-//             .then((response) => {
-//               Post.update(
-//                 {
-//                   post_content: response.data.response.body.items.item.overview,
-//                   post_homepage_path: response.data.response.body.items.item.homepage,
-//                 },
-//                 { where: { post_contentid: data[x].post_contentid } }
-//               );
-//             });
-//         }, 300 * x);
-//       })(i);
-//     }
-//   })
-//   .catch((err) => console.log(err));
-
 //areacode         시군구    1      2       3     4      5      6     7     8     9    10     11     12   13    14    15    16    17    18    19   20    21   22    23   24  25
 // 1 서울 656               강남   강동    강북   강서   관악   광진   구로  금천  노원  도봉  동대문  동작  마포  서대문 서초  성동   성북  송파  양천 영등포 용산  은평  종로 중구 중랑
 // 2 인천 351               강화   계양   미추홀  남동   동구   부평   서구  연수  옹진  중구
@@ -71,14 +12,10 @@
 // 34 충남 826              공주   금산    논산   당진   보령   부여   서산  서천  아산         예산   천안   청양  태안  홍성   계룡
 // 35 경북 1264             경산   경주    고령   구미   군위   김천   문경  봉화  상주  성주   안동   영덕   영양  영주  영천   예천  울릉  울진 의성  청도  청송  칠곡  포항
 // 36 경남 1075             거제   거창    고성   김해   남해          밀양  사천  산청  양산          의령  진주        창녕   창원  통영  하동 함안  함양  합천
-// 37 전북 926              고창   군산    김제   남원   무주   부안   순창  완주  익산  인실   장수   전주   정읍  진안
+// 37 전북 926              고창   군산    김제   남원   무주   부안   순창  완주  익산  임실   장수   전주   정읍  진안
 // 38 전남 1124             강진   고흥    곡성   광양   구례   나주   담양  목포  무안  보성   순천   신안   여수              영광  영암  완도  장성  장흥  진도 함평  해남  화순          26   27   28  29   30  31
 // 39 제주 427                                  서귀포  제주시
 // 31 경기 1404             가평   고양    과천   광명   광주   구리   군포  김포 남양주 동두천  부천   성남  수원  시흥   안산  안성  안양  양주  양평  여주  연천  오산  용인 의왕  의정부  이천 파주 평택 포천 하남 화성
-
-// if (siggSearch)
-let areaCode = 0;
-let siggCode = 0;
 
 const areaNameArr = [
   "- 지역선택 -",
@@ -101,6 +38,8 @@ const areaNameArr = [
   "제주",
 ];
 const areaCodeArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 31, 32, 33, 34, 35, 36, 37, 38, 39];
+
+const siggNameArrAC0 = ["- 지역선택 -"];
 
 const siggNameArrAC1 = [
   "- 지역선택 -",
@@ -352,8 +291,6 @@ const siggNameArrAC38 = [
 ];
 const siggNameArrAC39 = ["- 지역선택 -", "x", "x", "서귀포시", "제주시"];
 
-const siggNameArrAC0 = ["- 지역선택 -"];
-
 const allSigg = [
   siggNameArrAC0,
   siggNameArrAC1,
@@ -375,8 +312,9 @@ const allSigg = [
   siggNameArrAC39,
 ];
 
-// console.log(areaCodeArr.indexOf(31));
-// console.log(allSigg[8]);
+let areaCode = 0;
+let siggCode = 0;
+
 const getCodes = (areaSearch, siggSearch) => {
   for (let i = 0; i < areaNameArr.length; i++) {
     if (areaNameArr[i] === areaSearch) {
@@ -399,7 +337,7 @@ const getCodes = (areaSearch, siggSearch) => {
   return { areaCode: areaCode, siggCode: siggCode };
 };
 
-console.log(getCodes("강원", "영월시"));
+console.log(getCodes("경남", "함양군"));
 
 const getNames = (areaCode, siggCode) => {
   for (let i = 0; i < areaCodeArr.length; i++) {
@@ -422,40 +360,4 @@ const getNames = (areaCode, siggCode) => {
   return { areaName: areaName, siggName: siggName };
 };
 
-console.log(getNames(32, 8));
-
-// const { Post, Like, sequelize, Sequelize } = require("./models");
-// const axios = require("axios");
-// const request = require("request");
-
-// Post.findAll({
-//   raw: true,
-// })
-//   .then((data) => {
-//     for (let i = 2730; i < 2731; i++) {
-//       (function (x) {
-//         setTimeout(function () {
-//           const options = {
-//             method: "GET",
-//             url: `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}&contentTypeId=12&contentId=${data[x].post_contentid}&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json`,
-//             headers: {},
-//           };
-//           request(options, function (error, response, body) {
-//             if (error) {
-//               throw new Error(error);
-//             }
-//             let info = JSON.parse(body);
-//             console.log(info);
-//             // Post.update(
-//             //   {
-//             //     post_content: info.body.items.item.overview,
-//             //     post_homepage_path: info.body.items.item.homepage,
-//             //   },
-//             //   { where: { post_contentid: data[x].post_contentid } }
-//             // );
-//           });
-//         }, 200 * x);
-//       })(i);
-//     }
-//   })
-//   .catch((err) => console.log(err));
+console.log(getNames(8, 0));

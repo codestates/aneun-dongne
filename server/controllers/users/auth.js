@@ -1,8 +1,51 @@
 const { isAuthorized, generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 const { User } = require("../../models");
+
+const updateUserInfo = async (newNickname, newEmail, newPassword, imagePath, thumbnailPath) => {
+  let isUserInfoCreated = false;
+  //findOrCreate 메소드로 새 데이터를 생성하기 때문에 기존 데이터를 삭제하는 로직이 추가되어야 함
+  await User.findOrCreate({
+    defaults: {
+      password: newPassword,
+      user_image_path: imagePath,
+      user_thumbnail_path: thumbnailPath,
+    },
+    where: {
+      nickname: newNickname,
+      email: newEmail,
+    },
+  }).then(([save, created]) => {
+    if (!created) {
+      console.log("same info exists");
+    } else {
+      isUserInfoCreated = true;
+    }
+  });
+  return isUserInfoCreated;
+};
+
+const getUserInfo = async (userId) => {
+  let result = {};
+  await User.findOne({
+    raw: true,
+    where: {
+      id: userId,
+    },
+  }).then((data) => {
+    // console.log("하이하이하이", data);
+    if (!data) {
+      result = {};
+    } else {
+      delete data.password;
+      result = data;
+    }
+  });
+  return result;
+};
+
 module.exports = {
   get: async (req, res) => {
-    console.log("AUTH 겟 토큰", req);
+    console.log("AUTH 겟 토큰", req.headers);
     const accessTokenData = isAuthorized(req);
     console.log("토큰도착", accessTokenData);
 
@@ -14,100 +57,130 @@ module.exports = {
   },
   patch: async (req, res) => {
     console.log("리코그바디, auth.put", req.file);
+    console.log("AUTH 겟 토큰", req.headers);
 
-    if (req.body.password !== req.body.checkPassword) {
-      return res.status(400).send({ message: "type your password again" });
-    }
-    // 확인용 => password,email
-    // 변경용 => nickname,password,newPassword, image
-    let image = "";
-    // if (req.file !== undefined) {
-    //   //링크를 DB에 넣기 위한 값
-    //   image = req.file.location;
-    // } else {
-    //   //! 없으면 기본 프사들어가는데 이걸 회원가입에서 그냥 기본값으로 해야할듯
-    //   //! image =
-    //   //! "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
-    // }
+    const accessTokenData = isAuthorized(req);
+    console.log("토큰도착", accessTokenData);
 
-    //요청바디에서 유저정보 획득
-    const { nickname, email, password, newPassword } = req.body;
-
-    // console.log(image, nickname, email, password, newPassword);
-
-    console.log(req.cookies);
-
-    const validUser = await User.findOne({
-      where: {
-        email,
-        password,
-      },
-    });
-    //이메일이나 비번이 일치하는 자료가 DB에 없다면 컷
-    if (!validUser) {
-      return res.status(405).json({ data: null, message: "no such user in the database" });
+    if (!accessTokenData) {
+      res.status(401).send({ data: null, message: "not authorized" });
     } else {
-      // console.log(req.file.key) // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
+      const { id, email, password } = accessTokenData;
+      const { checkPassword, newNickname, newEmail, newPassword } = req.body;
 
-      // 변경하려는 프사가 없을떄
-      if (req.file === undefined) {
-        //기존프사가 있다면 기존프사 사용
-        if (validUser.user_image_path !== null) image = validUser.user_image_path;
-        //기존프사도 없다면,
-        else {
-          //기본 프사 사용
-          image =
-            "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
-        }
+      if (password !== checkPassword) {
+        res.status(400).send({ message: "type your password again" });
       } else {
-        //프사 있을때
-        image = req.file.location; //링크를 DB에 넣기위한 값
-        console.log("바꿀이미지", image);
-      }
-      User.update(
-        {
-          nickname,
-          email,
-          password: newPassword,
-          user_image_path: image,
-        },
-        { where: { email: email } }
-      )
-        .then((result) => {
-          console.log("Result", result);
-          // const accessToken = generateAccessToken(data.dataValues);
-          User.findOne({
-            where: {
-              email,
-              password: newPassword,
-            },
-          }).then((data) => {
-            console.log("하이하이하이", data);
-            if (!data) {
-              res.status(400).send("invalid user");
-            } else {
-              delete data.dataValues.password;
-              const accessToken = generateAccessToken(data.dataValues);
+        // 확인용 => password,email
+        // 변경용 => nickname,password,newPassword, image
+        console.log(req.cookies);
 
-              res
-                .cookie("jwt", accessToken)
-                .json({ data: { accessToken, nickname, user_image_path: image }, message: "okkk" });
-            }
-          });
-          // res.status(201).json({ message: "successfully changed" });
-        })
-        .catch((err) => {
-          //아마 서버에러겠죠??
-          console.log(err);
-          res.status(500).json({ message: "server errorr" });
+        let validUser = {};
+        await User.findOne({
+          raw: true,
+          where: {
+            id: id,
+          },
+        }).then((data) => {
+          validUser = data;
         });
+        //이메일이나 비번이 일치하는 자료가 DB에 없다면 컷
+        if (Object.keys(validUser).length === 0) {
+          return res.status(405).json({ data: null, message: "no such user in the database" });
+        } else {
+          // console.log(req.file.key) // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
+          // 변경하려는 프사가 없을떄
+          if (!req.file) {
+            //기존프사가 있다면 기존프사 사용
+            if (validUser.user_image_path !== null && validUser.user_thumbnail_path !== null) {
+              imagePath = validUser.user_image_path;
+              thumbnailPath = validUser.user_thumbnail_path;
+            }
+            //기존프사도 없다면,
+            else {
+              //기본 프사 사용
+              imagePath =
+                "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+              thumbnailPath =
+                "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+            }
+          } else {
+            //프사 있을때
+            // image = req.file.location; //링크를 DB에 넣기위한 값
+            //s3 서버에 저장된 이미지의 url 경로 획득
+            const imagesInfo = req.file.transforms;
+            let imagePath = "";
+            let thumbnailPath = "";
+            imagesInfo.forEach((imageInfo) => {
+              if (imageInfo.id === "thumbnail") thumbnailPath = imageInfo.location;
+              else if (imageInfo.id === "origin") imagePath = imageInfo.location;
+            });
+            console.log("바꿀이미지", imagePath);
+            if (imagePath === "" || thumbnailPath === "") {
+              imagePath =
+                "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+              thumbnailPath =
+                "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+              await res.status(400).json({ message: "Image upload failed" });
+            }
+          }
 
-      //   if (!req.file) {
-      //     if(validUser)
-      //   } else {
-      //     img = req.file.location; // 링크를 db 넣기위한 값
-      //   }
-      // }
+          let isUserInfoCreated = await updateUserInfo(newNickname, newEmail, newPassword, imagePath, thumbnailPath);
+
+          if (!isUserInfoCreated) {
+            res.status(400).json({ message: "Same info exists" });
+          } else {
+            const newUserInfo = await getUserInfo(id);
+            const accessToken = generateAccessToken(newUserInfo);
+            await res.cookie("jwt", accessToken, {
+              maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+              domain: ".aneun-dongne.com",
+              path: "/",
+              secure: true,
+              sameSite: "None",
+            });
+            sendAccessToken(res, accessToken);
+            await res.status(200).json({ data: newUserInfo, message: "ok" });
+          }
+        }
+      }
     }
   },
 };
+
+// const accessTokenData = isAuthorized(req);
+// try {
+//   if (!accessTokenData) {
+//     await res.status(400).json({ data: null, message: "invalid access token" });
+//   } else {
+//     const { id } = accessTokenData;
+//     const { area, sigg, mapx, mapy, memo } = req.body;
+//     const { visitedId } = req.query;
+
+//     if (!req.file) {
+//       console.log("이미지 없음");
+//       await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, null, null);
+//       await res.status(200).json({ data: await getMyVisiteds(id) });
+//     }
+
+//     //s3 서버에 저장된 이미지의 url 경로 획득
+//     const imagesInfo = req.file.transforms;
+//     let imagePath = "";
+//     let thumbnailPath = "";
+
+//     imagesInfo.forEach((imageInfo) => {
+//       if (imageInfo.id === "thumbnail") thumbnailPath = imageInfo.location;
+//       else if (imageInfo.id === "origin") imagePath = imageInfo.location;
+//     });
+
+//     if (imagePath === "" || thumbnailPath === "") {
+//       await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, null, null);
+//       await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
+//     } else {
+//       await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
+//       await res.status(200).json({ data: await getMyVisiteds(id) });
+//     }
+//   }
+// } catch (err) {
+//   res.status(500).json({ message: "server err" });
+// }

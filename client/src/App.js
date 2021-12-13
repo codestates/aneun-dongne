@@ -13,8 +13,6 @@ import { withCookies, Cookies, useCookies } from "react-cookie";
 
 import { Mainpage, Home, MyPage, DetailPage } from "./pages";
 import Header from "./components/Header";
-import Footer from "./components/Footer/Footer";
-import Loading from "./components/Loading";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -59,7 +57,7 @@ const App = () => {
       <Header handleResponseSuccess={handleResponseSuccess} />
       <Route exact path="/" component={Mainpage} />
       <Route exact path="/home" component={Home} />
-      <Route exact path="/mypage" component={MyPage} />
+      <Route path="/mypage" component={MyPage} />
       <Route exact path="/detailpage/:id" component={DetailPage} />
       {/* <Redirect from="*" to="/" /> */}
     </>

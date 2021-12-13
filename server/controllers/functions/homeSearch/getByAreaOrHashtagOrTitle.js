@@ -44,7 +44,7 @@ module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
     .then((data) => {
       console.log("데이터 잘들어왔니?", data);
       result = data.filter((el) => {
-        if (sigungucode === null) {
+        if (sigungucode === "null") {
           return true;
         } else if (sigungucode === el.post_sigungucode) {
           return true;

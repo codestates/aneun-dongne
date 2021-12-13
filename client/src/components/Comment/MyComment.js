@@ -179,7 +179,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     <CommentWrapper>
       <Comment>
         <Profile>
-          <ProfileImg src={userinfo.user_image_path}></ProfileImg>
+          <ProfileImg src={userinfo.user_image_path} />
           <NickName>{userinfo.nickname}</NickName>
         </Profile>
         <ContentBox>

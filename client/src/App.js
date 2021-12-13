@@ -19,6 +19,7 @@ import Header from "./components/Header";
 import Loading from "./components/Loading/Loading";
 import MyPage from "./pages/MyPage/MyPage";
 import MyVisited from "./components/MyVisited/MyVisited";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
@@ -44,9 +45,7 @@ const App = () => {
         console.log("홈으로 가잔");
         setInfo(res.data.data.userInfo);
         setIsLogin(true);
-
         window.location.reload();
-        // history.push("/home");
       });
   };
 

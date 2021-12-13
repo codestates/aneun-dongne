@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 
 import axios from "axios";
 import "./App.css";
@@ -11,11 +10,9 @@ import { loginState } from "./recoil/recoil";
 import { userInfo } from "./recoil/recoil";
 import { token } from "./recoil/recoil";
 import { withCookies, Cookies, useCookies } from "react-cookie";
-import Mainpage from "./pages/Mainpage";
-import Home from "./pages/Home/Home";
-import DetailPage from "./pages/DetailPage/DetailPage-index";
+
+import { Mainpage, Home, MyPage, DetailPage } from "./pages";
 import Header from "./components/Header";
-import MyPage from "./pages/MyPage/MyPage";
 import Footer from "./components/Footer/Footer";
 import Loading from "./components/Loading";
 
@@ -60,23 +57,11 @@ const App = () => {
   return (
     <>
       <Header handleResponseSuccess={handleResponseSuccess} />
-      <Switch>
-        <Route exact path="/">
-          <Mainpage />
-          {/* <Loading /> */}
-        </Route>
-        <Route exact path="/home">
-          <Home info={info} />
-        </Route>
-        <Route exact path="/mypage">
-          <BrowserRouter>
-            <MyPage />
-          </BrowserRouter>
-        </Route>
-
-        <Route exact path="/detailpage/:id" component={DetailPage}></Route>
-        {/* <Redirect from="*" to="/" /> */}
-      </Switch>
+      <Route exact path="/" component={Mainpage} />
+      <Route exact path="/home" component={Home} />
+      <Route exact path="/mypage" component={MyPage} />
+      <Route exact path="/detailpage/:id" component={DetailPage} />
+      {/* <Redirect from="*" to="/" /> */}
     </>
   );
 };

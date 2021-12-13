@@ -80,7 +80,7 @@ function DetailPage({ match }) {
   }, [pathname]);
   console.log(contentId);
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}comment/${contentId}`, { withCredentials: "true" }).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
       console.log("겟요청 첨에온거", res.data);
       // console.log(res.data.data);
       // console.log(res.data.userinfo);

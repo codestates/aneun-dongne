@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Styled } from "./style";
+import { userInfo, loginState, loginModal } from "../../recoil/recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import axios from "axios";
 
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 const MyPage = ({ match }) => {
+  const [info, setInfo] = useRecoilState(userInfo);
+  const [imgUrl, setImgUrl] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
+
   const activeStyle = {
     color: "#172a71",
   };
+
+  useEffect(() => {
+    //! 우선 적음 나중에 지우게되도
+    axios.get("https://localhost:80/user/info", { withCredentials: true }).then((res) => {
+      setInfo(res.data.data.userInfo);
+      setNickname(res.data.data.userInfo.nickname);
+      if (res.data.data.userInfo.user_image_path) {
+        setImgUrl(res.data.data.userInfo.user_image_path);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -17,7 +37,7 @@ const MyPage = ({ match }) => {
             <div className="profile-image">
               <img src="/snowman.png" />
             </div>
-            <div className="profile-name">김코딩</div>
+            <div className="profile-name">{nickname}</div>
           </div>
           <ul className="link-container">
             <li className="link-wrapper">
@@ -48,7 +68,9 @@ const MyPage = ({ match }) => {
           <Route exact path={`${match.url}/like`} component={MyLike} />
           <Route exact path={`${match.url}/visited`} component={MyVisited} />
           <Route exact path={`${match.url}/comments`} component={MyReview} />
-          <Route exact path={`${match.url}/profile`} component={Profile} />
+          <Route exact path={`${match.url}/profile`}>
+            <Profile imgUrl={imgUrl} setImgUrl={setImgUrl} />
+          </Route>
         </div>
       </Styled.Body>
     </>

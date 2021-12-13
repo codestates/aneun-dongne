@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import styled from "styled-components";
 import { MemoCards } from "./PlaceCards";
 import PlaceCards from "./PlaceCards";
 
-import { placelist, placeaddress, placelocation, placeimg, placetitle } from "../recoil/recoil";
+import { placeaddress, placelocation, placeimg, placetitle, placelist } from "../recoil/recoil";
 import { Link } from "react-router-dom";
 
 const PlaceLists = styled.div`
@@ -105,6 +105,7 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
+
   return (
     <PlaceLists>
       {placeList.map((place, idx) => {

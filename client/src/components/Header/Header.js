@@ -3,16 +3,19 @@ import { useRecoilState } from "recoil";
 import ModalLogin from "../ModalLogin/ModalLogin";
 import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
-import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
+import { isSavepositionOpen, loginState, loginModal, visitedModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { StyledLink } from "../PlaceList";
+import ModalVisited from "../ModalVisited/ModalVisited";
+
 const Header = ({ handleResponseSuccess }) => {
   const history = useHistory();
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
+  const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
@@ -51,6 +54,11 @@ const Header = ({ handleResponseSuccess }) => {
   const closeSavePositionModalHandler = (e) => {
     setIsSavePositionOpen(false);
   };
+  const closeVisitedModal = () => {
+    if (isVisitedOpen) {
+      setIsVisitedOpen(false);
+    }
+  };
 
   const ToLoginModal = () => {
     if (isSignupOpen) {
@@ -65,6 +73,7 @@ const Header = ({ handleResponseSuccess }) => {
       setIsSignupOpen(true);
     }
   };
+
   const logoutHandler = () => {
     console.log("hi");
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
@@ -75,9 +84,10 @@ const Header = ({ handleResponseSuccess }) => {
     history.push("/");
     // console.log(cookies);
   };
-
+  console.log(isVisitedOpen);
   return (
     <>
+      {/* // 로그인 모달 */}
       <Styled.ModalContainer>
         {isLoginOpen ? (
           <>
@@ -93,6 +103,7 @@ const Header = ({ handleResponseSuccess }) => {
           </>
         ) : null}
       </Styled.ModalContainer>
+      {/* // 회원가입 모달 */}
       <Styled.ModalContainer>
         {isSignupOpen ? (
           <>
@@ -108,13 +119,26 @@ const Header = ({ handleResponseSuccess }) => {
           </>
         ) : null}
       </Styled.ModalContainer>
-
+      {/* // HomeMap.js - 현재위치 저장 모달 */}
       <Styled.ModalContainer>
         {isSavePositionOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeSavePositionModalHandler}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
                 <ModalSavePosition />
+              </Styled.ModalView>
+            </Styled.ModalBackdrop>
+          </>
+        ) : null}
+      </Styled.ModalContainer>
+
+      {/* // MyPage/visited 내가 가본 곳 모달 */}
+      <Styled.ModalContainer>
+        {isVisitedOpen ? (
+          <>
+            <Styled.ModalBackdrop onClick={closeVisitedModal}>
+              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
+                <ModalVisited />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>

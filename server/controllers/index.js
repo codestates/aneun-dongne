@@ -5,7 +5,7 @@ module.exports = {
   signup: require("./users/signup"),
   signin: require("./users/signin"),
   signout: require("./users/signout"),
-
+  kakaologin: require("./users/kakao"),
   //Home
   home: require("./home/home"),
   bookmark: require("./home/bookmark"),
@@ -20,4 +20,12 @@ module.exports = {
   createComment: require("./comment").createComment,
   updateComment: require("./comment").updateComment,
   deleteComment: require("./comment").deleteComment,
+  //Visited
+  readVisiteds: require("./myPage/myVisiteds").readVisiteds,
+  createVisited: require("./myPage/myVisiteds").createVisited,
+  updateVisited: require("./myPage/myVisiteds").updateVisited,
+  deleteVisited: require("./myPage/myVisiteds").deleteVisited,
+  //MyPage
+  myLikes: require("./myPage/myLikes"),
+  myComments: require("./myPage/myComments"),
 };

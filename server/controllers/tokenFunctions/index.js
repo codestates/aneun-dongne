@@ -6,7 +6,7 @@ module.exports = {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: "6000s" });
   },
   sendAccessToken: (res, accessToken) => {
-    res.json({ data: { accessToken }, message: "ok" });
+    res.status(201).json({ data: { accessToken }, message: "ok" });
   },
   isAuthorized: (req) => {
     const authorization = req.headers["cookie"];

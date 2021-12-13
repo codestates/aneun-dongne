@@ -6,6 +6,8 @@ export const Styled = {
     display: flex;
 
     .menu-bar {
+      position: fixed;
+      left: 0;
       display: flex;
       flex-direction: column;
       align-items: center;

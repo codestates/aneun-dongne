@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       visited_wtmy: DataTypes.DECIMAL(50, 30),
       visited_post_contentid: DataTypes.INTEGER,
       visited_user_id: DataTypes.INTEGER,
+      visited_thumbnail_path: DataTypes.TEXT,
     },
     {
       sequelize,

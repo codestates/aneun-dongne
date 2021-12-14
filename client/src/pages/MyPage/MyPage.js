@@ -6,27 +6,30 @@ import { userInfo, loginState, loginModal, token } from "../../recoil/recoil";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 
 import axios from "axios";
-
-import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
-
+import Cookies from "universal-cookie";
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
-  const [imgUrl, setImgUrl] = useState("/men.png");
-  const [prevImg, setPrevImg] = useState("/men.png");
+  const cookies = new Cookies();
+  const [imgUrl, setImgUrl] = useState("");
+  const [prevImg, setPrevImg] = useState("");
   const [nickname, setNickname] = useState("");
-  const accessToken = useRecoilValue(token);
+  const [accessToken, setAccessToken] = useRecoilState(token);
   const [info, setInfo] = useRecoilState(userInfo);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   const [loading, setLoading] = useState(false);
+  // console.log(imgUrl);
+  let a = cookies.get("jwt");
+  // console.log(a);
 
   const activeStyle = {
     color: "#172a71",
   };
+  // console.log(accessToken);
   async function getUserInfo() {
+    console.log(accessToken);
     const result = await axios
       .get("https://localhost:80/user/info", {
         headers: {
@@ -39,7 +42,7 @@ const MyPage = ({ match }) => {
         console.log(res.data.data);
 
         setNickname(res.data.data.userInfo.nickname);
-        if (res.data.data.userInfo.user_image_path) {
+        if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
           setImgUrl(res.data.data.userInfo.user_thumbnail_path);
           setPrevImg(res.data.data.userInfo.user_image_path);
         }
@@ -51,6 +54,7 @@ const MyPage = ({ match }) => {
     //! 우선 적음 나중에 지우게되도
     await setLoading(true);
     getUserInfo();
+
     await setLoading(false);
     console.log("되나요");
     // axios
@@ -71,17 +75,17 @@ const MyPage = ({ match }) => {
 
     //     setLoading(false);
     //   });
-  }, []);
+  }, [accessToken]);
 
   return (
     <>
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
-            <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div>
-            {/* <div className="profile-image">
+            {/* <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div> */}
+            <div className="profile-image">
               <img src={prevImg} />
-            </div> */}
+            </div>
             <div className="profile-name">{nickname}</div>
           </div>
           <ul className="link-container">

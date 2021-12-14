@@ -62,6 +62,8 @@ module.exports = {
         //기존프사가 있다면 기존프사 사용
         if (validUser.user_image_path !== null) {
           image = validUser.user_image_path;
+          thumbnail = validUser.user_thumbnail_path;
+          console.log(image, thumbnail);
           console.log("이미지", image);
         }
         //기존프사도 없다면, -> 모두가 기본프사 갖고있음 이제
@@ -104,8 +106,17 @@ module.exports = {
               const accessToken = generateAccessToken(data.dataValues);
               console.log("여기까지왔어요?");
               res
-                .cookie("jwt", accessToken)
-                .json({ data: { accessToken, nickname, user_image_path: image }, message: "okkk" });
+                .cookie("jwt", accessToken, {
+                  maxAge: 1000 * 60 * 60 * 24 * 7,
+                  // domain: ".aneun-dongne.com", (배포)
+                  path: "/",
+                  secure: true,
+                  sameSite: "None",
+                })
+                .json({
+                  data: { accessToken, nickname, user_image_path: image, user_thumbnail_path: thumbnail },
+                  message: "okkk",
+                });
             }
           });
           // res.status(201).json({ message: "successfully changed" });

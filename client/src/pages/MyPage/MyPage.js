@@ -7,14 +7,10 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 
 import axios from "axios";
 
-import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
-
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
-
   const [imgUrl, setImgUrl] = useState("/men.png");
   const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
@@ -23,7 +19,7 @@ const MyPage = ({ match }) => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   const [loading, setLoading] = useState(false);
-  
+
   const activeStyle = {
     color: "#172a71",
   };
@@ -90,7 +86,6 @@ const MyPage = ({ match }) => {
           <Route exact path={`${match.url}/visited`} component={MyVisited} />
           <Route exact path={`${match.url}/comments`} component={MyReview} />
           <Route exact path={`${match.url}/profile`}>
-
             <Profile
               imgUrl={imgUrl}
               setImgUrl={setImgUrl}

@@ -9,18 +9,12 @@ module.exports = {
     res.status(201).json({ data: { accessToken }, message: "ok" });
   },
   isAuthorized: (req) => {
-    const authorization = req.headers["cookie"];
+    const authorization = req.headers["authorization"];
     if (!authorization) {
       return null;
     }
 
-    let token = authorization;
-
-    if (authorization.split(" ")[1]) {
-      token = authorization.split(" ")[0].slice(4, authorization.split(" ")[0].length - 1);
-    } else {
-      token = authorization.slice(4);
-    }
+    const token = authorization.split(" ")[1];
 
     try {
       return verify(token, process.env.ACCESS_SECRET);

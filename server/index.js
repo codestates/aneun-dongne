@@ -4,7 +4,6 @@ const https = require("https");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const session = require("express-session");
 // const { upload } = require("./upload");
 // const db = require("./models");
 // const { update } = require("../update");
@@ -16,9 +15,11 @@ const app = express();
 // const PORT = 3065; //(배포)
 const PORT = 4000;
 
+// const controllers = require("./controllers");
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 app.use(
   cors({
     origin: ["https://localhost:3000", "http://localhost:3000", "https://aneun-dongne.com", "http://aneun-dongne.com"],

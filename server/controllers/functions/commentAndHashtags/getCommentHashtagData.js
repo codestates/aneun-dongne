@@ -1,7 +1,7 @@
 const { Comment, User, Sequelize } = require("../../../models");
 
 // 포스트 contentId를 가지고 모든 댓글 목록 불러오기
-
+//getCommentHashtagData.js에요
 module.exports = async (userId, contentId) => {
   let onlyCommentData = [];
   let result = [];

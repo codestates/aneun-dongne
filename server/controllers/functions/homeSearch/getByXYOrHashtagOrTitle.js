@@ -71,7 +71,7 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
       }
 
       result.splice(50);
-      console.log("리쥴트", result);
+      // console.log("리쥴트", result);
     })
     .catch((err) => console.log(err));
   return result;

@@ -28,7 +28,8 @@ const s3 = require("../aws/s3");
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: "ap-northeast-2", // s3 버킷 이름
+    bucket: "aneun-dongne", // s3 버킷 이름
+
     contentType: multerS3.AUTO_CONTENT_TYPE, // 파일 MIME 타입 자동 감지
     shouldTransform: true, // 리사이징 true: transforms 속성 필요
     transforms: [

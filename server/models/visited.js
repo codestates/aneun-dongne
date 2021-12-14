@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       visited_memo_image_path: DataTypes.TEXT,
       visited_wtmx: DataTypes.DECIMAL(50, 30),
       visited_wtmy: DataTypes.DECIMAL(50, 30),
-      visited_post_contentid: DataTypes.INTEGER,
+      // visited_post_contentid: DataTypes.INTEGER,
       visited_user_id: DataTypes.INTEGER,
       visited_thumbnail_path: DataTypes.TEXT,
     },

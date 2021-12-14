@@ -1,4 +1,5 @@
 const { Comment, User, Post, Sequelize } = require("../../models");
+const { isAuthorized } = require("../tokenFunctions");
 
 // 포스트 contentId를 가지고 모든 댓글 목록 불러오기
 

@@ -69,7 +69,7 @@ const MyPage = ({ match }) => {
           <Route exact path={`${match.url}/like`} component={MyLike} />
           <Route exact path={`${match.url}/visited`} component={MyVisited} />
           <Route exact path={`${match.url}/comments`} component={MyReview} />
-          <Route exact path={`${match.url}/profile`}>
+          <Route exact path={`${match.url}/`}>
             <Profile
               imgUrl={imgUrl}
               setImgUrl={setImgUrl}

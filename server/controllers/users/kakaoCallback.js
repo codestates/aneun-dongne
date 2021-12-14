@@ -29,6 +29,20 @@ module.exports = async (req, res) => {
               provider: "kakao",
             }, //이메일을 기준으로 유저가 db에 없으면 새로 생성한다, 이미지는 기존 카톡 프로필이미지로
           }).then(([save, created]) => {
+            // if (!created) {
+            //   User.update(
+            //     {
+            //       nickname: response.data.kakao_account.profile.nickname,
+            //       user_image_path: response.data.kakao_account.profile.profile_image_url,
+            //       user_thumbnail_path: response.data.kakao_account.profile.thumbnail_image_url,
+            //     },
+            //     {
+            //       where: {
+            //         email: response.data.kakao_account.email,
+            //       },
+            //     }
+            //   );
+            // }  // 카톡 프사, 닉네임 등등이 바뀌면 여기도 자동으로 바뀔지 모르겠음
             delete save.dataValues.password;
             const accessToken = generateAccessToken(save.dataValues);
             res.cookie("jwt", accessToken, {

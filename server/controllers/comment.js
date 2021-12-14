@@ -11,20 +11,22 @@ module.exports = {
   readComments: async (req, res) => {
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
-    console.log("겟커멘트", accessTokenData);
+
     try {
       if (!accessTokenData) {
         await res.status(200).json({
           data: await getCommentHashtagData(0, contentId),
         });
       } else {
-        const { id } = accessTokenData;
+        const { id } = accessTokenData; //유저이미지는 없어요
+        console.log("겟커멘트", accessTokenData);
         await res.status(200).json({
-          data: await getCommentHashtagData(id, contentId),
-          suserinfo: { user_image_path, nickname },
+          data: await getCommentHashtagData(id, contentId), //이안에 userinfo가 있는건 알아요
+          userinfo: { user_image_path, nickname },
         });
       }
     } catch (err) {
+      console.log("에러", err);
       res.status(500).json({ message: "server err" });
     }
   },
@@ -41,7 +43,7 @@ module.exports = {
         const { id } = accessTokenData;
         await createCommentHashtagData(id, contentId, commentContent, tagsArr);
         await res.status(200).json({
-          data: await getCommentHashtagData(id, contentId),
+          data: await getCommentHashtagData(id, contentId, commentContent, tagsArr),
         });
       }
     } catch (err) {

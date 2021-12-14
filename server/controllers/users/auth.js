@@ -1,4 +1,4 @@
-// 승이님 update를 안쓰고 createfind를 쓰는 이유를 아까 듣고 저도 이걸로 어떻게든 해보려고 했는데
+// 승이님 update를 안쓰고 createfid를 쓰는 이유를 아까 듣고 저도 이걸로 어떻게든 해보려고 했는데
 // 결국에는 console.log('same info exists')로 가더라구요.
 // 우선은 전에 만들었던 update 이용하는 patch 메소드를
 // subAuth.js에 만들어서 쓰고 있어요. 이거 완성되면

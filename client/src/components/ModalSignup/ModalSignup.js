@@ -22,8 +22,6 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
     confirm: "",
   });
 
-  // TODO 중복된 이메일과 닉네임은 서버. 어떻게 할 지?
-
   const handleInputValue = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
     const id = e.target.id;

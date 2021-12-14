@@ -30,12 +30,11 @@ const App = () => {
         console.log("홈으로 가잔");
         setInfo(res.data.data.userInfo);
         setIsLogin(true);
-        window.location.reload();
       });
   };
 
-  console.log(accessToken);
-  //쿠키안에 jwt 있는지 보고 로긴상태결정
+  // console.log(accessToken);
+  // //쿠키안에 jwt 있는지 보고 로긴상태결정
   useEffect(() => {
     if (accessToken) {
       setIsLogin(true);
@@ -43,7 +42,7 @@ const App = () => {
       setIsLogin(false);
     }
     console.log(accessToken);
-  }, []);
+  }, [accessToken]);
 
   const handleResponseSuccess = () => {
     isAuthenticated();

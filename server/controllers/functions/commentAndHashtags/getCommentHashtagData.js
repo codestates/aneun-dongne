@@ -1,4 +1,4 @@
-const { Visited, User, Sequelize } = require("../../../models");
+const { Comment, User, Sequelize } = require("../../../models");
 
 // 포스트 contentId를 가지고 모든 댓글 목록 불러오기
 
@@ -6,12 +6,6 @@ module.exports = async (userId, contentId) => {
   let onlyCommentData = [];
   let result = [];
   let adduser = {};
-  await Visited.create({
-    comment_user_id: comment_user_id, //필수
-    comment_post_contentid: comment_post_contentid, //필수
-    comment_content: comment_content, //필수
-    comment_tags: String(comment_tags_arr), // []면 ""로 등록됨
-  });
   await Comment.findAll({
     raw: true,
     where: {

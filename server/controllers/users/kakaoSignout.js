@@ -6,6 +6,6 @@ module.exports = (req, res) => {
     sameSite: "None",
   });
   console.log("여기왔나요");
-  res.status(205).send("Logged out successfully");
-  // res.redirect(`${process.env.MAIN_URL}`);
+  // res.status(205).send("Logged out successfully");
+  res.redirect(`${process.env.URL_AFTER_LOGOUT}`); //로그아웃하고 갈 페이지
 };

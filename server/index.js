@@ -1,9 +1,10 @@
 require("dotenv").config();
-const fs = require("fs"); //!!
-const https = require("https"); //!!
+const fs = require("fs");
+const https = require("https");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
+const session = require("express-session");
 // const { upload } = require("./upload");
 // const db = require("./models");
 // const { update } = require("../update");
@@ -12,10 +13,8 @@ const controllers = require("./controllers");
 const upload = require("./controllers/upload-image");
 const app = express();
 
-// const PORT = 3065; (배포)
-const PORT = 80;
-
-// const controllers = require("./controllers");
+// const PORT = 3065; //(배포)
+const PORT = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,11 +41,11 @@ app.post("/visited", upload.single("image"), controllers.createVisited);
 app.patch("/visited", upload.single("image"), controllers.updateVisited);
 app.delete("/visited", controllers.deleteVisited);
 
-app.post("/user/kakaologin", controllers.kakaologin);
-
 app.post("/user/signup", controllers.signup);
 app.post("/user/login", controllers.signin);
 
+app.get("/user/kakao/callback", controllers.kakaoCallBack);
+app.get("/signout", controllers.kakaoSignout);
 app.post("/signout", controllers.signout);
 app.post("/home/bookmark", upload.single("image"), controllers.bookmark);
 
@@ -74,4 +73,4 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
 // (배포)
 // let server;
 // server = app.listen(PORT, () => console.log("http server runnning"));
-// module.exports = server;
+module.exports = server;

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
-import { withCookies, Cookies, useCookies } from "react-cookie";
+import { useSetRecoilState } from "recoil";
 import { Styled } from "./style";
 import { message } from "../../message";
-// import Cookies from "universal-cookie";
-import { loginState, token } from "../../recoil/recoil";
+import { token } from "../../recoil/recoil";
 import KakaoLogin from "./KakaoLogin";
 
 const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandler }) => {
+  const setAccessToken = useSetRecoilState(token);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -17,7 +16,6 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
 
   const [errorMessage, setErrorMessage] = useState("");
   const { email, password } = loginInfo;
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
@@ -45,7 +43,6 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         closeLoginModalHandler();
       })
       .then(() => {
-        // console.log(accessToken);
         handleResponseSuccess();
       })
       .catch(() => {

@@ -7,20 +7,22 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 
 import axios from "axios";
 
+import { useRecoilValue } from "recoil";
+import { token } from "../../recoil/recoil";
+
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
-  // console.log(match);
-  const [info, setInfo] = useRecoilState(userInfo);
-  const [imgUrl, setImgUrl] = useState("/snowman.png");
+  const [imgUrl, setImgUrl] = useState("/men.png");
+  const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
+  const accessToken = useRecoilValue(token);
+  const [info, setInfo] = useRecoilState(userInfo);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  // const [prevImg, setPrevImg] = useState("/snowman.png");
-  const [prevImg, setPrevImg] = useState("/snowman.png");
-  const accessToken = useRecoilValue(token);
   const [loading, setLoading] = useState(false);
+
   const activeStyle = {
     color: "#172a71",
   };
@@ -41,6 +43,7 @@ const MyPage = ({ match }) => {
           setImgUrl(res.data.data.userInfo.user_thumbnail_path);
           setPrevImg(res.data.data.userInfo.user_image_path);
         }
+        setLoading(false);
       });
     return result;
   }

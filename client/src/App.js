@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
-import { Route, useHistory } from "react-router-dom";
-
+import { Route } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-
+import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState } from "./recoil/recoil";
-
 import { token, loading, userInfo } from "./recoil/recoil";
 
 import { Mainpage, Home, MyPage, DetailPage } from "./pages";
@@ -41,8 +38,9 @@ const App = () => {
       });
   };
 
-  console.log(accessToken);
-  //쿠키안에 jwt 있는지 보고 로긴상태결정
+  // console.log(accessToken);
+  // //쿠키안에 jwt 있는지 보고 로긴상태결정
+
   useEffect(() => {
     if (accessToken) {
       setIsLogin(true);
@@ -87,11 +85,11 @@ const App = () => {
   //       })
   //       .catch((err) => {
   //         console.log(err);
+
   //         // setIsLoading(false);
   //         // setIsLogin(false);
   //       });
   //   }
-
   //   getToken();
   //   //카톡로긴버튼 눌렀을때만 실행되도록하기//
   // }, []);

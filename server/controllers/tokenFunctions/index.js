@@ -10,8 +10,9 @@ module.exports = {
   },
   isAuthorized: (req) => {
     const authorization = req.headers["authorization"];
+    console.log(req.headers);
     // const authorization = req.headers["cookie"].split("=")[1].split(",")[0];
-    console.log("이거보자", authorization);
+    console.log("isAuthorizaed함수에 찍히는 authorization : ", authorization);
     if (!authorization) {
       return null;
     }

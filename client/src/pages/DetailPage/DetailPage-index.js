@@ -15,7 +15,7 @@ import NoComment from "../../components/Comment/NoComment";
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
-  const [accessToken, setAccessToken] = useRecoilState(token);
+
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
@@ -35,7 +35,7 @@ function DetailPage({ match }) {
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
-
+  const accessToken = useRecoilValue(token);
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   //로딩창
@@ -46,16 +46,21 @@ function DetailPage({ match }) {
     //! 관광지 axios 쓸 자리
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
         withCredentials: true,
       })
       .then((res) => {
         console.log(res.data);
         const { post_mapx, post_mapy } = res.data.post;
         // console.log(mapx, mapy);
+
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
         setTitle(res.data.post.post_title);
-        if (res.data.post.post_tag) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
+        if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
         setPlaceAddr(res.data.post.post_addr1);
         if (res.data.post.post_homepage_path) {
           setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split('"')[0]);
@@ -65,7 +70,7 @@ function DetailPage({ match }) {
         // setOverview(res.data.response.body.items.item.overview);
         // ?
       });
-  }, [pathname]);
+  }, []);
   console.log(navi);
   useEffect(() => {
     axios
@@ -96,7 +101,13 @@ function DetailPage({ match }) {
   useEffect(() => {
     // setLikeLoading(true);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, { withCredentials: "true" })
+      .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
         console.log(like);
@@ -134,20 +145,40 @@ function DetailPage({ match }) {
     }
     await setLikeLoading(true);
     if (!likeOrNot) {
-      axios.post(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {}, { withCredentials: "true" }).then((res) => {
-        const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
-        console.log(like);
-        setLike(like.likeCount);
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/like/${contentId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
+          console.log(like);
+          setLike(like.likeCount);
 
-        setLikeOrNot(like.likeOrNot);
-      });
+          setLikeOrNot(like.likeOrNot);
+        });
     } else {
-      axios.delete(`${process.env.REACT_APP_API_URL}/like/${contentId}`, { withCredentials: "true" }).then((res) => {
-        const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
+        .then((res) => {
+          const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
 
-        setLike(like.likeCount);
-        setLikeOrNot(like.likeOrNot);
-      });
+          setLike(like.likeCount);
+          setLikeOrNot(like.likeOrNot);
+        });
     }
     // return setTimeout(() => {
     //   console.log("hi");

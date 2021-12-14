@@ -42,6 +42,7 @@ const MyPage = ({ match }) => {
           setImgUrl(res.data.data.userInfo.user_image_path);
           setPrevImg(res.data.data.userInfo.user_image_path);
         }
+
         setLoading(false);
       });
   }, []);

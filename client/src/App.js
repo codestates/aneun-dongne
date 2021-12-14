@@ -16,8 +16,8 @@ import Header from "./components/Header/Header";
 const App = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [info, setInfo] = useRecoilState(userInfo);
-  // const accessToken = useRecoilValue(token);
-  const [accessToken, setAccessToken] = useRecoilState(token);
+  const accessToken = useRecoilValue(token);
+  // const [accessToken, setAccessToken] = useRecoilState(token);
   const history = useHistory();
   const [isLoading, setIsLoading] = useRecoilState(loading);
   console.log(accessToken);

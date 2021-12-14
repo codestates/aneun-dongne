@@ -9,7 +9,10 @@ import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 
 const UserInfopage = styled.div`
   top: 0;
-  margin-left: 300px;
+  /* background: red; */
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 100%; */
   /* width: 100%; */
   /* height: 100%; */
   /* border: 1px gray solid; */
@@ -20,6 +23,7 @@ const UserInfopage = styled.div`
 `;
 const View = styled.div`
   margin-top: 40px;
+  margin-left: 20px;
 
   width: 60%;
 
@@ -28,7 +32,7 @@ const View = styled.div`
   flex-direction: column;
   align-self: center;
 
-  /* background: yellow; */
+  background: yellow;
 
   .btn-exit {
     margin: 20px auto;
@@ -59,8 +63,9 @@ const View = styled.div`
 //   cursor: pointer;
 // `;
 const ContentBox = styled.div`
-  margin-top: 40px;
-  margin-left: 10%;
+  margin: 40px 100px 0 0;
+  /* margin-left: 10%; */
+  background: red;
   width: 100%;
   /* display: flex; */
   /* flex-direction: column; */
@@ -70,8 +75,8 @@ const ContentBox = styled.div`
     flex-direction: column;
     /* background: red; */
   }
-  > button {
-    margin: auto;
+  > form button {
+    margin: 20px;
     width: 80px;
     border: none;
     height: 40px;

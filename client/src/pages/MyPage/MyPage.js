@@ -79,6 +79,8 @@ const MyPage = ({ match }) => {
             />
           </Route>
         </div>
+
+        <div>{/* justify-content:space-between을 위한 빈 태그 */}</div>
       </Styled.Body>
     </>
   );

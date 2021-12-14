@@ -2,7 +2,6 @@ const { User } = require("../../models");
 const { generateAccessToken } = require("../tokenFunctions");
 
 module.exports = (req, res) => {
-  console.log(req.body);
   const { nickname, email, password, user_image_path, user_thumbnail_path } = req.body;
   if (!nickname || !email || !password) {
     return res.status(422).send("insufficient parameters supplied");

@@ -18,7 +18,8 @@ module.exports = {
           data: await getCommentHashtagData(0, contentId),
         });
       } else {
-        const { id } = accessTokenData; //유저이미지는 없어요
+        const { id, user_image_path, nickname } = accessTokenData;
+
         console.log("겟커멘트", accessTokenData);
         await res.status(200).json({
           data: await getCommentHashtagData(id, contentId), //이안에 userinfo가 있는건 알아요

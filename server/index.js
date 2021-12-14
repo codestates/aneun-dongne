@@ -16,7 +16,7 @@ const app = express();
 const PORT = 80;
 
 // const controllers = require("./controllers");
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

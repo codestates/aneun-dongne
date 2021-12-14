@@ -474,30 +474,25 @@ const HomeMap = () => {
       });
     }
 
-    if (false) {
-      //어케될지 몰곘네
-      return;
-    } else {
-      //내위치 마커의 infowindow -> 파란색마커임,
-      let iwContentCenter = '<div style="padding:5px;">내 위치 <br></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        // iwPositionCenter = new kakao.maps.LatLng([0, 0]),//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
-        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다; //인포윈도우 표시 위치입니다
-      // 인포윈도우를 생성합니다
+    //내위치 마커의 infowindow -> 파란색마커임,
+    let iwContentCenter = '<div style="padding:5px;">내 위치 <br></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+      // iwPositionCenter = new kakao.maps.LatLng([0, 0]),//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
+      iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다; //인포윈도우 표시 위치입니다
+    // 인포윈도우를 생성합니다
 
-      let infowindowCenter = new kakao.maps.InfoWindow({
-        // position: iwPositionCenter,//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
-        content: iwContentCenter,
-        removable: iwRemoveable,
-      });
+    let infowindowCenter = new kakao.maps.InfoWindow({
+      // position: iwPositionCenter,//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
+      content: iwContentCenter,
+      removable: iwRemoveable,
+    });
 
-      // marker.setMap(map);
+    // marker.setMap(map);
 
-      // 중심좌표 마커에 클릭이벤트를 등록합니다
-      kakao.maps.event.addListener(markerCenter, "click", function () {
-        // 마커 위에 인포윈도우를 표시합니다
-        infowindowCenter.open(map, markerCenter);
-      });
-    }
+    // 중심좌표 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(markerCenter, "click", function () {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindowCenter.open(map, markerCenter);
+    });
 
     // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
     if (clickedNowLocationBtn) {
@@ -546,7 +541,7 @@ const HomeMap = () => {
     map.setBounds(bounds);
     setMap(map);
     setPending(false);
-  }, [kakao.maps, placeList, level]);
+  }, [placeList, level]);
 
   // const changeArea = (area) => {
   //   console.log(area);

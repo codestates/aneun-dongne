@@ -8,14 +8,14 @@ import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, loginModal, deleteCommentmode, defaultcomments, contentid } from "../../recoil/recoil";
+import { loginState, token, loginModal, deleteCommentmode, defaultcomments, contentid } from "../../recoil/recoil";
 import LikeLoading from "../../components/Loading/LikeLoading";
 import NoComment from "../../components/Comment/NoComment";
 
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
-
+  const [accessToken, setAccessToken] = useRecoilState(token);
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
@@ -55,7 +55,7 @@ function DetailPage({ match }) {
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
         setTitle(res.data.post.post_title);
-        setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
+        if (res.data.post.post_tag) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
         setPlaceAddr(res.data.post.post_addr1);
         if (res.data.post.post_homepage_path) {
           setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split('"')[0]);
@@ -68,20 +68,28 @@ function DetailPage({ match }) {
   }, [pathname]);
   console.log(navi);
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, { withCredentials: "true" }).then((res) => {
-      console.log("겟요청 첨에온거", res.data);
-      // console.log(res.data.data);
-      // console.log(res.data.userinfo);
-      // let arr = res.data.data;
-      let arr = res.data.data.map((el) => {
-        // console.log(el.comments.comment_tags.split(","));
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("겟요청 첨에온거", res.data, res.userinfo);
+        // console.log(res.data.data);
+        // console.log(res.data.userinfo);
+        // let arr = res.data.data;
+        let arr = res.data.data.map((el) => {
+          // console.log(el.comments.comment_tags.split(","));
 
-        return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+          return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+        });
+        // console.log("매핑한거", arr);
+        setDefaultComment(arr);
+        setUserinfo(res.data.userinfo);
       });
-      console.log("매핑한거", arr);
-      setDefaultComment(arr);
-      setUserinfo(res.data.userinfo);
-    });
     setDeleteOrNot(false);
   }, [, deleteOrNot]);
 

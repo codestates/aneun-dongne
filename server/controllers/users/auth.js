@@ -66,7 +66,7 @@ module.exports = {
   get: async (req, res) => {
     console.log("AUTH 겟 토큰", req.headers);
     const accessTokenData = isAuthorized(req);
-    // console.log("토큰도착", accessTokenData);
+    console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
@@ -96,6 +96,7 @@ module.exports = {
     console.log("AUTH 겟 토큰", req.headers);
 
     const accessTokenData = isAuthorized(req);
+    console.log("여기에요?", accessTokenData);
     console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {

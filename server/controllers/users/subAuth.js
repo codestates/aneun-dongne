@@ -50,6 +50,7 @@ module.exports = {
     });
     //이메일이나 비번이 일치하는 자료가 DB에 없다면 컷
     if (!validUser) {
+      console.log("이것좀보자", email, password);
       return res.status(405).json({ data: null, message: "no such user in the database" });
     } else {
       // console.log(req.file.key) // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..

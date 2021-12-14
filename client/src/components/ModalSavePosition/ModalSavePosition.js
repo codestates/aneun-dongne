@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
+import { isSavepositionOpen, loginState, loginModal, usersaddress, defaultposition, token } from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../message";
 import ImageUpload from "../UploadImage/ImageUpload";
 
 const ModalSavePosition = () => {
+  const [accessToken, setAccessToken] = useRecoilState(token);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
@@ -18,6 +19,10 @@ const ModalSavePosition = () => {
     image: "",
     memo: "",
   });
+  //유저 위치정보
+  const [userAddr, setUserAddr] = useRecoilState(usersaddress);
+  const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
+  console.log(userAddr, defaultPosition);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -31,22 +36,35 @@ const ModalSavePosition = () => {
       return;
     }
     let formData = new FormData();
-    // console.log("저장버튼 들어간다.", e);
-    //form-data 객체의 기존 키에 새 값을 추가하거나 키가 없으면 키를 추가한다.
 
+    // form-data 객체의 기존 키에 새 값을 추가하거나 키가 없으면 키를 추가한다.
+    // 이미지를 보낼땐 formData안에 넣어서 안보내면 1MB만 되어도 에러가 뜨더라구요
     formData.append("image", placeImage); // 파일
     formData.append("memo", memo); //메모
+    formData.append("area", userAddr.area);
+    formData.append("sigg", userAddr.sigg);
+    formData.append("mapx", defaultPosition.lon);
+    formData.append("mapy", defaultPosition.lat);
     console.log(memo);
     console.log("img", placeImage);
     console.log("폼데이터", formData);
     console.log("폼데이터imag", formData.get("image"));
+
     // headers: { "content-type": "multipart/form-data" },
     axios
-      .post(`${process.env.REACT_APP_API_URL}/visited`, formData, { withCredentials: true })
+      .post(`${process.env.REACT_APP_API_URL}/visited`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
 
       .then((res) => {
         console.log(res.data.message);
         setIsUploaded(true);
+
+        // window.location.reload();
       })
       .catch((err) => {
         setClickedBtn(true);

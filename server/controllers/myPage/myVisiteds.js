@@ -68,6 +68,7 @@ const getMyVisiteds = async (userId) => {
 
 module.exports = {
   readVisiteds: async (req, res) => {
+    console.log("왔나요왔나요", req.body);
     const accessTokenData = isAuthorized(req);
     try {
       if (!accessTokenData) {

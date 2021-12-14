@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { userInfo, loginState, loginModal } from "../../recoil/recoil";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+import { userInfo, loginState, loginModal, token } from "../../recoil/recoil";
 // import hamtori from "../../img/hamtori.png";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 
@@ -167,7 +167,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-
+  const accessToken = useRecoilValue(token);
   // const [PasswordErr, setPasswordErr] = useState("");
   // const [passwordError, setPasswordError] = useState("");
   // const [passwordCheckError, setPasswordCheckError] = useState("");
@@ -178,23 +178,31 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   // console.log(info);
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
-    axios.get("https://localhost:80/user/info", { withCredentials: true }).then((res) => {
-      console.log(res.data.data.userInfo);
-      console.log(typeof res.data.data.userInfo.user_image_path);
-      setInfo(res.data.data.userInfo);
-      if (res.data.data.userInfo.user_image_path) {
-        console.log(res.data.data.userInfo.user_image_path);
-        setImgUrl(res.data.data.userInfo.user_image_path);
-        setNickname(res.data.data.userInfo.nickname);
-      }
+    axios
+      .get("https://localhost:80/user/info", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data.userInfo);
+        console.log(typeof res.data.data.userInfo.user_image_path);
+        setInfo(res.data.data.userInfo);
+        if (res.data.data.userInfo.user_image_path) {
+          console.log(res.data.data.userInfo.user_image_path);
+          setImgUrl(res.data.data.userInfo.user_image_path);
+          setNickname(res.data.data.userInfo.nickname);
+        }
 
-      // const { , inputUsername, inputEmail } = res.data.data.userInfo;
-      // setInputEmail(inputEmail);
-      // setImgUrl(imgUrl);
-      // setInputUsername(inputUsername);
+        // const { , inputUsername, inputEmail } = res.data.data.userInfo;
+        // setInputEmail(inputEmail);
+        // setImgUrl(imgUrl);
+        // setInputUsername(inputUsername);
 
-      // props.accessToken(res.data.Info);
-    });
+        // props.accessToken(res.data.Info);
+      });
   }, []);
   console.log(imgUrl);
   const editInfo = (e) => {
@@ -215,7 +223,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       console.log(imgUrl);
     }
     formData.append("nickname", inputUsername);
-    formData.append("email", info.email);
+    formData.append("email", inputEmail);
     formData.append("password", inputPassword);
     formData.append("checkPassword", inputCheckPassword);
     formData.append("newPassword", inputNewPassword);
@@ -223,7 +231,13 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     console.log(formData.get("image"));
 
     axios
-      .patch(`https://localhost:80/user/info`, formData, { "Content-Type": "application/json", withCredentials: true })
+      .patch(`https://localhost:80/user/info`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          // "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.status === 400) {
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
@@ -269,9 +283,9 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     setInputUsername(e.target.value);
   };
   //이메일변경불가
-  // const handleInputEmail = (e) => {
-  //   setInputEmail(e.target.value);
-  // };
+  const handleInputEmail = (e) => {
+    setInputEmail(e.target.value);
+  };
 
   //비밀번호변경//유효성검사추가해야함
   const handleInputPassword = (e) => {
@@ -370,6 +384,9 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
                 <input type="text" name="nickname" placeholder="닉네임" onChange={handleInputUsername} />
               </div>
               <div className="userinfo-each-label">
+                <input type="text" name="email" placeholder="이메일" onChange={handleInputEmail} />
+              </div>
+              <div className="userinfo-each-label">
                 <input
                   type="password"
                   name="password"
@@ -403,6 +420,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
                 <button className="btn-edit" type="submit">
                   저장
                 </button>
+
                 <button className="btn-exit" onClick={() => deleteHandler()}>
                   회원탈퇴
                 </button>

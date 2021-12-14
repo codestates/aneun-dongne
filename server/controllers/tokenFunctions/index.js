@@ -9,19 +9,15 @@ module.exports = {
     res.status(201).json({ data: { accessToken }, message: "ok" });
   },
   isAuthorized: (req) => {
-    const authorization = req.headers["cookie"];
+    const authorization = req.headers["authorization"];
+    // const authorization = req.headers["cookie"].split("=")[1].split(",")[0];
+    console.log("이거보자", authorization);
     if (!authorization) {
       return null;
     }
-
-    let token = authorization;
-
-    if (authorization.split(" ")[1]) {
-      token = authorization.split(" ")[0].slice(4, authorization.split(" ")[0].length - 1);
-    } else {
-      token = authorization.slice(4);
-    }
-
+    const token = authorization.split(" ")[1];
+    // const token = authorization;
+    console.log("토큰", token);
     try {
       return verify(token, process.env.ACCESS_SECRET);
     } catch (err) {

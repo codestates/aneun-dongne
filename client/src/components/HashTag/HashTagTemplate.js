@@ -62,5 +62,5 @@ function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
     </>
   );
 }
-
-export default HashTagTemplate;
+// export default HashTagTemplate;
+export default React.memo(HashTagTemplate);

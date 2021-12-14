@@ -8,12 +8,12 @@ const CommentWrapper = styled.div`
 `;
 
 function CommentTemplate({ commentDummy, contentId }) {
-  console.log(commentDummy);
+  // console.log(commentDummy);
   return (
     <>
       <CommentWrapper>
         {commentDummy.map((comment, idx) => {
-          console.log(comment);
+          // console.log(comment);
           if (comment.text === "\n") return null;
           // if (comment.text === "") alert("내용을 입력해주세요");
           return (

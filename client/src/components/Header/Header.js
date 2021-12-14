@@ -4,13 +4,15 @@ import ModalLogin from "../ModalLogin/ModalLogin";
 import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
 import { isSavepositionOpen, loginState, loginModal, visitedModal } from "../../recoil/recoil";
-import ModalSavePosition from "../ModalSavePosition/ModalSavePosition-index";
+import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { StyledLink } from "../PlaceList";
 import ModalVisited from "../ModalVisited/ModalVisited";
+import Cookies from "universal-cookie";
 
 const Header = ({ handleResponseSuccess }) => {
+  const cookies = new Cookies();
   const history = useHistory();
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -78,6 +80,7 @@ const Header = ({ handleResponseSuccess }) => {
     console.log("hi");
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
       //로긴상태 해제
+      // cookies.remove("jwt");
       setIsLogin(false);
     });
 
@@ -133,7 +136,7 @@ const Header = ({ handleResponseSuccess }) => {
       </Styled.ModalContainer>
 
       {/* // MyPage/visited 내가 가본 곳 모달 */}
-      <Styled.ModalContainer>
+      {/* <Styled.ModalContainer>
         {isVisitedOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
@@ -143,7 +146,7 @@ const Header = ({ handleResponseSuccess }) => {
             </Styled.ModalBackdrop>
           </>
         ) : null}
-      </Styled.ModalContainer>
+      </Styled.ModalContainer> */}
 
       <Styled.HeaderContainer>
         <div className="header-wrapper">
@@ -170,7 +173,7 @@ const Header = ({ handleResponseSuccess }) => {
                   Log Out
                 </div>
                 {/* 나중에 밑줄뜨는거 처리해야함*/}
-                <StyledLink to="/mypage">
+                <StyledLink to="/mypage/profile">
                   <div className="mainpage-button">My Page</div>
                   {/* <div className="mainpage-button">My Page</div> */}
                 </StyledLink>

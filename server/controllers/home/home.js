@@ -11,8 +11,8 @@ require("dotenv").config();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
-  let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.params;
-
+  let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.query;
+  // console.log("리코그쿼리", req.query);
   // 입력 안 했을 경우
   // pickpoint  params { tag, searchWord : ""  areacode="null", sigungucode="null"}
   // word {areacode=0, sigungucode=0, tag, searchWord : ""}: 돋보기검색버튼
@@ -35,12 +35,12 @@ module.exports = async (req, res) => {
     if (!accessTokenData) {
       if (areacode === "null") {
         //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
-        const { clientwtmx, clientwtmy } = req.params;
+        const { clientwtmx, clientwtmy } = req.query;
         await res.status(200).json({
           data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),
         });
       } else {
-        const { areacode, sigungucode } = req.params;
+        const { areacode, sigungucode } = req.query;
         if (areacode === 0) {
           //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
           await res.status(200).json({
@@ -53,17 +53,16 @@ module.exports = async (req, res) => {
           });
         }
       }
-
     } else {
       const { id } = accessTokenData;
       if (areacode === "null") {
         //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
-        const { clientwtmx, clientwtmy } = req.params;
+        const { clientwtmx, clientwtmy } = req.query;
         await res.status(200).json({
           data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
         });
       } else {
-        const { areacode, sigungucode } = req.params;
+        const { areacode, sigungucode } = req.query;
         if (areacode === 0) {
           //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
           await res.status(200).json({

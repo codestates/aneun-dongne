@@ -7,7 +7,7 @@ const fs = require("fs");
 
 module.exports = {
   get: async (req, res) => {
-    console.log("AUTH 겟 토큰", req);
+    console.log("AUTH 겟 토큰", req.headers);
     const accessTokenData = isAuthorized(req);
     console.log("토큰도착", accessTokenData);
 

@@ -25,34 +25,14 @@ const View = styled.div`
   margin-top: 40px;
   margin-left: 20px;
 
-  width: 60%;
+  width: 500px;
 
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-self: center;
 
-  background: yellow;
-
-  .btn-exit {
-    margin: 20px auto;
-    width: 80px;
-    border: 1px gray solid;
-    height: 40px;
-    /* background-color: #8ea1da; */
-    /* background: purple; */
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    transition: all 0.5s ease;
-    border-radius: 20px;
-  }
-  .btn-exit:hover {
-    transform: scale(1.1);
-  }
+  /* background: yellow; */
 `;
 
 // export const ProfileImg = styled.img`
@@ -63,20 +43,19 @@ const View = styled.div`
 //   cursor: pointer;
 // `;
 const ContentBox = styled.div`
-  margin: 40px 100px 0 0;
+  /* margin: 40px 100px 0 0; */
   /* margin-left: 10%; */
-  background: red;
+  /* background: red; */
   width: 100%;
+  margin-top: 30px;
   /* display: flex; */
   /* flex-direction: column; */
 
   > form {
     display: flex;
     flex-direction: column;
-    /* background: red; */
   }
   > form button {
-    margin: 20px;
     width: 80px;
     border: none;
     height: 40px;
@@ -93,11 +72,12 @@ const ContentBox = styled.div`
   }
   > form .userinfo-each-label {
     /* background: skyblue; */
-    margin-top: 30px;
+    margin: 23px auto;
+
     position: relative;
   }
   > form .userinfo-each-label span {
-    float: left;
+    /* float: left; */
   }
   > form .userinfo-each-label input {
     /* background: yellow; */
@@ -113,9 +93,13 @@ const ContentBox = styled.div`
     /* position: absolute; */
     /* float: right; */
   }
-  > form .userinfo-each-label .btn-edit {
-    position: absolute;
-    right: 1%;
+  form .userinfo-button-label {
+    /* background: blue; */
+    display: flex;
+    justify-content: center;
+  }
+  > form .userinfo-button-label .btn-edit {
+    margin: 20px;
     width: 80px;
     border: 1px gray solid;
     height: 40px;
@@ -136,6 +120,25 @@ const ContentBox = styled.div`
   }
 
   button:active {
+    transform: scale(1.1);
+  }
+  form .userinfo-button-label .btn-exit {
+    margin: 20px;
+    width: 80px;
+    border: 1px gray solid;
+    height: 40px;
+    /* background-color: #8ea1da; */
+    /* background: purple; */
+    background-image: linear-gradient(
+      to right bottom,
+      rgba(255, 255, 255, 0.9) 0,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    transition: all 0.5s ease;
+    border-radius: 20px;
+  }
+  .btn-exit:hover {
     transform: scale(1.1);
   }
 `;
@@ -395,15 +398,17 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
                   value={inputNewPassword}
                   onChange={(e) => handleInputNewPassword(e)}
                 />
+              </div>
+              <div className="userinfo-button-label">
                 <button className="btn-edit" type="submit">
                   저장
+                </button>
+                <button className="btn-exit" onClick={() => deleteHandler()}>
+                  회원탈퇴
                 </button>
               </div>
             </form>
           </ContentBox>
-          <button className="btn-exit" onClick={() => deleteHandler()}>
-            회원탈퇴
-          </button>
         </View>
       </UserInfopage>
     </div>

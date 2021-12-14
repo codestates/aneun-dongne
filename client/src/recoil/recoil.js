@@ -1,6 +1,5 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
-
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -9,7 +8,7 @@ export const token = atom({
   default: cookies.get("jwt"),
 });
 
-//! 유저 주소 - Home.js에서 사용
+//! 유저 주소 - Home.js, savePositioModal 에서 사용
 export const usersaddress = atom({
   key: "usersaddress",
   default: { area: "", sigg: "", addr: "" },
@@ -207,4 +206,32 @@ export const setLo = selector({
 export const visitedModal = atom({
   key: "visitedModal",
   default: false,
+});
+
+//! 마이페이지
+
+export const imgUrl = atom({
+  key: "imgUrl",
+  default: "",
+});
+
+export const getVisitedList = selector({
+  key: "getVisitedList",
+  get: async ({ get }) => {
+    const result = await axios
+      .get(`${process.env.REACT_APP_API_URL}/visited`, {
+        headers: {
+          Authorization: `Bearer ${get(token)}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        // setVisitedImg(res.data)
+        return res.data.data;
+      });
+
+    return result;
+  },
 });

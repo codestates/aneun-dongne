@@ -42,9 +42,9 @@ const HomeMap = () => {
   const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
 
   //!지역 검색창을 위한 state
-  const [area, setArea] = useState(0); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(0); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
   const [level, setLevel] = useState(10);
@@ -474,30 +474,25 @@ const HomeMap = () => {
       });
     }
 
-    if (false) {
-      //어케될지 몰곘네
-      return;
-    } else {
-      //내위치 마커의 infowindow -> 파란색마커임,
-      let iwContentCenter = '<div style="padding:5px;">내 위치 <br></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        // iwPositionCenter = new kakao.maps.LatLng([0, 0]),//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
-        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다; //인포윈도우 표시 위치입니다
-      // 인포윈도우를 생성합니다
+    //내위치 마커의 infowindow -> 파란색마커임,
+    let iwContentCenter = '<div style="padding:5px;">내 위치 <br></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+      // iwPositionCenter = new kakao.maps.LatLng([0, 0]),//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
+      iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다; //인포윈도우 표시 위치입니다
+    // 인포윈도우를 생성합니다
 
-      let infowindowCenter = new kakao.maps.InfoWindow({
-        // position: iwPositionCenter,//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
-        content: iwContentCenter,
-        removable: iwRemoveable,
-      });
+    let infowindowCenter = new kakao.maps.InfoWindow({
+      // position: iwPositionCenter,//! 있어야되는줄 알았는데 없어도 된다. 나중에 문제생기면 복구용으로 안지움
+      content: iwContentCenter,
+      removable: iwRemoveable,
+    });
 
-      // marker.setMap(map);
+    // marker.setMap(map);
 
-      // 중심좌표 마커에 클릭이벤트를 등록합니다
-      kakao.maps.event.addListener(markerCenter, "click", function () {
-        // 마커 위에 인포윈도우를 표시합니다
-        infowindowCenter.open(map, markerCenter);
-      });
-    }
+    // 중심좌표 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(markerCenter, "click", function () {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindowCenter.open(map, markerCenter);
+    });
 
     // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
     if (clickedNowLocationBtn) {
@@ -546,7 +541,7 @@ const HomeMap = () => {
     map.setBounds(bounds);
     setMap(map);
     setPending(false);
-  }, [kakao.maps, placeList, level]);
+  }, [placeList, level]);
 
   // const changeArea = (area) => {
   //   console.log(area);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
-import { useRecoilState } from "recoil";
-import { defaultcomments, deleteCommentmode } from "../../recoil/recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { defaultcomments, deleteCommentmode, token } from "../../recoil/recoil";
 import MyComment from "./MyComment";
 import EditableHashTag from "../HashTag/EditableHashTag";
 import axios from "axios";
@@ -223,7 +223,7 @@ const Date = styled.div`
 
 function Comments({ uuid, img, nickname, text, initialTags, date, editable, contentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
-
+  const accessToken = useRecoilValue(token);
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(text);
@@ -277,10 +277,19 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     await axios
       .delete(
         `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+          params: { commentId: uuid },
+          withCredentials: true,
+        }
 
         //! axios에선 params지만 express에선 req.query래요.
         //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
-        { params: { commentId: uuid }, withCredentials: true }
+        // { params: { commentId: uuid }, withCredentials: true }
       )
       .then((res) => {
         console.log(res.data.data);

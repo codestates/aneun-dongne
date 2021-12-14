@@ -4,9 +4,10 @@ import styled from "styled-components";
 export const Styled = {
   Body: styled.div`
     display: flex;
-
+    justify-content: space-between;
     .menu-bar {
-      position: fixed;
+      position: sticky;
+      top: 0;
       left: 0;
       display: flex;
       flex-direction: column;
@@ -63,6 +64,9 @@ export const Styled = {
 
     .page-container {
       margin-top: 75px;
+      /* background: blue; */
+      display: flex;
+      justify-content: center;
     }
   `,
 

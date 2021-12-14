@@ -28,6 +28,7 @@ const Body = styled.div`
 `;
 function VisitedList({ placeList }) {
   console.log(placeList);
+
   return (
     <Body>
       {placeList.map((el, idx) => {

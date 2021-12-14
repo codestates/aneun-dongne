@@ -1,3 +1,12 @@
+// 승이님 update를 안쓰고 createfid를 쓰는 이유를 아까 듣고 저도 이걸로 어떻게든 해보려고 했는데
+// 결국에는 console.log('same info exists')로 가더라구요.
+// 우선은 전에 만들었던 update 이용하는 patch 메소드를
+// subAuth.js에 만들어서 쓰고 있어요. 이거 완성되면
+// index/controller에  주석만 바꾸시면 될 것 같아요.
+// 그리고 이메일은 고유값이라 안바꾸는걸로 바뀌었어요. 말씀을 못드렸네요
+// 클라이언트에서 오는 프사,닉넴,비번,이메일중 이메일값은 바꾸지 않고 닉넴, 비번, 프사만 바뀌어요
+// 클라이언트에서 확인하고 싶으시다면 /src/components/Profile/Profile.js에 있는 axios.patch를 보시면 돼요
+//
 const { isAuthorized, generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 const { User } = require("../../models");
 
@@ -57,7 +66,7 @@ module.exports = {
   get: async (req, res) => {
     console.log("AUTH 겟 토큰", req.headers);
     const accessTokenData = isAuthorized(req);
-    // console.log("토큰도착", accessTokenData);
+    console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
@@ -87,6 +96,7 @@ module.exports = {
     console.log("AUTH 겟 토큰", req.headers);
 
     const accessTokenData = isAuthorized(req);
+    console.log("여기에요?", accessTokenData);
     console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {

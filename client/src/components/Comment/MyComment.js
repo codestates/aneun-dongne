@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import EditableHashTag from "../HashTag/EditableHashTag";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { defaultcomments, updatecomment, loginState, loginModal } from "../../recoil/recoil";
+import { token, defaultcomments, updatecomment, loginState, loginModal } from "../../recoil/recoil";
 import axios from "axios";
 const CommentWrapper = styled.div`
   width: 100%;
@@ -122,6 +122,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
   const [text, setText] = useState("");
   const [count, setCount] = useState(0);
   const [tags, setTags] = useState([]);
+  const accessToken = useRecoilValue(token);
   // const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
@@ -155,15 +156,23 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       commentContent: something,
       tagsArr: tags,
     };
-    axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, { withCredentials: true }).then((res) => {
-      console.log("가공전", res.data.data);
-      let arr = res.data.data.map((el) => {
-        // console.log(el.comments.comment_tags.split(","));
-        console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
-        return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("가공전", res.data.data);
+        let arr = res.data.data.map((el) => {
+          // console.log(el.comments.comment_tags.split(","));
+          console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
+          return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+        });
+        setDefaultComment(arr);
       });
-      setDefaultComment(arr);
-    });
 
     //------------
     // setDefaultComment(defaultComment.concat(body)); 왜 일케하면 memo되고 밑에꺼로하면 안됨
@@ -204,5 +213,5 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     </CommentWrapper>
   );
 }
-
-export default MyComment;
+// export default MyComment;
+export default React.memo(MyComment);

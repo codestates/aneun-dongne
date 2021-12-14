@@ -36,7 +36,6 @@ require("dotenv").config();
 //   // 포스트를 찾아서 내용 및 홈페이지가 없을 경우 api요청해서 db에 넣고 있을 경우 넣지 않음
 // };
 
-
 const getPostData = async (contentId) => {
   let result = {};
 

@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 export const Styled = {
-  Body: styled.div`
-    margin-left: 400px;
-  `,
+  Body: styled.div``,
 
   Div: styled.div`
     /* background: red; */

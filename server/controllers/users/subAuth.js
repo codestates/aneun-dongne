@@ -21,7 +21,7 @@ module.exports = {
   patch: async (req, res) => {
     console.log("리코그바디, subAuth.put", req.file, req.body);
 
-    if (req.body.password !== req.body.checkPassword) {
+    if (req.body.newPassword !== req.body.checkPassword) {
       return res.status(400).send({ message: "type your password again" });
     }
     // 확인용 => password,email
@@ -52,7 +52,6 @@ module.exports = {
     });
     //이메일이나 비번이 일치하는 자료가 DB에 없다면 컷
     if (!validUser) {
-      console.log("이것좀보자", email, password);
       return res.status(405).json({ data: null, message: "no such user in the database" });
     } else {
       // console.log(req.file.key) // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
@@ -105,18 +104,10 @@ module.exports = {
               delete data.dataValues.password;
               const accessToken = generateAccessToken(data.dataValues);
               console.log("여기까지왔어요?");
-              res
-                .cookie("jwt", accessToken, {
-                  maxAge: 1000 * 60 * 60 * 24 * 7,
-                  // domain: ".aneun-dongne.com", (배포)
-                  path: "/",
-                  secure: true,
-                  sameSite: "None",
-                })
-                .json({
-                  data: { accessToken, nickname, user_image_path: image, user_thumbnail_path: thumbnail },
-                  message: "okkk",
-                });
+              res.json({
+                data: { accessToken, nickname, user_image_path: image, user_thumbnail_path: thumbnail },
+                message: "okkk",
+              });
             }
           });
           // res.status(201).json({ message: "successfully changed" });

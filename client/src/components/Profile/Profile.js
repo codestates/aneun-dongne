@@ -80,7 +80,8 @@ const ContentBox = styled.div`
   > form .userinfo-each-label span {
     /* float: left; */
   }
-  > form .userinfo-each-label input {
+  > form .userinfo-each-label input,
+  form .userinfo-each-label div {
     /* background: yellow; */
 
     font-size: 1.2rem;
@@ -91,6 +92,7 @@ const ContentBox = styled.div`
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 20px;
+    /* border: 1px gray solid; */
     /* position: absolute; */
     /* float: right; */
   }
@@ -192,7 +194,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       .then((res) => {
         console.log(res.data.data.userInfo);
         console.log(typeof res.data.data.userInfo.user_image_path);
-        setInfo(res.data.data.userInfo);
+        setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
           console.log(res.data.data.userInfo.user_image_path);
           setImgUrl(res.data.data.userInfo.user_image_path);
@@ -381,10 +383,10 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
           <ContentBox>
             <form onSubmit={editInfo}>
               <div className="userinfo-each-label">
-                <input type="text" name="nickname" placeholder="닉네임" onChange={handleInputUsername} />
+                <input type="text" name="nickname" placeholder="새로운 닉네임" onChange={handleInputUsername} />
               </div>
               <div className="userinfo-each-label">
-                <input type="text" name="email" placeholder="이메일" onChange={handleInputEmail} />
+                <input type="text" value={inputEmail} readOnly />
               </div>
               <div className="userinfo-each-label">
                 <input
@@ -396,24 +398,25 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
                   onChange={(e) => handleInputPassword(e)}
                 />
               </div>
+
               <div className="userinfo-each-label">
                 <input
                   type="password"
                   name="password"
-                  placeholder="비밀번호 확인"
                   // defaultValue=""
-                  value={inputCheckPassword}
-                  onChange={(e) => handleInputCheckPassword(e)}
+                  placeholder="새로운 비밀번호"
+                  value={inputNewPassword}
+                  onChange={(e) => handleInputNewPassword(e)}
                 />
               </div>
               <div className="userinfo-each-label">
                 <input
                   type="password"
                   name="password"
+                  placeholder="새로운 비밀번호 확인"
                   // defaultValue=""
-                  placeholder="수정 비밀번호"
-                  value={inputNewPassword}
-                  onChange={(e) => handleInputNewPassword(e)}
+                  value={inputCheckPassword}
+                  onChange={(e) => handleInputCheckPassword(e)}
                 />
               </div>
               <div className="userinfo-button-label">

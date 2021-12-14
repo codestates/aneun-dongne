@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-
+console.log(cookies.get("jwt"));
 export const token = atom({
   key: "token",
   default: cookies.get("jwt"),

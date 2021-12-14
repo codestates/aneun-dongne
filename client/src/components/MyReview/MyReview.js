@@ -5,8 +5,10 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { token } from "../../recoil/recoil";
 
+import MyReviewComment from "../MyReviewComment/MyReviewComment";
+
 const Body = styled.div`
-  margin-left: 400px;
+  margin-left: 450px;
 `;
 
 const MyReview = () => {
@@ -23,7 +25,8 @@ const MyReview = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data.data);
+        SetComments(res.data.data);
       });
   };
 
@@ -34,7 +37,13 @@ const MyReview = () => {
   return (
     <>
       <Body>
-        <div>dddd</div>
+        <div className="comment-list">
+          {comments.length === 0
+            ? "댓글이 없음"
+            : comments.map((comment) => {
+                return <MyReviewComment key={comment.comments.id} comment={comment} />;
+              })}
+        </div>
       </Body>
     </>
   );

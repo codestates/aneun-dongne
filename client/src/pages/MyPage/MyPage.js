@@ -9,8 +9,8 @@ import { token } from "../../recoil/recoil";
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 const MyPage = ({ match }) => {
-  const [imgUrl, setImgUrl] = useState("/snowman.png");
-  const [prevImg, setPrevImg] = useState("/snowman.png");
+  const [imgUrl, setImgUrl] = useState("/men.png");
+  const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
   const accessToken = useRecoilValue(token);
 
@@ -42,7 +42,7 @@ const MyPage = ({ match }) => {
         <nav className="menu-bar">
           <div className="profile">
             <div className="profile-image">
-              <img src="/snowman.png" />
+              <img src={imgUrl} />
             </div>
             <div className="profile-name">{nickname}</div>
           </div>

@@ -12,6 +12,8 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
     email: "",
     password: "",
     passwordConfirm: "",
+    user_image_path: "/men.png",
+    user_thumbnail_path: "/men.png",
   });
 
   const [errorMessage, setErrorMessage] = useState({
@@ -51,7 +53,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
   };
 
   const handleSignup = () => {
-    const { nickname, email, password, passwordConfirm } = userInfo;
+    const { nickname, email, password, passwordConfirm, user_image_path, user_thumbnail_path } = userInfo;
     if (nickname === "" || email === "" || password === "" || passwordConfirm === "") {
       setErrorMessage({
         ...errorMessage,
@@ -75,6 +77,8 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
           nickname,
           email,
           password,
+          user_image_path,
+          user_thumbnail_path,
         },
         {
           headers: { "Content-Type": "application/json" },

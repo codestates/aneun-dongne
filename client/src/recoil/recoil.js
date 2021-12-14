@@ -1,6 +1,14 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
 
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
+export const token = atom({
+  key: "token",
+  default: cookies.get("jwt"),
+});
+
 //! 유저 주소 - Home.js에서 사용
 export const usersaddress = atom({
   key: "usersaddress",
@@ -132,11 +140,6 @@ export const pickpoint = selector({
   set: ({ set }, arr) => {
     set(defaultposition, { lat: arr[0], lon: arr[1] });
   },
-});
-
-export const token = atom({
-  key: "token",
-  default: "",
 });
 
 export const infoEdit = atom({

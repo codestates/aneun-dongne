@@ -271,7 +271,7 @@ function Mainpage() {
     <>
       <Body>
         <MainTitleView>
-          <img src="/preview.gif" muted autoPlay loop playsInline />
+          <img src="/map.gif" muted autoPlay loop playsInline />
           <div className="main-title">
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <StartButton onClick={ToHome}>시작하기</StartButton>

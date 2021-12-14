@@ -35,10 +35,12 @@ function VisitedList({ placeList }) {
         return (
           <div className="visited-cards-list" key={idx}>
             <VisitedCards
+              idx={idx}
+              id={el.id}
               area={el.visited_area}
               sigg={el.visited_sigg}
               memo={el.visited_memo}
-              image={el.visited_memo_image_path}
+              image={el.visited_thumbnail_path}
             />
           </div>
         );

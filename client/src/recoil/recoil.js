@@ -209,12 +209,14 @@ export const visitedModal = atom({
 });
 
 //! 마이페이지
-
-export const imgUrl = atom({
-  key: "imgUrl",
+export const newVisitedPlace = atom({
+  key: "newVisitedPlace",
   default: "",
 });
-
+export const newVisitedMemo = atom({
+  key: "newVisitedMemo",
+  default: "",
+});
 export const getVisitedList = selector({
   key: "getVisitedList",
   get: async ({ get }) => {

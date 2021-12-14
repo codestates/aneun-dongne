@@ -108,7 +108,7 @@ export const Styled = {
   `,
 };
 
-function VisitedCards({ area, sigg, image, memo }) {
+function VisitedCards({ area, sigg, image, memo, id, idx }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const openModalHandler = () => {
     setIsVisitedOpen(true);
@@ -118,6 +118,7 @@ function VisitedCards({ area, sigg, image, memo }) {
       setIsVisitedOpen(false);
     }
   };
+  console.log(image);
   return (
     <>
       {/* // MyPage/visited 내가 가본 곳 모달 */}
@@ -132,7 +133,8 @@ function VisitedCards({ area, sigg, image, memo }) {
           </>
         ) : null}
       </Styled.ModalContainer>
-
+      {/* <Styled.PlaceCard > */}
+      {/* <Styled.PlaceCard onClick={() => openModalHandler}> */}
       <Styled.PlaceCard onClick={openModalHandler}>
         <div className="place-cards">
           {image ? <img src={image} /> : <img src={notImageYet} />}

@@ -2,17 +2,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
-import PlaceList from "../PlaceList";
+
 import VisitedList from "./VisitedList";
-import { token, loading, userInfo, visitedModal, getVisitedList, visitedModalImg } from "../../recoil/recoil";
-import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import {
+  token,
+  loading,
+  userInfo,
+  visitedModal,
+  getVisitedList,
+  visitedModalImg,
+  newVisitedPlace,
+} from "../../recoil/recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 
 const { kakao } = window;
 
 const MyVisited = () => {
   const setIsVisitedOpen = useSetRecoilState(visitedModal);
   const accessToken = useRecoilValue(token);
-  const [placeList, setPlaceList] = useState([]);
+  const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   const [loading, setLoading] = useState(false);
   // const visitedList = useRecoilValueLoadable(getVisitedList);
 
@@ -28,7 +36,7 @@ const MyVisited = () => {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         setPlaceList(res.data.data);
       });
     // await setLoading(false);

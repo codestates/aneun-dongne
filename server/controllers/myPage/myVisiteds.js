@@ -129,7 +129,14 @@ module.exports = {
         const { id } = accessTokenData;
         const { area, sigg, mapx, mapy, memo } = req.body;
         const { visitedId } = req.query;
-
+        //--이미지 추가안한 경우에는  이미지가 null로 떠서 렌더링이 안되네요, 이미지 추가안했을땐 이전이미지 쓰도록 했어요--//
+        const visitedPlace = await User.findOne({
+          where: {
+            id,
+          },
+        });
+        console.log("visitedPlace", visitedPlace);
+        //------------------------------------------------------//
         if (!req.file) {
           console.log("이미지 없음");
           await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, null, null);

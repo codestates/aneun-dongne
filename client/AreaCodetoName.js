@@ -315,7 +315,7 @@ const allSigg = [
 let areaCode = 0;
 let siggCode = 0;
 
-const getCodes = (areaSearch, siggSearch) => {
+export const getCodes = (areaSearch, siggSearch) => {
   for (let i = 0; i < areaNameArr.length; i++) {
     if (areaNameArr[i] === areaSearch) {
       //지역이 검색어와 일치하면
@@ -339,7 +339,7 @@ const getCodes = (areaSearch, siggSearch) => {
 
 console.log(getCodes("경남", "함양군"));
 
-const getNames = (areaCode, siggCode) => {
+export const getNames = (areaCode, siggCode) => {
   for (let i = 0; i < areaCodeArr.length; i++) {
     if (areaCodeArr[i] === areaCode) {
       //지역과 검색어 코드가 일치하면

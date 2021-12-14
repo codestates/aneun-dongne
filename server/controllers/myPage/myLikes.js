@@ -1,4 +1,5 @@
 const { Post, Like, sequelize, Sequelize } = require("../../models");
+const { isAuthorized } = require("../tokenFunctions");
 
 const getMyLikes = async (userId) => {
   let result = [];
@@ -56,6 +57,7 @@ const getMyLikes = async (userId) => {
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
+
   try {
     if (!accessTokenData) {
       await res.status(400).json({ data: null, message: "invalid access token" });

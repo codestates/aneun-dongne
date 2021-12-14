@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isSavepositionOpen, loginState, loginModal } from "../../recoil/recoil";
+import { isSavepositionOpen, visitedModal, loginState, loginModal } from "../../recoil/recoil";
 import { Styled } from "./style";
 import ImageUpload from "../UploadImage/ImageUpload";
-function ModalVisited() {
-  const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
+import VisitedUpload from "../UploadImage/VisitedUpload";
+function ModalVisited({ visitedImg }) {
+  const [isVisitedPlaceOpen, setIsVisitedPlaceOpen] = useRecoilState(visitedModal);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
   const [curUserImage, setCurUserImage] = useState(null);
-  const [placeImage, setPlaceImage] = useState(null);
+  const [placeImage, setPlaceImage] = useState(visitedImg);
   const [isUploaded, setIsUploaded] = useState(false);
   const [clickedBtn, setClickedBtn] = useState(false); //저장버튼 누른 후 인지 아닌지 확인하려는 용도
   const [errorMessage, setErrorMessage] = useState({
@@ -19,12 +20,14 @@ function ModalVisited() {
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-
+  useEffect(() => {
+    // axios.get(`${process.env.REACT_APP_API_URL}/home/bookmark`, formData, { withCredentials: true })
+  });
   function updateInfoRequest(e) {
     e.preventDefault();
     // 로긴 안한상태면 로그인부터 시킨다.
     if (!isLogin) {
-      setIsSavePositionOpen(false);
+      setIsVisitedPlaceOpen(false);
       setIsLoginOpen(true);
       return;
     }
@@ -40,7 +43,7 @@ function ModalVisited() {
     console.log("폼데이터imag", formData.get("image"));
     // headers: { "content-type": "multipart/form-data" },
     axios
-      .post(`${process.env.REACT_APP_API_URL}home/bookmark`, formData, { withCredentials: true })
+      .post(`${process.env.REACT_APP_API_URL}/home/bookmark`, formData, { withCredentials: true })
 
       .then((res) => {
         console.log(res.data.message);
@@ -62,12 +65,12 @@ function ModalVisited() {
   return (
     <>
       <Styled.FormContainer>
-        <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
+        <Styled.CloseBtn onClick={() => setIsVisitedPlaceOpen(false)}>
           <i className="fas fa-times"></i>
         </Styled.CloseBtn>
         <form id="form-id" onSubmit={updateInfoRequest}>
           <h3>이미지</h3>
-          <ImageUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
+          <VisitedUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
           <div className="alert-box">{errorMessage.image}</div>
           {/* //! 업로드버튼 하나 없애 form 두개 못하겠다 */}
           {/* <button type="submit" className="image-upload-button" onClick={saveImage}>

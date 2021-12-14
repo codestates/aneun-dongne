@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { withCookies, Cookies, useCookies } from "react-cookie";
 import { Styled } from "./style";
 import { message } from "../../message";
 // import Cookies from "universal-cookie";
-import { token, loginState } from "../../recoil/recoil";
+import { loginState, token } from "../../recoil/recoil";
 import KakaoLogin from "./KakaoLogin";
 
 const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandler }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [accessToken, setAccessToken] = useRecoilState(token);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+  const [accessToken, setAccessToken] = useRecoilState(token);
+
   const [errorMessage, setErrorMessage] = useState("");
   const { email, password } = loginInfo;
-  // const cookies = new Cookies();
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const handleInputValue = (key) => (e) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
@@ -31,8 +30,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       setErrorMessage(message.loginPassword);
       return;
     }
-    //http://localhost:3065/
-    // `${process.env.REACT_APP_API_URL}/user/login`,
+
     await axios
       .post(
         `${process.env.REACT_APP_API_URL}/user/login`,
@@ -43,11 +41,8 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         { "Content-Type": "application/json", withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data.data.accessToken);
         setAccessToken(res.data.data.accessToken);
         closeLoginModalHandler();
-        //! 쿠키를 읽는것 외에는 로그인상태를 바꿀 수 없다.
-        // setIsLogin(true);
       })
       .then(() => {
         // console.log(accessToken);
@@ -57,8 +52,15 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
         setErrorMessage(message.loginError);
       });
   };
-  console.log("모달로그인", cookies);
-  useEffect(() => {});
+
+  useEffect(() => {
+    if (accessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+    console.log(accessToken);
+  }, [accessToken]);
 
   return (
     <>

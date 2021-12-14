@@ -101,7 +101,7 @@ const App = () => {
       <Header handleResponseSuccess={handleResponseSuccess} />
       <Route exact path="/" component={Mainpage} />
       <Route exact path="/home" component={Home} />
-      <Route path="/mypage/profile" component={MyPage} />
+      <Route path="/mypage" component={MyPage} />
       <Route exact path="/detailpage/:id" component={DetailPage} />
       {/* <Redirect from="*" to="/" /> */}
     </>

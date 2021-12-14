@@ -53,15 +53,6 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       });
   };
 
-  useEffect(() => {
-    if (accessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-    console.log(accessToken);
-  }, [accessToken]);
-
   return (
     <>
       <Styled.FormContainer>

@@ -11,7 +11,7 @@ import { Profile, MyLike, MyReview, MyVisited } from ".";
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
-  console.log(match);
+  // console.log(match);
   const [info, setInfo] = useRecoilState(userInfo);
   const [imgUrl, setImgUrl] = useState("/snowman.png");
   const [nickname, setNickname] = useState("");
@@ -24,10 +24,8 @@ const MyPage = ({ match }) => {
   const activeStyle = {
     color: "#172a71",
   };
-
-  useEffect(() => {
-    //! 우선 적음 나중에 지우게되도
-    axios
+  async function getUserInfo() {
+    const result = await axios
       .get("https://localhost:80/user/info", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -36,15 +34,40 @@ const MyPage = ({ match }) => {
         withCredentials: true,
       })
       .then((res) => {
-        setLoading(true);
+        console.log(res.data.data);
+
         setNickname(res.data.data.userInfo.nickname);
         if (res.data.data.userInfo.user_image_path) {
-          setImgUrl(res.data.data.userInfo.user_image_path);
+          setImgUrl(res.data.data.userInfo.user_thumbnail_path);
           setPrevImg(res.data.data.userInfo.user_image_path);
         }
-
-        setLoading(false);
       });
+    return result;
+  }
+  useEffect(async () => {
+    //! 우선 적음 나중에 지우게되도
+    await setLoading(true);
+    getUserInfo();
+    await setLoading(false);
+    console.log("되나요");
+    // axios
+    //   .get("https://localhost:80/user/info", {
+    //     headers: {
+    //       Authorization: `Bearer ${accessToken}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     setLoading(true);
+    //     setNickname(res.data.data.userInfo.nickname);
+    //     if (res.data.data.userInfo.user_image_path) {
+    //       setImgUrl(res.data.data.userInfo.user_image_path);
+    //       setPrevImg(res.data.data.userInfo.user_image_path);
+    //     }
+
+    //     setLoading(false);
+    //   });
   }, []);
 
   return (
@@ -75,7 +98,7 @@ const MyPage = ({ match }) => {
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.NavLink to={`${match.url}`} activeStyle={activeStyle}>
+              <Styled.NavLink to={`${match.url}/profile`} activeStyle={activeStyle}>
                 프로필 수정
               </Styled.NavLink>
             </li>
@@ -87,7 +110,7 @@ const MyPage = ({ match }) => {
           <Route exact path={`${match.url}/like`} component={MyLike} />
           <Route exact path={`${match.url}/visited`} component={MyVisited} />
           <Route exact path={`${match.url}/comments`} component={MyReview} />
-          <Route exact path={`${match.url}`}>
+          <Route exact path={`${match.url}/profile`}>
             <Profile
               imgUrl={imgUrl}
               setImgUrl={setImgUrl}

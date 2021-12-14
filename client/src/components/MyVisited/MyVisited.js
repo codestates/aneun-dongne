@@ -18,7 +18,7 @@ const MyVisited = () => {
 
   //!---------
   async function getVisitedPlace() {
-    await setLoading(true);
+    // await setLoading(true);
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/visited`, {
         headers: {
@@ -31,13 +31,14 @@ const MyVisited = () => {
         // console.log(res.data.data);
         setPlaceList(res.data.data);
       });
-    await setLoading(false);
+    // await setLoading(false);
     return result;
   }
   useEffect(async () => {
     await setLoading(true);
     getVisitedPlace();
     await setLoading(false);
+    console.log("되나요");
   }, []);
   // console.log(visitedList.contents);
   //!---------
@@ -130,7 +131,7 @@ const MyVisited = () => {
     return (
       <Styled.Body>
         <Styled.Div>
-          <div>암것도 없어요</div>
+          <div>0개일때 화면 넣어주세요</div>
         </Styled.Div>
       </Styled.Body>
     );

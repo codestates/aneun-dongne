@@ -14,6 +14,7 @@ module.exports = {
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
     } else {
+      console.log("토큰도착", accessTokenData);
       res.status(200).json({ data: { userInfo: accessTokenData }, message: "ok" });
     }
   },
@@ -26,6 +27,7 @@ module.exports = {
     // 확인용 => password,email
     // 변경용 => nickname,password,newPassword, image
     let image = "";
+    let thumbnail = "";
     // if (req.file !== undefined) {
     //   //링크를 DB에 넣기 위한 값
     //   image = req.file.location;
@@ -58,18 +60,21 @@ module.exports = {
       // 변경하려는 프사가 없을떄
       if (req.file === undefined) {
         //기존프사가 있다면 기존프사 사용
-        if (validUser.user_image_path !== null) image = validUser.user_image_path;
-        //기존프사도 없다면,
-        else {
-          //기본 프사 사용
-          image =
-            "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+        if (validUser.user_image_path !== null) {
+          image = validUser.user_image_path;
+          console.log("이미지", image);
         }
+        //기존프사도 없다면, -> 모두가 기본프사 갖고있음 이제
+        // else {
+        //   //기본 프사 사용
+        //   image =
+        //     "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+        // }
       } else {
         //프사 있을때
         //링크를 DB에 넣기위한 값
-
-        image = req.file.transforms[0].location;
+        thumbnail = req.file.transforms[0].location;
+        image = req.file.transforms[1].location;
         console.log("바꿀이미지", image);
       }
       User.update(
@@ -78,6 +83,7 @@ module.exports = {
           email,
           password: newPassword,
           user_image_path: image,
+          user_thumbnail_path: thumbnail,
         },
         { where: { email: email } }
       )
@@ -96,7 +102,7 @@ module.exports = {
             } else {
               delete data.dataValues.password;
               const accessToken = generateAccessToken(data.dataValues);
-
+              console.log("여기까지왔어요?");
               res
                 .cookie("jwt", accessToken)
                 .json({ data: { accessToken, nickname, user_image_path: image }, message: "okkk" });

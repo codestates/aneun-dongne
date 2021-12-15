@@ -133,7 +133,6 @@ const Body = styled.div`
   }
 `;
 function VisitedList({ placeList }) {
-  const [selectedArr, setSelectedArr] = useState([]);
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [selectedModal, setSelectedModal] = useState(null);
   // console.log(placeList);

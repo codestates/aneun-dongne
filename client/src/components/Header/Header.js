@@ -186,7 +186,7 @@ const Header = ({ handleResponseSuccess }) => {
                   Log Out
                 </div>
                 {/* 나중에 밑줄뜨는거 처리해야함*/}
-                <StyledLink to="/mypage">
+                <StyledLink to="/mypage/like">
                   <div className="mainpage-button">My Page</div>
                   {/* <div className="mainpage-button">My Page</div> */}
                 </StyledLink>

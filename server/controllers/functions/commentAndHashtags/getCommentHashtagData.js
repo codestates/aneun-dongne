@@ -1,4 +1,4 @@
-const { Comment, User, Sequelize } = require("../../../models");
+const { Comment, User, Sequelize, Post } = require("../../../models");
 
 // 포스트 contentId를 가지고 모든 댓글 목록 불러오기
 //getCommentHashtagData.js에요
@@ -45,6 +45,20 @@ module.exports = async (userId, contentId) => {
       };
       delete adduser.comments.comment_user_id;
     });
+    await Post.findOne({
+      raw: true,
+      where: {
+        post_contentid: onlyCommentData[i].comment_post_contentid,
+      },
+    })
+      .then((postInfo) => {
+        adduser.post = {
+          title: postInfo.post_title,
+          sigungucode: postInfo.post_sigungucode,
+          areacode: postInfo.post_areacode,
+        };
+      })
+      .catch((err) => console.log(err));
 
     // 오래된게 밑으로가고 최신이 가장위에있는게 맞는것같아서 unshift로 바꿨어요
     result.unshift(adduser);

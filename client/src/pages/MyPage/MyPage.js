@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Styled } from "./style";
 
-import { userInfo, loginState, loginModal, token } from "../../recoil/recoil";
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-
 import axios from "axios";
 
 import { Profile, MyLike, MyReview, MyVisited } from ".";
@@ -15,20 +12,16 @@ const MyPage = ({ match }) => {
   const [imgUrl, setImgUrl] = useState("/men.png");
   const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
-  const [accessToken, setAccessToken] = useRecoilState(token);
-  const [info, setInfo] = useRecoilState(userInfo);
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const setIsLoginOpen = useSetRecoilState(loginModal);
+  const accessToken = useRecoilValue(token);
   const [loading, setLoading] = useState(false);
-  
+
   const activeStyle = {
     color: "#172a71",
   };
-  // console.log(accessToken);
+
   async function getUserInfo() {
-    console.log(accessToken);
     const result = await axios
-      .get("https://localhost:80/user/info", {
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -54,24 +47,6 @@ const MyPage = ({ match }) => {
 
     await setLoading(false);
     console.log("되나요");
-    // axios
-    //   .get("https://localhost:80/user/info", {
-    //     headers: {
-    //       Authorization: `Bearer ${accessToken}`,
-    //       "Content-Type": "application/json",
-    //     },
-    //     withCredentials: true,
-    //   })
-    //   .then((res) => {
-    //     setLoading(true);
-    //     setNickname(res.data.data.userInfo.nickname);
-    //     if (res.data.data.userInfo.user_image_path) {
-    //       setImgUrl(res.data.data.userInfo.user_image_path);
-    //       setPrevImg(res.data.data.userInfo.user_image_path);
-    //     }
-
-    //     setLoading(false);
-    //   });
   }, [accessToken]);
 
   return (

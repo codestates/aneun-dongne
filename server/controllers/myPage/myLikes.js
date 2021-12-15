@@ -58,7 +58,7 @@ module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
   try {
     if (!accessTokenData) {
-      await res.status(400).json({ data: null, message: "invalid access token" });
+      await res.status(400).json({ data: null, messsage: "invalid access token" });
     } else {
       const { id } = accessTokenData;
       await res.status(200).json({

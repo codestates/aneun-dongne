@@ -322,6 +322,7 @@ function Mainpage() {
           <VideoContainer>
             <Image>
               <img src="/likeimg.png" />
+
               <img
                 className="play"
                 src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"

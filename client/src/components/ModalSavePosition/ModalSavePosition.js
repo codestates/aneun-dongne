@@ -7,7 +7,7 @@ import { message } from "../../message";
 import ImageUpload from "../UploadImage/ImageUpload";
 
 const ModalSavePosition = () => {
-  const [accessToken, setAccessToken] = useRecoilState(token);
+  const accessToken = useRecoilValue(token);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
@@ -39,7 +39,7 @@ const ModalSavePosition = () => {
 
     // form-data 객체의 기존 키에 새 값을 추가하거나 키가 없으면 키를 추가한다.
     // 이미지를 보낼땐 formData안에 넣어서 안보내면 1MB만 되어도 에러가 뜨더라구요
-    formData.append("image", placeImage); // 파일
+    formData.append("image", placeImage); // 파일 -req.file, 나머지는 req.body로 가요
     formData.append("memo", memo); //메모
     formData.append("area", userAddr.area);
     formData.append("sigg", userAddr.sigg);

@@ -14,18 +14,20 @@ module.exports = {
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
     } else {
+      console.log("토큰도착", accessTokenData);
       res.status(200).json({ data: { userInfo: accessTokenData }, message: "ok" });
     }
   },
   patch: async (req, res) => {
     console.log("리코그바디, subAuth.put", req.file, req.body);
 
-    if (req.body.password !== req.body.checkPassword) {
+    if (req.body.newPassword !== req.body.checkPassword) {
       return res.status(400).send({ message: "type your password again" });
     }
     // 확인용 => password,email
     // 변경용 => nickname,password,newPassword, image
     let image = "";
+    let thumbnail = "";
     // if (req.file !== undefined) {
     //   //링크를 DB에 넣기 위한 값
     //   image = req.file.location;
@@ -50,7 +52,6 @@ module.exports = {
     });
     //이메일이나 비번이 일치하는 자료가 DB에 없다면 컷
     if (!validUser) {
-      console.log("이것좀보자", email, password);
       return res.status(405).json({ data: null, message: "no such user in the database" });
     } else {
       // console.log(req.file.key) // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
@@ -58,18 +59,23 @@ module.exports = {
       // 변경하려는 프사가 없을떄
       if (req.file === undefined) {
         //기존프사가 있다면 기존프사 사용
-        if (validUser.user_image_path !== null) image = validUser.user_image_path;
-        //기존프사도 없다면,
-        else {
-          //기본 프사 사용
-          image =
-            "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+        if (validUser.user_image_path !== null) {
+          image = validUser.user_image_path;
+          thumbnail = validUser.user_thumbnail_path;
+          console.log(image, thumbnail);
+          console.log("이미지", image);
         }
+        //기존프사도 없다면, -> 모두가 기본프사 갖고있음 이제
+        // else {
+        //   //기본 프사 사용
+        //   image =
+        //     "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png";
+        // }
       } else {
         //프사 있을때
         //링크를 DB에 넣기위한 값
-
-        image = req.file.transforms[0].location;
+        thumbnail = req.file.transforms[0].location;
+        image = req.file.transforms[1].location;
         console.log("바꿀이미지", image);
       }
       User.update(
@@ -78,6 +84,7 @@ module.exports = {
           email,
           password: newPassword,
           user_image_path: image,
+          user_thumbnail_path: thumbnail,
         },
         { where: { email: email } }
       )
@@ -96,10 +103,11 @@ module.exports = {
             } else {
               delete data.dataValues.password;
               const accessToken = generateAccessToken(data.dataValues);
-
-              res
-                .cookie("jwt", accessToken)
-                .json({ data: { accessToken, nickname, user_image_path: image }, message: "okkk" });
+              console.log("여기까지왔어요?");
+              res.json({
+                data: { accessToken, nickname, user_image_path: image, user_thumbnail_path: thumbnail },
+                message: "okkk",
+              });
             }
           });
           // res.status(201).json({ message: "successfully changed" });

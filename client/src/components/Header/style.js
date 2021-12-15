@@ -22,6 +22,15 @@ export const Styled = {
       display: flex;
     }
 
+    .kakao_mainpage-button {
+      cursor: pointer;
+      margin: 20px 20px;
+      width: 190px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
     .mainpage-button {
       cursor: pointer;
       margin: 20px 20px;

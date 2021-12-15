@@ -10,37 +10,38 @@
 const { isAuthorized, generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 const { User } = require("../../models");
 
-const updateUserInfo = async (newNickname, newEmail, newPassword, imagePath, thumbnailPath) => {
-  let isUserInfoCreated = false;
-  //findOrCreate 메소드로 새 데이터를 생성하기 때문에 기존 데이터를 삭제하는 로직이 추가되어야 함
-  await User.findOrCreate({
-    defaults: {
+const updateUserInfo = async (userId, newNickname, newPassword, imagePath, thumbnailPath) => {
+  await User.update(
+    {
+      nickname: newNickname,
       password: newPassword,
       user_image_path: imagePath,
       user_thumbnail_path: thumbnailPath,
     },
-    where: {
-      nickname: newNickname,
-      email: newEmail,
-    },
-  }).then(([save, created]) => {
-    if (!created) {
-      console.log("same info exists");
-    } else {
-      isUserInfoCreated = true;
-      delete save.dataValues.password;
-      const accessToken = generateAccessToken(save.dataValues);
-      res.cookie("jwt", accessToken, {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
-        domain: ".aneun-dongne.com",
-        path: "/",
-        secure: true,
-        sameSite: "None",
-      });
-      res.status(200).json({ data: save.dataValues, message: "ok" });
+    {
+      where: {
+        id: userId,
+      },
     }
-  });
-  return isUserInfoCreated;
+  );
+  // ).then(([save, created]) => {
+  //   if (!created) {
+  //     console.log("same info exists");
+  //   } else {
+  //     isUserInfoCreated = true;
+  //     delete save.dataValues.password;
+  //     const accessToken = generateAccessToken(save.dataValues);
+  //     res.cookie("jwt", accessToken, {
+  //       maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+  //       domain: ".aneun-dongne.com",
+  //       path: "/",
+  //       secure: true,
+  //       sameSite: "None",
+  //     });
+  //     res.status(200).json({ data: save.dataValues, message: "ok" });
+  //   }
+  // });
+  // return isUserInfoCreated;
 };
 
 const getUserInfo = async (userId) => {
@@ -102,8 +103,8 @@ module.exports = {
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
     } else {
-      const { id, email, password } = accessTokenData;
-      const { checkPassword, newNickname, newEmail, newPassword } = req.body;
+      const { id, password } = accessTokenData;
+      const { checkPassword, newNickname, newPassword } = req.body;
 
       if (password !== checkPassword) {
         res.status(400).send({ message: "type your password again" });
@@ -162,11 +163,17 @@ module.exports = {
             }
           }
 
-          let isUserInfoCreated = await updateUserInfo(newNickname, newEmail, newPassword, imagePath, thumbnailPath);
-
-          if (!isUserInfoCreated) {
-            res.status(400).json({ message: "Same info exists" });
-          }
+          await updateUserInfo(id, newNickname, newPassword, imagePath, thumbnailPath);
+          const userInfo = await getUserInfo(id);
+          const accessToken = generateAccessToken(userInfo);
+          await res.cookie("jwt", accessToken, {
+            maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+            // domain: ".aneun-dongne.com",
+            path: "/",
+            secure: true,
+            sameSite: "None",
+          });
+          await res.status(200).json({ data: userInfo, message: "ok" });
         }
       }
     }

@@ -6,6 +6,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { userInfo, loginState, loginModal, token } from "../../recoil/recoil";
 // import hamtori from "../../img/hamtori.png";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
+import Cookies from "universal-cookie";
 
 const UserInfopage = styled.div`
   top: 0;
@@ -79,7 +80,8 @@ const ContentBox = styled.div`
   > form .userinfo-each-label span {
     /* float: left; */
   }
-  > form .userinfo-each-label input {
+  > form .userinfo-each-label input,
+  form .userinfo-each-label div {
     /* background: yellow; */
 
     font-size: 1.2rem;
@@ -90,6 +92,7 @@ const ContentBox = styled.div`
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 20px;
+    /* border: 1px gray solid; */
     /* position: absolute; */
     /* float: right; */
   }
@@ -153,6 +156,7 @@ const ImgDiv = styled.div`
 
 function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname }) {
   const [info, setInfo] = useRecoilState(userInfo);
+  const cookies = new Cookies();
   //   const [imgUrl, setImgUrl] = useState("");
   // const [prevImg, setPrevImg] = useState(
   //   "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png"
@@ -167,13 +171,14 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const accessToken = useRecoilValue(token);
+  const [accessToken, setAccessToken] = useRecoilState(token);
   // const [PasswordErr, setPasswordErr] = useState("");
   // const [passwordError, setPasswordError] = useState("");
   // const [passwordCheckError, setPasswordCheckError] = useState("");
 
   // console.log(imgUrl);
-  console.log(imgUrl);
+  let a = cookies.get("jwt");
+  // console.log(a);
   const history = useHistory();
   // console.log(info);
   useEffect(() => {
@@ -189,7 +194,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       .then((res) => {
         console.log(res.data.data.userInfo);
         console.log(typeof res.data.data.userInfo.user_image_path);
-        setInfo(res.data.data.userInfo);
+        setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
           console.log(res.data.data.userInfo.user_image_path);
           setImgUrl(res.data.data.userInfo.user_image_path);
@@ -204,7 +209,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         // props.accessToken(res.data.Info);
       });
   }, []);
-  console.log(imgUrl);
+  // console.log(imgUrl);
   const editInfo = (e) => {
     e.preventDefault();
     // 토큰만료시 컷
@@ -243,7 +248,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
           return;
         }
-
+        setAccessToken(res.data.data.accessToken);
         console.log(res.data);
         setImgUrl(res.data.data.user_image_path);
         setPrevImg(res.data.data.user_image_path);
@@ -252,9 +257,6 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
 
       .catch((err) => console.log(err));
   };
-  useEffect(() => {
-    console.log(nickname);
-  }, [nickname]);
 
   // console.log(inputEmail, imgUrl, inputUsername);
   //정보를 바로 받아온다면...?
@@ -369,7 +371,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       })
       .catch((err) => console.log(err));
   };
-  console.log(nickname);
+
   return (
     <div>
       <UserInfopage>
@@ -381,10 +383,10 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
           <ContentBox>
             <form onSubmit={editInfo}>
               <div className="userinfo-each-label">
-                <input type="text" name="nickname" placeholder="닉네임" onChange={handleInputUsername} />
+                <input type="text" name="nickname" placeholder="새로운 닉네임" onChange={handleInputUsername} />
               </div>
               <div className="userinfo-each-label">
-                <input type="text" name="email" placeholder="이메일" onChange={handleInputEmail} />
+                <input type="text" value={inputEmail} readOnly />
               </div>
               <div className="userinfo-each-label">
                 <input
@@ -396,24 +398,25 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
                   onChange={(e) => handleInputPassword(e)}
                 />
               </div>
+
               <div className="userinfo-each-label">
                 <input
                   type="password"
                   name="password"
-                  placeholder="비밀번호 확인"
                   // defaultValue=""
-                  value={inputCheckPassword}
-                  onChange={(e) => handleInputCheckPassword(e)}
+                  placeholder="새로운 비밀번호"
+                  value={inputNewPassword}
+                  onChange={(e) => handleInputNewPassword(e)}
                 />
               </div>
               <div className="userinfo-each-label">
                 <input
                   type="password"
                   name="password"
+                  placeholder="새로운 비밀번호 확인"
                   // defaultValue=""
-                  placeholder="수정 비밀번호"
-                  value={inputNewPassword}
-                  onChange={(e) => handleInputNewPassword(e)}
+                  value={inputCheckPassword}
+                  onChange={(e) => handleInputCheckPassword(e)}
                 />
               </div>
               <div className="userinfo-button-label">

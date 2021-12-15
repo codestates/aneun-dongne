@@ -2,23 +2,32 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
-import PlaceList from "../PlaceList";
+
 import VisitedList from "./VisitedList";
-import { token, loading, userInfo, visitedModal, getVisitedList, visitedModalImg } from "../../recoil/recoil";
-import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import {
+  token,
+  loading,
+  userInfo,
+  visitedModal,
+  getVisitedList,
+  visitedModalImg,
+  newVisitedPlace,
+} from "../../recoil/recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 
 const { kakao } = window;
 
 const MyVisited = () => {
   const setIsVisitedOpen = useSetRecoilState(visitedModal);
   const accessToken = useRecoilValue(token);
-  const [placeList, setPlaceList] = useState([]);
+  const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   const [loading, setLoading] = useState(false);
   // const visitedList = useRecoilValueLoadable(getVisitedList);
 
   //!---------
   async function getVisitedPlace() {
-    await setLoading(true);
+    // await setLoading(true);
+    console.log(accessToken);
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/visited`, {
         headers: {
@@ -28,16 +37,17 @@ const MyVisited = () => {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         setPlaceList(res.data.data);
       });
-    await setLoading(false);
+    // await setLoading(false);
     return result;
   }
   useEffect(async () => {
     await setLoading(true);
     getVisitedPlace();
     await setLoading(false);
+    console.log("되나요");
   }, []);
   // console.log(visitedList.contents);
   //!---------
@@ -130,7 +140,7 @@ const MyVisited = () => {
     return (
       <Styled.Body>
         <Styled.Div>
-          <div>암것도 없어요</div>
+          <div>0개일때 화면 넣어주세요</div>
         </Styled.Div>
       </Styled.Body>
     );

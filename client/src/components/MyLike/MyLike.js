@@ -5,11 +5,7 @@ import axios from "axios";
 // const [like, setLike] = useState(0);
 
 const MyLike = () => {
-  return (
-    <div id="like-list">
-     ddd
-    </div>
-  );
+  return <div id="like-list">ddd</div>;
 };
 
 export default MyLike;

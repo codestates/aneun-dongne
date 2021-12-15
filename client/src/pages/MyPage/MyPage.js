@@ -4,10 +4,8 @@ import { Styled } from "./style";
 
 import axios from "axios";
 
-import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
-
 import { Profile, MyLike, MyReview, MyVisited } from ".";
+
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
@@ -21,9 +19,9 @@ const MyPage = ({ match }) => {
     color: "#172a71",
   };
 
-  useEffect(() => {
-    axios
-      .get("https://localhost:80/user/info", {
+  async function getUserInfo() {
+    const result = await axios
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -31,25 +29,35 @@ const MyPage = ({ match }) => {
         withCredentials: true,
       })
       .then((res) => {
-        setLoading(true);
+        console.log(res.data.data);
+
         setNickname(res.data.data.userInfo.nickname);
-        if (res.data.data.userInfo.user_image_path) {
-          setImgUrl(res.data.data.userInfo.user_image_path);
+        if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
+          setImgUrl(res.data.data.userInfo.user_thumbnail_path);
           setPrevImg(res.data.data.userInfo.user_image_path);
         }
         setLoading(false);
       });
-  }, []);
+    return result;
+  }
+  useEffect(async () => {
+    //! 우선 적음 나중에 지우게되도
+    await setLoading(true);
+    getUserInfo();
+
+    await setLoading(false);
+    console.log("되나요");
+  }, [accessToken]);
 
   return (
     <>
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
-            <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div>
-            {/* <div className="profile-image">
+            {/* <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div> */}
+            <div className="profile-image">
               <img src={prevImg} />
-            </div> */}
+            </div>
             <div className="profile-name">{nickname}</div>
           </div>
           <ul className="link-container">

@@ -72,12 +72,10 @@ module.exports = {
     }
   },
   deleteComment: async (req, res) => {
-    console.log(req.cookies);
-    console.log("커맨드 제거 ", req.query);
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
     const { commentId } = req.query;
-    console.log("파람,쿼리", req.params, req.query);
+
     try {
       if (!accessTokenData) {
         // return res.status(401).send("no token in req.headers['authorization']");

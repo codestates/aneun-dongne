@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+import { useRecoilValue } from "recoil";
+import { token } from "../../recoil/recoil";
+
+import { getAreaNames } from "../../AreaCodetoName";
 
 const Body = styled.div`
   margin: 20px 0px;
@@ -9,41 +14,53 @@ const Body = styled.div`
   width: 600px;
 `;
 
-const MyReviewComment = ({ comment }) => {
+const MyReviewComment = ({ comment, SetComments }) => {
+  const accessToken = useRecoilValue(token);
   const history = useHistory();
-  const updatedAt = comment.comments.updatedAt.slice(0, 10);
+  const [areacode, setAreaCode] = useState("");
+  const [sigungucode, setSigunguCode] = useState("");
+  const [titie, setTitle] = useState("");
+
+  const sigungu = getAreaNames(comment.post.areacode, comment.post.sigungucode);
+  const { user_image_path, nickname } = comment.user;
+  const { comment_content, comment_tag, comment_post_contentid, createdAt } = comment.comments;
+  const { title } = comment.post;
+  const created = createdAt.slice(0, 10);
 
   const handleContentClick = () => {
-    history.push(`/detailpage/${comment.comments.comment_post_contentid}`);
+    history.push(`/detailpage/${comment_post_contentid}`);
   };
 
-  const deleteComment = () => {
-    axios
-      .delete
-      // `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
-
-      //! axios에선 params지만 express에선 req.query래요.
-      //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
-      // { params: { commentId: uuid }, withCredentials: true }
-      ()
+  const deleteComment = async () => {
+    await axios
+      .delete(`${process.env.REACT_APP_API_URL}/comment/${comment_post_contentid}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        params: { commentId: comment.comments.id },
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res.data.data);
-        // let arr = res.data.data.map((el) => {
-        //   return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
-        // });
+
+        // SetComments(res.data.data);
       });
   };
 
   return (
     <>
       <Body>
-        <div>{comment.user.user_image_path}</div>
-        <div>{comment.user.nickname}</div>
-        <div onClick={handleContentClick}>{comment.comments.comment_content}</div>
-        <div>{comment.comments.comment_tags}</div>
-        <div onClick={handleContentClick}>{comment.post.title}</div>
-        <div>작성날짜 : {updatedAt}</div>
-        <button>삭제</button>
+        <div>{sigungu.areaName}</div>
+        <div>{sigungu.siggName}</div>
+        <div>{user_image_path}</div>
+        <div>{nickname}</div>
+        <div onClick={handleContentClick}>{comment_content}</div>
+        <div>{comment_tag}</div>
+        <div onClick={handleContentClick}>{title}</div>
+        <div>작성날짜 : {created}</div>
+        <button onClick={deleteComment}>삭제</button>
       </Body>
     </>
   );

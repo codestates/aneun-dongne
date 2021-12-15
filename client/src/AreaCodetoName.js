@@ -339,7 +339,33 @@ export const getCodes = (areaSearch, siggSearch) => {
 
 console.log(getCodes("경남", "함양군"));
 
-export const getNames = (areaCode, siggCode) => {
+export const getNames = (areaCode) => {
+  let areaName;
+  // let siggName;
+
+  for (let i = 0; i < areaCodeArr.length; i++) {
+    if (areaCodeArr[i] === areaCode) {
+      //지역과 검색어 코드가 일치하면
+      areaName = areaNameArr[i]; // 코드와 지역이름 매치
+    }
+  }
+  // let siggarr = allSigg[areaCodeArr.indexOf(areaCode)];
+  // for (let k = 0; k <= 31; k++) {
+  //   if (k === siggCode) {
+  // allSigg 배열에서 각 지역코드에 해당하는 함수 찾기, allSigg[areaCodeArr.indexOf(areaCode)]는 시군구 이름들이 담겨있는 배열
+  // 이 배열에서 k 인덱스가 시군구 코드이면
+  // siggName = siggarr[k];
+  // allSigg[areaCodeArr.indexOf(areaCode)](시군구 이름들이 담겨있는 배열)에서 시군구 검색어의 인덱스 반환
+  // 이것이 곧 시군구코드
+  //}
+  //}
+
+  return areaName;
+};
+
+export const getAreaNames = (areaCode, siggCode) => {
+  let areaName;
+  let siggName;
   for (let i = 0; i < areaCodeArr.length; i++) {
     if (areaCodeArr[i] === areaCode) {
       //지역과 검색어 코드가 일치하면

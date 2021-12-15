@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Styled } from "./style";
 
-import { userInfo, loginState, loginModal, token } from "../../recoil/recoil";
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-
 import axios from "axios";
 
 import { useRecoilValue } from "recoil";
@@ -14,22 +11,17 @@ import { Profile, MyLike, MyReview, MyVisited } from ".";
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
-
   const [imgUrl, setImgUrl] = useState("/men.png");
   const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
   const accessToken = useRecoilValue(token);
-  const [info, setInfo] = useRecoilState(userInfo);
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const setIsLoginOpen = useSetRecoilState(loginModal);
   const [loading, setLoading] = useState(false);
-  
+
   const activeStyle = {
     color: "#172a71",
   };
 
   useEffect(() => {
-    //! 우선 적음 나중에 지우게되도
     axios
       .get("https://localhost:80/user/info", {
         headers: {
@@ -77,7 +69,7 @@ const MyPage = ({ match }) => {
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.NavLink to={`${match.url}`} activeStyle={activeStyle}>
+              <Styled.NavLink to={`${match.url}/profile`} activeStyle={activeStyle}>
                 프로필 수정
               </Styled.NavLink>
             </li>
@@ -90,7 +82,6 @@ const MyPage = ({ match }) => {
           <Route exact path={`${match.url}/visited`} component={MyVisited} />
           <Route exact path={`${match.url}/comments`} component={MyReview} />
           <Route exact path={`${match.url}/profile`}>
-
             <Profile
               imgUrl={imgUrl}
               setImgUrl={setImgUrl}

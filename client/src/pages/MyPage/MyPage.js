@@ -6,25 +6,21 @@ import { userInfo, loginState, loginModal, token } from "../../recoil/recoil";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 
 import axios from "axios";
-import Cookies from "universal-cookie";
+
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
-  const cookies = new Cookies();
-  const [imgUrl, setImgUrl] = useState("");
-  const [prevImg, setPrevImg] = useState("");
+  const [imgUrl, setImgUrl] = useState("/men.png");
+  const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
   const [accessToken, setAccessToken] = useRecoilState(token);
   const [info, setInfo] = useRecoilState(userInfo);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   const [loading, setLoading] = useState(false);
-  // console.log(imgUrl);
-  let a = cookies.get("jwt");
-  // console.log(a);
-
+  
   const activeStyle = {
     color: "#172a71",
   };

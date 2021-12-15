@@ -15,7 +15,6 @@ const App = () => {
   const [info, setInfo] = useRecoilState(userInfo);
   const accessToken = useRecoilValue(token);
   // const [accessToken, setAccessToken] = useRecoilState(token);
-
   const [isLoading, setIsLoading] = useRecoilState(loading);
   console.log(accessToken);
   //카톡

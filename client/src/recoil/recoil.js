@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-
+console.log(cookies.get("jwt"));
 export const token = atom({
   key: "token",
   default: cookies.get("jwt"),
@@ -209,12 +209,14 @@ export const visitedModal = atom({
 });
 
 //! 마이페이지
-
-export const imgUrl = atom({
-  key: "imgUrl",
+export const newVisitedPlace = atom({
+  key: "newVisitedPlace",
   default: "",
 });
-
+export const newVisitedMemo = atom({
+  key: "newVisitedMemo",
+  default: "",
+});
 export const getVisitedList = selector({
   key: "getVisitedList",
   get: async ({ get }) => {

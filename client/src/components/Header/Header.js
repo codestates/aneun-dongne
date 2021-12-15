@@ -97,7 +97,7 @@ const Header = ({ handleResponseSuccess }) => {
     history.push("/");
     // console.log(cookies);
   };
-  console.log(isVisitedOpen);
+  // console.log(isVisitedOpen);
   return (
     <>
       {/* // 로그인 모달 */}
@@ -186,7 +186,7 @@ const Header = ({ handleResponseSuccess }) => {
                   Log Out
                 </div>
                 {/* 나중에 밑줄뜨는거 처리해야함*/}
-                <StyledLink to="/mypage/profile">
+                <StyledLink to="/mypage">
                   <div className="mainpage-button">My Page</div>
                   {/* <div className="mainpage-button">My Page</div> */}
                 </StyledLink>

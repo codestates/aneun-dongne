@@ -8,25 +8,26 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 
 import { Profile, MyLike, MyReview, MyVisited } from ".";
+
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {
   const [imgUrl, setImgUrl] = useState("/men.png");
   const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
-  const accessToken = useRecoilValue(token);
+  const [accessToken, setAccessToken] = useRecoilState(token);
   const [info, setInfo] = useRecoilState(userInfo);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   const [loading, setLoading] = useState(false);
-
+  
   const activeStyle = {
     color: "#172a71",
   };
-
-  useEffect(() => {
-    //! 우선 적음 나중에 지우게되도
-    axios
+  // console.log(accessToken);
+  async function getUserInfo() {
+    console.log(accessToken);
+    const result = await axios
       .get("https://localhost:80/user/info", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -35,25 +36,53 @@ const MyPage = ({ match }) => {
         withCredentials: true,
       })
       .then((res) => {
-        setLoading(true);
+        console.log(res.data.data);
+
         setNickname(res.data.data.userInfo.nickname);
-        if (res.data.data.userInfo.user_image_path) {
-          setImgUrl(res.data.data.userInfo.user_image_path);
+        if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
+          setImgUrl(res.data.data.userInfo.user_thumbnail_path);
           setPrevImg(res.data.data.userInfo.user_image_path);
         }
         setLoading(false);
       });
-  }, []);
+    return result;
+  }
+  useEffect(async () => {
+    //! 우선 적음 나중에 지우게되도
+    await setLoading(true);
+    getUserInfo();
+
+    await setLoading(false);
+    console.log("되나요");
+    // axios
+    //   .get("https://localhost:80/user/info", {
+    //     headers: {
+    //       Authorization: `Bearer ${accessToken}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     setLoading(true);
+    //     setNickname(res.data.data.userInfo.nickname);
+    //     if (res.data.data.userInfo.user_image_path) {
+    //       setImgUrl(res.data.data.userInfo.user_image_path);
+    //       setPrevImg(res.data.data.userInfo.user_image_path);
+    //     }
+
+    //     setLoading(false);
+    //   });
+  }, [accessToken]);
 
   return (
     <>
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
-            <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div>
-            {/* <div className="profile-image">
+            {/* <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div> */}
+            <div className="profile-image">
               <img src={prevImg} />
-            </div> */}
+            </div>
             <div className="profile-name">{nickname}</div>
           </div>
           <ul className="link-container">
@@ -73,7 +102,7 @@ const MyPage = ({ match }) => {
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.NavLink to={`${match.url}`} activeStyle={activeStyle}>
+              <Styled.NavLink to={`${match.url}/profile`} activeStyle={activeStyle}>
                 프로필 수정
               </Styled.NavLink>
             </li>

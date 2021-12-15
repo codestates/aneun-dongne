@@ -15,7 +15,6 @@ const App = () => {
   const [info, setInfo] = useRecoilState(userInfo);
   const accessToken = useRecoilValue(token);
   // const [accessToken, setAccessToken] = useRecoilState(token);
-  // const history = useHistory();
   const [isLoading, setIsLoading] = useRecoilState(loading);
   console.log(accessToken);
   //카톡
@@ -99,7 +98,7 @@ const App = () => {
       <Header handleResponseSuccess={handleResponseSuccess} />
       <Route exact path="/" component={Mainpage} />
       <Route exact path="/home" component={Home} />
-      <Route path="/mypage/profile" component={MyPage} />
+      <Route path="/mypage" component={MyPage} />
       <Route exact path="/detailpage/:id" component={DetailPage} />
       {/* <Redirect from="*" to="/" /> */}
     </>

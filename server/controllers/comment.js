@@ -16,6 +16,11 @@ module.exports = {
       if (!accessTokenData) {
         await res.status(200).json({
           data: await getCommentHashtagData(0, contentId),
+          userinfo: {
+            user_image_path:
+              "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B5.png",
+            nickname: "김코딩",
+          },
         });
       } else {
         const { id, user_image_path, nickname } = accessTokenData;
@@ -55,8 +60,10 @@ module.exports = {
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
     const { commentId, commentContent, tagsArr } = req.body;
+    console.log("확인하자", req.headers);
     try {
       if (!accessTokenData) {
+        // console.log("확인하자", req.body);
         // return res.status(401).send("no token in req.headers['authorization']");
         return res.status(400).json({ data: null, message: "invalid access token" });
       } else {

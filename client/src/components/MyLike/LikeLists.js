@@ -1,7 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Mylike from "./MyLike";
 import { getNames } from "../../AreaCodetoName";
+
 const Lists = styled.div`
   /* height: 100vh; */
 
@@ -164,7 +166,12 @@ const LikeBtn = styled.div`
     transform: scale(1.3);
   }
 `;
-export default function LikeLists({ postsInfo, handlecontentClick }) {
+export default function LikeLists({ postsInfo }) {
+  const history = useHistory();
+
+  const handlecontentClick = () => {
+    history.push(`/detailpage/${postsInfo.post_contentid}`);
+  };
   return (
     <Lists onClick={handlecontentClick}>
       <PlaceCard>
@@ -177,7 +184,7 @@ export default function LikeLists({ postsInfo, handlecontentClick }) {
         <LikeBtn>
           <div>{postsInfo["Likes.likeCount"]}</div>
         </LikeBtn>
-        <KeyWordBox>{!postsInfo.post_tags ? "" : <KeyWord>#{postsInfo.post_tags}</KeyWord>}</KeyWordBox>
+        <KeyWordBox>{!postsInfo.post_tags ? "" : <KeyWord>{postsInfo.post_tags}</KeyWord>}</KeyWordBox>
         <div>{postsInfo.likeCount}</div>
       </PlaceCard>
     </Lists>
@@ -185,3 +192,4 @@ export default function LikeLists({ postsInfo, handlecontentClick }) {
 }
 //post_tags: "데이트,공원"
 // ,를 #으로 바꿔주는 함수를 넣어야할 것 같음.
+//서울특별시 !구

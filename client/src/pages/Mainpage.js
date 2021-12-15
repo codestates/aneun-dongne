@@ -271,9 +271,9 @@ function Mainpage() {
     <>
       <Body>
         <MainTitleView>
-          <img src="/map.gif" muted autoPlay loop playsInline />
+          <img src="/look.gif" muted autoPlay loop playsInline />
           <div className="main-title">
-            <div className="title">어디론가 놀러가고 싶으신가요?</div>
+            <div className="title">어디론가 떠나고 싶으신가요?</div>
             <StartButton onClick={ToHome}>시작하기</StartButton>
             <div className="icon">
               <Icon size={"100"} icon={angleDoubleDown} onClick={ToScrollBottom} />

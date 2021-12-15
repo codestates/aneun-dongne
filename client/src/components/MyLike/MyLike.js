@@ -54,10 +54,7 @@ const MyLike = () => {
     renderMyLike();
   }, []);
 
-  const handlecontentClick = () => {
-    history.push(`/detailpage/${postsInfo.post_contentid}`);
-  };
-
+  console.log(postsInfo[0]);
   return (
     <Margin>
       <div className="list">
@@ -68,7 +65,7 @@ const MyLike = () => {
           </div>
         ) : (
           postsInfo.map((postsInfo) => {
-            return <LikeLists postsInfo={postsInfo} key={postsInfo.id} handlecontentClick={handlecontentClick} />;
+            return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
           })
         )}
       </div>

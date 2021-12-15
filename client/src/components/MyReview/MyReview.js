@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
 
 import { useRecoilValue } from "recoil";
 import { token } from "../../recoil/recoil";
 
 import MyReviewComment from "../MyReviewComment/MyReviewComment";
 import LikeLoading from "../Loading/LikeLoading";
-
-const Body = styled.div`
-  margin-left: 450px;
-`;
 
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
@@ -41,23 +36,21 @@ const MyReview = () => {
 
   return (
     <>
-      <Body>
-        <div className="comment-list">
-          {isLoing ? (
-            <div>
-              <LikeLoading />
-            </div>
-          ) : (
-            <div>
-              {comments.length === 0
-                ? "댓글이 없음"
-                : comments.map((comment) => {
-                    return <MyReviewComment key={comment.comments.id} comment={comment} SetComments={SetComments} />;
-                  })}
-            </div>
-          )}
-        </div>
-      </Body>
+      <div className="comment-list">
+        {isLoing ? (
+          <div>
+            <LikeLoading />
+          </div>
+        ) : (
+          <div>
+            {comments.length === 0
+              ? "댓글이 없음"
+              : comments.map((comment) => {
+                  return <MyReviewComment key={comment.comments.id} comment={comment} SetComments={SetComments} />;
+                })}
+          </div>
+        )}
+      </div>
     </>
   );
 };

@@ -60,8 +60,10 @@ module.exports = {
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
     const { commentId, commentContent, tagsArr } = req.body;
+    console.log("확인하자", req.headers);
     try {
       if (!accessTokenData) {
+        // console.log("확인하자", req.body);
         // return res.status(401).send("no token in req.headers['authorization']");
         return res.status(400).json({ data: null, message: "invalid access token" });
       } else {

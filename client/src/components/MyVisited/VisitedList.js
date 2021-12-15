@@ -158,7 +158,6 @@ function VisitedList({ placeList }) {
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
                 <ModalVisited visitedImg={selectedModal && selectedModal.visited_thumbnail_path} />
-                {/*  a||b => a안되면 b   ,  a&&b => b안되면 a */}
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>

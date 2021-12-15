@@ -55,7 +55,7 @@ function DetailPage({ match }) {
       .then((res) => {
         console.log(res.data);
         const { post_mapx, post_mapy } = res.data.post;
-        // console.log(mapx, mapy);
+        console.log(post_mapx, post_mapy);
 
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);

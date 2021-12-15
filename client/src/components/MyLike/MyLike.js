@@ -63,7 +63,7 @@ const MyLike = () => {
       <div className="list">
         {postsInfo.length === 0 ? (
           <div>
-            Let's push the like button
+            Let's push the like button !!!
             <Icon size={"100"} icon={heartO} />
           </div>
         ) : (

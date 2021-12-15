@@ -112,7 +112,7 @@ function ModalVisited({ id, idx, visitedImg }) {
     //onClick으로 하니까 필요없으려나?? 우선 납둬봐
   }, [isUploaded]);
   console.log(placeImage);
-
+  console.log(visitedImg);
   return (
     <>
       <Styled.FormContainer>

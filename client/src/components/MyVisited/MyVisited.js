@@ -27,6 +27,7 @@ const MyVisited = () => {
   //!---------
   async function getVisitedPlace() {
     // await setLoading(true);
+    console.log(accessToken);
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/visited`, {
         headers: {

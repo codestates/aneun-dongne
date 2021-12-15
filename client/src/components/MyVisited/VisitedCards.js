@@ -111,12 +111,15 @@ export const Styled = {
 
 function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSigg, sMemo, sImage }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
-  const [vtModal, setVtModal] = useState(0);
-  const openModalHandler = (e) => {
+  const [vtModal, setVtModal] = useState(null);
+  const openModalHandler = (modal) => {
+    setVtModal(modal);
     setIsVisitedOpen(true);
   };
   const closeVisitedModal = () => {
+    console.log(isVisitedOpen);
     if (isVisitedOpen) {
+      setVtModal(null);
       setIsVisitedOpen(false);
     }
   };
@@ -126,7 +129,7 @@ function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSig
   return (
     <>
       {/* // MyPage/visited 내가 가본 곳 모달 */}
-      <Styled.ModalContainer>
+      {/* <Styled.ModalContainer>
         {isVisitedOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
@@ -136,10 +139,9 @@ function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSig
             </Styled.ModalBackdrop>
           </>
         ) : null}
-      </Styled.ModalContainer>
-      <Styled.PlaceCard>
-        {/* <Styled.PlaceCard onClick={(el) => openModalHandler(el)}> */}
-        {/* <Styled.PlaceCard> */}
+      </Styled.ModalContainer> */}
+      {/* <Styled.PlaceCard> */}
+      <Styled.PlaceCard onClick={() => openModalHandler()}>
         <div className={`place-cards ${id}`}>
           {/* <div className={`place-cards ${id}`} onClick={(e) => openModalHandler(id)}> */}
           {image ? <img className={id} src={image} /> : <img className={id} src={notImageYet} />}

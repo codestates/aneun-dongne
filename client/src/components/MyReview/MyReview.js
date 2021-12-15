@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import styled from "styled-components";
+
 import { useRecoilValue } from "recoil";
 import { token } from "../../recoil/recoil";
 
@@ -12,11 +12,11 @@ const Body = styled.div`
 `;
 
 const MyReview = () => {
-  const [comments, SetComments] = useState([]);
   const accessToken = useRecoilValue(token);
+  const [comments, SetComments] = useState([]);
 
-  const renderMyComments = () => {
-    axios
+  const renderMyComments = async () => {
+    await axios
       .get(`${process.env.REACT_APP_API_URL}/mypage/commentlists`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -41,7 +41,7 @@ const MyReview = () => {
           {comments.length === 0
             ? "댓글이 없음"
             : comments.map((comment) => {
-                return <MyReviewComment key={comment.comments.id} comment={comment} />;
+                return <MyReviewComment key={comment.comments.id} comment={comment} SetComments={SetComments} />;
               })}
         </div>
       </Body>

@@ -7,7 +7,9 @@ module.exports = {
   signup: require("./users/signup"),
   signin: require("./users/signin"),
   signout: require("./users/signout"),
-  kakaologin: require("./users/kakao"),
+  //kakao
+  kakaoCallBack: require("./users/kakaoCallback"),
+  kakaoSignout: require("./users/kakaoSignout.js"),
   //Home
   home: require("./home/home"),
   bookmark: require("./home/bookmark"),

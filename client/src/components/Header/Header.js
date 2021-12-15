@@ -76,8 +76,18 @@ const Header = ({ handleResponseSuccess }) => {
     }
   };
 
+  const kakaologoutHandler = () => {
+    console.log("bye kakao");
+    window.location.assign(
+      `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_API_URL}/signout`
+    );
+    setIsLogin(false);
+    // history.push("/");
+    // console.log(cookies);
+  };
+
   const logoutHandler = () => {
-    console.log("hi");
+    console.log("bye");
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
       //로긴상태 해제
       // cookies.remove("jwt");
@@ -87,7 +97,7 @@ const Header = ({ handleResponseSuccess }) => {
     history.push("/");
     // console.log(cookies);
   };
-  console.log(isVisitedOpen);
+  // console.log(isVisitedOpen);
   return (
     <>
       {/* // 로그인 모달 */}
@@ -169,11 +179,14 @@ const Header = ({ handleResponseSuccess }) => {
               </>
             ) : (
               <>
+                <div className="kakao_mainpage-button" onClick={kakaologoutHandler}>
+                  KAKAO Log Out
+                </div>
                 <div className="mainpage-button" onClick={logoutHandler}>
                   Log Out
                 </div>
                 {/* 나중에 밑줄뜨는거 처리해야함*/}
-                <StyledLink to="/mypage/profile">
+                <StyledLink to="/mypage/like">
                   <div className="mainpage-button">My Page</div>
                   {/* <div className="mainpage-button">My Page</div> */}
                 </StyledLink>

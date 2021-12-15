@@ -55,7 +55,7 @@ function DetailPage({ match }) {
       .then((res) => {
         console.log(res.data);
         const { post_mapx, post_mapy } = res.data.post;
-        // console.log(mapx, mapy);
+        console.log(post_mapx, post_mapy);
 
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
@@ -84,7 +84,7 @@ function DetailPage({ match }) {
       .then((res) => {
         console.log("겟요청 첨에온거", res.data, res.userinfo);
         // console.log(res.data.data);
-        // console.log(res.data.userinfo);
+        console.log(res);
         // let arr = res.data.data;
         let arr = res.data.data.map((el) => {
           // console.log(el.comments.comment_tags.split(","));
@@ -187,6 +187,7 @@ function DetailPage({ match }) {
     // }, 2000);
     await setLikeLoading(false);
   };
+  console.log(userinfo);
   // console.log("좋아요로딩", likeLoading);
   return (
     <>

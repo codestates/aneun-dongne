@@ -182,7 +182,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     setTags([]);
     setSomething("");
   };
-
+  console.log(userinfo);
   return (
     <CommentWrapper>
       <Comment>

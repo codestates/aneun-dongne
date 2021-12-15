@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Visited.belongsTo(models.User, { foreignKey: "visited_user_id" });
-      // Visited.belongsTo(models.Post, { foreignKey: "visited_post_contentid", targetKey: "post_contentid" });
     }
   }
   Visited.init(

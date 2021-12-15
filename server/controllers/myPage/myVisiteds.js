@@ -129,7 +129,6 @@ module.exports = {
         const { id } = accessTokenData;
         const { area, sigg, mapx, mapy, memo } = req.body;
         const { visitedId } = req.query;
-
         if (!req.file) {
           console.log("이미지 없음");
           await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, null, null);

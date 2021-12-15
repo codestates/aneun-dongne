@@ -321,7 +321,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
 
     await axios
       .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
-        headers: { "content-type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
         withCredentials: true,
       })
       .then((res) => {

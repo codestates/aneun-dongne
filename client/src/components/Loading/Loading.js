@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Div = styled.div`
+  height: 100vh;
   //! 동그라미 로딩
   //! 발자국로딩
   display: flex;
@@ -12,6 +13,7 @@ const Div = styled.div`
   /* background-color: red; */
 
   p {
+    /* background-color: blue; */
     font-size: 2rem;
     width: 500px;
     margin: 60px auto;
@@ -50,7 +52,7 @@ const Div = styled.div`
     margin-top: 10px;
 
     @keyframes blink {
-      10% {
+      0% {
         opacity: 1;
       }
       25% {
@@ -69,6 +71,8 @@ const Div = styled.div`
     }
   }
   #footer-logo-img2 {
+    /* margin-left: 200px; */
+    margin-bottom: 100px;
     animation: blink2 4s ease-in-out infinite;
     /* animation-delay: 2s; */
     @keyframes blink2 {
@@ -76,7 +80,9 @@ const Div = styled.div`
         opacity: 0;
         /* margin-left: 0; */
       }
-      25% {
+      35% {
+        /* margin-left: 100px; */
+        /* margin-bottom: 100px; */
         opacity: 1;
         /* margin-left: 20px; */
       }
@@ -117,6 +123,7 @@ const Div = styled.div`
     }
   }
   #footer-logo-img4 {
+    margin-bottom: 100px;
     animation: blink4 4s ease-in-out infinite;
     /* animation-delay: 2s; */
 
@@ -145,6 +152,9 @@ function Loading() {
   return (
     <Div>
       <p>잠시만 기다려주세요</p>
+
+      <hr />
+      <hr />
       <div>
         <img
           className="footer-logo-img"
@@ -171,6 +181,7 @@ function Loading() {
           alt="icon"
           src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
         />
+        <p>잠시만 기다려주세요</p>
       </div>
     </Div>
   );

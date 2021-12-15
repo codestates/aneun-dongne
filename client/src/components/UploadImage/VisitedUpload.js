@@ -43,7 +43,7 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
   // function inputImageHandler(){
   //     const image = placeImage.current.files
   // }
-
+  console.log(typeof placeImage);
   return (
     <div className="image-upload-box">
       <input
@@ -61,7 +61,11 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
           style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
         ></ImgDiv>
       ) : (
-        <ImgDiv onClick={(e) => inputBtn(e, inputValue)} style={{ backgroundImage: `url(${placeImage})` }}></ImgDiv>
+        <ImgDiv
+          className="good"
+          onClick={(e) => inputBtn(e, inputValue)}
+          style={{ backgroundImage: `url(${placeImage})` }}
+        ></ImgDiv>
       )}
       <EditProfile onClick={(e) => inputBtn(e, inputValue)}>
         <i className="fas fa-edit"></i>

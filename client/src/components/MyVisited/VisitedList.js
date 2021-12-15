@@ -135,37 +135,39 @@ const Body = styled.div`
 function VisitedList({ placeList }) {
   const [selectedArr, setSelectedArr] = useState([]);
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
-  const [vtModal, setVtModal] = useState(null);
+  const [selectedModal, setSelectedModal] = useState(null);
   // console.log(placeList);
 
   const openModalHandler = (el) => {
-    setVtModal(el);
+    setSelectedModal(el);
     setIsVisitedOpen(true);
   };
   const closeVisitedModal = () => {
     if (isVisitedOpen) {
-      setVtModal(null);
+      setSelectedModal(null);
       setIsVisitedOpen(false);
     }
   };
 
   //! 배열을 매핑해서 모달에 넣을때는 array.map()을 작성하는 그 위치에서 모달창을 만들어야함
-  console.log(vtModal);
+  console.log(selectedModal);
   return (
     <>
-      {/* <Styled.ModalContainer>
+      <Styled.ModalContainer>
         {isVisitedOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalVisited visitedImg={vtModal && vtModal.visited_thumbnail_path} />
+                <ModalVisited visitedImg={selectedModal && selectedModal.visited_thumbnail_path} />
+                {/*  a||b => a안되면 b   ,  a&&b => b안되면 a */}
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>
         ) : null}
-      </Styled.ModalContainer> */}
+      </Styled.ModalContainer>
       <Body>
         {placeList.map((el) => {
+          console.log(el);
           return (
             <div className="visited-cards-list" key={el.id} onClick={() => openModalHandler(el)}>
               {/* <div className="visited-cards-list" key={el.id}> */}

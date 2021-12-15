@@ -129,7 +129,7 @@ function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSig
   return (
     <>
       {/* // MyPage/visited 내가 가본 곳 모달 */}
-      <Styled.ModalContainer>
+      {/* <Styled.ModalContainer>
         {isVisitedOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
@@ -139,7 +139,7 @@ function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSig
             </Styled.ModalBackdrop>
           </>
         ) : null}
-      </Styled.ModalContainer>
+      </Styled.ModalContainer> */}
       {/* <Styled.PlaceCard> */}
       <Styled.PlaceCard onClick={() => openModalHandler()}>
         <div className={`place-cards ${id}`}>

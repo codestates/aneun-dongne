@@ -79,7 +79,7 @@ const Header = ({ handleResponseSuccess }) => {
   const kakaologoutHandler = () => {
     console.log("bye kakao");
     window.location.assign(
-      `https://kauth.kakao.com/oauth/logout?client_id=408efd35e5665efd5887c51c419dfb85&logout_redirect_uri=https://localhost:4000/signout`
+      `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_API_URL}/signout`
     );
     setIsLogin(false);
     // history.push("/");

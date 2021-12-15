@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -17,13 +17,10 @@ const Body = styled.div`
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);
   const history = useHistory();
-  const [areacode, setAreaCode] = useState("");
-  const [sigungucode, setSigunguCode] = useState("");
-  const [titie, setTitle] = useState("");
 
   const sigungu = getAreaNames(comment.post.areacode, comment.post.sigungucode);
   const { user_image_path, nickname } = comment.user;
-  const { comment_content, comment_tag, comment_post_contentid, createdAt } = comment.comments;
+  const { id, comment_content, comment_tag, comment_post_contentid, createdAt } = comment.comments;
   const { title } = comment.post;
   const created = createdAt.slice(0, 10);
 
@@ -39,13 +36,11 @@ const MyReviewComment = ({ comment, SetComments }) => {
           "Content-Type": "application/json",
         },
         withCredentials: true,
-        params: { commentId: comment.comments.id },
+        params: { commentId: id },
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
-
-        // SetComments(res.data.data);
+        SetComments(res.data.data);
       });
   };
 

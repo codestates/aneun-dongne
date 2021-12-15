@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import VisitedCards from "./VisitedCards";
 import styled from "styled-components";
 const Body = styled.div`
@@ -27,20 +27,36 @@ const Body = styled.div`
   }
 `;
 function VisitedList({ placeList }) {
-  console.log(placeList);
+  const [selectedArr, setSelectedArr] = useState([]);
+  // let selectedArr = [];
+  // console.log(placeList);
+
+  function selectNum(el) {
+    // console.log(el.id);
+    let list = placeList.filter((e) => {
+      return e.id === el.id;
+    });
+    setSelectedArr(list);
+    // console.log(selectedArr);
+    // setSelectedArr(arr);
+  }
 
   return (
     <Body>
-      {placeList.map((el, idx) => {
+      {placeList.map((el) => {
         return (
-          <div className="visited-cards-list" key={idx}>
+          <div className="visited-cards-list" key={el.id} onClick={() => selectNum(el)}>
             <VisitedCards
-              idx={idx}
               id={el.id}
               area={el.visited_area}
               sigg={el.visited_sigg}
               memo={el.visited_memo}
               image={el.visited_thumbnail_path}
+              sId={selectedArr.id}
+              sArea={selectedArr.visited_area}
+              sSigg={selectedArr.visited_sigg}
+              sMemo={selectedArr.visited_memo}
+              sImage={placeList[0].visited_thumbnail_path}
             />
           </div>
         );

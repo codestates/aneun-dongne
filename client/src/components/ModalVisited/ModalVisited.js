@@ -5,15 +5,15 @@ import { isSavepositionOpen, visitedModal, loginState, loginModal, token, newVis
 import { Styled } from "./style";
 import ImageUpload from "../UploadImage/ImageUpload";
 import VisitedUpload from "../UploadImage/VisitedUpload";
-function ModalVisited({ visitedImg, id, idx }) {
-  console.log(visitedImg);
+
+function ModalVisited({ id, idx, visitedImg }) {
   const accessToken = useRecoilValue(token);
   const [isVisitedPlaceOpen, setIsVisitedPlaceOpen] = useRecoilState(visitedModal);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
-
+  const [loading, setLoading] = useState(false);
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
-  console.log(idx);
+  console.log(visitedImg);
   const [placeImage, setPlaceImage] = useState(visitedImg);
   const [isUploaded, setIsUploaded] = useState(false);
   const [clickedBtn, setClickedBtn] = useState(false); //저장버튼 누른 후 인지 아닌지 확인하려는 용도
@@ -24,6 +24,37 @@ function ModalVisited({ visitedImg, id, idx }) {
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
+
+  //!모달창은 배열수만큼 있는게 아니라 컴퍼넌트 1개임 -> 그래서 여러개가 한방에 다 떴다.
+  // async function getVisitedPlace() {
+  //   // await setLoading(true);
+  //   const result = await axios
+  //     .get(`${process.env.REACT_APP_API_URL}/visited`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data.data);
+  //       let list = res.data.data.filter((e) => {
+  //         return e.id === id;
+  //       });
+  //       console.log(list[0].visited_thumbnail_path);
+  //       setPlaceImage(list[0].visited_thumbnail_path);
+  //     });
+  //   // await setLoading(false);
+  //   return result;
+  // }
+
+  // useEffect(async () => {
+  //   await setLoading(true);
+  //   getVisitedPlace();
+  //   await setLoading(false);
+  //   console.log("되나요");
+  // }, []);
+  //!-------------
 
   function updateInfo(e) {
     console.log(e);
@@ -75,11 +106,13 @@ function ModalVisited({ visitedImg, id, idx }) {
       return;
     }
   }
+  console.log(idx);
   // console.log(isUploaded && clickedBtn);
   useEffect(() => {
     //onClick으로 하니까 필요없으려나?? 우선 납둬봐
   }, [isUploaded]);
   console.log(placeImage);
+
   return (
     <>
       <Styled.FormContainer>

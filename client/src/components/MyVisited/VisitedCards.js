@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import notImageYet from "../../img/not-image-yet.png";
@@ -7,6 +7,7 @@ import { visitedModal } from "../../recoil/recoil";
 import ModalVisited from "../ModalVisited/ModalVisited";
 export const Styled = {
   PlaceCard: styled.div`
+    /* background: skyblue; */
     margin: auto;
     margin-top: 40px;
     border: 1px rgb(107, 217, 224) solid;
@@ -108,9 +109,10 @@ export const Styled = {
   `,
 };
 
-function VisitedCards({ area, sigg, image, memo, id, idx }) {
+function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSigg, sMemo, sImage }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
-  const openModalHandler = () => {
+  const [vtModal, setVtModal] = useState(0);
+  const openModalHandler = (e) => {
     setIsVisitedOpen(true);
   };
   const closeVisitedModal = () => {
@@ -118,7 +120,9 @@ function VisitedCards({ area, sigg, image, memo, id, idx }) {
       setIsVisitedOpen(false);
     }
   };
-  console.log(image);
+
+  console.log(sImage);
+  console.log(sId);
   return (
     <>
       {/* // MyPage/visited 내가 가본 곳 모달 */}
@@ -126,20 +130,21 @@ function VisitedCards({ area, sigg, image, memo, id, idx }) {
         {isVisitedOpen ? (
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
-              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalVisited visitedImg={image} />
+              <Styled.ModalView id={id} onClick={(e) => e.stopPropagation()}>
+                <ModalVisited visitedImg={image} id={id} idx={idx} />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>
         ) : null}
       </Styled.ModalContainer>
-      {/* <Styled.PlaceCard > */}
-      {/* <Styled.PlaceCard onClick={() => openModalHandler}> */}
-      <Styled.PlaceCard onClick={openModalHandler}>
-        <div className="place-cards">
-          {image ? <img src={image} /> : <img src={notImageYet} />}
-          <div className="place-cards-title">
-            <div>
+      <Styled.PlaceCard>
+        {/* <Styled.PlaceCard onClick={(el) => openModalHandler(el)}> */}
+        {/* <Styled.PlaceCard> */}
+        <div className={`place-cards ${id}`}>
+          {/* <div className={`place-cards ${id}`} onClick={(e) => openModalHandler(id)}> */}
+          {image ? <img className={id} src={image} /> : <img className={id} src={notImageYet} />}
+          <div className={`place-cards-title ${id}`}>
+            <div className={id}>
               [ {area} {sigg} ]
             </div>
             <div className="place-cards-memo">{memo}</div>

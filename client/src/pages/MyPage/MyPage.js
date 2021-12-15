@@ -8,6 +8,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { Profile, MyLike, MyReview, MyVisited } from ".";
+
 import LikeLoading from "../../components/Loading/LikeLoading";
 
 const MyPage = ({ match }) => {

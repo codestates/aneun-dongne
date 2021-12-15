@@ -6,7 +6,6 @@ module.exports = async (userId, contentId) => {
   let onlyCommentData = [];
   let result = [];
   let adduser = {};
-
   await Comment.findAll({
     raw: true,
     where: {

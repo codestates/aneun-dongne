@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       user_image_path: DataTypes.TEXT,
       user_thumbnail_path: DataTypes.TEXT,
+      kakao_id: DataTypes.INTEGER,
+      provider: DataTypes.STRING,
     },
     {
       sequelize,

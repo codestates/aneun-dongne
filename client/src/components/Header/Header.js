@@ -76,8 +76,18 @@ const Header = ({ handleResponseSuccess }) => {
     }
   };
 
+  const kakaologoutHandler = () => {
+    console.log("bye kakao");
+    window.location.assign(
+      `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_API_URL}/signout`
+    );
+    setIsLogin(false);
+    // history.push("/");
+    // console.log(cookies);
+  };
+
   const logoutHandler = () => {
-    console.log("hi");
+    console.log("bye");
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
       //로긴상태 해제
       // cookies.remove("jwt");
@@ -169,6 +179,9 @@ const Header = ({ handleResponseSuccess }) => {
               </>
             ) : (
               <>
+                <div className="kakao_mainpage-button" onClick={kakaologoutHandler}>
+                  KAKAO Log Out
+                </div>
                 <div className="mainpage-button" onClick={logoutHandler}>
                   Log Out
                 </div>

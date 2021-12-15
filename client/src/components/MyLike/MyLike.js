@@ -59,10 +59,7 @@ const MyLike = () => {
     <Margin>
       <div className="list">
         {postsInfo.length === 0 ? (
-          <div>
-            Let's push the like button !!!
-            <Icon size={"100"} icon={heartO} />
-          </div>
+          <div>Let's push the like button !!!</div>
         ) : (
           postsInfo.map((postsInfo) => {
             return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;

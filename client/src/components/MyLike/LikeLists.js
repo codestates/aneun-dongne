@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Mylike from "./MyLike";
-import { getNames } from "../../AreaCodetoName";
+import { getNames, getAreaNames } from "../../AreaCodetoName";
 
 const Lists = styled.div`
   /* height: 100vh; */
@@ -141,6 +141,7 @@ const KeyWordBox = styled.div`
   /* background-color: white; */
 `;
 const LikeBtn = styled.div`
+  position: absolute;
   border: 1px red solid;
   border-radius: 20px;
   /* background: white; */
@@ -167,6 +168,14 @@ const LikeBtn = styled.div`
   }
 `;
 export default function LikeLists({ postsInfo }) {
+  // const sliceWords = () => {
+  //   for (let i = 0; i < post_tagsArr.length; i++) {
+  //     if (post_tagsArr === ",") {
+  //       post_tagsArr === "";
+  //     }
+  //   }
+  // };
+
   const history = useHistory();
 
   const handlecontentClick = () => {
@@ -177,7 +186,12 @@ export default function LikeLists({ postsInfo }) {
       <PlaceCard>
         <img src={postsInfo.post_firstimage} />
         <div className="place-cards-title">
-          <div>[{getNames(postsInfo.post_areacode)}]</div>
+          <div>
+            [{getNames(postsInfo.post_areacode)}][{postsInfo.post_addr1}]
+          </div>
+          {/* <div>{postsInfo.post_sigungucode}</div> */}
+
+          <div></div>
           <div>{postsInfo.post_title}</div>
           {/* <div>{postsInfo.isLiked}</div> */}
         </div>

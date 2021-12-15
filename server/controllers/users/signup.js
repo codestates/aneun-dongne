@@ -2,16 +2,20 @@ const { User } = require("../../models");
 const { generateAccessToken } = require("../tokenFunctions");
 
 module.exports = (req, res) => {
-  const { nickname, email, password } = req.body;
+  const { nickname, email, password, user_image_path, user_thumbnail_path } = req.body;
   if (!nickname || !email || !password) {
     return res.status(422).send("insufficient parameters supplied");
   }
 
   User.findOrCreate({
     where: {
-      nickname,
-      email,
-      password,
+      nickname: nickname,
+      email: email,
+    },
+    defaults: {
+      password: password,
+      user_image_path: user_image_path,
+      user_thumbnail_path: user_thumbnail_path,
     },
   })
     .then(([save, created]) => {
@@ -20,7 +24,13 @@ module.exports = (req, res) => {
       } else {
         delete save.dataValues.password;
         const accessToken = generateAccessToken(save.dataValues);
-        res.cookie("jwt", accessToken);
+        res.cookie("jwt", accessToken, {
+          maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+          domain: ".aneun-dongne.com",
+          path: "/",
+          secure: true,
+          sameSite: "None",
+        });
         res.status(201).json({ message: "ok" });
       }
     })

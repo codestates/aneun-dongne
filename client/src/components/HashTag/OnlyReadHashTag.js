@@ -91,7 +91,7 @@ const OnlyReadHashTag = ({ initialTags, uuid }) => {
             if (tag.length === 0) return;
             return (
               <div key={index} className="tag">
-                {"#" + tag}
+                #{tag}
               </div>
             );
           })}

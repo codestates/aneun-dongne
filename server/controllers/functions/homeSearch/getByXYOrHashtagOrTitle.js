@@ -1,9 +1,11 @@
-const { User, Post, HashTag, Like, Comment, sequelize, Sequelize } = require("../../../models");
+const { User, Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord) => {
   let result = [];
+
   await Post.findAll({
     raw: true,
+    // limit: 10,
     attributes: [
       "id",
       "post_addr1",
@@ -36,7 +38,10 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
       },
     ],
     group: "post_contentid",
-    order: [[sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"]],
+    order: [
+      [sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"],
+      ["post_readcount", "DESC"],
+    ],
     where: sequelize.where(
       sequelize.fn(
         "ST_Distance",
@@ -47,6 +52,7 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
     ),
   })
     .then((data) => {
+      // console.log("데이터", data);
       result = data.filter((el) => {
         if (tag === "") {
           return el.post_title.includes(searchWord);
@@ -65,7 +71,7 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
       }
 
       result.splice(50);
-      // console.log(result);
+      // console.log("리쥴트", result);
     })
     .catch((err) => console.log(err));
   return result;

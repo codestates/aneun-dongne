@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Review from "./Review";
+import { Icon } from "react-icons-kit";
+import { angleDoubleDown } from "react-icons-kit/fa/angleDoubleDown";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { placelist, loginState } from "../recoil/recoil";
+import { loginState } from "../recoil/recoil";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -15,6 +17,9 @@ AOS.init();
 
 export const Body = styled.div`
   position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  /* overflow-x: visible; */
   /* display: flex;
   flex-direction: column; */
 `;
@@ -52,6 +57,7 @@ export const PopularTitleView = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  margin-top: 10%;
 
   .title {
     font-size: 2.5rem;
@@ -101,6 +107,8 @@ export const PeopleTitleView = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  background-color: #505f7b;
+  color: white;
 
   .title {
     margin-bottom: 50px;
@@ -153,17 +161,32 @@ export const TitleEndView = styled.div`
 export const Image = styled.div`
   display: flex;
   justify-content: center;
+
   margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
   img {
-    width: 1000px;
-    height: 500px;
+    width: 30%;
+    height: 30%;
+
     object-fit: cover;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .play {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
   }
 `;
 
 export const VideoContainer = styled.div`
   /* width: 500px;
   height: 300px; */
+  width: 50%;
+
   img {
     width: 100%;
     object-fit: cover;
@@ -174,48 +197,87 @@ export const MainTitleView = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   img {
     position: relative;
     width: 100%;
   }
   .main-title {
+    margin-top: 10%;
     position: absolute;
     font-size: 3rem;
     font-family: fantasy;
     color: white;
   }
+  .icon {
+    margin-top: 10%;
+    margin-left: 41%;
+    margin-right: auto;
+    animation-name: updown;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    @keyframes updown {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    :hover {
+      cursor: pointer;
+      color: #6af4aa;
+      transition: all 0.3s;
+    }
+  }
+
+  /* i {
+    justify-content: center;
+    margin-right: 50%;
+  } */
 `;
 
+// export const Icon = styled.i`
+//   justify-content: center;
+// `;
+
+// export const Icon = styled.div`
+//   display: flex;
+// `;
+
 function Mainpage() {
-  const placeList = useRecoilValue(placelist);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const history = useHistory();
   const ToHome = () => {
     history.push("/home");
   };
 
-  //첫화면에 영상을 넣을 시 추가
-  {
-    /* <video video height="180" width="288" controls autoplay>
-            <source src="/Main.mp4" type="video/mp4" />
-          </video> */
-  }
+  const ToScrollBottom = (e) => {
+    window.scroll({
+      top: 800,
+
+      behavior: "smooth",
+    });
+  };
+
   console.log("로긴되었나요", isLogin);
 
   return (
     <>
       <Body>
         <MainTitleView>
-          <img
-            src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
-            muted
-            autoPlay
-            loop
-            playsInline
-          />
+          <img src="/preview.gif" muted autoPlay loop playsInline />
           <div className="main-title">
             <div className="title">어디론가 놀러가고 싶으신가요?</div>
             <StartButton onClick={ToHome}>시작하기</StartButton>
+            <div className="icon">
+              <Icon size={"100"} icon={angleDoubleDown} onClick={ToScrollBottom} />
+            </div>
           </div>
         </MainTitleView>
 
@@ -227,6 +289,7 @@ function Mainpage() {
               <img src="/mapclick.png" />
 
               <img
+                className="play"
                 src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
                 muted
                 autoPlay
@@ -242,6 +305,7 @@ function Mainpage() {
           <VideoContainer>
             <Image>
               <img
+                className="play"
                 src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
                 muted
                 autoPlay
@@ -260,6 +324,7 @@ function Mainpage() {
               <img src="/likeimg.png" />
 
               <img
+                className="play"
                 src="https://res.cloudinary.com/cloudinary/image/upload/c_limit,w_770/f_auto,fl_lossy,q_auto/Mario_1.gif"
                 muted
                 autoPlay
@@ -275,23 +340,6 @@ function Mainpage() {
             유저들의 후기
           </div>
           <Review />
-          {/* <img src="/people3.png" />
-          <div className="peopleTitle">
-            우리지역에서 인기있는 관광지가 궁금했는데 우리동네로 간편하게 찾아줬어요. <p>-강OO</p>
-          </div>
-          <img src="/people2.png" />
-          <div className="peopleTitle">
-            가고싶은 곳을 정하기 어려울 때 좋아요! <p>-최OO</p>
-          </div>
-          <img src="/people1.png" />
-          <div className="peopleTitle">
-            친구들이 우리동네에 놀러왔을 때 원하는 곳으로 데려가기 간편해요!!
-            <p>-정OO</p>
-          </div>
-          <img src="/people4.png" />
-          <div className="peopleTitle">
-            동네를 산책하는 재미가 생겼어요!! <p>-박OO-</p>
-          </div> */}
         </PeopleTitleView>
 
         <TitleEndView>

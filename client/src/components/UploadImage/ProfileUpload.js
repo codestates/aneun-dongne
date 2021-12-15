@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import hamtori from "../../img/hamtori.png";
+// import hamtori from "../../img/hamtori.png";
 import "./profileUpload.css";
 import styled from "styled-components";
 
@@ -43,8 +43,8 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   // function inputImageHandler(){
   //     const image = imgUrl.current.files
   // }
-  console.log(typeof imgUrl);
-  console.log(imgUrl);
+  // console.log(typeof imgUrl);
+  // console.log(imgUrl);
   return (
     <div className="profile-upload-box">
       <input

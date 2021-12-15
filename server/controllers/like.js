@@ -42,44 +42,58 @@ const deleteLike = async (userId, contentId) => {
 module.exports = {
   getLikeCount: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
-    if (!accessTokenData) {
-      await res.status(200).json({
-        data: await getLikeCount(0, contentId),
-      });
-    } else {
-      await res.status(200).json({
-        data: await getLikeCount(id, contentId),
-      });
+    try {
+      if (!accessTokenData) {
+        await res.status(200).json({
+          data: await getLikeCount(0, contentId),
+        });
+      } else {
+        const { id } = accessTokenData;
+        await res.status(200).json({
+          data: await getLikeCount(id, contentId),
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "server err" });
     }
   },
   addLike: async (req, res) => {
+    console.log("더하기", req.cookies);
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
-    if (!accessTokenData) {
-      // return res.status(401).send("no token in req.headers['authorization']");
-      await res.status(400).json({ data: null, message: "invalid access token" });
-    } else {
-      await addLike(id, contentId);
-      await res.status(200).json({
-        data: await getLikeCount(id, contentId),
-      });
+    try {
+      if (!accessTokenData) {
+        // return res.status(401).send("no token in req.headers['authorization']");
+        await res.status(400).json({ data: null, message: "invalid access token" });
+      } else {
+        const { id } = accessTokenData;
+        await addLike(id, contentId);
+        await res.status(200).json({
+          data: await getLikeCount(id, contentId),
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "server err" });
     }
   },
   deleteLike: async (req, res) => {
+    console.log("딜리트", req.cookies);
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
-    if (!accessTokenData) {
-      // return res.status(401).send("no token in req.headers['authorization']");
-      return res.status(400).json({ data: null, message: "invalid access token" });
-    } else {
-      await deleteLike(id, contentId);
-      await res.status(200).json({
-        data: await getLikeCount(id, contentId),
-      });
+    try {
+      if (!accessTokenData) {
+        // return res.status(401).send("no token in req.headers['authorization']");
+        return res.status(400).json({ data: null, message: "invalid access token" });
+      } else {
+        const { id } = accessTokenData;
+        await deleteLike(id, contentId);
+        await res.status(200).json({
+          data: await getLikeCount(id, contentId),
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "server err" });
     }
   },
 };

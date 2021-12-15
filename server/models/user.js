@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       user_image_path: DataTypes.TEXT,
+      user_thumbnail_path: DataTypes.TEXT,
     },
     {
       sequelize,

@@ -5,3 +5,4 @@ package-lock.json
 *.pem
 
 awsconfig.json
+.DS_Store

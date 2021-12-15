@@ -10,71 +10,87 @@ const { isAuthorized } = require("./tokenFunctions");
 module.exports = {
   readComments: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-
-    const { id } = accessTokenData;
     const { contentId } = req.params;
-    console.log("겟커멘트", accessTokenData);
-    const { user_image_path, nickname } = accessTokenData;
-    if (!accessTokenData) {
-      await res.status(200).json({
-        data: await getCommentHashtagData(0, contentId),
-      });
-    } else {
-      await res.status(200).json({
-        data: await getCommentHashtagData(id, contentId),
-        userinfo: { user_image_path, nickname },
-      });
+
+    try {
+      if (!accessTokenData) {
+        await res.status(200).json({
+          data: await getCommentHashtagData(0, contentId),
+        });
+      } else {
+        const { id, user_image_path, nickname } = accessTokenData;
+
+        console.log("겟커멘트", accessTokenData);
+        await res.status(200).json({
+          data: await getCommentHashtagData(id, contentId), //이안에 userinfo가 있는건 알아요
+          userinfo: { user_image_path, nickname },
+        });
+      }
+    } catch (err) {
+      console.log("에러", err);
+      res.status(500).json({ message: "server err" });
     }
   },
   createComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     const { commentContent, tagsArr } = req.body;
     console.log("포스트커맨드", req.body);
-    if (!accessTokenData) {
-      // return res.status(401).send("no token in req.headers['authorization']");
-      await res.status(400).json({ data: null, message: "invalid access token" });
-    } else {
-      await createCommentHashtagData(id, contentId, commentContent, tagsArr);
-      await res.status(200).json({
-        data: await getCommentHashtagData(id, contentId),
-      });
+    try {
+      if (!accessTokenData) {
+        // return res.status(401).send("no token in req.headers['authorization']");
+        await res.status(400).json({ data: null, message: "invalid access token" });
+      } else {
+        const { id } = accessTokenData;
+        await createCommentHashtagData(id, contentId, commentContent, tagsArr);
+        await res.status(200).json({
+          data: await getCommentHashtagData(id, contentId, commentContent, tagsArr),
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "server err" });
     }
   },
   updateComment: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     const { commentId, commentContent, tagsArr } = req.body;
-
-    if (!accessTokenData) {
-      // return res.status(401).send("no token in req.headers['authorization']");
-      return res.status(400).json({ data: null, message: "invalid access token" });
-    } else {
-      console.log("패치커맨드", req.body);
-      await updateCommentHashtagData(commentId, id, contentId, commentContent, tagsArr);
-      await res.status(200).json({
-        data: await getCommentHashtagData(id, contentId),
-      });
+    try {
+      if (!accessTokenData) {
+        // return res.status(401).send("no token in req.headers['authorization']");
+        return res.status(400).json({ data: null, message: "invalid access token" });
+      } else {
+        const { id } = accessTokenData;
+        console.log("패치커맨드", req.body);
+        await updateCommentHashtagData(commentId, id, contentId, commentContent, tagsArr);
+        await res.status(200).json({
+          data: await getCommentHashtagData(id, contentId),
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "server err" });
     }
   },
   deleteComment: async (req, res) => {
     console.log(req.cookies);
     console.log("커맨드 제거 ", req.query);
     const accessTokenData = isAuthorized(req);
-    const { id } = accessTokenData;
     const { contentId } = req.params;
     const { commentId } = req.query;
     console.log("파람,쿼리", req.params, req.query);
-    if (!accessTokenData) {
-      // return res.status(401).send("no token in req.headers['authorization']");
-      return res.status(400).json({ data: null, message: "invalid access token" });
-    } else {
-      await deleteCommentData(commentId, id, contentId);
-      await res.status(200).json({
-        data: await getCommentHashtagData(id, contentId),
-      });
+    try {
+      if (!accessTokenData) {
+        // return res.status(401).send("no token in req.headers['authorization']");
+        return res.status(400).json({ data: null, message: "invalid access token" });
+      } else {
+        const { id } = accessTokenData;
+        await deleteCommentData(commentId, id, contentId);
+        await res.status(200).json({
+          data: await getCommentHashtagData(id, contentId),
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "server err" });
     }
   },
 };

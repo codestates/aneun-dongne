@@ -85,21 +85,19 @@ module.exports = {
         console.log("data", data);
         validUser = data;
       }); // 유저정보 조회
-      console.log("유저보여주ㅏ", validUser);
-      console.log("닉어케찍힘", nickname);
+
       if (nickname === "") {
         new_Nickname = validUser.nickname;
       } else {
         new_Nickname = nickname;
       }
-      console.log("여긴닉어케찍힘", new_Nickname);
-      console.log("비번어케찍힘", newPassword);
+
       if (newPassword === "") {
         new_Password = validUser.password;
       } else {
         new_Password = newPassword;
       }
-      console.log("이번에는비번어케찍힘", new_Password);
+
       if (checkPassword === "") {
         check_Password = validUser.password;
       } else {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Route } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { token, loading } from "../recoil/recoil";
+
+import { useSetRecoilState } from "recoil";
+import { token } from "../recoil/recoil";
 import Loading from "../components/Loading/Loading";
 import { useHistory } from "react-router-dom";
 import axios from "axios";

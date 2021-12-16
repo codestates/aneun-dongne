@@ -222,6 +222,18 @@ export const saveOrNotModal = atom({
   default: false,
 });
 
+//! 회원탈퇴 재확인모달
+export const warningDeleteUserModal = atom({
+  key: "warningDeleteUserModal",
+  default: false,
+});
+
+//! 다시 로그인해주세요 모달
+export const loginAgainModal = atom({
+  key: "loginAgainModal",
+  default: false,
+});
+
 //! 마이페이지
 export const newVisitedPlace = atom({
   key: "newVisitedPlace",

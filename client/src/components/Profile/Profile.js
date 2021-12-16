@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { userInfo, loginState, loginModal, token, kToken } from "../../recoil/recoil";
+import { loginState, loginModal, token, kToken } from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
@@ -157,8 +157,7 @@ const ImgDiv = styled.div`
 
 //회원수정, 로그아웃시켜줘야힘.
 
-function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname }) {
-  const [info, setInfo] = useRecoilState(userInfo);
+function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const history = useHistory();
   //   const [imgUrl, setImgUrl] = useState("");
   // const [prevImg, setPrevImg] = useState(
@@ -169,15 +168,18 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [inputPassword, setInputPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputCheckPassword, setInputCheckPassword] = useState("");
-  const [confirmMessage, setConfirmMessage] = useState("");
 
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const accessToken = useRecoilValue(token);
-  // const [accessToken, setAccessToken] = useRecoilState(token);
+
+  const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    console.log(kakaoToken);
+    if (kakaoToken) setErrorMessage(message.kakaoState);
+  }, []);
 
   console.log(inputEmail);
   useEffect(() => {
@@ -214,9 +216,10 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     // if(!imgUrl){
     //   formData.append("image", imgUrl);
     // }
+
     if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
       console.log("hi");
-      setErrorMessage("입력하신 정보를 다시 한번 확인해주세요");
+      setErrorMessage(message.checkAgain);
       return;
     }
     if (imgUrl) {
@@ -246,7 +249,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         setPrevImg(res.data.data.user_image_path);
         setNickname(res.data.data.nickname);
         setInputEmail(res.data.data.email);
-        setErrorMessage("프로필이 변경되었습니다.");
+        setErrorMessage(message.changedProfile);
       })
       .catch((err) => {
         if (err.response) {
@@ -255,11 +258,11 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
             history.push("/");
           } else if (err.response.status === 400) {
             //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
-            setErrorMessage("입력하신 정보를 확인해주세요.");
+            setErrorMessage(message.checkAgain);
           } else if (err.response.status === 403) {
             //3. 카톡로긴일땐 정보변경을 허용하지 않음
             //403번: 유저가 누구인진 알지만 허용하지 않을때
-            setErrorMessage("카톡프로필은 바꿀수 없습니다.");
+            setErrorMessage(message.kakaoState);
 
             //현재비번 잘못썼을때else if()
             //닉넴잘못적었을때

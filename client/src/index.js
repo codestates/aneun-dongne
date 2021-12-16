@@ -5,15 +5,12 @@ import { RecoilRoot } from "recoil";
 import App from "./App";
 
 import { BrowserRouter } from "react-router-dom";
-import SaveOrNotModal from "./components/ModalSaveOrNot/SaveOrNotModal";
-import { Autocomplete } from "./components/Home-Rightbar/Autocomplete";
 
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <BrowserRouter>
         <App />
-        {/* <Autocomplete /> */}
       </BrowserRouter>
     </RecoilRoot>
   </React.StrictMode>,

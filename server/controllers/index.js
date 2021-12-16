@@ -33,4 +33,6 @@ module.exports = {
   //MyPage
   myLikes: require("./myPage/myLikes"),
   myComments: require("./myPage/myComments"),
+  //Hashtag
+  getTags: require("./hashtags"),
 };

@@ -221,6 +221,11 @@ export const saveOrNotModal = atom({
   key: "saveOrNotModal",
   default: false,
 });
+// 댓글 삭제 모달
+export const deleteCommentModal = atom({
+  key: "deleteCommentModal",
+  default: false,
+});
 
 //! 마이페이지
 export const newVisitedPlace = atom({

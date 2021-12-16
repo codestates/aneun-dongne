@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Styled } from "./style";
 
 import { useRecoilValue, useRecoilState } from "recoil";
@@ -90,19 +90,21 @@ const MyPage = ({ match }) => {
         </nav>
 
         <div className="page-container">
-          <Route exact path={match.url} component={MyLike} />
-          <Route exact path={`${match.url}/like`} component={MyLike} />
-          <Route exact path={`${match.url}/visited`} component={MyVisited} />
-          <Route exact path={`${match.url}/comments`} component={MyReview} />
-          <Route exact path={`${match.url}/profile`}>
-            <Profile
-              imgUrl={imgUrl}
-              setImgUrl={setImgUrl}
-              prevImg={prevImg}
-              setPrevImg={setPrevImg}
-              setNickname={setNickname}
-            />
-          </Route>
+          <Switch>
+            <Route exact path={match.url} component={MyLike} />
+            <Route exact path={`${match.url}/like`} component={MyLike} />
+            <Route exact path={`${match.url}/visited`} component={MyVisited} />
+            <Route exact path={`${match.url}/comments`} component={MyReview} />
+            <Route exact path={`${match.url}/profile`}>
+              <Profile
+                imgUrl={imgUrl}
+                setImgUrl={setImgUrl}
+                prevImg={prevImg}
+                setPrevImg={setPrevImg}
+                setNickname={setNickname}
+              />
+            </Route>
+          </Switch>
         </div>
 
         <div>{/* justify-content:space-between을 위한 빈 태그 */}</div>

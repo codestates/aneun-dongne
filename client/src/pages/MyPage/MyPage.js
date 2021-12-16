@@ -4,6 +4,9 @@ import { Styled } from "./style";
 
 import axios from "axios";
 
+import { useRecoilValue } from "recoil";
+import { token } from "../../recoil/recoil";
+
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 import LikeLoading from "../../components/Loading/LikeLoading";

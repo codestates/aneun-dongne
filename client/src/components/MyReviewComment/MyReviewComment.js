@@ -1,31 +1,26 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
 import { useRecoilValue } from "recoil";
 import { token } from "../../recoil/recoil";
 
-import { getAreaNames } from "../../AreaCodetoName";
+import { Icon } from "react-icons-kit";
+import { ic_delete } from "react-icons-kit/md/ic_delete";
+import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 
-const Body = styled.div`
-  margin: 20px 0px;
-  border: 1px black solid;
-  width: 600px;
-`;
+import { Styled } from "./style";
+import { getAreaNames } from "../../AreaCodetoName";
 
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);
   const history = useHistory();
-  const [areacode, setAreaCode] = useState("");
-  const [sigungucode, setSigunguCode] = useState("");
-  const [titie, setTitle] = useState("");
 
   const sigungu = getAreaNames(comment.post.areacode, comment.post.sigungucode);
   const { user_image_path, nickname } = comment.user;
-  const { comment_content, comment_tag, comment_post_contentid, createdAt } = comment.comments;
+  const { id, comment_content, comment_tags, comment_post_contentid, createdAt } = comment.comments;
   const { title } = comment.post;
   const created = createdAt.slice(0, 10);
+  const tagArr = comment_tags.split(",");
 
   const handleContentClick = () => {
     history.push(`/detailpage/${comment_post_contentid}`);
@@ -39,29 +34,52 @@ const MyReviewComment = ({ comment, SetComments }) => {
           "Content-Type": "application/json",
         },
         withCredentials: true,
-        params: { commentId: comment.comments.id },
+        params: { commentId: id },
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
-
-        // SetComments(res.data.data);
+        SetComments(res.data.data);
       });
   };
 
   return (
     <>
-      <Body>
-        <div>{sigungu.areaName}</div>
-        <div>{sigungu.siggName}</div>
-        <div>{user_image_path}</div>
-        <div>{nickname}</div>
-        <div onClick={handleContentClick}>{comment_content}</div>
-        <div>{comment_tag}</div>
-        <div onClick={handleContentClick}>{title}</div>
-        <div>작성날짜 : {created}</div>
-        <button onClick={deleteComment}>삭제</button>
-      </Body>
+      <Styled.Body>
+        <div className="user-container">
+          <div className="user-info-wrapper">
+            <img src={user_image_path} className="user-image" />
+            <div className="user-name">{nickname}</div>
+          </div>
+          <div className="user-content-wrapper">
+            <div className="user-content" onClick={handleContentClick}>
+              {comment_content}
+            </div>
+            <div className="user-hastag-wrapper">
+              {tagArr.map((tag) => (
+                <span className="user-hastag">{tag}</span>
+              ))}
+            </div>
+            <div className="user-content-bottom">
+              <div className="user-location-wrapper">
+                <span className="user-location">
+                  [{sigungu.areaName} {sigungu.siggName}]
+                </span>
+                <span className="user-place" onClick={handleContentClick}>
+                  {title}
+                </span>
+              </div>
+              <div className="created-date">작성날짜 : {created}</div>
+            </div>
+          </div>
+        </div>
+        <div className="side-button">
+          <Icon size={32} icon={ic_cancel_outline} className="cancel-button" />
+          <Icon icon={ic_delete} onClick={deleteComment} className="delete-button" />
+        </div>
+      </Styled.Body>
+      <Styled.Side>
+        <div className="side-delete">dddd</div>
+      </Styled.Side>
     </>
   );
 };

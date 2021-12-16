@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
 
 import { useRecoilValue } from "recoil";
 import { token } from "../../recoil/recoil";
 
 import MyReviewComment from "../MyReviewComment/MyReviewComment";
-
-const Body = styled.div`
-  margin-left: 450px;
-`;
+import LikeLoading from "../Loading/LikeLoading";
 
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
   const [comments, SetComments] = useState([]);
+  const [isLoing, SetIsloading] = useState(true);
 
   const renderMyComments = async () => {
     await axios
@@ -25,8 +22,11 @@ const MyReview = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
+        SetIsloading(true);
         SetComments(res.data.data);
+      })
+      .then(() => {
+        SetIsloading(false);
       });
   };
 
@@ -36,15 +36,21 @@ const MyReview = () => {
 
   return (
     <>
-      <Body>
-        <div className="comment-list">
-          {comments.length === 0
-            ? "댓글이 없음"
-            : comments.map((comment) => {
-                return <MyReviewComment key={comment.comments.id} comment={comment} SetComments={SetComments} />;
-              })}
-        </div>
-      </Body>
+      <div className="comment-list">
+        {isLoing ? (
+          <div>
+            <LikeLoading />
+          </div>
+        ) : (
+          <div>
+            {comments.length === 0
+              ? "댓글이 없음"
+              : comments.map((comment) => {
+                  return <MyReviewComment key={comment.comments.id} comment={comment} SetComments={SetComments} />;
+                })}
+          </div>
+        )}
+      </div>
     </>
   );
 };

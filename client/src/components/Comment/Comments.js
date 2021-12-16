@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
-import { useRecoilState } from "recoil";
-import { defaultcomments, deleteCommentmode } from "../../recoil/recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { defaultcomments, deleteCommentmode, token, kToken } from "../../recoil/recoil";
 import MyComment from "./MyComment";
 import EditableHashTag from "../HashTag/EditableHashTag";
 import axios from "axios";
 import OnlyReadHashTag from "../HashTag/OnlyReadHashTag";
+import LikeLoading from "../Loading/LikeLoading";
 
 const Comment = styled.div`
   position: relative;
@@ -29,40 +30,90 @@ const Comment = styled.div`
     width: 100%;
   }
 `;
-const Profile = styled.div``;
+const Profile = styled.div`
+  position: relative;
+  /* background-color: red; */
+  display: flex;
+  width: 80px;
+  height: 140px;
+  margin: 40px;
+`;
 const ProfileImg = styled.img`
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  background-color: white;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  /* background-color: white; */
 `;
 
 const NickName = styled.span`
-  background-color: yellowgreen;
-
+  /* background-color: yellowgreen; */
+  position: absolute;
+  bottom: 5px;
   text-align: center;
+  width: 100%;
 `;
 
 const ContentBox = styled.div`
-  background-color: yellow;
+  /* background-color: yellow; */
+  margin-top: 30px;
+  position: relative;
+  width: 480px;
+  /* height: 140px; */
+  > button {
+    position: absolute;
+    right: -10px;
+    top: 20px;
+    width: 80px;
+    border: none;
+    height: 40px;
+    background-color: rgb(192, 251, 255);
+    background-image: linear-gradient(
+      to right bottom,
+      rgba(255, 255, 255, 0.9) 0,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    transition: all 0.5s ease;
+    border-radius: 20px;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  button:active {
+    transform: scale(1.1);
+  }
 `;
 
 const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
+  line-height: 1em;
+  word-break: break-all;
+  /* position: absolute; */
+  top: 0;
+  left: 10px;
+  width: 370px;
+  height: 70px;
+  padding-left: 10px;
+  padding-right: 10px;
 
-  background-color: whitesmoke;
+  /* background-color: skyblue; */
 `;
 
 const ContentInput = styled.div`
   display: flex;
-  flex-wrap: wrap;
-
-  > #commentRead {
-    display: flex;
-    flex-wrap: wrap;
+  padding: 10px;
+  /* border: 1px gray solid; */
+  /* flex-wrap: wrap; */
+  /* background-color: burlywood; */
+  > #comment-read {
     word-wrap: break-word;
-    word-break: keep-all;
+    /* background-color: green; */
+    > span {
+    }
   }
   > #comment-change {
     display: flex;
@@ -73,14 +124,26 @@ const ContentInput = styled.div`
   }
   > input,
   div {
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
 
     width: 370px;
 
     padding-left: 10px;
     padding-right: 10px;
   }
+`;
 
+const BtnWrapper = styled.div`
+  width: 370px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  > button {
+    margin: 10px 0 10px 0;
+    background-color: rgb(192, 251, 255);
+  }
   .change-comment,
   .complete-change {
     z-index: 999;
@@ -140,8 +203,15 @@ const ContentInput = styled.div`
 
 const HashTagWrapper = styled.div`
   /* margin-top: 100px; */
+  /* position: absolute; */
+  /* background-color: red; */
   width: 370px;
 
+  /* bottom: 0; */
+  /* top: 75px; */
+  /* margin-top: 75px; */
+  left: 10px;
+  padding-right: 10px;
   white-space: nowrap;
   border: none;
 `;
@@ -153,7 +223,8 @@ const Date = styled.div`
 
 function Comments({ uuid, img, nickname, text, initialTags, date, editable, contentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
-
+  const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(text);
@@ -163,6 +234,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
+  //댓글로딩
+  const [commentLoading, setCommentLoading] = useState(false);
+  //
+
   // console.log(initialTags);
   useEffect(() => {
     //text,initialTags초기화
@@ -180,6 +255,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   function getCommentId(e) {
     // e.preventDefault(); //필요한가?
     //누른 버튼의 className으로 실행되는 함수가 결정된다.
+
     setClickedBtn(e.target.className);
   }
 
@@ -197,14 +273,23 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   // console.log(tags.map((el) => el.substr(0, el.length - 1)));
 
   // 댓글 삭제요청 보내는 함수
-  function deleteComment() {
-    axios
+  async function deleteComment() {
+    setCommentLoading(true);
+    await axios
       .delete(
         `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken || kakaoToken}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+          params: { commentId: uuid },
+        }
 
         //! axios에선 params지만 express에선 req.query래요.
         //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
-        { params: { commentId: uuid }, withCredentials: true }
+        // { params: { commentId: uuid }, withCredentials: true }
       )
       .then((res) => {
         console.log(res.data.data);
@@ -218,25 +303,32 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         setDeleteOrNot(true);
       });
     setClickedBtn("");
+    setCommentLoading(false);
   }
   function changeComment() {
     setPrevComment(comment);
     setEditMode(true);
     console.log(editMode);
   }
-  function completeChange() {
+  async function completeChange() {
     console.log(tags, comment);
     const body = {
       commentId: uuid, //댓글아뒤
       commentContent: comment, //댓글내용
       tagsArr: tags, //해시태그
     };
-    axios
+    setCommentLoading(true);
+
+    await axios
       .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
-        headers: { "content-type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
         withCredentials: true,
       })
       .then((res) => {
+        console.log("코맨트로딩", commentLoading);
         let arr = res.data.data.map((el) => {
           console.log(el.comments.comment_tags.split(","));
           console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
@@ -246,12 +338,13 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         setDefaultComment(arr);
       });
 
-    if (editMode) console.log("수정완료");
-    else console.log("댓글수정 클릭");
+    // if (editMode) console.log("수정완료");
+    // else console.log("댓글수정 클릭");
 
     setEditMode(false);
 
     setClickedBtn("");
+    setCommentLoading(false);
   }
   //댓글 바꾸는 함수
   const ChangeHandler = (e) => {
@@ -262,9 +355,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     setEditMode(false);
     setClickedBtn("");
   }, [changeOrNot]);
-  useEffect(() => {
-    console.log(editMode);
-  }, [editMode]);
+  // useEffect(() => {
+
+  // }, [commentLoading]);
+
   return (
     <>
       <Comment>
@@ -273,71 +367,82 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
           <NickName>{nickname}</NickName>
         </Profile>
         <ContentBox>
-          {!editable ? (
-            <Content name="comment">{text}</Content>
+          {commentLoading ? (
+            <div>
+              <LikeLoading />
+            </div>
           ) : (
-            <ContentInput>
-              {!editMode ? (
-                <div id="comment-read" name="comment">
-                  {comment}
-                </div>
+            <>
+              {!editable ? (
+                <Content name="comment">{text}</Content>
               ) : (
-                <textarea
-                  id="comment-change"
-                  type="text"
-                  // value={comment}
-                  defaultValue={prevComment}
-                  onChange={(e) => ChangeHandler(e)}
-                  onKeyUp={(e) => {
-                    if (e.key === "Enter") {
-                      ChangeHandler(e);
-                      setEditMode(false);
-                    }
-                  }}
-                  name="comment"
-                />
+                <ContentInput>
+                  {!editMode ? (
+                    <div id="comment-read" name="comment">
+                      <span>{comment}</span>
+                    </div>
+                  ) : (
+                    <textarea
+                      id="comment-change"
+                      type="text"
+                      // value={comment}
+                      defaultValue={prevComment}
+                      onChange={(e) => ChangeHandler(e)}
+                      onKeyUp={(e) => {
+                        if (e.key === "Enter") {
+                          completeChange();
+                        }
+                      }}
+                      name="comment"
+                    />
+                  )}
+                  {!editMode ? (
+                    <BtnWrapper>
+                      <button
+                        className="change-comment"
+                        onClick={(e) => {
+                          getCommentId(e);
+                        }}
+                      >
+                        수정하기
+                      </button>
+
+                      <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
+                        댓글삭제
+                      </button>
+                    </BtnWrapper>
+                  ) : (
+                    <BtnWrapper>
+                      <button className="complete-change" onClick={(e) => getCommentId(e)}>
+                        수정완료
+                      </button>
+
+                      <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
+                        수정취소
+                      </button>
+                    </BtnWrapper>
+                  )}
+                </ContentInput>
               )}
-              {!editMode ? (
-                <button
-                  className="change-comment"
-                  onClick={(e) => {
-                    getCommentId(e);
-                  }}
-                >
-                  수정하기
-                </button>
-              ) : (
-                <button className="complete-change" onClick={(e) => getCommentId(e)}>
-                  수정완료
-                </button>
-              )}
-              {!editMode ? (
-                <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
-                  댓글삭제
-                </button>
-              ) : (
-                <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
-                  수정취소
-                </button>
-              )}
-            </ContentInput>
-          )}
-          <HashTagWrapper>
-            {/* 편집못함? -> 읽기만가능한해시태그 안에 props로 다른사람의 해시태그 전달
+              <HashTagWrapper>
+                {/* 편집못함? -> 읽기만가능한해시태그 안에 props로 다른사람의 해시태그 전달
             편집가능? -> 수정못함? : 읽기만가능한 해시태그안에 props로 나의 해시태그 전달
             편집가능? -? 수정가능? : 수정가능한 해시태그  */}
-            {editable ? (
-              editMode ? (
-                <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
-              ) : (
-                <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
-              )
-            ) : (
-              <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />
-            )}
-          </HashTagWrapper>
+                {editable ? (
+                  editMode ? (
+                    <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
+                  ) : (
+                    <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
+                  )
+                ) : (
+                  <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />
+                )}
+              </HashTagWrapper>
+            </>
+          )}
         </ContentBox>
-        <Date>작성날짜 : {date}</Date>
+
+        {/* <Date>작성날짜 : {date}</Date> */}
       </Comment>
     </>
   );

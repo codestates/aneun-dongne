@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import HomeMap from "../../components/kakao-map/HomeMap/HomeMap";
+import HomeMap from "../../components/Map/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList";
 import HashTagList from "../../components/HashTag/HashTagList";
 import { useRecoilState } from "recoil";
 import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Loading/Loading";
 
 const FixedComp = styled.div`
   margin-top: 73px;
@@ -73,12 +73,14 @@ function Home() {
   };
   useEffect(() => {
     // console.log("이건돼?");
-
+    let mounted = true;
     getPosition();
     // console.log(add);
-
+    return () => {
+      mounted = false;
+    };
     // // console.log(defaultPosition);
-  }, [add]);
+  }, []);
 
   return (
     <>

@@ -88,6 +88,9 @@ export const Styled = {
       flex-direction: column;
       /* background-color: pink; */
       text-align: center;
+      > input {
+        padding: 10px;
+      }
     }
     .form-memo input {
       /* margin: 20px 0px; */
@@ -96,10 +99,13 @@ export const Styled = {
     }
 
     form .save-position-button {
-      margin-top: -10px;
+      margin-top: 10px;
     }
 
     .error-message {
+      color: red;
+    }
+    .alert-box {
       color: red;
     }
   `,

@@ -2,8 +2,18 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import EditableHashTag from "../HashTag/EditableHashTag";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { defaultcomments, updatecomment, loginState, loginModal } from "../../recoil/recoil";
+import {
+  token,
+  kToken,
+  defaultcomments,
+  updatecomment,
+  loginState,
+  loginModal,
+  commentloading,
+} from "../../recoil/recoil";
 import axios from "axios";
+import CommentLoading from "../Loading/CommentLoading";
+import LikeLoading from "../Loading/LikeLoading";
 const CommentWrapper = styled.div`
   width: 100%;
 `;
@@ -91,8 +101,7 @@ const Content = styled.textarea`
   left: 10px;
   width: 370px;
   height: 70px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 10px;
 `;
 
 const HashTagWrapper = styled.div`
@@ -118,12 +127,16 @@ const Date = styled.div`
 `;
 
 function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
+  const kakaoToken = useRecoilValue(kToken);
   const [pending, setPending] = useState(false);
   const [something, setSomething] = useState("");
   const [text, setText] = useState("");
   const [count, setCount] = useState(0);
   const [tags, setTags] = useState([]);
+  const accessToken = useRecoilValue(token);
   // const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
+  // const [commentLoading, setCommentLoading] = useRecoilState(commentloading);
+  const [commentLoading, setCommentLoading] = useState(false);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -132,7 +145,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     setSomething(e.target.value);
   };
 
-  const registerMyComment = (e) => {
+  const registerMyComment = async (e) => {
     e.preventDefault();
     if (!isLogin) {
       setIsLoginOpen(true);
@@ -142,68 +155,87 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       alert("내용을 입력해주세요");
       return;
     }
-    //------------
-    //이게 응답이라고 생각
-    // const myComment = {
-    //   img: "/people3.png", //유저 프로필
-    //   nickname: "김코딩", //유저닉네임
-    //   text: "",
-    //   tags: [],
-    //   date: "DB에서 날라오겠지", //현재날짜
-    //   editable: true,
-    // };
-    let body = {
-      commentContent: something,
-      tagsArr: tags,
-    };
-    axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, { withCredentials: true }).then((res) => {
-      console.log("가공전", res.data.data);
-      let arr = res.data.data.map((el) => {
-        // console.log(el.comments.comment_tags.split(","));
+    try {
+      let body = {
+        commentContent: something,
+        tagsArr: tags,
+      };
+
+      setCommentLoading(true);
+      const result = await axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      let arr = await result.data.data.map((el) => {
         console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
         return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
       });
       setDefaultComment(arr);
-    });
+      setTags([]);
+      setSomething("");
 
-    //------------
-    // setDefaultComment(defaultComment.concat(body)); 왜 일케하면 memo되고 밑에꺼로하면 안됨
+      setIsLoginOpen(false);
+      // .then((res) => {
+    } catch (err) {
+      //   let arr = res.data.data.map((el) => {
+      //     console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
+      //     return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+      //   });
+      //   setDefaultComment(arr);
+      //   setTags([]);
+      //   setSomething("");
+      // })
+      // .then((res) => {
+      //   setCommentLoading(false);
+      // });
 
-    // setDefaultComment([body].concat(defaultComment)); -> DB가 대신함
-    // setPending(true);
-    setTags([]);
-    setSomething("");
+      // setPending(true);
+      console.log(err);
+    }
+    setCommentLoading(false);
   };
 
-  return (
-    <CommentWrapper>
-      <Comment>
-        <Profile>
-          <ProfileImg src={userinfo.user_image_path}></ProfileImg>
-          <NickName>{userinfo.nickname}</NickName>
-        </Profile>
-        <ContentBox>
-          <Content
-            type="text"
-            value={something}
-            placeholder="댓글을 입력하슈"
-            onChange={(e) => writeSomething(e)}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                registerMyComment(e);
-                e.target.value = "";
-              }
-            }}
-          ></Content>
+  if (commentLoading) {
+    console.log(commentLoading);
 
-          <HashTagWrapper>
-            <EditableHashTag tags={tags} setTags={setTags} />
-          </HashTagWrapper>
-          <button onClick={registerMyComment}>작성하기</button>
-        </ContentBox>
-      </Comment>
-    </CommentWrapper>
+    return <CommentLoading userinfo={userinfo} />;
+  }
+  return (
+    <>
+      <div>
+        <CommentWrapper>
+          <Comment>
+            <Profile>
+              <ProfileImg src={userinfo.user_image_path} />
+              <NickName>{userinfo.nickname}</NickName>
+            </Profile>
+            <ContentBox>
+              <Content
+                type="text"
+                value={something}
+                placeholder="여러분의 소중한 댓글을 입력해주세요"
+                onChange={(e) => writeSomething(e)}
+                onKeyUp={(e) => {
+                  if (e.key === "Enter") {
+                    registerMyComment(e);
+                    e.target.value = "";
+                  }
+                }}
+              ></Content>
+              <HashTagWrapper>
+                <EditableHashTag tags={tags} setTags={setTags} />
+              </HashTagWrapper>
+
+              <button onClick={registerMyComment}>작성하기</button>
+            </ContentBox>
+          </Comment>
+        </CommentWrapper>
+      </div>
+    </>
   );
 }
-
-export default MyComment;
+// export default MyComment;
+export default React.memo(MyComment);

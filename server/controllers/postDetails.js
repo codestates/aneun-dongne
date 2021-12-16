@@ -4,38 +4,37 @@ require("dotenv").config();
 
 // node ./controllers/postDetails.js
 
-const updatePostData = async (contentId) => {
-  let prevPost = {};
-  try {
-    await Post.findOne({
-      raw: true,
-      where: {
-        post_contentid: contentId,
-      },
-    }).then((data) => {
-      prevPost = data;
-    }); // prevPost 변수에 이전 데이터 저장
-
-    const response = await axios.get(
-      `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}&contentTypeId=12&contentId=${contentId}&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json`
-    );
-    if (prevPost.post_content === null || prevPost.post_homepage_path === null) {
-      await Post.update(
-        {
-          post_content: response.data.response.body.items.item.overview,
-          post_homepage_path: response.data.response.body.items.item.homepage,
-        },
-        { where: { post_contentid: contentId } }
-      );
-      console.log("저장 완료");
-    } else {
-      console.log("이미 저장됨");
-    }
-  } catch (err) {
-    console.log(err);
-  }
-  // 포스트를 찾아서 내용 및 홈페이지가 없을 경우 api요청해서 db에 넣고 있을 경우 넣지 않음
-};
+// const updatePostData = async (contentId) => {
+//   let prevPost = {};
+//   try {
+//     await Post.findOne({
+//       raw: true,
+//       where: {
+//         post_contentid: contentId,
+//       },
+//     }).then((data) => {
+//       prevPost = data;
+//     }); // prevPost 변수에 이전 데이터 저장
+//     const response = await axios.get(
+//       `http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=${process.env.REACT_APP_TOUR_API_KEY}&contentTypeId=12&contentId=${contentId}&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json`
+//     );
+//     if (prevPost.post_content === null || prevPost.post_homepage_path === null) {
+//       await Post.update(
+//         {
+//           post_content: response.data.response.body.items.item.overview,
+//           post_homepage_path: response.data.response.body.items.item.homepage,
+//         },
+//         { where: { post_contentid: contentId } }
+//       );
+//       console.log("저장 완료");
+//     } else {
+//       console.log("이미 저장됨");
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   // 포스트를 찾아서 내용 및 홈페이지가 없을 경우 api요청해서 db에 넣고 있을 경우 넣지 않음
+// };
 
 const getPostData = async (contentId) => {
   let result = {};
@@ -85,13 +84,9 @@ const getPostData = async (contentId) => {
 
 module.exports = async (req, res) => {
   const { contentId } = req.params;
-
-  await updatePostData(contentId)
-    .then(async () => {
-      res.status(200).json(await getPostData(contentId));
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ message: "unsufficent request" });
-    });
+  try {
+    res.status(200).json(await getPostData(contentId));
+  } catch (err) {
+    res.status(500).json({ message: "server err" });
+  }
 };

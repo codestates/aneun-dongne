@@ -1,88 +1,111 @@
-import React, { useEffect, useRef } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route } from "react-router-dom";
 import { Styled } from "./style";
-import { useLocation } from "react-router-dom";
 
-import Profile from "../../components/Profile/Profile";
-import MyLike from "../../components/MyLike/MyLike";
-import MyReview from "../../components/MyReview/MyReview";
-import MyVisited from "../../components/MyVisited/MyVisited";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { token, kToken, loginState } from "../../recoil/recoil";
 
-// TODO SPA에서 새로고침을 하면 흰 화면이 뜬다. 해결하기!
+import axios from "axios";
 
-const MyPage = () => {
-  const { pathname } = useLocation();
+import { Profile, MyLike, MyReview, MyVisited } from ".";
 
-  const navMenu = useRef();
+import LikeLoading from "../../components/Loading/LikeLoading";
 
-  useEffect(() => {
-    navEffectHandler();
-  });
+const MyPage = ({ match }) => {
+  const [imgUrl, setImgUrl] = useState("/men.png");
+  const [prevImg, setPrevImg] = useState("/men.png");
+  const [nickname, setNickname] = useState("");
+  const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
+  const [loading, setLoading] = useState(false);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
 
-  const navEffectHandler = () => {
-    for (let i = 0; i < navMenu.current.childNodes.length; i++) {
-      navMenu.current.childNodes[i].childNodes[0].classList.remove("focused");
-    }
-    switch (pathname) {
-      case "/mypage":
-        navMenu.current.childNodes[0].childNodes[0].classList.add("focused");
-        break;
-      case "/mypage/comments":
-        navMenu.current.childNodes[1].childNodes[0].classList.add("focused");
-        break;
-      case "/mypage/like":
-        navMenu.current.childNodes[2].childNodes[0].classList.add("focused");
-        break;
-      case "/mypage/visited":
-        navMenu.current.childNodes[3].childNodes[0].classList.add("focused");
-        break;
-      default:
-        return;
-    }
+  const activeStyle = {
+    color: "#172a71",
   };
+
+  async function getUserInfo() {
+    const result = await axios
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+
+        setNickname(res.data.data.userInfo.nickname);
+        if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
+          setImgUrl(res.data.data.userInfo.user_thumbnail_path);
+          setPrevImg(res.data.data.userInfo.user_image_path);
+        }
+        setLoading(false);
+      });
+    return result;
+  }
+  useEffect(async () => {
+    //! 우선 적음 나중에 지우게되도
+    await setLoading(true);
+    getUserInfo();
+
+    await setLoading(false);
+    console.log("되나요");
+  }, []);
 
   return (
     <>
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
+            {/* <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div> */}
             <div className="profile-image">
-              <img src="/snowman.png" />
+              <img src={prevImg} />
             </div>
-            <div className="profile-name">guest33</div>
+            <div className="profile-name">{nickname}</div>
           </div>
-          <ul className="link-container" ref={navMenu}>
+          <ul className="link-container">
             <li className="link-wrapper">
-              <Styled.Link to="/mypage">프로필 수정</Styled.Link>
+              <Styled.NavLink to={`${match.url}/like`} activeStyle={activeStyle}>
+                좋아요 한 관광지
+              </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.Link to="/mypage/comments">좋아요 한 관광지</Styled.Link>
+              <Styled.NavLink to={`${match.path}/visited`} activeStyle={activeStyle}>
+                내가 저장한 장소들
+              </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.Link to="/mypage/like">내가 쓴 리뷰</Styled.Link>
+              <Styled.NavLink to={`${match.url}/comments`} activeStyle={activeStyle}>
+                내가 쓴 리뷰
+              </Styled.NavLink>
             </li>
             <li className="link-wrapper">
-              <Styled.Link to="/mypage/visited">내가 가본 곳</Styled.Link>
+              <Styled.NavLink to={`${match.url}/profile`} activeStyle={activeStyle}>
+                프로필 수정
+              </Styled.NavLink>
             </li>
           </ul>
         </nav>
 
         <div className="page-container">
-          <Switch>
-            <Route exact path="/mypage">
-              <Profile />
-            </Route>
-            <Route exact path="/mypage/comments">
-              <MyLike />
-            </Route>
-            <Route exact path="/mypage/like">
-              <MyReview />
-            </Route>
-            <Route exact path="/mypage/visited">
-              <MyVisited />
-            </Route>
-          </Switch>
+          <Route exact path={match.url} component={MyLike} />
+          <Route exact path={`${match.url}/like`} component={MyLike} />
+          <Route exact path={`${match.url}/visited`} component={MyVisited} />
+          <Route exact path={`${match.url}/comments`} component={MyReview} />
+          <Route exact path={`${match.url}/profile`}>
+            <Profile
+              imgUrl={imgUrl}
+              setImgUrl={setImgUrl}
+              prevImg={prevImg}
+              setPrevImg={setPrevImg}
+              setNickname={setNickname}
+            />
+          </Route>
         </div>
+
+        <div>{/* justify-content:space-between을 위한 빈 태그 */}</div>
       </Styled.Body>
     </>
   );

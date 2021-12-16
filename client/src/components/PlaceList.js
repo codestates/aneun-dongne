@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import styled from "styled-components";
 import { MemoCards } from "./PlaceCards";
 import PlaceCards from "./PlaceCards";
 
-import { placelist, placeaddress, placelocation, placeimg, placetitle } from "../recoil/recoil";
+import { placeaddress, placelocation, placeimg, placetitle, placelist, token, kToken } from "../recoil/recoil";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PlaceLists = styled.div`
   /* height: 100vh; */
@@ -60,6 +61,8 @@ const Div = styled.div`
 // 아 근데 왜 안돼 우선 제껴,
 
 function PlaceList() {
+  const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const placeList = useRecoilValue(placelist);
   const setPlaceLocation = useSetRecoilState(placelocation);
   const setPlaceAddress = useSetRecoilState(placeaddress);
@@ -105,6 +108,7 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
+
   return (
     <PlaceLists>
       {placeList.map((place, idx) => {
@@ -117,6 +121,7 @@ function PlaceList() {
                 title={place[2]}
                 img={place[3]}
                 addr1={place[4] ? place[4].split(" ")[0] : null}
+                contentId={place[5]}
               ></MemoCards>
             </StyledLink>
           </Div>

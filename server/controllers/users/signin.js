@@ -10,14 +10,20 @@ module.exports = (req, res) => {
     },
   })
     .then((data) => {
-      console.log("하이하이하이", data);
+      // console.log("하이하이하이", data);
       if (!data) {
         res.status(404).send("invalid user");
       } else {
         delete data.dataValues.password;
         const accessToken = generateAccessToken(data.dataValues);
-
-        res.cookie("jwt", accessToken);
+        res.cookie("jwt", accessToken, {
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          // domain: ".aneun-dongne.com", (배포)
+          // httpOnly: true,
+          path: "/",
+          secure: true,
+          sameSite: "None",
+        });
         sendAccessToken(res, accessToken);
       }
     })

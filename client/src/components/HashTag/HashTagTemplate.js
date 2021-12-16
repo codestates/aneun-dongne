@@ -25,9 +25,16 @@ const KeyWord = styled.span`
   margin-right: 6px;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   padding: 5px;
-  border-radius: 5px;
+  border-radius: 20px;
   border: 1px solid rgb(192, 251, 255);
   background-color: rgba(192, 251, 255, 0.8);
+  background-image: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.9) 0,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+
   color: black;
   cursor: pointer;
 
@@ -49,11 +56,11 @@ function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
     <>
       <KeyWordBox>
         {keywordDummy.map((keyword, idx) => {
-          return <KeyWord key={idx}>{keyword}</KeyWord>;
+          return <KeyWord key={idx}>#{keyword}</KeyWord>;
         })}
       </KeyWordBox>
     </>
   );
 }
-
-export default HashTagTemplate;
+// export default HashTagTemplate;
+export default React.memo(HashTagTemplate);

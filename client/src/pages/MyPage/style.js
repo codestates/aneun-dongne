@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const Styled = {
   Body: styled.div`
     display: flex;
-
+    justify-content: space-between;
     .menu-bar {
+      position: sticky;
+      top: 0;
+      left: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -41,7 +44,7 @@ export const Styled = {
       font-size: 1.5rem;
     }
 
-    img {
+    .menu-bar > .profile > .profile-image > img {
       width: 100%;
       height: 100%;
       border-radius: 100%;
@@ -61,14 +64,13 @@ export const Styled = {
 
     .page-container {
       margin-top: 75px;
-    }
-
-    .focused {
-      color: #172a71;
+      /* background: blue; */
+      display: flex;
+      justify-content: center;
     }
   `,
 
-  Link: styled(Link)`
+  NavLink: styled(NavLink)`
     text-decoration: none;
     font-size: 1.5rem;
     color: #96a3b6;

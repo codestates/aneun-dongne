@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import LikeLists from "./LikeLists.js";
 import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
+import { token, kToken } from "../../recoil/recoil";
 
 import styled from "styled-components";
 
@@ -18,6 +18,7 @@ const MyLike = () => {
   const [postsInfo, setPostsInfo] = useState("");
 
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
 
   const history = useHistory();
 
@@ -31,7 +32,7 @@ const MyLike = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/mypage/likelists`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: "true",

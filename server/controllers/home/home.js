@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
   // 입력 안 했을 경우
   // pickpoint  params { tag, searchWord : ""  areacode="null", sigungucode="null"}
   // word {areacode=0, sigungucode=0, tag, searchWord : ""}: 돋보기검색버튼
+
   radius = Number(radius);
 
   if (tag === "null") {
@@ -30,7 +31,7 @@ module.exports = async (req, res) => {
   if (sigungucode !== "null") {
     sigungucode = Number(sigungucode);
   }
-
+  console.log("하이", accessTokenData);
   try {
     if (!accessTokenData) {
       if (areacode === "null") {
@@ -58,6 +59,7 @@ module.exports = async (req, res) => {
       if (areacode === "null") {
         //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
         const { clientwtmx, clientwtmy } = req.query;
+        console.log("저기야", areacode, sigungucode);
         await res.status(200).json({
           data: await getByXYOrHashtagOrTitle(id, radius, clientwtmx, clientwtmy, tag, searchWord),
         });
@@ -65,11 +67,12 @@ module.exports = async (req, res) => {
         const { areacode, sigungucode } = req.query;
         if (areacode === 0) {
           //돋보기 아이콘 눌러서 검색했는데 지역선택을 전혀 안 한 경우
+          console.log("여기야", areacode, sigungucode);
           await res.status(200).json({
             data: await getByHashtagOrTitle(id, tag, searchWord),
           });
         } else {
-          //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우
+          //돋보기 아이콘 눌러서 검색하고 지역선택까지 한 경우 -> tag,searchWord 없으면 자동으로 배제
           await res.status(200).json({
             data: await getByAreaOrHashtagOrTitle(id, areacode, sigungucode, tag, searchWord),
           });

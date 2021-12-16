@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { userInfo, loginState, loginModal, token } from "../../recoil/recoil";
-// import hamtori from "../../img/hamtori.png";
+import { userInfo, loginState, loginModal, token, kToken } from "../../recoil/recoil";
+import { Styled } from "./style";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
-import Cookies from "universal-cookie";
 
 const UserInfopage = styled.div`
   top: 0;
@@ -46,12 +45,15 @@ const View = styled.div`
 const ContentBox = styled.div`
   /* margin: 40px 100px 0 0; */
   /* margin-left: 10%; */
-  /* background: red; */
+  /* background: green; */
   width: 100%;
   margin-top: 30px;
-  /* display: flex; */
+  display: flex;
+  justify-content: center;
   /* flex-direction: column; */
-
+  .alert-box {
+    color: red;
+  }
   > form {
     display: flex;
     flex-direction: column;
@@ -156,7 +158,7 @@ const ImgDiv = styled.div`
 
 function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname }) {
   const [info, setInfo] = useRecoilState(userInfo);
-  const cookies = new Cookies();
+  const history = useHistory();
   //   const [imgUrl, setImgUrl] = useState("");
   // const [prevImg, setPrevImg] = useState(
   //   "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png"
@@ -171,22 +173,22 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const [accessToken, setAccessToken] = useRecoilState(token);
-  // const [PasswordErr, setPasswordErr] = useState("");
-  // const [passwordError, setPasswordError] = useState("");
-  // const [passwordCheckError, setPasswordCheckError] = useState("");
+  const accessToken = useRecoilValue(token);
+  // const [accessToken, setAccessToken] = useRecoilState(token);
+  const kakaoToken = useRecoilValue(kToken);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // console.log(imgUrl);
-  let a = cookies.get("jwt");
+
   // console.log(a);
-  const history = useHistory();
+
   // console.log(info);
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
     axios
       .get("https://localhost:80/user/info", {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -210,7 +212,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       });
   }, []);
   // console.log(imgUrl);
-  const editInfo = (e) => {
+  const editInfo = async (e) => {
     e.preventDefault();
     // 토큰만료시 컷
     if (!isLogin) {
@@ -222,7 +224,12 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     // if(!imgUrl){
     //   formData.append("image", imgUrl);
     // }
-
+    const validPW = validPassword();
+    if (inputCheckPassword !== inputNewPassword || !inputCheckPassword || !inputNewPassword) {
+      console.log("hi");
+      setErrorMessage("입력하신 정보를 다시 한번 확인해주세요");
+      return;
+    }
     if (imgUrl) {
       formData.append("image", imgUrl);
       console.log(imgUrl);
@@ -235,11 +242,11 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     // formData.append("")
     console.log(formData.get("image"));
 
-    axios
+    await axios
       .patch(`https://localhost:80/user/info`, formData, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-          // "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
         },
         withCredentials: true,
       })
@@ -248,11 +255,12 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
           return;
         }
-        setAccessToken(res.data.data.accessToken);
+        // setAccessToken(res.data.data.accessToken);
         console.log(res.data);
         setImgUrl(res.data.data.user_image_path);
         setPrevImg(res.data.data.user_image_path);
         setNickname(res.data.data.nickname);
+        setErrorMessage("프로필이 변경되었습니다.");
       })
 
       .catch((err) => console.log(err));
@@ -302,9 +310,9 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   };
 
   //유효성검사
-  const validePassword = (InputPassword, InputNewPassword) => {
-    if (InputPassword !== InputNewPassword) {
-      alert("동일한 비밀번호를 입력하세요!");
+  const validPassword = (inputCheckPassword, inputNewPassword) => {
+    if (inputCheckPassword !== inputNewPassword) {
+      setErrorMessage({ ...errorMessage, ...{ checkPasswordErr: "비밀번호가 일치하지 않습니다." } });
       return false;
     }
   };
@@ -324,7 +332,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   // }, []);
 
   const saveBtnHandler = () => {
-    if (!validePassword || !handleEdit) {
+    if (!validPassword || !handleEdit) {
       // const token = JSON.parse(localStorage.getItem("token"));
       axios
         .patch(
@@ -337,7 +345,10 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
             new_password: userInfo.new_password, //새로운 비밀번호 추가됨.
           },
           {
-            "Content-Type": "application/json",
+            headers: {
+              Authorization: `Bearer ${accessToken || kakaoToken}`,
+              "Content-Type": "application/json",
+            },
             withCredentials: true,
             // Authorization: `token ${token}`,
           }
@@ -356,7 +367,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     axios
       .delete(`http://localhost:80/user/mypage`, {
         headers: {
-          // authorization: accessToken,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -419,6 +430,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
                   onChange={(e) => handleInputCheckPassword(e)}
                 />
               </div>
+              <div className="alert-box">{errorMessage}</div>
               <div className="userinfo-button-label">
                 <button className="btn-edit" type="submit">
                   저장

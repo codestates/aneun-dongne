@@ -4,7 +4,6 @@ import styled from "styled-components";
 import notImageYet from "../../img/not-image-yet.png";
 import { visitedModal } from "../../recoil/recoil";
 
-import ModalVisited from "../ModalVisited/ModalVisited";
 export const Styled = {
   PlaceCard: styled.div`
     /* background: skyblue; */
@@ -124,23 +123,8 @@ function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSig
     }
   };
 
-  console.log(sImage);
-  console.log(sId);
   return (
     <>
-      {/* // MyPage/visited 내가 가본 곳 모달 */}
-      {/* <Styled.ModalContainer>
-        {isVisitedOpen ? (
-          <>
-            <Styled.ModalBackdrop onClick={closeVisitedModal}>
-              <Styled.ModalView id={id} onClick={(e) => e.stopPropagation()}>
-                <ModalVisited visitedImg={image} id={id} idx={idx} />
-              </Styled.ModalView>
-            </Styled.ModalBackdrop>
-          </>
-        ) : null}
-      </Styled.ModalContainer> */}
-      {/* <Styled.PlaceCard> */}
       <Styled.PlaceCard onClick={() => openModalHandler()}>
         <div className={`place-cards ${id}`}>
           {/* <div className={`place-cards ${id}`} onClick={(e) => openModalHandler(id)}> */}
@@ -156,5 +140,5 @@ function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSig
     </>
   );
 }
-// export default VisitedCards;
+
 export default React.memo(VisitedCards);

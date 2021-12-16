@@ -51,38 +51,11 @@ const NickName = styled.span`
 
 const ContentBox = styled.div`
   /* background-color: yellow; */
-  margin-top: 30px;
-  position: relative;
-  width: 480px;
-  /* height: 140px; */
-  > button {
-    position: absolute;
-    right: -10px;
-    top: 20px;
-    width: 80px;
-    border: none;
-    height: 40px;
-    background-color: rgb(192, 251, 255);
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    transition: all 0.5s ease;
-    border-radius: 20px;
-  }
 
-  button:hover {
-    transform: scale(1.1);
-  }
-
-  button:active {
-    transform: scale(1.1);
-  }
   > div {
     /* background: red; */
-    margin-left: 10%;
+    margin-left: 0%;
+    margin-top: 100px;
   }
 `;
 
@@ -93,9 +66,8 @@ const HashTagWrapper = styled.div`
   margin: 20% auto 0 auto;
   width: 370px;
 
-  left: 10px;
   padding-right: 10px;
-  white-space: nowrap;
+
   border: none;
 `;
 const Date = styled.div`

@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isSavepositionOpen, loginState, loginModal, usersaddress, defaultposition, token } from "../../recoil/recoil";
+import {
+  isSavepositionOpen,
+  loginState,
+  loginModal,
+  usersaddress,
+  defaultposition,
+  token,
+  kToken,
+  saveOrNotModal,
+} from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../message";
 import ImageUpload from "../UploadImage/ImageUpload";
 
 const ModalSavePosition = () => {
+  const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
@@ -22,7 +33,7 @@ const ModalSavePosition = () => {
   //유저 위치정보
   const [userAddr, setUserAddr] = useRecoilState(usersaddress);
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
-  console.log(userAddr, defaultPosition);
+  // console.log(userAddr, defaultPosition);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -34,6 +45,14 @@ const ModalSavePosition = () => {
       setIsSavePositionOpen(false);
       setIsLoginOpen(true);
       return;
+    }
+    if (placeImage === null) {
+      setErrorMessage({ ...errorMessage, ...{ image: "사진을 등록해주세요" } });
+      return null;
+    }
+    if (memo === "") {
+      setErrorMessage({ ...errorMessage, ...{ memo: "메모를 적어주세요" } });
+      return null;
     }
     let formData = new FormData();
 
@@ -54,7 +73,7 @@ const ModalSavePosition = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/visited`, formData, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -63,8 +82,8 @@ const ModalSavePosition = () => {
       .then((res) => {
         console.log(res.data.message);
         setIsUploaded(true);
-
-        // window.location.reload();
+        setIsSaveOrNotModal(true);
+        setIsSavePositionOpen(false);
       })
       .catch((err) => {
         setClickedBtn(true);
@@ -75,41 +94,37 @@ const ModalSavePosition = () => {
         }
       });
   }
-  console.log(isUploaded && clickedBtn);
-  useEffect(() => {
-    //onClick으로 하니까 필요없으려나?? 우선 납둬봐
-  }, [isUploaded]);
+  // console.log(isUploaded && clickedBtn);
+  // useEffect(() => {
+  //   //onClick으로 하니까 필요없으려나?? 우선 납둬봐
+  // }, [isUploaded]);
 
-  console.log(isSavePositionOpen);
+  console.log(memo);
   return (
     <>
       <Styled.FormContainer>
         <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
           <i className="fas fa-times"></i>
         </Styled.CloseBtn>
-        <form id="form-id" onSubmit={updateInfoRequest}>
+        <form className="form-id" onSubmit={updateInfoRequest}>
           <h3>이미지</h3>
           <ImageUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
-          <div className="alert-box">{errorMessage.image}</div>
-          {/* //! 업로드버튼 하나 없애 form 두개 못하겠다 */}
-          {/* <button type="submit" className="image-upload-button" onClick={saveImage}>
-            업로드
-          </button>
-        </form>
-        <form> */}
+          {placeImage !== null ? null : <div className="alert-box">{errorMessage.image}</div>}
+
           <div className="form-memo">
             <h3>메모</h3>
             {/* <label htmlFor="memo">메모</label> */}
             <input
               id="memo"
               value={memo}
+              placeholder="기억하고 싶은 내용을 적어주세요"
               onChange={(e) => {
                 console.log(e.target.value);
                 setMemo(e.target.value);
               }}
             />
           </div>
-          {/* <div className="alert-box">{errorMessage.memo}</div> */}
+          {memo !== "" ? null : <div className="alert-box">{errorMessage.memo}</div>}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <button type="submit" className="save-position-button">
             저장

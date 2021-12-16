@@ -157,7 +157,10 @@ function VisitedList({ placeList }) {
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalVisited visitedImg={selectedModal && selectedModal.visited_thumbnail_path} />
+                <ModalVisited
+                  id={selectedModal && selectedModal.id}
+                  visitedImg={selectedModal && selectedModal.visited_thumbnail_path}
+                />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>
@@ -168,7 +171,6 @@ function VisitedList({ placeList }) {
           console.log(el);
           return (
             <div className="visited-cards-list" key={el.id} onClick={() => openModalHandler(el)}>
-              {/* <div className="visited-cards-list" key={el.id}> */}
               <VisitedCards
                 id={el.id}
                 area={el.visited_area}

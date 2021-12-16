@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
+import { token, kToken } from "../../recoil/recoil";
 
 import MyReviewComment from "../MyReviewComment/MyReviewComment";
 
@@ -13,13 +13,14 @@ const Body = styled.div`
 
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const [comments, SetComments] = useState([]);
 
   const renderMyComments = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/mypage/commentlists`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

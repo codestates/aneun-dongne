@@ -10,12 +10,13 @@ module.exports = {
   },
   isAuthorized: (req) => {
     const authorization = req.headers["authorization"];
+
     if (!authorization) {
       return null;
     }
 
     const token = authorization.split(" ")[1];
-
+    // console.log("토큰왔는지 확인", token);
     try {
       return verify(token, process.env.ACCESS_SECRET);
     } catch (err) {

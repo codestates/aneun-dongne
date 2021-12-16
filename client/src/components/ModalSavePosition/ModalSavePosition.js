@@ -84,6 +84,7 @@ const ModalSavePosition = () => {
         setIsUploaded(true);
         setIsSaveOrNotModal(true);
         setIsSavePositionOpen(false);
+        setErrorMessage({});
       })
       .catch((err) => {
         setClickedBtn(true);

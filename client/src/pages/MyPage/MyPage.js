@@ -76,7 +76,7 @@ const MyPage = ({ match }) => {
             </li>
             <li className="link-wrapper">
               <Styled.NavLink to={`${match.path}/visited`} activeStyle={activeStyle}>
-                내가 가본 곳
+                내가 저장한 장소들
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">

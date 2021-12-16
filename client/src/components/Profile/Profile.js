@@ -169,7 +169,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputCheckPassword, setInputCheckPassword] = useState("");
   const [confirmMessage, setConfirmMessage] = useState("");
-  // const [nickname, setNickname] = useState("");
+
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -177,10 +177,6 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   // const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
-
-  // console.log(imgUrl);
-
-  // console.log(a);
 
   // console.log(info);
   useEffect(() => {
@@ -202,13 +198,6 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
           setImgUrl(res.data.data.userInfo.user_image_path);
           setNickname(res.data.data.userInfo.nickname);
         }
-
-        // const { , inputUsername, inputEmail } = res.data.data.userInfo;
-        // setInputEmail(inputEmail);
-        // setImgUrl(imgUrl);
-        // setInputUsername(inputUsername);
-
-        // props.accessToken(res.data.Info);
       });
   }, []);
   // console.log(imgUrl);
@@ -266,28 +255,6 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       .catch((err) => console.log(err));
   };
 
-  // console.log(inputEmail, imgUrl, inputUsername);
-  //정보를 바로 받아온다면...?
-
-  //app.js에서 login인인 상태에서 mypage로 들어온다.
-  //아닐 경우에는 로그인 모달창이 뜨게 함.
-
-  //로그인 상태를 recoil에서 true로 가져온다.
-
-  // const accessTokenRequest = () => {
-
-  //파일변경
-  // const handleChangeFile = (e) => {
-  //   let reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     const url = reader.result;
-  //     if (url) {
-  //       setImgUrl(url.toString());
-  //     }
-  //   };
-  //   reader.readAsDataURL(e.target.files[0]);
-  // };
-
   //닉네임변경
   const handleInputUsername = (e) => {
     setInputUsername(e.target.value);
@@ -322,43 +289,6 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     if (imgUrl === "" || inputUsername === "" || inputEmail === "" || inputPassword === "") {
       alert("빈칸이 있어요!");
       return;
-    }
-  };
-
-  // useEffect(() => {
-  //   axios.post("http://localhost:3000/mypage").then((res) => {
-  //     console.log(res);
-  //   });
-  // }, []);
-
-  const saveBtnHandler = () => {
-    if (!validPassword || !handleEdit) {
-      // const token = JSON.parse(localStorage.getItem("token"));
-      axios
-        .patch(
-          "https://localhost:80/mypage",
-          {
-            // email: inputUsername,
-            nickname: userInfo.nikename,
-            users_image_path: userInfo.users_image_path,
-            password: userInfo.password,
-            new_password: userInfo.new_password, //새로운 비밀번호 추가됨.
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken || kakaoToken}`,
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-            // Authorization: `token ${token}`,
-          }
-        )
-        .then((res) => {
-          setConfirmMessage("변경된 내용이 저장되었습니다!");
-          // localStorage.clear();
-          history.push("/mypage");
-        })
-        .catch((err) => console.log(err));
     }
   };
 

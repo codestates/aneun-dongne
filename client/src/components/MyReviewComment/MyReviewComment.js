@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
+import { token, kToken } from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
 import { ic_delete } from "react-icons-kit/md/ic_delete";
@@ -13,6 +13,7 @@ import { getAreaNames } from "../../AreaCodetoName";
 
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const history = useHistory();
 
   const sigungu = getAreaNames(comment.post.areacode, comment.post.sigungucode);
@@ -30,7 +31,7 @@ const MyReviewComment = ({ comment, SetComments }) => {
     await axios
       .delete(`${process.env.REACT_APP_API_URL}/comment/${comment_post_contentid}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

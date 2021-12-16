@@ -3,9 +3,14 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 console.log(cookies.get("jwt"));
+console.log(cookies.get("kakao-jwt"));
 export const token = atom({
   key: "token",
   default: cookies.get("jwt"),
+});
+export const kToken = atom({
+  key: "kToken",
+  default: cookies.get("kakao-jwt"),
 });
 
 //! 유저 주소 - Home.js, savePositioModal 에서 사용
@@ -63,6 +68,10 @@ export const sendPlaceinfo = selector({
 export const loading = atom({
   key: "loading",
   default: true,
+});
+export const commentloading = atom({
+  key: "commentloading",
+  default: false,
 });
 
 //! Home화면에서 현재위치 저장 모달
@@ -205,6 +214,11 @@ export const setLo = selector({
 //! myVisited 모달
 export const visitedModal = atom({
   key: "visitedModal",
+  default: false,
+});
+//! 내 장소 저장 후 모달
+export const saveOrNotModal = atom({
+  key: "saveOrNotModal",
   default: false,
 });
 

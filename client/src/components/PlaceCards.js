@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import notImageYet from "../img/not-image-yet.png";
 import HashTagTemplate from "./HashTag/HashTagTemplate";
+import { token, kToken } from "../recoil/recoil";
+import { useRecoilValue } from "recoil";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
@@ -65,12 +68,33 @@ const PlaceCard = styled.div`
   }
 `;
 
-function PlaceCards({ title, img, addr1, onClick }) {
+function PlaceCards({ title, img, addr1, onClick, contentId }) {
+  const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    const getHashTag = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken || kakaoToken}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+        // console.log(response.data.post.post_tags);
+        if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getHashTag();
+  }, []);
   // console.log(addr1)
   return (
     <PlaceCard onClick={onClick}>
       <div className="place-cards">
-        <HashTagTemplate keywordDummy={keywordDummy} />
+        <HashTagTemplate keywordDummy={tags || []} />
         {img ? <img src={img} /> : <img src={notImageYet} />}
         <div className="place-cards-title">
           <div>{`[${addr1}] `}</div>

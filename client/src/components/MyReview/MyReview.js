@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
+import { token, kToken } from "../../recoil/recoil";
 
 import MyReviewComment from "../MyReviewComment/MyReviewComment";
 import LikeLoading from "../Loading/LikeLoading";
 
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const [comments, SetComments] = useState([]);
   const [isLoing, SetIsloading] = useState(true);
 
@@ -16,7 +17,7 @@ const MyReview = () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/mypage/commentlists`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

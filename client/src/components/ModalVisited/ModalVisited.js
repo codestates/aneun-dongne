@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isSavepositionOpen, visitedModal, loginState, loginModal, token, newVisitedPlace } from "../../recoil/recoil";
+import {
+  isSavepositionOpen,
+  visitedModal,
+  loginState,
+  loginModal,
+  token,
+  kToken,
+  newVisitedPlace,
+  deleteCommentmode,
+} from "../../recoil/recoil";
 import { Styled } from "./style";
 import ImageUpload from "../UploadImage/ImageUpload";
 import VisitedUpload from "../UploadImage/VisitedUpload";
 
 function ModalVisited({ id, idx, visitedImg }) {
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const [isVisitedPlaceOpen, setIsVisitedPlaceOpen] = useRecoilState(visitedModal);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
   const [loading, setLoading] = useState(false);
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
-  console.log(visitedImg);
   const [placeImage, setPlaceImage] = useState(visitedImg);
   const [isUploaded, setIsUploaded] = useState(false);
   const [clickedBtn, setClickedBtn] = useState(false); //저장버튼 누른 후 인지 아닌지 확인하려는 용도
@@ -21,61 +30,28 @@ function ModalVisited({ id, idx, visitedImg }) {
     image: "",
     memo: "",
   });
+  const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
 
-  //!모달창은 배열수만큼 있는게 아니라 컴퍼넌트 1개임 -> 그래서 여러개가 한방에 다 떴다.
-  // async function getVisitedPlace() {
-  //   // await setLoading(true);
-  //   const result = await axios
-  //     .get(`${process.env.REACT_APP_API_URL}/visited`, {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //       withCredentials: true,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data.data);
-  //       let list = res.data.data.filter((e) => {
-  //         return e.id === id;
-  //       });
-  //       console.log(list[0].visited_thumbnail_path);
-  //       setPlaceImage(list[0].visited_thumbnail_path);
-  //     });
-  //   // await setLoading(false);
-  //   return result;
-  // }
-
-  // useEffect(async () => {
-  //   await setLoading(true);
-  //   getVisitedPlace();
-  //   await setLoading(false);
-  //   console.log("되나요");
-  // }, []);
-  //!-------------
-
-  function updateInfo(e) {
-    console.log(e);
+  async function updateInfo(e) {
+    e.preventDefault();
     let formData = new FormData();
     // console.log("저장버튼 들어간다.", e);
     //form-data 객체의 기존 키에 새 값을 추가하거나 키가 없으면 키를 추가한다.
 
     formData.append("image", placeImage); // 파일
     formData.append("memo", memo); //메모
-    console.log(memo);
-    console.log("img", placeImage);
-    console.log("폼데이터", formData);
-    console.log("폼데이터imag", formData.get("image"));
     // headers: { "content-type": "multipart/form-data" },
+    console.log(id);
     axios
       .patch(`${process.env.REACT_APP_API_URL}/visited`, formData, {
+        params: { visitedId: id },
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
-        params: { visitedId: id },
         withCredentials: true,
       })
 
@@ -84,6 +60,7 @@ function ModalVisited({ id, idx, visitedImg }) {
         setPlaceList(res.data.data);
 
         setIsUploaded(true);
+        setIsVisitedPlaceOpen(false);
       })
       .catch((err) => {
         setClickedBtn(true);
@@ -94,8 +71,20 @@ function ModalVisited({ id, idx, visitedImg }) {
         }
       });
   }
-  function deleteInfo(e) {
-    console.log(e);
+  async function deleteInfo(e) {
+    await axios
+      .delete(`${process.env.REACT_APP_API_URL}/visited`, {
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        params: { visitedId: id },
+      })
+      .then((res) => {
+        setDeleteOrNot(true);
+        setIsVisitedPlaceOpen(false);
+      });
   }
   function updateInfoRequest(e) {
     e.preventDefault();
@@ -105,14 +94,9 @@ function ModalVisited({ id, idx, visitedImg }) {
       setIsLoginOpen(true);
       return;
     }
+    console.log("실행됨?");
   }
-  console.log(idx);
-  // console.log(isUploaded && clickedBtn);
-  useEffect(() => {
-    //onClick으로 하니까 필요없으려나?? 우선 납둬봐
-  }, [isUploaded]);
-  console.log(placeImage);
-  console.log(visitedImg);
+
   return (
     <>
       <Styled.FormContainer>
@@ -142,8 +126,8 @@ function ModalVisited({ id, idx, visitedImg }) {
             <button type="submit" value="update" className="edit-position-button" onClick={updateInfo}>
               저장
             </button>
-            <button type="submit" value="delete" className="delete-position-button" onClick={() => console.log(idx)}>
-              {/* <button type="submit" value="delete" className="delete-position-button" onClick={deleteInfo}> */}
+
+            <button type="submit" value="delete" className="delete-position-button" onClick={deleteInfo}>
               삭제
             </button>
           </div>

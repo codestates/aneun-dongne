@@ -72,7 +72,7 @@ export const Styled = {
     position: fixed;
     background-color: white;
     width: 450px;
-    height: 650px;
+    height: ${(props) => props.height || "650px"};
     z-index: 2;
     border: 1px solid white;
     border-radius: 20px;

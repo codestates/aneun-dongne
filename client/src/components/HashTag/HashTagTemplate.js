@@ -56,7 +56,7 @@ function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
     <>
       <KeyWordBox>
         {keywordDummy.map((keyword, idx) => {
-          return <KeyWord key={idx}>{keyword}</KeyWord>;
+          return <KeyWord key={idx}>#{keyword}</KeyWord>;
         })}
       </KeyWordBox>
     </>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import Review from "./Review";
 import { Icon } from "react-icons-kit";
 import { angleDoubleDown } from "react-icons-kit/fa/angleDoubleDown";

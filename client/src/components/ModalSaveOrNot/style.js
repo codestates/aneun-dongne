@@ -22,20 +22,16 @@ export const Styled = {
     flex-direction: column;
     position: relative;
 
-    form {
+    > h2 {
+      /* background: red; */
+      margin-top: 100px;
+    }
+    > .button-wrapper {
+      margin: 40px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      position: relative;
     }
-
-    form h3 {
-      margin-top: 10px;
-    }
-
-    form button {
-      margin-top: 10px;
+    > .button-wrapper button {
+      margin: 30px;
       border: none;
       border-radius: 10px;
       background: rgb(192, 251, 255);
@@ -75,37 +71,7 @@ export const Styled = {
       }
     }
 
-    .form-image {
-      cursor: pointer;
-      width: 60px;
-      height: 40px;
-      background-color: #a3dcf3;
-    }
-
-    .form-memo {
-      margin: 20px 0px;
-      display: flex;
-      flex-direction: column;
-      /* background-color: pink; */
-      text-align: center;
-      > input {
-        padding: 10px;
-      }
-    }
-    .form-memo input {
-      /* margin: 20px 0px; */
-      width: 300px;
-      height: 80px;
-    }
-
-    form .save-position-button {
-      margin-top: 10px;
-    }
-
     .error-message {
-      color: red;
-    }
-    .alert-box {
       color: red;
     }
   `,

@@ -124,13 +124,13 @@ module.exports = {
             else if (imageInfo.id === "origin") imagePath = imageInfo.location;
           });
 
-          if (imagePath === "" || thumbnailPath === "") {
-            await createMyVisited(id, area, sigg, mapx, mapy, memo, null, null);
-            await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
-          } else {
-            await createMyVisited(id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
-            await res.status(200).json({ data: await getMyVisiteds(id) });
-          }
+          // if (imagePath === "" || thumbnailPath === "") {
+          //   await createMyVisited(id, area, sigg, mapx, mapy, memo, null, null);
+          //   await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
+          //  } else {
+          await createMyVisited(id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
+          await res.status(200).json({ data: await getMyVisiteds(id) });
+          // }
         }
       }
     } catch (err) {

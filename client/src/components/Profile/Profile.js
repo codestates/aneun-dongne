@@ -173,8 +173,8 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const accessToken = useRecoilValue(token);
-  // const [accessToken, setAccessToken] = useRecoilState(token);
+  // const accessToken = useRecoilValue(token);
+  const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
 

@@ -56,11 +56,11 @@ const getMyLikes = async (userId) => {
   return result;
 };
 
-// const bb = async () => {
-//   console.log(await getMyLikes(4));
-// };
+const bb = async () => {
+  console.log(await getMyLikes(2031791888));
+};
 
-// bb();
+bb();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);

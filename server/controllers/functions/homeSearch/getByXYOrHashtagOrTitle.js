@@ -4,8 +4,6 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
   let result = [];
 
   await Post.findAll({
-    raw: true,
-    // limit: 10,
     attributes: [
       "id",
       "post_addr1",
@@ -34,13 +32,9 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
     include: [
       {
         model: Like,
-        attributes: [[sequelize.literal("COUNT(`Likes`.`id`)"), "likeCount"], "like_user_id"],
+        attributes: ["like_user_id"],
+        group: "Posts.post_contentid",
       },
-    ],
-    group: "post_contentid",
-    order: [
-      [sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"],
-      ["post_readcount", "DESC"],
     ],
     where: sequelize.where(
       sequelize.fn(
@@ -53,7 +47,20 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
   })
     .then((data) => {
       // console.log("데이터", data);
-      result = data.filter((el) => {
+      for (let i = 0; i < data.length; i++) {
+        result.push(data[i].dataValues);
+        let result2 = result[i].Likes.map((el) => {
+          return el.dataValues.like_user_id;
+        });
+        result[i].like_user_ids = result2;
+        result[i].isLiked = false;
+        if (result[i].like_user_ids.includes(userId)) {
+          result[i].isLiked = true;
+        }
+        result[i].likeCount = result[i].Likes.length;
+        // delete result[i].like_user_ids;
+      }
+      result = result.filter((el) => {
         if (tag === "") {
           return el.post_title.includes(searchWord);
         } else if (el.post_tags !== null) {
@@ -62,16 +69,10 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
           return false;
         }
       });
-      for (let i = 0; i < result.length; i++) {
-        result[i].isLiked = false;
-        if (result[i]["Likes.like_user_id"] === userId) {
-          result[i].isLiked = true;
-        }
-        delete result[i]["Likes.like_user_id"];
-      }
-
+      result.sort(function (a, b) {
+        return b.likeCount - a.likeCount;
+      });
       result.splice(50);
-      // console.log("리쥴트", result);
     })
     .catch((err) => console.log(err));
   return result;

@@ -63,6 +63,8 @@ app.get("/like/:contentId", controllers.getLikeCount);
 app.post("/like/:contentId", controllers.addLike);
 app.delete("/like/:contentId", controllers.deleteLike);
 
+app.get("/hashtagslist", controllers.getTags);
+
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");

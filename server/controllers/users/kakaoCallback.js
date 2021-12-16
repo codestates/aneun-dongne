@@ -50,7 +50,8 @@ module.exports = async (req, res) => {
                   console.log(data);
                   delete data.dataValues.password;
                   const accessToken = generateAccessToken(data.dataValues);
-                  res.cookie("jwt", accessToken, {
+                  // res.cookie("jwt", accessToken, {
+                  res.cookie("kakao-jwt", accessToken, {
                     // maxAge: 1000 * 60 * 60 * 24 * 7,
                     // domain: ".aneun-dongne.com", (배포)
                     path: "/",
@@ -66,7 +67,8 @@ module.exports = async (req, res) => {
             else {
               delete save.dataValues.password;
               const accessToken = generateAccessToken(save.dataValues);
-              res.cookie("jwt", accessToken, {
+              // res.cookie("jwt", accessToken, {
+              res.cookie("kakao-jwt", accessToken, {
                 // maxAge: 1000 * 60 * 60 * 24 * 7,
                 // domain: ".aneun-dongne.com", (배포)
                 path: "/",

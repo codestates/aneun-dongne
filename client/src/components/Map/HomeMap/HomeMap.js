@@ -5,6 +5,8 @@ import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
 
 import notImageYet from "../../../img/not-image-yet.png";
 import {
+  token,
+  kToken,
   nowlocation,
   pickpoint,
   usersaddress,
@@ -22,6 +24,8 @@ import Loading from "../../Loading/Loading";
 
 const HomeMap = () => {
   const kakao = window.kakao;
+  const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const history = useHistory();
   const [add, setAdd] = useRecoilState(usersaddress);
   const [placeList, setPlaceList] = useRecoilState(placelist);
@@ -61,7 +65,7 @@ const HomeMap = () => {
    *! 장소 검색시 실행되는 함수 serachPlace
    * @param keyword 검색어
    */
-  console.log(getWtm);
+  // console.log(getWtm);
   const wtm = getWtm.contents;
   const searchPlace = (keyword) => {
     setCount(0);
@@ -115,6 +119,10 @@ const HomeMap = () => {
     //이건 검색어입력헀을때,
     if (area === null) {
       axios.get(`${process.env.REACT_APP_API_URL}/home`, {
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
         params: {
           areacode: null,
           sigungucode: sigg,
@@ -155,6 +163,10 @@ const HomeMap = () => {
 
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
         params: {
           areacode: area,
           sigungucode: sigg,
@@ -167,7 +179,7 @@ const HomeMap = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         //!id는 어떤건가요??
         const list = res.data.data.map((el) => {
           return [
@@ -374,7 +386,7 @@ const HomeMap = () => {
     if (container === null) {
       return;
     }
-    console.log(container);
+    // console.log(container);
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     //마커가 표시될 위치입니다.
     let markerCenter = new kakao.maps.Marker({
@@ -384,7 +396,7 @@ const HomeMap = () => {
     });
     let bounds = new kakao.maps.LatLngBounds();
 
-    console.log(placeList);
+    // console.log(placeList);
 
     // !마커 여러개찍기, placeList:[[관광지1의 y좌표,x좌표,제목,썸네일,주소],[관광지2의 y좌표,x좌표,제목,썸네일,주소],...]
     let positions = [];

@@ -6,12 +6,14 @@ import { Styled } from "./style";
 import VisitedList from "./VisitedList";
 import {
   token,
+  kToken,
   loading,
   userInfo,
   visitedModal,
   getVisitedList,
   visitedModalImg,
   newVisitedPlace,
+  deleteCommentmode,
 } from "../../recoil/recoil";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 
@@ -20,10 +22,11 @@ const { kakao } = window;
 const MyVisited = () => {
   const setIsVisitedOpen = useSetRecoilState(visitedModal);
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   const [loading, setLoading] = useState(false);
   // const visitedList = useRecoilValueLoadable(getVisitedList);
-
+  const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   //!---------
   async function getVisitedPlace() {
     // await setLoading(true);
@@ -31,7 +34,7 @@ const MyVisited = () => {
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/visited`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -47,8 +50,9 @@ const MyVisited = () => {
     await setLoading(true);
     getVisitedPlace();
     await setLoading(false);
+    await setDeleteOrNot(false);
     console.log("되나요");
-  }, []);
+  }, [, deleteOrNot]);
   // console.log(visitedList.contents);
   //!---------
   useEffect(() => {
@@ -165,85 +169,3 @@ const MyVisited = () => {
 };
 
 export default MyVisited;
-
-// const placeList = [
-//   {
-//     id: 1,
-//     visited_area: "충청북도",
-//     visited_sigg: "제천",
-//     visited_memo_image_path: "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/cafe1.jpg",
-//     visited_memo: "와~~카페다~",
-//     mapX: "128.37468237",
-//     mapY: "37.43569238",
-//     createdAt: "2021 - 08 - 23",
-//   },
-//   {
-//     id: 2,
-//     visited_area: "충청북도",
-//     visited_sigg: "청주",
-//     visited_memo_image_path:
-//       "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2021-11-26+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+1.19.31.png",
-//     visited_memo: `붉은노을처럼 난 너를 사랑해 이 세상은 너 뿐이야`,
-//     mapX: "126.37468237",
-//     mapY: "35.23569238",
-//     createdAt: "2021 - 03 - 20",
-//   },
-//   {
-//     id: 3,
-//     visited_area: "충청북도",
-//     visited_sigg: "청주",
-//     visited_memo_image_path:
-//       "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2021-11-26+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+1.19.31.png",
-//     visited_memo: `소리쳐 부르지만`,
-//     mapX: "126.37468237",
-//     mapY: "36.83569238",
-//     createdAt: "2021 - 03 - 20",
-//   },
-//   {
-//     id: 4,
-//     visited_area: "충청북도",
-//     visited_sigg: "청주",
-//     visited_memo_image_path:
-//       "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2021-11-26+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+1.19.31.png",
-//     visited_memo: `저 대답없는 노을만 붉게타는데`,
-//     mapX: "126.37468237",
-//     mapY: "36.43569238",
-//     createdAt: "2021 - 03 - 20",
-//   },
-//   {
-//     id: 5,
-//     visited_area: "충청북도",
-//     visited_sigg: "청주",
-//     visited_memo_image_path:
-//       "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2021-11-26+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+1.19.31.png",
-//     visited_memo: `멋진풍경
-//     와 노을 진짜 멋지다 와
-//     와'
-//   와와와
-//   와와
-//   와
-//   대박
-//   대박사건`,
-//     mapX: "127.2468237",
-//     mapY: "36.43569238",
-//     createdAt: "2021 - 03 - 20",
-//   },
-//   {
-//     id: 6,
-//     visited_area: "충청북도",
-//     visited_sigg: "청주",
-//     visited_memo_image_path:
-//       "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2021-11-26+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+1.19.31.png",
-//     visited_memo: `멋진풍경
-//     와 노을 진짜 멋지다 와
-//     와'
-//   와와와
-//   와와
-//   와
-//   대박
-//   대박사건`,
-//     mapX: "127.37468237",
-//     mapY: "36.43569238",
-//     createdAt: "2021 - 03 - 20",
-//   },
-// ];

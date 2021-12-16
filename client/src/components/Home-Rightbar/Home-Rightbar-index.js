@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Styled } from "./style";
 import { cat1_name, cat2_name } from "../../location-data";
-import { useRecoilState } from "recoil";
-import { usersaddress } from "../../recoil/recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { usersaddress, token, kToken } from "../../recoil/recoil";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
 import Loading from "../Loading/Loading";
 function HomeRightbar({ setLevel, searchCurrentPlace }) {
-  const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState(0); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState(0); //메인페이지에서 넘어오면 userAddress[1]넣기
   const [place, setPlace] = useState("");
   const [add, setAdd] = useRecoilState(usersaddress);
   const [hashtag, setHashtag] = useState("null");
+  const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   // console.log(add);
   const changeArea = (area) => {
     console.log(area);
@@ -35,23 +37,28 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
     setPlace(e.target.value);
     // e.target.value=''
   };
+  console.log(place);
   const searchPlace = (area, sigg, hashtag, keyword) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
         params: {
-          areacode: area,
-          sigungucode: sigg,
+          areacode: 33,
+          sigungucode: 1,
           radius: 10000,
-          clientwtmx: undefined,
-          clientwtmy: undefined,
-          tag: hashtag,
-          searchWord: keyword,
+          clientwtmx: "null",
+          clientwtmy: "null",
+          tag: hashtag, //
+          searchWord: place,
         },
         withCredentials: true,
       })
       .then((res) => {
         setLevel(13);
-        console.log(res);
+        console.log(res.data);
       });
   };
   return (

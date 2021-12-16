@@ -5,7 +5,7 @@ import "./App.css";
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState } from "./recoil/recoil";
-import { token, loading, userInfo } from "./recoil/recoil";
+import { token, kToken, loading, userInfo } from "./recoil/recoil";
 
 import { Mainpage, Home, MyPage, DetailPage, KakaoRedirectHandler } from "./pages";
 import Header from "./components/Header/Header";
@@ -14,6 +14,7 @@ const App = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [info, setInfo] = useRecoilState(userInfo);
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   // const [accessToken, setAccessToken] = useRecoilState(token);
   const [isLoading, setIsLoading] = useRecoilState(loading);
   console.log(accessToken);
@@ -25,7 +26,7 @@ const App = () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -41,57 +42,17 @@ const App = () => {
   // //쿠키안에 jwt 있는지 보고 로긴상태결정
 
   useEffect(() => {
-    if (accessToken) {
+    if (accessToken || kakaoToken) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
     }
     console.log(accessToken);
-  }, [accessToken]);
+  }, [accessToken, kToken]);
 
   const handleResponseSuccess = () => {
     isAuthenticated();
   };
-
-  // 카톡 로긴
-  // useEffect(() => {
-  //   function getToken() {
-  //     if (authorizationCode) {
-  //     }
-  //     // setIsLoading(true);
-  //     axios
-  //       .post(
-  //         `${process.env.REACT_APP_API_URL}/user/kakaologin`,
-  //         {
-  //           authorizationCode,
-  //         },
-  //         { withCredentials: true }
-  //       )
-  //       .then(async (res) => {
-  //         console.log(res.data, res.status);
-  //         if (res.status === 201) {
-  //           // 서버에서 응답으로 리프레시 토큰(쿠키), 액세스 토큰 옴
-  //           // 받은 액세스 토큰을 전역상태에 저장
-  //           setAccessToken(res.data.data.accessToken);
-  //           // 액세스 토큰으로 유저정보 요청
-  //           // 유저정보 전역 상태에 저장
-  //           // setInfo(res.data.data.userInfo);
-  //           // 로그인 상태 true
-  //           handleResponseSuccess();
-  //           setIsLoading(false);
-  //         }
-  //         console.log(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-
-  //         // setIsLoading(false);
-  //         // setIsLogin(false);
-  //       });
-  //   }
-  //   getToken();
-  //   //카톡로긴버튼 눌렀을때만 실행되도록하기//
-  // }, []);
 
   return (
     <>

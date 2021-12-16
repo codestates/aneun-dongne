@@ -113,28 +113,27 @@ module.exports = {
           console.log("이미지 없음");
           await createMyVisited(id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id) });
-        }
-
-        //s3 서버에 저장된 이미지의 url 경로 획득
-        const imagesInfo = req.file.transforms;
-        let imagePath = "";
-        let thumbnailPath = "";
-
-        imagesInfo.forEach((imageInfo) => {
-          if (imageInfo.id === "thumbnail") thumbnailPath = imageInfo.location;
-          else if (imageInfo.id === "origin") imagePath = imageInfo.location;
-        });
-
-        if (imagePath === "" || thumbnailPath === "") {
-          await createMyVisited(id, area, sigg, mapx, mapy, memo, "", "");
-          await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
         } else {
-          await createMyVisited(id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
-          await res.status(200).json({ data: await getMyVisiteds(id) });
+          //s3 서버에 저장된 이미지의 url 경로 획득
+          const imagesInfo = req.file.transforms;
+          let imagePath = "";
+          let thumbnailPath = "";
+
+          imagesInfo.forEach((imageInfo) => {
+            if (imageInfo.id === "thumbnail") thumbnailPath = imageInfo.location;
+            else if (imageInfo.id === "origin") imagePath = imageInfo.location;
+          });
+
+          if (imagePath === "" || thumbnailPath === "") {
+            await createMyVisited(id, area, sigg, mapx, mapy, memo, null, null);
+            await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
+          } else {
+            await createMyVisited(id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
+            await res.status(200).json({ data: await getMyVisiteds(id) });
+          }
         }
       }
     } catch (err) {
-      console.log("여기서 에러뜸 외래키못찾는대", err);
       res.status(500).json({ message: "server err" });
     }
   },
@@ -147,28 +146,29 @@ module.exports = {
         const { id } = accessTokenData;
         const { area, sigg, mapx, mapy, memo } = req.body;
         const { visitedId } = req.query;
+        console.log("허이", req.file, req.query);
         if (!req.file) {
           console.log("이미지 없음");
           await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id) });
-        }
-
-        //s3 서버에 저장된 이미지의 url 경로 획득
-        const imagesInfo = req.file.transforms;
-        let imagePath = "";
-        let thumbnailPath = "";
-
-        imagesInfo.forEach((imageInfo) => {
-          if (imageInfo.id === "thumbnail") thumbnailPath = imageInfo.location;
-          else if (imageInfo.id === "origin") imagePath = imageInfo.location;
-        });
-
-        if (imagePath === "" || thumbnailPath === "") {
-          await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, "", "");
-          await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
         } else {
-          await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
-          await res.status(200).json({ data: await getMyVisiteds(id) });
+          //s3 서버에 저장된 이미지의 url 경로 획득
+          const imagesInfo = req.file.transforms;
+          let imagePath = "";
+          let thumbnailPath = "";
+
+          imagesInfo.forEach((imageInfo) => {
+            if (imageInfo.id === "thumbnail") thumbnailPath = imageInfo.location;
+            else if (imageInfo.id === "origin") imagePath = imageInfo.location;
+          });
+
+          if (imagePath === "" || thumbnailPath === "") {
+            await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, null, null);
+            await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
+          } else {
+            await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
+            await res.status(200).json({ data: await getMyVisiteds(id) });
+          }
         }
       }
     } catch (err) {
@@ -187,6 +187,7 @@ module.exports = {
         await res.status(200).json({ data: await getMyVisiteds(id) });
       }
     } catch (err) {
+      console.log("에러", err);
       res.status(500).json({ message: "server err" });
     }
   },

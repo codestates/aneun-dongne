@@ -8,10 +8,20 @@ import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
 import MyComment from "../../components/Comment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, token, loginModal, deleteCommentmode, defaultcomments, contentid } from "../../recoil/recoil";
+import {
+  loginState,
+  token,
+  kToken,
+  loginModal,
+  deleteCommentmode,
+  defaultcomments,
+  contentid,
+  commentloading,
+} from "../../recoil/recoil";
+
 import LikeLoading from "../../components/Loading/LikeLoading";
 import NoComment from "../../components/Comment/NoComment";
-
+import CommentLoading from "../../components/Loading/CommentLoading";
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
@@ -36,24 +46,25 @@ function DetailPage({ match }) {
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   //댓글지웠는지?
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
   //로딩창
   const [likeLoading, setLikeLoading] = useState(false);
-
+  const [commentLoading, setCommentLoading] = useState(commentloading);
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     //! 관광지 axios 쓸 자리
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.post);
         const { post_mapx, post_mapy } = res.data.post;
         console.log(post_mapx, post_mapy);
 
@@ -67,24 +78,25 @@ function DetailPage({ match }) {
           // setPageURL(res.data.response.body.items.item.homepage);
         }
         setNavi(`https://map.kakao.com/link/to/${res.data.post.post_title},${post_mapy},${post_mapx}`);
-        // setOverview(res.data.response.body.items.item.overview);
+        if (res.data.post.post_content) setOverview(res.data.post.post_content);
         // ?
       });
   }, []);
-  console.log(navi);
-  useEffect(() => {
-    axios
+
+  useEffect(async () => {
+    // await setCommentLoading(true);
+    await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
       .then((res) => {
-        console.log("겟요청 첨에온거", res.data, res.userinfo);
+        console.log("겟요청 첨에온거", res.data, res.data.userinfo);
         // console.log(res.data.data);
-        console.log(res);
+        // console.log(res);
         // let arr = res.data.data;
         let arr = res.data.data.map((el) => {
           // console.log(el.comments.comment_tags.split(","));
@@ -95,15 +107,19 @@ function DetailPage({ match }) {
         setDefaultComment(arr);
         setUserinfo(res.data.userinfo);
       });
-    setDeleteOrNot(false);
+    // await setCommentLoading(false);
+    setTimeout(() => {
+      setCommentLoading(false);
+    }, 1000);
+    // setDeleteOrNot(false);
   }, [, deleteOrNot]);
 
   useEffect(() => {
-    // setLikeLoading(true);
+    setLikeLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -130,12 +146,6 @@ function DetailPage({ match }) {
     setReadMore(!readMore);
   };
 
-  // useEffect(() => {
-  //   if (updateComment) {
-
-  //   }
-  //   setUpdateComment(false);
-  // }, [updatecomment]);
   //! 이 글에 내가 좋아요를 눌렀는지 싫었는지도 DB에 저장해야할듯
   //! 초기화 안되게
   const LikeHandler = async () => {
@@ -151,7 +161,7 @@ function DetailPage({ match }) {
           {},
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${accessToken || kakaoToken}`,
               "Content-Type": "application/json",
             },
             withCredentials: true,
@@ -168,7 +178,7 @@ function DetailPage({ match }) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken || kakaoToken}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -236,6 +246,7 @@ function DetailPage({ match }) {
             defaultComment={defaultComment}
             setDefaultComment={setDefaultComment}
           ></MyComment>
+
           {defaultComment.length === 0 ? (
             <NoComment />
           ) : (

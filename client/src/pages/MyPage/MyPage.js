@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Styled } from "./style";
+
+import { useRecoilValue, useRecoilState } from "recoil";
+import { token, kToken, loginState } from "../../recoil/recoil";
+
+import axios from "axios";
+
 import { useRecoilValue } from "recoil";
 import { token } from "../../recoil/recoil";
-import axios from "axios";
 
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
@@ -14,17 +19,22 @@ const MyPage = ({ match }) => {
   const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   const [loading, setLoading] = useState(false);
-
+  //
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  //
   const activeStyle = {
     color: "#172a71",
   };
+  //\
 
+  //
   async function getUserInfo() {
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -48,7 +58,7 @@ const MyPage = ({ match }) => {
 
     await setLoading(false);
     console.log("되나요");
-  }, [accessToken]);
+  }, []);
 
   return (
     <>
@@ -69,7 +79,7 @@ const MyPage = ({ match }) => {
             </li>
             <li className="link-wrapper">
               <Styled.NavLink to={`${match.path}/visited`} activeStyle={activeStyle}>
-                내가 가본 곳
+                내가 저장한 장소들
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">

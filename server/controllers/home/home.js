@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
   try {
     if (!accessTokenData) {
       if (areacode === "null") {
-        //areacode, sigungucode 값이 아예 없으면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
+        //areacode, sigungucode 값이 "null"이면 pickpoint 요청이거나 현재위치반경 기준 관광지 정보 요청이다
         const { clientwtmx, clientwtmy } = req.query;
         await res.status(200).json({
           data: await getByXYOrHashtagOrTitle(0, radius, clientwtmx, clientwtmy, tag, searchWord),

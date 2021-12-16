@@ -159,6 +159,7 @@ const ImgDiv = styled.div`
 
 function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const history = useHistory();
+
   const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   //   const [imgUrl, setImgUrl] = useState("");
   // const [prevImg, setPrevImg] = useState(

@@ -8,7 +8,7 @@ import { useRecoilValue } from "recoil";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 1px rgb(107, 217, 224) solid;
+  border: 3px rgb(107, 217, 224) solid;
 
   border-radius: 20px;
   width: 300px;

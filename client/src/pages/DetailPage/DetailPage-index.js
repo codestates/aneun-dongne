@@ -74,8 +74,10 @@ function DetailPage({ match }) {
         if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
         setPlaceAddr(res.data.post.post_addr1);
         if (res.data.post.post_homepage_path) {
-          setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split('"')[0]);
-          // setPageURL(res.data.response.body.items.item.homepage);
+          if (res.data.post.post_homepage_path.split('<a href="')[1]) {
+            setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split(`"`)[0]);
+            // setPageURL(res.data.response.body.items.item.homepage);
+          }
         }
         setNavi(`https://map.kakao.com/link/to/${res.data.post.post_title},${post_mapy},${post_mapx}`);
         if (res.data.post.post_content) setOverview(res.data.post.post_content);

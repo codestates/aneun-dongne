@@ -7,9 +7,6 @@ import { token, kToken, loginState } from "../../recoil/recoil";
 
 import axios from "axios";
 
-import { useRecoilValue } from "recoil";
-import { token } from "../../recoil/recoil";
-
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 import LikeLoading from "../../components/Loading/LikeLoading";
@@ -21,15 +18,12 @@ const MyPage = ({ match }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [loading, setLoading] = useState(false);
-  //
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  //
+
   const activeStyle = {
     color: "#172a71",
   };
-  //\
 
-  //
   async function getUserInfo() {
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {

@@ -2,14 +2,15 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Mylike from "./MyLike";
-import { getNames, getAreaNames } from "../../AreaCodetoName";
+
+import { getAreaNames } from "../../AreaCodetoName";
 
 const Lists = styled.div`
   /* height: 100vh; */
 
   @media (min-width: 1040px) {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   @media (min-width: 1360px) {
     display: grid;
@@ -61,7 +62,9 @@ const PlaceCard = styled.div`
     transition: all 0.3s ease;
   }
   img {
+    align-content: center;
     width: 100%;
+    border-radius: 20px;
   }
   .place-cards {
     display: flex;
@@ -141,7 +144,6 @@ const KeyWordBox = styled.div`
   /* background-color: white; */
 `;
 const LikeBtn = styled.div`
-  position: absolute;
   border: 1px red solid;
   border-radius: 20px;
   /* background: white; */
@@ -149,9 +151,14 @@ const LikeBtn = styled.div`
   height: 30px;
   margin: 20px auto;
   cursor: pointer;
+  text-justify: center;
+  flex-direction: row-reverse;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: all 0.1s ease-in-out;
-
+  i {
+    justify-content: center;
+    margin-left: 10px;
+  }
   &:hover {
     color: black;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -167,15 +174,9 @@ const LikeBtn = styled.div`
     transform: scale(1.3);
   }
 `;
-export default function LikeLists({ postsInfo }) {
-  // const sliceWords = () => {
-  //   for (let i = 0; i < post_tagsArr.length; i++) {
-  //     if (post_tagsArr === ",") {
-  //       post_tagsArr === "";
-  //     }
-  //   }
-  // };
-
+const LikeLists = ({ postsInfo }) => {
+  // const tagsArr = post_tags.split(",");
+  const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
 
   const handlecontentClick = () => {
@@ -184,26 +185,32 @@ export default function LikeLists({ postsInfo }) {
   return (
     <Lists onClick={handlecontentClick}>
       <PlaceCard>
+        <KeyWordBox>{!postsInfo.post_tags ? "" : <KeyWord>{postsInfo.post_tags}</KeyWord>}</KeyWordBox>
         <img src={postsInfo.post_firstimage} />
         <div className="place-cards-title">
-          <div>
-            [{getNames(postsInfo.post_areacode)}][{postsInfo.post_addr1}]
+          <div className="user-area">
+            [{sigungu.areaName} {sigungu.siggName}]
           </div>
           {/* <div>{postsInfo.post_sigungucode}</div> */}
 
-          <div></div>
           <div>{postsInfo.post_title}</div>
           {/* <div>{postsInfo.isLiked}</div> */}
         </div>
         <LikeBtn>
-          <div>{postsInfo["Likes.likeCount"]}</div>
+          <div>
+            <i class="fas fa-heart"></i>
+            {postsInfo["Likes.likeCount"]}
+          </div>
         </LikeBtn>
-        <KeyWordBox>{!postsInfo.post_tags ? "" : <KeyWord>{postsInfo.post_tags}</KeyWord>}</KeyWordBox>
-        <div>{postsInfo.likeCount}</div>
+        {/* <div>{postsInfo.likeCount}</div> */}
+        {/* <KeyWordBox>
+          {tagsArr.map((tag) => (
+            <div>{tag}</div>
+          ))}
+        </KeyWordBox> */}
       </PlaceCard>
     </Lists>
   );
-}
-//post_tags: "데이트,공원"
-// ,를 #으로 바꿔주는 함수를 넣어야할 것 같음.
-//서울특별시 !구
+};
+
+export default LikeLists;

@@ -105,7 +105,7 @@ const siggNameArrAC6 = [
   "해운대구",
 ];
 const siggNameArrAC7 = ["- 지역선택 -", "중구", "남구", "동구", "북구", "울주군"];
-const siggNameArrAC8 = ["- 지역선택 -"];
+const siggNameArrAC8 = ["- 지역선택 -", ""];
 const siggNameArrAC31 = [
   "- 지역선택 -",
   "가평군",

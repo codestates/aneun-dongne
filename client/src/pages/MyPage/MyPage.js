@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Styled } from "./style";
-
+import { useRecoilValue } from "recoil";
+import { token } from "../../recoil/recoil";
 import axios from "axios";
 
 import { Profile, MyLike, MyReview, MyVisited } from ".";

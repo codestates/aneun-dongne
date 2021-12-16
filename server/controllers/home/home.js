@@ -9,6 +9,12 @@ require("dotenv").config();
 // 로그아웃한 상태로 홈 화면에 들어오면 유저id가 필요한 함수의 id부분을 0처리한다 아이디가 0인 유저는 없어서
 // 시퀄라이즈로 서치할 때 tag, searchWord는 ""로 바꾸는데 빈 스트링을 검색하면 데이터가 전원 다 뜨기 때문 : 필터링 없는 전체 데이터 검색
 
+const bb = async () => {
+  console.log(await getByHashtagOrTitle(0, "", ""));
+};
+
+bb();
+
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);
   let { areacode, sigungucode, radius, clientwtmx, clientwtmy, tag, searchWord } = req.query;

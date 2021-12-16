@@ -21,35 +21,41 @@ module.exports = async (userId, tag, searchWord) => {
       "post_wtmx",
       "post_wtmy",
       "post_tags",
+      "post_readcount",
     ],
     include: [
       {
         model: Like,
-        attributes: [[sequelize.literal("COUNT(`Likes`.`id`)"), "likeCount"], "like_user_id"],
+        attributes: [[sequelize.fn("COUNT", sequelize.col("Likes.id")), "likeCount"], "like_user_id"],
+        group: "Posts.post_contentid",
       },
     ],
-    group: "post_contentid",
-    order: [
-      [sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"],
-      ["post_readcount", "DESC"],
-    ],
-    where: {
-      [Sequelize.Op.and]: [
-        { post_tags: { [Sequelize.Op.substring]: `${tag}` } },
-        { post_title: { [Sequelize.Op.substring]: `${searchWord}` } },
-      ],
-    },
+    // group: "post_contentid",
+    // order: [
+    //   [sequelize.literal("COUNT(`Likes`.`id`)"), "DESC"],
+    //   ["post_readcount", "DESC"],
+    // ],
+    where: { post_title: { [Sequelize.Op.substring]: `${searchWord}` } },
   })
+    //SELECT `Post`.*, COUNT(*) AS `Likes.likeCount`, `Likes`.`like_user_id` AS `Likes.like_user_id` FROM (SELECT `Post`.`id`, `Post`.`post_addr1`, `Post`.`post_addr2`, `Post`.`post_areacode`, `Post`.`post_contentid`, `Post`.`post_contenttypeid`, `Post`.`post_firstimage`, `Post`.`post_firstimage2`, `Post`.`post_mapx`, `Post`.`post_mapy`, `Post`.`post_sigungucode`, `Post`.`post_title`, `Post`.`post_wtmx`, `Post`.`post_wtmy`, `Post`.`post_tags`, `Post`.`post_readcount` FROM `Posts` AS `Post` WHERE (`Post`.`post_tags` LIKE '%%' AND `Post`.`post_title` LIKE '%경복궁%') GROUP BY `post_contentid` ORDER BY COUNT(*) DESC, `Post`.`post_readcount` DESC LIMIT 100) AS `Post` LEFT OUTER JOIN `Likes` AS `Likes` ON `Post`.`post_contentid` = `Likes`.`like_post_contentid` ORDER BY COUNT(*) DESC, `Post`.`post_readcount` DESC;
     .then((data) => {
-      // console.log(data);
-      for (let i = 0; i < data.length; i++) {
-        data[i].isLiked = false;
-        if (data[i]["Likes.like_user_id"] === userId) {
-          data[i].isLiked = true;
+      console.log(data);
+      result = data.filter((el) => {
+        if (tag === "") {
+          return true;
+        } else if (el.post_tags !== null) {
+          return el.post_tags.includes(tag);
+        } else {
+          return false;
         }
-        delete data[i]["Likes.like_user_id"];
+      });
+      for (let i = 0; i < result.length; i++) {
+        result[i].isLiked = false;
+        if (result[i]["Likes.like_user_id"] === userId) {
+          result[i].isLiked = true;
+        }
+        delete result[i]["Likes.like_user_id"];
       }
-      result = data;
     })
     .catch((err) => console.log(err));
   return result;

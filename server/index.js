@@ -13,8 +13,7 @@ const upload = require("./controllers/upload-image");
 const app = express();
 
 // const PORT = 3065; //(배포)
-const PORT = 4000;
-
+const PORT = process.env.PORT;
 // const controllers = require("./controllers");
 app.use(cookieParser());
 app.use(express.json());
@@ -33,6 +32,7 @@ app.get("/post/:contentId", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
+app.delete("/user/info", controllers.deleteAuth);
 
 app.get("/mypage/likelists", controllers.myLikes);
 app.get("/mypage/commentlists", controllers.myComments);

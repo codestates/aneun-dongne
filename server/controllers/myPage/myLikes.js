@@ -25,7 +25,7 @@ const getMyLikes = async (userId) => {
     include: [
       {
         model: Like,
-        attributes: [[sequelize.literal("COUNT(`Likes`.`id`)"), "likeCount"], "like_user_id", "createdAt"],
+        attributes: ["like_user_id", "createdAt"],
       },
     ],
     group: "post_contentid",
@@ -37,20 +37,27 @@ const getMyLikes = async (userId) => {
     .then((data) => {
       // console.log(data);
       result = data;
-      for (let i = 0; i < result.length; i++) {
-        result[i].isLiked = false;
-        if (result[i]["Likes.like_user_id"] === userId) {
-          result[i].isLiked = true;
-        }
-        delete result[i]["Likes.like_user_id"];
-      }
     })
     .catch((err) => console.log(err));
+  for (let i = 0; i < result.length; i++) {
+    await Like.findAndCountAll({
+      where: {
+        like_post_contentid: result[i].post_contentid,
+      },
+    }).then((likedata) => {
+      result[i]["Likes.likeCount"] = likedata.count;
+    });
+    result[i].isLiked = false;
+    if (result[i]["Likes.like_user_id"] === userId) {
+      result[i].isLiked = true;
+    }
+    delete result[i]["Likes.like_user_id"];
+  }
   return result;
 };
 
 // const bb = async () => {
-//   console.log(await getMyLikes(1));
+//   console.log(await getMyLikes(4));
 // };
 
 // bb();

@@ -184,7 +184,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
     axios
-      .get("https://localhost:80/user/info", {
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -236,7 +236,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     console.log(formData.get("image"));
 
     axios
-      .patch(`https://localhost:80/user/info`, formData, {
+      .patch(`${process.env.REACT_APP_API_URL}/user/info`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           // "Content-Type": "application/json",
@@ -247,17 +247,21 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         if (res.status === 400) {
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
           return;
+        } else {
+          setAccessToken(res.data.data.accessToken);
+          console.log(res.data);
+          setImgUrl(res.data.data.user_image_path);
+          setPrevImg(res.data.data.user_image_path);
+          setNickname(res.data.data.nickname);
+          setInputEmail(res.data.data.email);
         }
-        setAccessToken(res.data.data.accessToken);
-        console.log(res.data);
-        setImgUrl(res.data.data.user_image_path);
-        setPrevImg(res.data.data.user_image_path);
-        setNickname(res.data.data.nickname);
+      })
+      .catch((err) => {
+        console.log(err);
       })
 
       .catch((err) => console.log(err));
   };
-
   // console.log(inputEmail, imgUrl, inputUsername);
   //정보를 바로 받아온다면...?
 
@@ -328,7 +332,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       // const token = JSON.parse(localStorage.getItem("token"));
       axios
         .patch(
-          "https://localhost:80/mypage",
+          `${process.env.REACT_APP_API_URL}/mypage`,
           {
             // email: inputUsername,
             nickname: userInfo.nikename,
@@ -354,9 +358,10 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   //회원탈퇴
   const deleteHandler = () => {
     axios
-      .delete(`http://localhost:80/user/mypage`, {
+      .delete(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           // authorization: accessToken,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -365,6 +370,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         console.log("탈퇴가 될지...", res);
         // isLogout();
         setIsDelete(true);
+        setIsLogin(false);
         setTimeout(() => {
           history.push("/");
         }, 1000);

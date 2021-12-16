@@ -8,6 +8,12 @@ const fs = require("fs");
 // 포스트 contentId를 가지고 모든 댓글 목록 불러오기
 
 const createMyVisited = async (userId, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath) => {
+  if (imagePath === "") {
+    imagePath = "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png";
+  }
+  if (thumbnailPath === "") {
+    thumbnailPath = "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png";
+  }
   await Visited.create({
     visited_area: area,
     visited_sigg: sigg,
@@ -21,6 +27,18 @@ const createMyVisited = async (userId, area, sigg, mapx, mapy, memo, imagePath, 
 };
 
 const updateMyVisited = async (visitedId, userId, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath) => {
+  await Visited.findOne({
+    raw: true,
+    where: { id: visitedId },
+  }).then((data) => {
+    if (imagePath === "") {
+      imagePath = data.visited_memo_image_path;
+    }
+    if (thumbnailPath === "") {
+      thumbnailPath = data.visited_thumbnail_path;
+    }
+  });
+
   await Visited.update(
     {
       visited_area: area,
@@ -93,7 +111,7 @@ module.exports = {
 
         if (!req.file) {
           console.log("이미지 없음");
-          await createMyVisited(id, area, sigg, mapx, mapy, memo, null, null);
+          await createMyVisited(id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id) });
         }
 
@@ -108,7 +126,7 @@ module.exports = {
         });
 
         if (imagePath === "" || thumbnailPath === "") {
-          await createMyVisited(id, area, sigg, mapx, mapy, memo, null, null);
+          await createMyVisited(id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
         } else {
           await createMyVisited(id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);
@@ -131,7 +149,7 @@ module.exports = {
         const { visitedId } = req.query;
         if (!req.file) {
           console.log("이미지 없음");
-          await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, null, null);
+          await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id) });
         }
 
@@ -146,7 +164,7 @@ module.exports = {
         });
 
         if (imagePath === "" || thumbnailPath === "") {
-          await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, null, null);
+          await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id), message: "Image upload failed" });
         } else {
           await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, imagePath, thumbnailPath);

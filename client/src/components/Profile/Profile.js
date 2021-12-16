@@ -244,14 +244,12 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
           return;
         } else {
-          setAccessToken(res.data.data.accessToken);
           console.log(res.data);
           setImgUrl(res.data.data.user_image_path);
           setPrevImg(res.data.data.user_image_path);
           setNickname(res.data.data.nickname);
           setInputEmail(res.data.data.email);
           setErrorMessage("프로필이 변경되었습니다.");
-
         }
       })
       .catch((err) => console.log(err));

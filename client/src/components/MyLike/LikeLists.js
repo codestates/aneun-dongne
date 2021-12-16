@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Mylike from "./MyLike";
 
 import { getAreaNames } from "../../AreaCodetoName";
+import Empty from "../../Empty";
 
 const Lists = styled.div`
   /* height: 100vh; */
@@ -132,6 +133,7 @@ const KeyWord = styled.span`
   }
 `;
 const KeyWordBox = styled.div`
+  margin-top: 5%;
   display: flex;
   justify-content: center;
   /* background-color: red; */
@@ -147,8 +149,8 @@ const LikeBtn = styled.div`
   border: 1px red solid;
   border-radius: 20px;
   /* background: white; */
-  width: 60px;
-  height: 30px;
+  width: 80px;
+  height: 40px;
   margin: 20px auto;
   cursor: pointer;
   text-justify: center;
@@ -157,7 +159,9 @@ const LikeBtn = styled.div`
   transition: all 0.1s ease-in-out;
   i {
     justify-content: center;
-    margin-left: 10px;
+    margin-left: 20px;
+    margin-right: 3px;
+    margin-top: 8px;
   }
   &:hover {
     color: black;
@@ -175,7 +179,7 @@ const LikeBtn = styled.div`
   }
 `;
 const LikeLists = ({ postsInfo }) => {
-  // const tagsArr = post_tags.split(",");
+  const tagArr = postsInfo.post_tags.split(",");
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
 
@@ -183,34 +187,49 @@ const LikeLists = ({ postsInfo }) => {
     history.push(`/detailpage/${postsInfo.post_contentid}`);
   };
   return (
-    <Lists onClick={handlecontentClick}>
-      <PlaceCard>
-        <KeyWordBox>{!postsInfo.post_tags ? "" : <KeyWord>{postsInfo.post_tags}</KeyWord>}</KeyWordBox>
-        <img src={postsInfo.post_firstimage} />
-        <div className="place-cards-title">
-          <div className="user-area">
-            [{sigungu.areaName} {sigungu.siggName}]
-          </div>
-          {/* <div>{postsInfo.post_sigungucode}</div> */}
+    <>
+      <div>
+        {!postsInfo.length === 0 ? (
+          <Empty />
+        ) : (
+          <Lists onClick={handlecontentClick}>
+            <PlaceCard>
+              <KeyWordBox>
+                {!postsInfo.post_tags ? (
+                  ""
+                ) : (
+                  <KeyWord>
+                    {tagArr.map((tag) => (
+                      <span>#{tag}</span>
+                    ))}
+                  </KeyWord>
+                )}
+              </KeyWordBox>
+              <img src={postsInfo.post_firstimage} />
+              <div className="place-cards-title">
+                <div className="user-area">
+                  [{sigungu.areaName} {sigungu.siggName}]
+                </div>
+                {/* <div>{postsInfo.post_sigungucode}</div> */}
 
-          <div>{postsInfo.post_title}</div>
-          {/* <div>{postsInfo.isLiked}</div> */}
-        </div>
-        <LikeBtn>
-          <div>
-            <i class="fas fa-heart"></i>
-            {postsInfo["Likes.likeCount"]}
-          </div>
-        </LikeBtn>
-        {/* <div>{postsInfo.likeCount}</div> */}
-        {/* <KeyWordBox>
-          {tagsArr.map((tag) => (
-            <div>{tag}</div>
-          ))}
-        </KeyWordBox> */}
-      </PlaceCard>
-    </Lists>
+                <div>{postsInfo.post_title}</div>
+                {/* <div>{postsInfo.isLiked}</div> */}
+              </div>
+              <LikeBtn>
+                <div>
+                  <i class="fas fa-heart"></i>
+                  {postsInfo["Likes.likeCount"]}
+                </div>
+              </LikeBtn>
+              {/* <div>{postsInfo.likeCount}</div> */}
+            </PlaceCard>
+          </Lists>
+        )}
+      </div>
+    </>
   );
 };
 
 export default LikeLists;
+
+//<KeyWord>{postsInfo.post_tags}</KeyWord>

@@ -3,13 +3,14 @@ import { useRecoilState } from "recoil";
 import ModalLogin from "../ModalLogin/ModalLogin";
 import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
-import { isSavepositionOpen, loginState, loginModal, visitedModal } from "../../recoil/recoil";
+import { isSavepositionOpen, loginState, loginModal, visitedModal, saveOrNotModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { StyledLink } from "../PlaceList";
 import ModalVisited from "../ModalVisited/ModalVisited";
 import Cookies from "universal-cookie";
+import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
 
 const Header = ({ handleResponseSuccess }) => {
   const cookies = new Cookies();
@@ -19,6 +20,7 @@ const Header = ({ handleResponseSuccess }) => {
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
       setIsLoginOpen(false);
@@ -61,7 +63,9 @@ const Header = ({ handleResponseSuccess }) => {
       setIsVisitedOpen(false);
     }
   };
-
+  const closeSaveOrNotModalHandler = (e) => {
+    setIsSaveOrNotModal(false);
+  };
   const ToLoginModal = () => {
     if (isSignupOpen) {
       setIsSignupOpen(false);
@@ -145,18 +149,18 @@ const Header = ({ handleResponseSuccess }) => {
         ) : null}
       </Styled.ModalContainer>
 
-      {/* // MyPage/visited 내가 가본 곳 모달 */}
-      {/* <Styled.ModalContainer>
-        {isVisitedOpen ? (
+      {/* 홈화면에서 내장소 저장 후 뜨는 saveOrNot 모달 */}
+      <Styled.ModalContainer>
+        {isSaveOrNotModal ? (
           <>
-            <Styled.ModalBackdrop onClick={closeVisitedModal}>
-              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalVisited />
+            <Styled.ModalBackdrop onClick={closeSaveOrNotModalHandler}>
+              <Styled.ModalView height="300px" onClick={(e) => e.stopPropagation()}>
+                <SaveOrNotModal />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>
         ) : null}
-      </Styled.ModalContainer> */}
+      </Styled.ModalContainer>
 
       <Styled.HeaderContainer>
         <div className="header-wrapper">
@@ -179,12 +183,16 @@ const Header = ({ handleResponseSuccess }) => {
               </>
             ) : (
               <>
-                <div className="kakao_mainpage-button" onClick={kakaologoutHandler}>
-                  KAKAO Log Out
-                </div>
-                <div className="mainpage-button" onClick={logoutHandler}>
-                  Log Out
-                </div>
+                {cookies.get("kakao-jwt") ? (
+                  <div className="kakao_mainpage-button mainpage-button" onClick={kakaologoutHandler}>
+                    {/* <div className="kakao_mainpage-button" onClick={logoutHandler}> */}
+                    Log Out
+                  </div>
+                ) : (
+                  <div className="mainpage-button" onClick={logoutHandler}>
+                    Log Out
+                  </div>
+                )}
                 {/* 나중에 밑줄뜨는거 처리해야함*/}
                 <StyledLink to="/mypage/like">
                   <div className="mainpage-button">My Page</div>

@@ -151,10 +151,6 @@ const Div = styled.div`
 function Loading() {
   return (
     <Div>
-      <p>잠시만 기다려주세요</p>
-
-      <hr />
-      <hr />
       <div>
         <img
           className="footer-logo-img"
@@ -181,8 +177,8 @@ function Loading() {
           alt="icon"
           src="https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/footer.png"
         />
-        <p>잠시만 기다려주세요</p>
       </div>
+      <p>잠시만 기다려주세요</p>
     </Div>
   );
 }

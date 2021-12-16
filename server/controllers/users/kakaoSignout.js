@@ -1,5 +1,6 @@
 module.exports = (req, res) => {
-  res.clearCookie("jwt", {
+  // res.clearCookie("jwt", {
+  res.clearCookie("kakao-jwt", {
     // domain: ".aneun-dongne.com", (배포)
     path: "/",
     secure: true,

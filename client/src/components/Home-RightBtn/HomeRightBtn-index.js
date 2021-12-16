@@ -27,7 +27,7 @@ function HomeRightBtn({ pending, setPending }) {
     <>
       <Styled.RightBtnBox>
         <Styled.RightBtn onClick={openModalHandler}>현재위치 저장</Styled.RightBtn>
-        <Link to="/mypage/profile/visited">
+        <Link to="/mypage/visited">
           <Styled.RightBtn>내가 가본 곳</Styled.RightBtn>
         </Link>
         <Styled.RightBtn

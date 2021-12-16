@@ -12,9 +12,6 @@ const controllers = require("./controllers");
 const upload = require("./controllers/upload-image");
 const app = express();
 
-// const PORT = 3065; //(배포)
-// const PORT = 4000;
-// const PORT = 80;
 const PORT = process.env.PORT;
 
 // const controllers = require("./controllers");

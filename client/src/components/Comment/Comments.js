@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { defaultcomments, deleteCommentmode, token } from "../../recoil/recoil";
+import { defaultcomments, deleteCommentmode, token, kToken } from "../../recoil/recoil";
 import MyComment from "./MyComment";
 import EditableHashTag from "../HashTag/EditableHashTag";
 import axios from "axios";
@@ -224,6 +224,7 @@ const Date = styled.div`
 function Comments({ uuid, img, nickname, text, initialTags, date, editable, contentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
   const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(text);
@@ -273,18 +274,17 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
 
   // 댓글 삭제요청 보내는 함수
   async function deleteComment() {
-    await setCommentLoading(true);
+    setCommentLoading(true);
     await axios
       .delete(
         `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken || kakaoToken}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
           params: { commentId: uuid },
-          withCredentials: true,
         }
 
         //! axios에선 params지만 express에선 req.query래요.
@@ -303,7 +303,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         setDeleteOrNot(true);
       });
     setClickedBtn("");
-    await setCommentLoading(false);
+    setCommentLoading(false);
   }
   function changeComment() {
     setPrevComment(comment);
@@ -317,12 +317,12 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
       commentContent: comment, //댓글내용
       tagsArr: tags, //해시태그
     };
-    await setCommentLoading(true);
+    setCommentLoading(true);
 
     await axios
       .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -338,13 +338,13 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         setDefaultComment(arr);
       });
 
-    if (editMode) console.log("수정완료");
-    else console.log("댓글수정 클릭");
+    // if (editMode) console.log("수정완료");
+    // else console.log("댓글수정 클릭");
 
     setEditMode(false);
 
     setClickedBtn("");
-    await setCommentLoading(false);
+    setCommentLoading(false);
   }
   //댓글 바꾸는 함수
   const ChangeHandler = (e) => {

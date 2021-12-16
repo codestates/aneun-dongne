@@ -182,7 +182,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
     axios
-      .get("https://localhost:80/user/info", {
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
@@ -231,8 +231,8 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     // formData.append("")
     console.log(formData.get("image"));
 
-    await axios
-      .patch(`https://localhost:80/user/info`, formData, {
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/user/info`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
@@ -243,15 +243,17 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         if (res.status === 400) {
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
           return;
-        }
-        // setAccessToken(res.data.data.accessToken);
-        console.log(res.data);
-        setImgUrl(res.data.data.user_image_path);
-        setPrevImg(res.data.data.user_image_path);
-        setNickname(res.data.data.nickname);
-        setErrorMessage("프로필이 변경되었습니다.");
-      })
+        } else {
+          setAccessToken(res.data.data.accessToken);
+          console.log(res.data);
+          setImgUrl(res.data.data.user_image_path);
+          setPrevImg(res.data.data.user_image_path);
+          setNickname(res.data.data.nickname);
+          setInputEmail(res.data.data.email);
+          setErrorMessage("프로필이 변경되었습니다.");
 
+        }
+      })
       .catch((err) => console.log(err));
   };
 
@@ -295,7 +297,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   //회원탈퇴
   const deleteHandler = () => {
     axios
-      .delete(`http://localhost:80/user/mypage`, {
+      .delete(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
@@ -306,6 +308,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         console.log("탈퇴가 될지...", res);
         // isLogout();
         setIsDelete(true);
+        setIsLogin(false);
         setTimeout(() => {
           history.push("/");
         }, 1000);

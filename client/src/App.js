@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState } from "./recoil/recoil";
 import { token, kToken, loading, userInfo } from "./recoil/recoil";
 
-import { Mainpage, Home, MyPage, DetailPage } from "./pages";
+import { Mainpage, Home, MyPage, DetailPage, KakaoRedirectHandler } from "./pages";
 import Header from "./components/Header/Header";
 
 const App = () => {
@@ -61,6 +61,7 @@ const App = () => {
       <Route exact path="/home" component={Home} />
       <Route path="/mypage" component={MyPage} />
       <Route exact path="/detailpage/:id" component={DetailPage} />
+      <Route path="/user/kakao/callback" component={KakaoRedirectHandler} />
       {/* <Redirect from="*" to="/" /> */}
     </>
   );

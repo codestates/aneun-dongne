@@ -32,6 +32,7 @@ app.get("/post/:contentId", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
 app.patch("/user/info", upload.single("image"), controllers.updateAuth);
+app.delete("/user/info", controllers.deleteAuth);
 
 app.get("/mypage/likelists", controllers.myLikes);
 app.get("/mypage/commentlists", controllers.myComments);

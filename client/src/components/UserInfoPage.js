@@ -252,7 +252,7 @@ const UserInfo = () => {
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
     axios
-      .get("https://localhost:80/user/info", { "Content-Type": "application/json", withCredentials: true })
+      .get(`${process.env.REACT_APP_API_URL}/user/info`, { "Content-Type": "application/json", withCredentials: true })
       .then((res) => {
         console.log(res.data.data.userInfo);
 
@@ -291,7 +291,7 @@ const UserInfo = () => {
     // formData.append("")
 
     axios
-      .patch(`https://localhost:80/user/info`, formData, { withCredentials: true })
+      .patch(`${process.env.REACT_APP_API_URL}/user/info`, formData, { withCredentials: true })
       .then((res) => {
         if (res.status === 400) {
           alert("비번과 비번확인 불일치"); //지금만 alert으로 함
@@ -364,7 +364,7 @@ const UserInfo = () => {
       // const token = JSON.parse(localStorage.getItem("token"));
       axios
         .put(
-          "https://localhost:80/mypage",
+          `${process.env.REACT_APP_API_URL}/mypage`,
           {
             // email: inputUsername,
             nickname: userInfo.nikename,
@@ -390,7 +390,7 @@ const UserInfo = () => {
   //회원탈퇴
   const deleteHandler = () => {
     axios
-      .delete(`http://localhost:80/user/mypage`, {
+      .delete(`${process.env.REACT_APP_API_URL}/user/mypage`, {
         headers: {
           // authorization: accessToken,
           "Content-Type": "application/json",

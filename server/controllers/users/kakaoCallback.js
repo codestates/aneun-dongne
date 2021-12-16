@@ -58,8 +58,8 @@ module.exports = async (req, res) => {
                     secure: true,
                     sameSite: "None",
                   }); //토큰 담은 쿠키 전달
-                  res.redirect(`${process.env.URL_AFTER_LOGIN}`); //로그인 후 이동할 페이지 : MAIN_URL
-                  // sendAccessToken(res, accessToken);
+                  // res.redirect(`${process.env.URL_AFTER_LOGIN}`); //로그인 후 이동할 페이지 : MAIN_URL
+                  sendAccessToken(res, accessToken);
                   // 로그인 인증 완료});
                 });
               });
@@ -75,8 +75,8 @@ module.exports = async (req, res) => {
                 secure: true,
                 sameSite: "None",
               }); //토큰 담은 쿠키 전달
-              res.redirect(`${process.env.URL_AFTER_LOGIN}`); //로그인 후 이동할 페이지 : MAIN_URL
-              // sendAccessToken(res, accessToken);
+              // res.redirect(`${process.env.URL_AFTER_LOGIN}`); //로그인 후 이동할 페이지 : MAIN_URL
+              sendAccessToken(res, accessToken);
               // 로그인 인증 완료
             }
           });

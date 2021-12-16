@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { loginState, loginModal, token, kToken } from "../../recoil/recoil";
+import { loginState, loginModal, token, kToken, loginAgainModal } from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
@@ -159,6 +159,7 @@ const ImgDiv = styled.div`
 
 function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const history = useHistory();
+  const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   //   const [imgUrl, setImgUrl] = useState("");
   // const [prevImg, setPrevImg] = useState(
   //   "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png"
@@ -201,14 +202,23 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
           setImgUrl(res.data.data.userInfo.user_image_path);
           setNickname(res.data.data.userInfo.nickname);
         }
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
+
+            setIsLoginAgainOpen(true);
+          }
+        }
       });
   }, []);
   // console.log(imgUrl);
   const editInfo = async (e) => {
     e.preventDefault();
-    // 토큰만료시 컷
-    if (!isLogin) {
-      setIsLoginOpen(true);
+
+    if (!kakaoToken && !accessToken) {
+      setIsLoginAgainOpen(true);
       return;
     }
     let a = null;
@@ -218,7 +228,6 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
     // }
 
     if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
-      console.log("hi");
       setErrorMessage(message.checkAgain);
       return;
     }
@@ -255,7 +264,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         if (err.response) {
           if (err.response.status === 401) {
             //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때
-            history.push("/");
+            setIsLoginAgainOpen(true);
           } else if (err.response.status === 400) {
             //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
             setErrorMessage(message.checkAgain);

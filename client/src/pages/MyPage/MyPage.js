@@ -10,7 +10,7 @@ import axios from "axios";
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 const MyPage = ({ match }) => {
-  const history = useHistory();
+  // const history = useHistory();
   const [imgUrl, setImgUrl] = useState("/men.png");
   const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
@@ -52,6 +52,14 @@ const MyPage = ({ match }) => {
       });
     return result;
   }
+  //! 첨에 이렇게 하니까 새로고침안하면 적용이 안돼요
+  //! 그래서 axios에서 401번 호출하면 보내는걸로 하는게 좋을것같아요
+  function checkToken() {
+    if (!kakaoToken && !accessToken) {
+      setIsLoginAgainOpen(true);
+    }
+  }
+  //!
   useEffect(async () => {
     //! 우선 적음 나중에 지우게되도
     await setLoading(true);
@@ -63,7 +71,7 @@ const MyPage = ({ match }) => {
 
   return (
     <>
-      <Styled.Body>
+      <Styled.Body onClick={checkToken}>
         <nav className="menu-bar">
           <div className="profile">
             {/* <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div> */}

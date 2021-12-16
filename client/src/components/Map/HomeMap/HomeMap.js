@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
 // import { changePlaceList } from "../../redux/actions/actions";
 
-import notImageYet from "../../../img/not-image-yet.png";
+// import notImageYet from "../../../img/not-image-yet.png";
 import {
   token,
   kToken,
@@ -435,7 +435,7 @@ const HomeMap = () => {
           </div>
           <div class="body">
               <div class="img">
-                  <img src=${positions[i].img || notImageYet} width="73" height="70">
+                  <img src=${positions[i].img || "/notImageYet.png"} width="73" height="70">
              </div>
               <div class="desc">
                   <div class="ellipsis">${positions[i].addr}</div>
@@ -465,7 +465,7 @@ const HomeMap = () => {
                      </div>
                      <div class="body">
                          <div class="img">
-                             <img src=${positions[i].img || notImageYet} width="73" height="70">
+                             <img src=${positions[i].img || "/notImageYet.png"} width="73" height="70">
                         </div>
                          <div class="desc">
                              <div class="ellipsis">${positions[i].addr}</div>
@@ -591,7 +591,7 @@ const HomeMap = () => {
         pickPoint={pickPoint}
         setPickPoint={setPickPoint}
       />
-      <span>위치 :{add.address} </span>
+      {/* <span>위치 :{add.address} </span> */}
       {mapLoading ? <div>로딩</div> : <Styled.Map id="map"></Styled.Map>}
     </Styled.Div>
   );

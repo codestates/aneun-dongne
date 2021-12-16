@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { userInfo, loginState, loginModal, token, kToken } from "../../recoil/recoil";
 import { Styled } from "./style";
+import { message } from "../../message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 
 const UserInfopage = styled.div`
@@ -178,7 +179,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // console.log(info);
+  console.log(inputEmail);
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
     axios
@@ -190,7 +191,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data.userInfo);
+        console.log(res.data.data);
         console.log(typeof res.data.data.userInfo.user_image_path);
         setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
@@ -213,8 +214,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     // if(!imgUrl){
     //   formData.append("image", imgUrl);
     // }
-    const validPW = validPassword();
-    if (inputCheckPassword !== inputNewPassword || !inputCheckPassword || !inputNewPassword) {
+    if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
       console.log("hi");
       setErrorMessage("입력하신 정보를 다시 한번 확인해주세요");
       return;
@@ -223,6 +223,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       formData.append("image", imgUrl);
       console.log(imgUrl);
     }
+    console.log(inputEmail);
     formData.append("nickname", inputUsername);
     formData.append("email", inputEmail);
     formData.append("password", inputPassword);
@@ -240,23 +241,32 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         withCredentials: true,
       })
       .then((res) => {
-        if (res.status === 400) {
-          alert("비번과 비번확인 불일치"); //지금만 alert으로 함
-          return;
-        } else {
-          setAccessToken(res.data.data.accessToken);
-          console.log(res.data);
-          setImgUrl(res.data.data.user_image_path);
-          setPrevImg(res.data.data.user_image_path);
-          setNickname(res.data.data.nickname);
-          setInputEmail(res.data.data.email);
-          setErrorMessage("프로필이 변경되었습니다.");
-
-        }
+        console.log(res.data);
+        setImgUrl(res.data.data.user_image_path);
+        setPrevImg(res.data.data.user_image_path);
+        setNickname(res.data.data.nickname);
+        setInputEmail(res.data.data.email);
+        setErrorMessage("프로필이 변경되었습니다.");
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때
+            history.push("/");
+          } else if (err.response.status === 400) {
+            //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
+            setErrorMessage("입력하신 정보를 확인해주세요.");
+          } else if (err.response.status === 403) {
+            //3. 카톡로긴일땐 정보변경을 허용하지 않음
+            //403번: 유저가 누구인진 알지만 허용하지 않을때
+            setErrorMessage("카톡프로필은 바꿀수 없습니다.");
 
+            //현재비번 잘못썼을때else if()
+            //닉넴잘못적었을때
+          }
+        }
+      });
+  };
   //닉네임변경
   const handleInputUsername = (e) => {
     setInputUsername(e.target.value);
@@ -331,6 +341,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
               </div>
               <div className="userinfo-each-label">
                 <input type="text" value={inputEmail} readOnly />
+                {/* <div>{inputEmail} </div> */}
               </div>
               <div className="userinfo-each-label">
                 <input

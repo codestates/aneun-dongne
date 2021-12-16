@@ -5,6 +5,7 @@ export const Styled = {
   RightBtn: styled.button`
     border-radius: 5px;
     position: relative;
+    z-index: -7;
     /* left: -10px;
     bottom: 20px; */
     background-color: rgb(192, 251, 255);
@@ -53,6 +54,7 @@ export const Styled = {
     }
   `,
   RightBtnBox: styled.div`
+    z-index: -8;
     display: flex;
     justify-content: space-evenly;
     margin: 10px 0 10px 0px;

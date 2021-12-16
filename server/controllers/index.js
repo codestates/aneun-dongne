@@ -1,10 +1,10 @@
 module.exports = {
   //User
+  // getAuth: require("./users/subAuth").get,
+  // updateAuth: require("./users/subAuth").patch,
+  deleteAuth: require("./users/auth").delete,
   getAuth: require("./users/auth").get,
   updateAuth: require("./users/auth").patch,
-  deleteAuth: require("./users/auth").delete,
-  //getAuth: require("./users/auth").get,
-  //updateAuth: require("./users/auth").patch,
   signup: require("./users/signup"),
   signin: require("./users/signin"),
   signout: require("./users/signout"),

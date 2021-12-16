@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import notImageYet from "../../img/not-image-yet.png";
+// import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
 
 import VisitedList from "./VisitedList";

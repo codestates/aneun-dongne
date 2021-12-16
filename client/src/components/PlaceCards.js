@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import notImageYet from "../img/not-image-yet.png";
 import HashTagTemplate from "./HashTag/HashTagTemplate";
 import { token, kToken } from "../recoil/recoil";
 import { useRecoilValue } from "recoil";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 1px rgb(107, 217, 224) solid;
+  border: 3px rgb(107, 217, 224) solid;
 
   border-radius: 20px;
   width: 300px;
@@ -95,7 +94,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
     <PlaceCard onClick={onClick}>
       <div className="place-cards">
         <HashTagTemplate keywordDummy={tags || []} />
-        {img ? <img src={img} /> : <img src={notImageYet} />}
+        {img ? <img src={img} /> : <img src="/notImageYet.png" />}
         <div className="place-cards-title">
           <div>{`[${addr1}] `}</div>
           <span>{title}</span>

@@ -61,7 +61,7 @@ export const Styled = {
     width: 300px;
     height: 40px;
     border-radius: 5px;
-    border: 1px gray solid;
+    border: 3px gray solid;
     transition: all 0.5s ease-in-out;
     &:hover {
       color: black;
@@ -136,7 +136,7 @@ export const Styled = {
     height: 40px;
     background-color: white;
     border: gray 1px solid;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px;
     transition: all 0.5s ease-in-out;
     &:hover {

@@ -33,8 +33,12 @@ export const Styled = {
         border-right: none;
       }
     }
+    > span {
+      z-index: -8;
+    }
   `,
   Map: styled.div`
+    z-index: -8;
     margin-left: 10px;
     margin-top: 20px;
     border-radius: 10px;

@@ -8,7 +8,7 @@ import { token, kToken } from "../../recoil/recoil";
 import styled from "styled-components";
 
 import LikeLoading from "../Loading/LikeLoading";
-import Empty from "../Empty.js";
+import Empty from "../Empty/Empty.js";
 
 // import { getNames } from "../../AreaCodetoName";
 // const [like, setLike] = useState(0);

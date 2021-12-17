@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Mylike from "./MyLike";
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
-import Empty from "../Empty";
+import Empty from "../Empty/Empty";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 // const Body = styled.div`
 //   grid-template-columns: repeat(3, 1fr);

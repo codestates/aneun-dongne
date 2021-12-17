@@ -78,6 +78,9 @@ export const Styled = {
         white-space: nowrap;
       }
     }
+    @media (max-width: 1000px) {
+      margin: 0px;
+    }
   `,
   ModalContainer: styled.div`
     position: relative;
@@ -109,18 +112,6 @@ export const Styled = {
 };
 const Body = styled.div`
   /* display: flex; */
-  @media (min-width: 1040px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (min-width: 1360px) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (min-width: 1730px) {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 40px;
@@ -130,6 +121,22 @@ const Body = styled.div`
   > .visited-cards-list {
     /* border: 1px gray solid; */
     margin: 15px;
+  }
+
+  @media (max-width: 1000px) {
+    margin: 0px;
+    grid-column-gap: 0px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1360px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 1730px) {
+    grid-template-columns: repeat(4, 1fr);
   }
 `;
 function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerClick, setMarkerClick }) {

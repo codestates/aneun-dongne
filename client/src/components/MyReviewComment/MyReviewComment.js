@@ -8,7 +8,6 @@ import { Icon } from "react-icons-kit";
 import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 
 import { Styled } from "./style";
-
 import { getAreaNames } from "../../modules/AreaCodetoName";
 
 const MyReviewComment = ({ comment, SetComments }) => {
@@ -58,7 +57,7 @@ const MyReviewComment = ({ comment, SetComments }) => {
             </div>
             <div className="user-hastag-wrapper">
               {tagArr.map((tag) => (
-                <span className="user-hastag">{tag}</span>
+                <span className="user-hastag">#{tag}</span>
               ))}
             </div>
             <div className="user-content-bottom">

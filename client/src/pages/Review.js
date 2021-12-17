@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-elastic-carousel";
-import { responsive, myArrow } from "./carousel";
+import { responsive, myArrow } from "../modules/carousel";
 
 import "aos/dist/aos.css";
 import styled from "styled-components";

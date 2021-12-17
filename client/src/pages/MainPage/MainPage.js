@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import Review from "./Review";
+import Review from "../Review";
 import { Icon } from "react-icons-kit";
 import { angleDoubleDown } from "react-icons-kit/fa/angleDoubleDown";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { loginState } from "../recoil/recoil";
+import { loginState } from "../../recoil/recoil";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Footer from "../components/Footer/Footer";
+import Footer from "../../components/Footer/Footer";
 
 AOS.init();
 

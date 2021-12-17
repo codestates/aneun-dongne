@@ -5,14 +5,12 @@ import { RecoilRoot } from "recoil";
 import App from "./App";
 
 import { BrowserRouter } from "react-router-dom";
-import SaveOrNotModal from "./components/ModalSaveOrNot/SaveOrNotModal";
 
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <BrowserRouter>
         <App />
-        {/* <SaveOrNotModal /> */}
       </BrowserRouter>
     </RecoilRoot>
   </React.StrictMode>,

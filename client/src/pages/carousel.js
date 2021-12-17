@@ -3,7 +3,6 @@ import { angleLeft } from "react-icons-kit/fa/angleLeft";
 import { angleRight } from "react-icons-kit/fa/angleRight";
 import { consts } from "react-elastic-carousel";
 import styled from "styled-components";
-
 export const responsive = [
   { width: 400, itemsToShow: 1 },
   { width: 600, itemsToShow: 2 },

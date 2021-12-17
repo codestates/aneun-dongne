@@ -6,6 +6,7 @@ import { token, kToken } from "../../recoil/recoil";
 
 import MyReviewComment from "../MyReviewComment/MyReviewComment";
 import LikeLoading from "../Loading/LikeLoading";
+import Empty from "../../Empty";
 
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
@@ -44,11 +45,13 @@ const MyReview = () => {
           </div>
         ) : (
           <div>
-            {comments.length === 0
-              ? "댓글이 없음"
-              : comments.map((comment) => {
-                  return <MyReviewComment key={comment.comments.id} comment={comment} SetComments={SetComments} />;
-                })}
+            {comments.length === 0 ? (
+              <Empty />
+            ) : (
+              comments.map((comment) => {
+                return <MyReviewComment key={comment.comments.id} comment={comment} SetComments={SetComments} />;
+              })
+            )}
           </div>
         )}
       </div>

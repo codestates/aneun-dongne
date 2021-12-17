@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { token, kToken } from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
-import { ic_delete } from "react-icons-kit/md/ic_delete";
 import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 
 import { Styled } from "./style";
@@ -14,6 +13,7 @@ import { getAreaNames } from "../../AreaCodetoName";
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
+
   const history = useHistory();
 
   const sigungu = getAreaNames(comment.post.areacode, comment.post.sigungucode);
@@ -45,7 +45,7 @@ const MyReviewComment = ({ comment, SetComments }) => {
 
   return (
     <>
-      <Styled.Body>
+      <Styled.Comment>
         <div className="user-container">
           <div className="user-info-wrapper">
             <img src={user_image_path} className="user-image" />
@@ -73,14 +73,10 @@ const MyReviewComment = ({ comment, SetComments }) => {
             </div>
           </div>
         </div>
-        <div className="side-button">
-          <Icon size={32} icon={ic_cancel_outline} className="cancel-button" />
-          <Icon icon={ic_delete} onClick={deleteComment} className="delete-button" />
+        <div className="side" onClick={deleteComment}>
+          <Icon size={28} icon={ic_cancel_outline} className="delete-button" />
         </div>
-      </Styled.Body>
-      <Styled.Side>
-        <div className="side-delete">dddd</div>
-      </Styled.Side>
+      </Styled.Comment>
     </>
   );
 };

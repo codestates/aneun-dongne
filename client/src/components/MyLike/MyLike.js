@@ -8,6 +8,7 @@ import { token, kToken } from "../../recoil/recoil";
 import styled from "styled-components";
 
 import LikeLoading from "../Loading/LikeLoading";
+import Empty from "../../Empty.js";
 
 // import { getNames } from "../../AreaCodetoName";
 // const [like, setLike] = useState(0);
@@ -58,15 +59,15 @@ const MyLike = () => {
             <LikeLoading />
           </div>
         ) : (
-          <Margin>
-            <div className="list">
-              {postsInfo.length === 0
-                ? "좋아요 없음"
-                : postsInfo.map((postsInfo) => {
-                    return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
-                  })}
-            </div>
-          </Margin>
+          <div className="list">
+            {postsInfo.length === 0 ? (
+              <Empty />
+            ) : (
+              postsInfo.map((postsInfo) => {
+                return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
+              })
+            )}
+          </div>
         )}
       </div>
     </>

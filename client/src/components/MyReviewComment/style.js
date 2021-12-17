@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Styled = {
-  Body: styled.div`
+  Comment: styled.div`
     display: flex;
     width: 700px;
     border: 1px gray solid;
@@ -67,20 +67,22 @@ export const Styled = {
       color: gray;
     }
 
-    .cancel-button {
+    .side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      &:hover {
+        background-color: #eee;
+      }
+    }
+
+    .delete-button {
       color: gray;
       cursor: pointer;
     }
-
-    .side-delete {
-      width: 200px;
-      height: 120px;
-      background-color: red;
-    }
-  `,
-  Side: styled.div`
-    width: 30px;
-    height: 30px;
-    background-color: red;
   `,
 };

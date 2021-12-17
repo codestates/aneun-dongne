@@ -44,7 +44,7 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   //     const image = imgUrl.current.files
   // }
   // console.log(typeof imgUrl);
-  // console.log(imgUrl);
+  console.log(imgUrl);
   return (
     <div className="profile-upload-box">
       <input

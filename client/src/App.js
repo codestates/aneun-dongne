@@ -1,32 +1,32 @@
 import React, { useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState } from "./recoil/recoil";
-import { token, kToken, loading, userInfo } from "./recoil/recoil";
+import { token, kToken, userInfo } from "./recoil/recoil";
 
 import { Mainpage, Home, MyPage, DetailPage, KakaoRedirectHandler } from "./pages";
 import Header from "./components/Header/Header";
-
+import Cookies from "universal-cookie";
 const App = () => {
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [info, setInfo] = useRecoilState(userInfo);
+  const cookies = new Cookies();
+  const setIsLogin = useSetRecoilState(loginState);
+  const setInfo = useSetRecoilState(userInfo);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-  // const [accessToken, setAccessToken] = useRecoilState(token);
-  const [isLoading, setIsLoading] = useRecoilState(loading);
+
   console.log(accessToken);
-  //카톡
-  const authorizationCode = new URL(window.location.href).searchParams.get("code");
+
   const isAuthenticated = async () => {
-    await console.log(accessToken);
+    console.log(accessToken);
     // if(!accessToken)
     await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -47,8 +47,7 @@ const App = () => {
     } else {
       setIsLogin(false);
     }
-    console.log(accessToken);
-  }, [accessToken, kToken]);
+  }, [accessToken, kakaoToken]);
 
   const handleResponseSuccess = () => {
     isAuthenticated();
@@ -57,11 +56,13 @@ const App = () => {
   return (
     <>
       <Header handleResponseSuccess={handleResponseSuccess} />
-      <Route exact path="/" component={Mainpage} />
-      <Route exact path="/home" component={Home} />
-      <Route path="/mypage" component={MyPage} />
-      <Route exact path="/detailpage/:id" component={DetailPage} />
-      <Route path="/user/kakao/callback" component={KakaoRedirectHandler} />
+      <Switch>
+        <Route exact path="/" component={Mainpage} />
+        <Route exact path="/home" component={Home} />
+        <Route path="/mypage" component={MyPage} />
+        <Route exact path="/detailpage/:id" component={DetailPage} />
+        <Route path="/user/kakao/callback" component={KakaoRedirectHandler} />
+      </Switch>
       {/* <Redirect from="*" to="/" /> */}
     </>
   );

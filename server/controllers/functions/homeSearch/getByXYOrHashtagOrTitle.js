@@ -45,6 +45,7 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
       { [Sequelize.Op.lte]: radius }
     ),
   })
+
     .then((data) => {
       // console.log("데이터", data);
       for (let i = 0; i < data.length; i++) {
@@ -72,7 +73,7 @@ module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord)
       result.sort(function (a, b) {
         return b.likeCount - a.likeCount;
       });
-      result.splice(50);
+      result.splice(30);
     })
     .catch((err) => console.log(err));
   return result;

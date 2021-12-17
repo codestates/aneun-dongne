@@ -78,5 +78,10 @@ export const Styled = {
     &:hover {
       color: #172a71;
     }
+
+    .fas {
+      width: 50px;
+      text-align: center;
+    }
   `,
 };

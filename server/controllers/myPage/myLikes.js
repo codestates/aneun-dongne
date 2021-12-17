@@ -55,12 +55,12 @@ const getMyLikes = async (userId) => {
   }
   return result;
 };
+//콘솔창에 막 떠서 주석했슴다.
+// const bb = async () => {
+//   console.log(await getMyLikes(2031791888));
+// };
 
-const bb = async () => {
-  console.log(await getMyLikes(2031791888));
-};
-
-bb();
+// bb();
 
 module.exports = async (req, res) => {
   const accessTokenData = isAuthorized(req);

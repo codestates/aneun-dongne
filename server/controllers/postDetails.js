@@ -83,6 +83,7 @@ const getPostData = async (contentId) => {
 // bb();
 
 module.exports = async (req, res) => {
+  //토큰없으면 401번보내고 끝내는거
   const { contentId } = req.params;
   try {
     res.status(200).json(await getPostData(contentId));

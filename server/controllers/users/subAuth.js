@@ -105,7 +105,7 @@ module.exports = {
               const accessToken = generateAccessToken(data.dataValues);
               console.log("여기까지왔어요?");
               res.json({
-                data: { accessToken, nickname, user_image_path: image, user_thumbnail_path: thumbnail },
+                data: { accessToken, nickname, email, user_image_path: image, user_thumbnail_path: thumbnail },
                 message: "okkk",
               });
             }

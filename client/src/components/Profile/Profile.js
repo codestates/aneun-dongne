@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { userInfo, loginState, loginModal, token, kToken } from "../../recoil/recoil";
+import { loginState, loginModal, token, kToken, loginAgainModal } from "../../recoil/recoil";
 import { Styled } from "./style";
+import { message } from "../../message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 
 const UserInfopage = styled.div`
@@ -156,9 +157,10 @@ const ImgDiv = styled.div`
 
 //회원수정, 로그아웃시켜줘야힘.
 
-function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname }) {
-  const [info, setInfo] = useRecoilState(userInfo);
+function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const history = useHistory();
+
+  const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   //   const [imgUrl, setImgUrl] = useState("");
   // const [prevImg, setPrevImg] = useState(
   //   "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A2%E1%86%B7%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5+414kb.png"
@@ -168,17 +170,20 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [inputPassword, setInputPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputCheckPassword, setInputCheckPassword] = useState("");
-  const [confirmMessage, setConfirmMessage] = useState("");
 
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  // const accessToken = useRecoilValue(token);
+
   const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    console.log(kakaoToken);
+    if (kakaoToken) setErrorMessage(message.kakaoState);
+  }, []);
 
-  // console.log(info);
+  console.log(inputEmail);
   useEffect(() => {
     //! 우선 적음 나중에 지우게되도
     axios
@@ -190,7 +195,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data.userInfo);
+        console.log(res.data.data);
         console.log(typeof res.data.data.userInfo.user_image_path);
         setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
@@ -198,14 +203,23 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
           setImgUrl(res.data.data.userInfo.user_image_path);
           setNickname(res.data.data.userInfo.nickname);
         }
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
+
+            setIsLoginAgainOpen(true);
+          }
+        }
       });
   }, []);
-  // console.log(imgUrl);
+  console.log(imgUrl);
   const editInfo = async (e) => {
     e.preventDefault();
-    // 토큰만료시 컷
-    if (!isLogin) {
-      setIsLoginOpen(true);
+
+    if (!kakaoToken && !accessToken) {
+      setIsLoginAgainOpen(true);
       return;
     }
     let a = null;
@@ -213,16 +227,16 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
     // if(!imgUrl){
     //   formData.append("image", imgUrl);
     // }
-    const validPW = validPassword();
-    if (inputCheckPassword !== inputNewPassword || !inputCheckPassword || !inputNewPassword) {
-      console.log("hi");
-      setErrorMessage("입력하신 정보를 다시 한번 확인해주세요");
+
+    if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
+      setErrorMessage(message.checkAgain);
       return;
     }
     if (imgUrl) {
       formData.append("image", imgUrl);
       console.log(imgUrl);
     }
+    console.log(imgUrl);
     formData.append("nickname", inputUsername);
     formData.append("email", inputEmail);
     formData.append("password", inputPassword);
@@ -240,21 +254,32 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
         withCredentials: true,
       })
       .then((res) => {
-        if (res.status === 400) {
-          alert("비번과 비번확인 불일치"); //지금만 alert으로 함
-          return;
-        } else {
-          console.log(res.data);
-          setImgUrl(res.data.data.user_image_path);
-          setPrevImg(res.data.data.user_image_path);
-          setNickname(res.data.data.nickname);
-          setInputEmail(res.data.data.email);
-          setErrorMessage("프로필이 변경되었습니다.");
-        }
+        console.log(res.data);
+        setImgUrl(res.data.data.user_image_path);
+        setPrevImg(res.data.data.user_image_path);
+        setNickname(res.data.data.nickname);
+        setInputEmail(res.data.data.email);
+        setErrorMessage(message.changedProfile);
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때
+            setIsLoginAgainOpen(true);
+          } else if (err.response.status === 400) {
+            //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
+            setErrorMessage(message.checkAgain);
+          } else if (err.response.status === 403) {
+            //3. 카톡로긴일땐 정보변경을 허용하지 않음
+            //403번: 유저가 누구인진 알지만 허용하지 않을때
+            setErrorMessage(message.kakaoState);
 
+            //현재비번 잘못썼을때else if()
+            //닉넴잘못적었을때
+          }
+        }
+      });
+  };
   //닉네임변경
   const handleInputUsername = (e) => {
     setInputUsername(e.target.value);
@@ -329,6 +354,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
               </div>
               <div className="userinfo-each-label">
                 <input type="text" value={inputEmail} readOnly />
+                {/* <div>{inputEmail} </div> */}
               </div>
               <div className="userinfo-each-label">
                 <input

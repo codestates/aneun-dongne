@@ -66,7 +66,7 @@ export const siggNameArrAC1 = [
   "용산구",
   "은평구",
   "종로구",
-  "중구구",
+  "중구",
   "중랑구",
 ];
 export const siggNameArrAC2 = [
@@ -337,7 +337,7 @@ export const getCodes = (areaSearch, siggSearch) => {
   return { areaCode: areaCode, siggCode: siggCode };
 };
 
-console.log(getCodes("경남", "함양군"));
+// console.log(getCodes("충주"));
 
 export const getNames = (areaCode) => {
   let areaName;
@@ -386,4 +386,4 @@ export const getAreaNames = (areaCode, siggCode) => {
   return { areaName: areaName, siggName: siggName };
 };
 
-console.log(getNames(8, 0));
+// console.log(getNames(8, 0));

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import HomeMap from "../../components/Map/HomeMap/HomeMap";
-import PlaceList from "../../components/PlaceList";
-import HashTagList from "../../components/HashTag/HashTagList";
+import HomeMap from "../../components/HomeMap/HomeMap";
+import PlaceList from "../../components/PlaceList/PlaceList";
+import HashTagList from "../../components/HashTagList/HashTagList";
 import { useRecoilState } from "recoil";
 import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
 import Loading from "../../components/Loading/Loading";

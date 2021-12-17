@@ -270,7 +270,7 @@ function MainPage() {
     <>
       <Body>
         <MainTitleView>
-          <img src="/look.gif" muted autoPlay loop playsInline />
+          <img src="/images/look.gif" muted autoPlay loop playsInline />
           <div className="main-title">
             <div className="title">어디론가 떠나고 싶으신가요?</div>
             <StartButton onClick={ToHome}>시작하기</StartButton>
@@ -285,7 +285,7 @@ function MainPage() {
 
           <VideoContainer>
             <Image>
-              <img src="/mapclick.png" />
+              <img src="images/mapclick.png" />
 
               <img
                 className="play"
@@ -311,7 +311,7 @@ function MainPage() {
                 loop
                 playsInline
               />
-              <img src="/mapimgpeople.png" />
+              <img src="images/mapimgpeople.png" />
             </Image>
           </VideoContainer>
         </FocusTitleView>
@@ -320,7 +320,7 @@ function MainPage() {
           <div className="title">그곳이 어디라도 간직하고 싶다면 내가 서있는 바로 그곳을 저장할 수 있어요.</div>
           <VideoContainer>
             <Image>
-              <img src="/likeimg.png" />
+              <img src="images/likeimg.png" />
 
               <img
                 className="play"

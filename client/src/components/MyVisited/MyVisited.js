@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import notImageYet from "../../img/not-image-yet.png";
 import { Styled } from "./style";
 
-import VisitedList from "./VisitedList";
-import {
-  token,
-  kToken,
-  loading,
-  userInfo,
-  visitedModal,
-  getVisitedList,
-  visitedModalImg,
-  newVisitedPlace,
-  deleteCommentmode,
-} from "../../recoil/recoil";
+import VisitedList from "../VisitedList/VisitedList";
+import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from "../../recoil/recoil";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+import Empty from "../../Empty";
 
 const { kakao } = window;
 
@@ -27,7 +17,7 @@ const MyVisited = () => {
   const [loading, setLoading] = useState(false);
   // const visitedList = useRecoilValueLoadable(getVisitedList);
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
-  //!---------
+
   async function getVisitedPlace() {
     // await setLoading(true);
     console.log(accessToken);
@@ -143,9 +133,11 @@ const MyVisited = () => {
   if (placeList.length === 0) {
     return (
       <Styled.Body>
-        <Styled.Div>
-          <div>0개일때 화면 넣어주세요</div>
-        </Styled.Div>
+        <Empty />
+        {/* <Styled.Div>
+          <Empty /> 
+         <div>0개일때 화면 넣어주세요</div> 
+       </Styled.Div>  */}
       </Styled.Body>
     );
   }

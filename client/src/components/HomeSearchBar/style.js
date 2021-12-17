@@ -7,9 +7,9 @@ export const Styled = {
       display: flex;
       flex-direction: column;
       /* background: red; */
-      width:100%;
+      width: 100%;
       margin-left: 20px;
-      align-content:center;
+      align-content: center;
       border: 1px rgb(192, 251, 255) solid;
       border-radius: 10px;
     }
@@ -27,7 +27,7 @@ export const Styled = {
     > p {
       @media (max-width: 1023px) {
         margin: 2% auto;
-        
+
         text-align: center;
       }
 
@@ -37,7 +37,6 @@ export const Styled = {
         text-align: center;
       }
     }
-  }
   `,
   //도|시군구를 감싸고있는 div
   SearchBar: styled.div`
@@ -97,7 +96,6 @@ export const Styled = {
     /* background-color: red; */
     border: none;
     /* border: 1px pink solid; */
-    //중앙선 더 오른쪽으로 옮기고 싶은데 잘안된다..
     border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
   `,
   //도|시군구를 감싸고있는 div
@@ -120,6 +118,7 @@ export const Styled = {
     &:hover:after {
       left: 0;
       width: 100%;
+    }
     @media (max-width: 1023px) {
       width: 48%;
       height: 40px;
@@ -133,14 +132,10 @@ export const Styled = {
       width: 50%;
       height: 100%;
       background-color: white;
-
       border: none;
-
       border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
-    } ;
+    }
   `,
-
-  //키워드 검색
   SearchKeyWord: styled.select`
     @media (min-width: 1024px) {
       margin: 5px 2% 5px 2%;
@@ -149,13 +144,7 @@ export const Styled = {
       top: 0;
       right: 0;
       z-index: 200;
-      background-color: rgb(192, 251, 255);
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
+      background-color: #3a6fb0;
       border: gray 1px solid;
       border-radius: 10px;
       padding: 5px;
@@ -168,13 +157,7 @@ export const Styled = {
         top: 0;
         right: 0;
         z-index: -1;
-        background-color: rgb(192, 251, 255);
-        background-image: linear-gradient(
-          to left top,
-          rgba(255, 255, 255, 0.9) 0,
-          rgba(0, 0, 0, 0) 60%,
-          rgba(0, 0, 0, 0) 100%
-        );
+        background-color: #3a6fb0;
         border-radius: 5px;
         box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
           4px 4px 5px 0px rgba(0, 0, 0, 0.1);
@@ -244,20 +227,14 @@ export const Styled = {
     margin-left: 5px;
     width: 80px;
     height: 40px;
-    background-color: rgb(192, 251, 255);
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
+    background-color: #3a6fb0;
     border: white;
     border-radius: 10px;
     padding: 5px;
     cursor: pointer;
-    cursor: pointer;
     perspective: 230px;
     transition: all 0.5s ease-in-out;
+    color: white;
     &:after {
       position: absolute;
       content: "";
@@ -266,6 +243,10 @@ export const Styled = {
       top: 0;
       right: 0;
       z-index: 999;
+    }
+    &:hover {
+      background-color: #2f4d6f;
+    }
     @media (max-width: 1023px) {
       width: 98%;
       height: 40px;
@@ -280,13 +261,7 @@ export const Styled = {
       margin-left: 5px;
       width: 80px;
       height: 40px;
-      background-color: rgb(192, 251, 255);
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
+      background-color: #3a6fb0;
       border: white;
       border-radius: 10px;
       padding: 5px;
@@ -302,27 +277,11 @@ export const Styled = {
         top: 0;
         right: 0;
         z-index: -1;
-        background-color: rgb(192, 251, 255);
-        background-image: linear-gradient(
-          to left top,
-          rgba(255, 255, 255, 0.9) 0,
-          rgba(0, 0, 0, 0) 60%,
-          rgba(0, 0, 0, 0) 100%
-        );
+        background-color: #3a6fb0;
         border-radius: 5px;
         box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
           4px 4px 5px 0px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
-      }
-      &:hover {
-        color: black;
-        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-          4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-        transform: scale(1.1);
-      }
-      &:hover:after {
-        left: 0;
-        width: 100%;
       }
     }
   `,

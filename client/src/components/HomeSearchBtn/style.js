@@ -16,29 +16,22 @@ export const Styled = {
       /* background: red; */
     }
     border-radius: 5px;
-<<<<<<< HEAD:client/src/components/Home-RightBtn/style.js
-    z-index: 0;
-=======
     position: relative;
-    z-index: 7.9; //버튼
->>>>>>> dev:client/src/components/HomeSearchBtn/style.js
+    z-index: 7.9;
     /* left: -10px;
     bottom: 20px; */
-    position:relative
-    background-color: rgb(192, 251, 255);
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
+    position: relative;
+    background-color: #3a6fb0;
+    color: white;
     height: 40px;
     width: 100px;
-
     border: none;
     cursor: pointer;
     perspective: 230px;
     transition: all 0.5s ease-in-out;
+    &:hover {
+      background-color: #2f4d6f;
+    }
     &:after {
       position: absolute;
       content: "";
@@ -59,26 +52,5 @@ export const Styled = {
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
-    &:hover {
-      color: black;
-      transform: scale(1.1);
-    }
-    &:hover:after {
-      left: 0;
-    }
-    &:active {
-      //
-    }
   `,
 };
-
-// &:hover {
-// 	/* box-shadow: inset 2px 2px 0px 0px rgba(255, 255, 255, 0.5), 0px 7px 7px 7px rgba(0, 0, 0, 0.1),
-// 		5px 5px 0px 0px rgba(0, 0, 0, 0.1); */
-// 	background-image: linear-gradient(
-// 		to left top,
-// 		rgba(255, 255, 255, 0.9) 0,
-// 		rgba(0, 0, 0, 0) 60%,
-// 		rgba(0, 0, 0, 0) 100%
-// 	);
-// }

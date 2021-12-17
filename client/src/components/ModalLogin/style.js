@@ -6,6 +6,14 @@ export const Styled = {
     align-items: center;
     flex-direction: column;
 
+    .close-button {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
     form {
       display: flex;
       flex-direction: column;
@@ -14,12 +22,15 @@ export const Styled = {
 
     .form-title {
       margin: 70px 0px 30px 0px;
+      width: 90px;
+      height: 50px;
+      object-fit: cover;
     }
 
     label {
       font-size: 1.5rem;
       font-weight: bold;
-      color: #00ccff;
+      color: #3a6fb0;
     }
 
     .form-email {
@@ -36,7 +47,7 @@ export const Styled = {
       margin-bottom: 30px;
       width: 300px;
       height: 40px;
-      border: 1px solid #00ccff;
+      border: 1px solid #3a6fb0;
     }
 
     .login-button {
@@ -44,7 +55,7 @@ export const Styled = {
       cursor: pointer;
       width: 250px;
       height: 50px;
-      background-color: #00ccff;
+      background-color: #3a6fb0;
       color: white;
       border-radius: 10px;
       font-size: 1.5rem;
@@ -69,7 +80,7 @@ export const Styled = {
 
     .signup-link {
       cursor: pointer;
-      color: #00ccff;
+      color: #3a6fb0;
       font-size: 1rem;
       margin-top: 5px;
     }
@@ -91,7 +102,7 @@ export const Styled = {
       transition: all 0.3s;
 
       &:hover {
-        background-color: #6af4aa;
+        background-color: #2f4d6f;
         transition: all 0.3s;
       }
     }
@@ -105,8 +116,23 @@ export const Styled = {
       }
     }
 
-    @media screen and (max-height: 660px) {
+    @media screen and (max-height: 660px), screen and (max-width: 500px) {
       label {
+        font-size: 1rem;
+      }
+
+      input {
+        width: 200px;
+        height: 30px;
+      }
+
+      .login-button {
+        width: 200px;
+        font-size: 1rem;
+      }
+
+      .kakao-login-button {
+        width: 200px;
         font-size: 1rem;
       }
     }

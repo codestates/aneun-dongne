@@ -17,6 +17,16 @@ const ImgDiv = styled.div`
   border: 1px gray solid;
   /* border-radius: 70%; */
   z-index: 999;
+
+  @media screen and (max-height: 660px), screen and (max-width: 500px) {
+    width: 300px;
+    height: 150px;
+  }
+
+  @media screen and (max-height: 900px) {
+    width: 300px;
+    height: 150px;
+  }
 `;
 const EditProfile = styled.div`
   cursor: pointer;

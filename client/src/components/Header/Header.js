@@ -208,11 +208,7 @@ const Header = ({ handleResponseSuccess }) => {
         <div className="header-wrapper">
           <Link to="/home">
             {/* <div id="logo">아는동네</div> */}
-            <img
-              src="https://media.discordapp.net/attachments/912244672578089002/912920442157805678/E53C1906-3AF2-4061-AFD3-E6E7A131BDCE.jpeg"
-              id="logo"
-              alt="logo"
-            ></img>
+            <img src="/images/logo.png" id="logo" alt="logo"></img>
           </Link>
           <div className="header-button-wrapper">
             {!isLogin ? (

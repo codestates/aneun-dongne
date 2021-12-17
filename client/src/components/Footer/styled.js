@@ -6,16 +6,13 @@ export const Styled = {
     padding: 20px;
     margin-left: 20px;
     margin-right: 20px;
-    border-top: 1px rgb(192, 251, 255) solid;
-    border-bottom: 1px rgb(192, 251, 255) solid;
+    border-top: 1px #2f4d6f solid;
+    border-bottom: 1px #2f4d6f solid;
     margin-bottom: 10px;
-    /* background-color: green; */
   `,
   Side: styled.div`
-    /* border: 1px gray solid; */
-    /* background-color: skyblue; */
     min-width: 200px;
-    border-right: 1px rgb(192, 251, 255) solid;
+    border-right: 1px #2f4d6f solid;
     display: flex;
     flex-direction: column;
     width: 30%;
@@ -42,15 +39,9 @@ export const Styled = {
 
       letter-spacing: 0.1em;
       transition: all 0.3s ease;
-
-      /* &:hover {
-        color: rgb(21, 225, 240);
-        padding-left: 10px;
-      } */
     }
 
     .side-col {
-      /* width: 50%; */
       display: flex;
       background-color: red;
       flex-direction: column;
@@ -58,10 +49,8 @@ export const Styled = {
     }
     .side-col .info-icon {
       display: flex;
-      /* justify-content: space-evenly; */
       padding: 10px;
       background-color: white;
-      /* border: 1px gray solid; */
       padding-left: 20%;
       a {
         transition: all 0.3s ease;
@@ -70,7 +59,7 @@ export const Styled = {
       }
     }
     .side-col .info-icon a:hover {
-      color: rgb(21, 225, 240);
+      color: #2f4d6f;
       padding-left: 10px;
     }
     .side-col .info-icon i {
@@ -153,7 +142,7 @@ export const Styled = {
       color: rgb(21, 225, 240);
     } */
     .user-info .info-icon a:hover {
-      color: rgb(21, 225, 240);
+      color: #2f4d6f;
       padding-left: 10px;
     }
   `,

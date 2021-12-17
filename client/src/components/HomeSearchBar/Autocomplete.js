@@ -42,18 +42,14 @@ export const InputContainer = styled.div`
     margin-right: auto;
     height: 40px;
   }
-  /* margin-top: 8rem; */
   margin: 5px 2% 5px 2%;
   height: 40px;
   width: 140px;
-  /* background-color: #ffffff; */
   display: flex;
   flex-direction: row;
-  /* padding: 1rem; */
   border-radius: 20px;
-  /* border: 1px gray solid; */
   border: none;
-  position:relative
+  position: relative;
   z-index: 999;
   border-radius: ${(props) => (props.hashtag ? activeBorderRadius : inactiveBorderRadius)};
   &:focus-within {
@@ -86,7 +82,7 @@ export const InputContainer = styled.div`
 `;
 
 export const DropDownContainer = styled.ul`
-  position:relative
+  position: relative;
   background-color: #ffffff;
   display: block;
   margin-left: auto;
@@ -118,7 +114,7 @@ export const DropDownContainer = styled.ul`
   }
 `;
 const DropDownWrapper = styled.div`
-  position:relative
+  position: relative;
   z-index: 999;
   border-radius: 0 0 5px 5px;
   padding: 5px;
@@ -126,7 +122,7 @@ const DropDownWrapper = styled.div`
 `;
 const DropDownValue = styled.div`
   /* background: white; */
-  position:relative
+  position: relative;
   border-bottom: 1px gray solid;
   padding: 3px;
   z-index: 999;

@@ -17,7 +17,6 @@ export const Styled = {
     transition: box-shadow 0.1s, transform 0.1s;
     text-decoration: inherit;
     &:hover {
-      transform: scale(1.05);
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
@@ -75,7 +74,6 @@ export const Styled = {
       border-radius: 10px;
       opacity: 0.8;
       &:hover {
-        transform: scale(1.1);
         opacity: 1;
       }
     }

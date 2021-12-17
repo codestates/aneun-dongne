@@ -19,7 +19,7 @@ export const Styled = {
       width: 100%;
       height: 80%;
 
-      border-bottom: 1px skyblue solid;
+      border-bottom: 1px #3a6fb0 solid;
 
       > span {
         z-index: -8;
@@ -45,7 +45,6 @@ export const Styled = {
       color: black;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transform: scale(1.05);
     }
     &:hover:after {
       left: 0;

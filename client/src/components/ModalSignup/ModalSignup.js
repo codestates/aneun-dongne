@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import { valid } from "../../validator";
-import { message } from "../../message";
+import { valid } from "../../modules/validator";
+import { message } from "../../modules/message";
 
 import { Styled } from "../ModalSignup/style";
 

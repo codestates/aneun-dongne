@@ -7,7 +7,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState } from "./recoil/recoil";
 import { token, kToken, userInfo } from "./recoil/recoil";
 
-import { Mainpage, Home, MyPage, DetailPage, KakaoRedirectHandler } from "./pages";
+import { MainPage, Home, MyPage, DetailPage, KakaoRedirectHandler } from "./pages";
 import Header from "./components/Header/Header";
 import Cookies from "universal-cookie";
 const App = () => {
@@ -57,7 +57,7 @@ const App = () => {
     <>
       <Header handleResponseSuccess={handleResponseSuccess} />
       <Switch>
-        <Route exact path="/" component={Mainpage} />
+        <Route exact path="/" component={MainPage} />
         <Route exact path="/home" component={Home} />
         <Route path="/mypage" component={MyPage} />
         <Route exact path="/detailpage/:id" component={DetailPage} />

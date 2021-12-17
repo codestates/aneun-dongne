@@ -12,7 +12,7 @@ import {
   saveOrNotModal,
 } from "../../recoil/recoil";
 import { Styled } from "./style";
-import { message } from "../../message";
+import { message } from "../../modules/message";
 import ImageUpload from "../UploadImage/ImageUpload";
 
 const ModalSavePosition = () => {

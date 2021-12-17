@@ -67,4 +67,31 @@ export const Styled = {
       width: 300px;
     }
   `,
+  ModalContainer: styled.div`
+    position: relative;
+  `,
+
+  ModalBackdrop: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    backdrop-filter: contrast(50%);
+    /* backdrop-filter: brightness(50%); */
+
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+  `,
+  ModalView: styled.div`
+    position: fixed;
+    background-color: white;
+    width: 450px;
+    height: 650px;
+    z-index: 2;
+    border: 1px solid white;
+    border-radius: 20px;
+  `,
 };

@@ -7,7 +7,7 @@ import { loginState, loginModal, token, kToken, loginAgainModal } from "../../re
 import { Styled } from "./style";
 import { message } from "../../modules/message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
-
+import Cookies from "universal-cookie";
 const UserInfopage = styled.div`
   top: 0;
   /* background: red; */
@@ -170,7 +170,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const [inputPassword, setInputPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputCheckPassword, setInputCheckPassword] = useState("");
-
+  const cookies = new Cookies();
   const [isDelete, setIsDelete] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -189,7 +189,8 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -248,7 +249,8 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
     axios
       .patch(`${process.env.REACT_APP_API_URL}/user/info`, formData, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

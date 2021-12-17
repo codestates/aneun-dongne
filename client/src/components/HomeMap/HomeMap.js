@@ -561,20 +561,13 @@ const HomeMap = () => {
   return (
     <Styled.Div>
       <HomeRightbar
-        // area={area}
-        // sigg={sigg}
-        // areaIdx={areaIdx}
-        // changeArea={changeArea}
-        // changeSigg={changeSigg}
         setLevel={setLevel}
-        // handleSearch={handleSearch}
         searchCurrentPlace={searchPlace}
         place={place}
         pickPoint={pickPoint}
         setPickPoint={setPickPoint}
       />
-      {/* <span>위치 :{add.address} </span> */}
-      {/* <MapLoading /> */}
+
       <Styled.Map id="map"></Styled.Map>
     </Styled.Div>
   );

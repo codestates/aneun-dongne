@@ -12,23 +12,49 @@ const FixedComp = styled.div`
   margin-top: 73px;
 `;
 const DivRow = styled.div`
-  display: flex;
+  @media (max-width: 1023px) {
+    /* display: flex; */
 
-  justify-content: space-evenly;
+    /* background: yellow; */
+  }
+  @media (min-width: 1024px) {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+
+    justify-content: space-evenly;
+  }
 `;
 const DivColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
+  @media (max-width: 1023px) {
+    display: flex;
+    flex-direction: column;
+    /* margin: auto; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* background: blue; */
+  }
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
 `;
 const DivColumnSecond = styled.div`
-  display: flex;
+  @media (max-width: 1023px) {
+    display: flex;
+    flex-direction: column;
+    /* background: red; */
+  }
+  @media (min-width: 1024px) {
+    display: flex;
 
-  flex-direction: column;
-  align-content: center;
-  /* border: 1px gray solid; */
-  position: absolute;
-  right: 3%;
+    flex-direction: column;
+    align-content: center;
+
+    position: absolute;
+    right: 3%;
+  }
 `;
 
 function Home() {
@@ -93,7 +119,6 @@ function Home() {
               <HomeMap />
             </DivColumn>
             <DivColumnSecond>
-              {/* <HashTagList /> */}
               <PlaceList />
             </DivColumnSecond>
           </DivRow>

@@ -85,10 +85,13 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
           withCredentials: true,
         }
       )
-      .then(() => {
+      .then((res) => {
+        console.log("hi");
+        console.log(res);
         closeLogoutModalHandler();
         handleResponseSuccess();
-      });
+      })
+      .catch((err) => console.log(err.response));
   };
 
   return (

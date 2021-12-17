@@ -119,7 +119,7 @@ const ModalSavePosition = () => {
               value={memo}
               placeholder="기억하고 싶은 내용을 적어주세요"
               onChange={(e) => {
-                console.log(e.target.value);
+                // console.log(e.target.value);
                 setMemo(e.target.value);
               }}
             />

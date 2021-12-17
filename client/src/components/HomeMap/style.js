@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const Styled = {
   Div: styled.div`
     z-index: -8;
-    /* border: 1px gray solid; */
+    /* border-left: none; */
+    /* border-right: none; */
     position: fixed;
     left: 0;
     display: flex;
@@ -18,8 +19,8 @@ export const Styled = {
     height: 80%;
 
     border-bottom: 1px skyblue solid;
-    animation: color-change 6s infinite;
-    @keyframes color-change {
+    /* animation: color-change2 6s infinite;
+    @keyframes color-change2 {
       0% {
         border: #fafabe 1px solid;
         border-right: none;
@@ -32,9 +33,13 @@ export const Styled = {
         border: #ebffeb 1px solid;
         border-right: none;
       }
+    } */
+    > span {
+      z-index: -8;
     }
   `,
   Map: styled.div`
+    z-index: -8;
     margin-left: 10px;
     margin-top: 20px;
     border-radius: 10px;

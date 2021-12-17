@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import VisitedCards from "./VisitedCards";
+import VisitedCards from "../VisitedCards/VisitedCards";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { visitedModal } from "../../recoil/recoil";

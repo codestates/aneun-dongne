@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import MapInRoom from "../../components/Map/MapInRoom/MapInRoom-index";
-// import notImageYet from "/images/not-image-yet.png";
+import MapInRoom from "../../components/MapInRoom/MapInRoom";
+
 import { Styled } from "./style";
-import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
-import CommentTemplate from "../../components/Comment/CommentTemplate";
-import MyComment from "../../components/Comment/MyComment";
+import HashTagTemplate from "../../components/HashTagTemplate/HashTagTemplate";
+import CommentTemplate from "../../components/CommentTemplate/CommentTemplate";
+import MyComment from "../../components/MyComment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   loginState,
@@ -15,12 +15,11 @@ import {
   loginModal,
   deleteCommentmode,
   defaultcomments,
-  contentid,
   commentloading,
 } from "../../recoil/recoil";
 
 import LikeLoading from "../../components/Loading/LikeLoading";
-import NoComment from "../../components/Comment/NoComment";
+import NoComment from "../../components/NoComment/NoComment";
 import CommentLoading from "../../components/Loading/CommentLoading";
 function DetailPage({ match }) {
   const { id } = match.params;
@@ -36,7 +35,7 @@ function DetailPage({ match }) {
   const [navi, setNavi] = useState("");
   const [tags, setTags] = useState([]);
   const [readMore, setReadMore] = useState(false);
-  const { pathname } = useLocation();
+
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -53,8 +52,7 @@ function DetailPage({ match }) {
   const [likeLoading, setLikeLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(commentloading);
   useEffect(() => {
-    // window.scrollTo(0, 0);
-    //! 관광지 axios 쓸 자리
+    window.scrollTo(0, 0);
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
@@ -86,7 +84,7 @@ function DetailPage({ match }) {
   }, []);
 
   useEffect(async () => {
-    // await setCommentLoading(true);
+    setCommentLoading(true);
     await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
@@ -96,23 +94,15 @@ function DetailPage({ match }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("겟요청 첨에온거", res.data, res.data.userinfo);
-        // console.log(res.data.data);
-        // console.log(res);
-        // let arr = res.data.data;
         let arr = res.data.data.map((el) => {
-          // console.log(el.comments.comment_tags.split(","));
-
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
-        // console.log("매핑한거", arr);
+
         setDefaultComment(arr);
         setUserinfo(res.data.userinfo);
       });
-    // await setCommentLoading(false);
-    setTimeout(() => {
-      setCommentLoading(false);
-    }, 1000);
+    setCommentLoading(false);
+
     // setDeleteOrNot(false);
   }, [, deleteOrNot]);
 
@@ -155,7 +145,7 @@ function DetailPage({ match }) {
       setIsLoginOpen(true);
       return;
     }
-    await setLikeLoading(true);
+    setLikeLoading(true);
     if (!likeOrNot) {
       axios
         .post(
@@ -175,6 +165,11 @@ function DetailPage({ match }) {
           setLike(like.likeCount);
 
           setLikeOrNot(like.likeOrNot);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setIsLoginOpen(true);
+          }
         });
     } else {
       axios
@@ -190,6 +185,11 @@ function DetailPage({ match }) {
 
           setLike(like.likeCount);
           setLikeOrNot(like.likeOrNot);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setIsLoginOpen(true);
+          }
         });
     }
     // return setTimeout(() => {
@@ -197,7 +197,7 @@ function DetailPage({ match }) {
     //   setLikeLoading(false);
     //   console.log(likeOrNot);
     // }, 2000);
-    await setLikeLoading(false);
+    setLikeLoading(false);
   };
   console.log(userinfo);
   // console.log("좋아요로딩", likeLoading);
@@ -262,5 +262,3 @@ function DetailPage({ match }) {
 }
 
 export default DetailPage;
-
-const keywordDummy = ["#왕릉", "#공원"];

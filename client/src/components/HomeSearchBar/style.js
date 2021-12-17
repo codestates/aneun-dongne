@@ -6,12 +6,30 @@ export const Styled = {
     display: flex;
     flex-direction: column;
     border: 1px rgb(192, 251, 255) solid;
-    /* border: 1px red solid; */
+
     border-radius: 10px;
     margin-left: 10px;
     margin-top: 10px;
 
     width: 600px;
+    animation: color-change1 2s infinite;
+    @keyframes color-change1 {
+      0% {
+        border: #c1ff6b 3px solid;
+
+        border: #c1ff6b 3px solid;
+      }
+      50% {
+        border: #fab4b4 3px solid;
+
+        border: #fab4b4 3px solid;
+      }
+      100% {
+        border: #46ffff 3px solid;
+
+        border: #46ffff 3px solid;
+      }
+    }
     /* height: 130px; */
 
     /* &:hover {
@@ -136,7 +154,7 @@ export const Styled = {
     height: 40px;
     background-color: white;
     border: gray 1px solid;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px;
     transition: all 0.5s ease-in-out;
     &:hover {

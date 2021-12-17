@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-import { useRecoilState, useRecoilValue } from "recoil";
-import { defaultcomments, deleteCommentmode, token, kToken } from "../../recoil/recoil";
-import MyComment from "./MyComment";
-import EditableHashTag from "../HashTag/EditableHashTag";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { defaultcomments, deleteCommentmode, token, kToken, loginState, loginModal } from "../../recoil/recoil";
+
+import EditableHashTag from "../EditableHashTag/EditableHashTag";
 import axios from "axios";
-import OnlyReadHashTag from "../HashTag/OnlyReadHashTag";
+import OnlyReadHashTag from "../OnlyReadHashTag/OnlyReadHashTag";
 import LikeLoading from "../Loading/LikeLoading";
 
 const Comment = styled.div`
@@ -215,11 +215,6 @@ const HashTagWrapper = styled.div`
   white-space: nowrap;
   border: none;
 `;
-const Date = styled.div`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-`;
 
 function Comments({ uuid, img, nickname, text, initialTags, date, editable, contentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
@@ -228,12 +223,15 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(text);
-
+  //로긴상태,로긴모달
+  const isLogin = useRecoilValue(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
+  //
   const [changeOrNot, setChangeOrNot] = useState(false);
   const [tags, setTags] = useState(initialTags);
-  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
+  const setDefaultComment = useSetRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
-  const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
+  const setDeleteOrNot = useSetRecoilState(deleteCommentmode);
   //댓글로딩
   const [commentLoading, setCommentLoading] = useState(false);
   //
@@ -244,8 +242,8 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     setComment(text);
     setTags(initialTags);
   }, [text, initialTags]);
+
   useEffect(() => {
-    // console.log("위", text);
     setPrevComment(text);
   }, []);
 
@@ -336,6 +334,11 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         });
         console.log(arr);
         setDefaultComment(arr);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          setIsLoginOpen(true);
+        }
       });
 
     // if (editMode) console.log("수정완료");
@@ -447,9 +450,9 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     </>
   );
 }
-function PropsEqual(prev, next) {
-  console.log(prev.text === next.text);
-  return prev.text === next.text;
-}
+// function PropsEqual(prev, next) {
+//   console.log(prev.text === next.text);
+//   return prev.text === next.text;
+// }
 export default React.memo(Comments);
 // export default Comments;

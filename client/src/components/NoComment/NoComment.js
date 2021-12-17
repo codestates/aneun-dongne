@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 
-import { useRecoilState } from "recoil";
-import { defaultcomments, deleteCommentmode } from "../../recoil/recoil";
-import MyComment from "./MyComment";
-import EditableHashTag from "../HashTag/EditableHashTag";
-import axios from "axios";
-import OnlyReadHashTag from "../HashTag/OnlyReadHashTag";
+import OnlyReadHashTag from "../OnlyReadHashTag/OnlyReadHashTag";
 
 const Comment = styled.div`
   position: relative;

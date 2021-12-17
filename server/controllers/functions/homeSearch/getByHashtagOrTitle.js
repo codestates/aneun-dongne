@@ -2,6 +2,7 @@ const { Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, tag, searchWord) => {
   let result = [];
+  console.log("여기다");
   await Post.findAll({
     attributes: [
       "id",
@@ -56,9 +57,10 @@ module.exports = async (userId, tag, searchWord) => {
       result.sort(function (a, b) {
         return b.likeCount - a.likeCount;
       });
-      result.splice(50);
+      result.splice(30);
+      // console.log("해시태그없고 지역없고 검색어만눌렀을때 나오는거", result);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log("에러", err));
 
   // for (let i = 0; i < result.length; i++) {
   //   result[i].isLiked = false;

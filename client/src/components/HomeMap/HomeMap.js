@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
-// import { changePlaceList } from "../../redux/actions/actions";
-
-// import notImageYet from "/images/not-image-yet.png";
 import {
   token,
   kToken,
-  nowlocation,
   pickpoint,
   usersaddress,
   isClickedNowLocation,
   placelist,
   setLo,
   getWTM,
-} from "../../../recoil/recoil";
-import "../kakao-map.css";
+} from "../../recoil/recoil";
+import "../MapInRoom/kakao-map.css";
 
-import HomeRightbar from "../../Home-Rightbar/Home-Rightbar-index";
 import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
-import Loading from "../../Loading/Loading";
+import Loading from "../Loading/Loading";
+import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
 
 const HomeMap = () => {
   const kakao = window.kakao;
@@ -29,9 +25,9 @@ const HomeMap = () => {
   const history = useHistory();
   const [add, setAdd] = useRecoilState(usersaddress);
   const [placeList, setPlaceList] = useRecoilState(placelist);
-  const nowLoc = useRecoilValue(nowlocation);
+  // const nowLoc = useRecoilValue(nowlocation);
   // const [add, setAdd] = useState({ area: "", sigg: "", address: "" });
-  const [count, setCount] = useState(0); //1번만시작하게함
+
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
   const [place, setPlace] = useState("");
@@ -45,18 +41,17 @@ const HomeMap = () => {
   // const [pickPoint, setPickPoint] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
   const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
 
-  //!지역 검색창을 위한 state
-  const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
-  const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
+  // //!지역 검색창을 위한 state
+  // const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
+  // const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
+  // const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
   const [level, setLevel] = useState(10);
-  //! 마커 없애는 신호
-  const [markerAway, setMarkerAway] = useState(false);
+
   //! 검색했다는 신호
-  const [keyWord, setKeyWord] = useState("");
-  const [searched, setSearched] = useState(false);
+  // const [keyWord, setKeyWord] = useState("");
+  // const [searched, setSearched] = useState(false);
   //! 평면좌표
   const [mapLoading, setMapLoading] = useState(false);
   // const [getPosition, setGetPosition] = useState({ x: 0, y: 0 });
@@ -68,7 +63,6 @@ const HomeMap = () => {
   // console.log(getWtm);
   const wtm = getWtm.contents;
   const searchPlace = (keyword) => {
-    setCount(0);
     setPending(true);
     console.log(keyword);
 
@@ -78,7 +72,7 @@ const HomeMap = () => {
     places.keywordSearch(keyword, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
         //검색어를 keyWord상태에 할당한다. -> 검색어를 서버에 전달하기위해
-        setKeyWord(keyword);
+        // setKeyWord(keyword);
         const firstItem = result[0];
         const { x, y } = firstItem;
         let moveLatLng = {};
@@ -99,10 +93,8 @@ const HomeMap = () => {
         //!! setPickPoint를 등록하여 클릭한것과 같은 효과를 낸다.
         //!!setPickPoint([moveLatLng.Ma, moveLatLng.La]);  -> 이거 주석하면 마커 안나옴.. 이게 마커나오는 기능과의 연결고리임..
 
-        // 마커 없애기
-        setMarkerAway(true);
         // 검색했다는 신호
-        setSearched(true);
+        // setSearched(true);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         // alert("검색 결과가 없습니다.");
         return;
@@ -113,30 +105,6 @@ const HomeMap = () => {
       setPending(false);
     });
   };
-  useEffect(() => {
-    //지역만 선택했을때는 없다?..
-
-    //이건 검색어입력헀을때,
-    if (area === null) {
-      axios.get(`${process.env.REACT_APP_API_URL}/home`, {
-        headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          areacode: null,
-          sigungucode: sigg,
-        },
-        withCredentials: true,
-      });
-    }
-  }, [searched]);
-
-  useEffect(() => {
-    if (level === 14) {
-      //관광지 전체 좋아요 상위 50개 보여주는거 어떨까요
-    }
-  }, [level]);
 
   // ! 클릭할때마다 평면좌표 찍어온다.
   // useEffect(() => {
@@ -168,8 +136,8 @@ const HomeMap = () => {
           "Content-Type": "application/json",
         },
         params: {
-          areacode: area,
-          sigungucode: sigg,
+          areacode: "null",
+          sigungucode: "null",
           radius: 10000,
           clientwtmx: wtm.x,
           clientwtmy: wtm.y,
@@ -591,7 +559,7 @@ const HomeMap = () => {
         pickPoint={pickPoint}
         setPickPoint={setPickPoint}
       />
-      <span>위치 :{add.address} </span>
+      {/* <span>위치 :{add.address} </span> */}
       {mapLoading ? <div>로딩</div> : <Styled.Map id="map"></Styled.Map>}
     </Styled.Div>
   );

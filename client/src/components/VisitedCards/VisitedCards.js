@@ -108,7 +108,7 @@ export const Styled = {
   `,
 };
 
-function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSigg, sMemo, sImage }) {
+function VisitedCards({ area, sigg, image, memo, id }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [vtModal, setVtModal] = useState(null);
   const openModalHandler = (modal) => {
@@ -125,7 +125,7 @@ function VisitedCards({ area, sigg, image, memo, id, idx, sArea, sId, sIdx, sSig
 
   return (
     <>
-      <Styled.PlaceCard onClick={() => openModalHandler()}>
+      <Styled.PlaceCard>
         <div className={`place-cards ${id}`}>
           {/* <div className={`place-cards ${id}`} onClick={(e) => openModalHandler(id)}> */}
           {image ? <img className={id} src={image} /> : <img className={id} src="/images/not-image-yet.png" />}

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import styled from "styled-components";
-import { MemoCards } from "./PlaceCards";
-import PlaceCards from "./PlaceCards";
+import { MemoCards } from "../PlaceCard/PlaceCards";
 
-import { placeaddress, placelocation, placeimg, placetitle, placelist, token, kToken } from "../recoil/recoil";
+import { placeaddress, placelocation, placeimg, placetitle, placelist, token, kToken } from "../../recoil/recoil";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const PlaceLists = styled.div`
   /* height: 100vh; */

@@ -3,14 +3,22 @@ import { useRecoilState } from "recoil";
 import ModalLogin from "../ModalLogin/ModalLogin";
 import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
-import { isSavepositionOpen, loginState, loginModal, visitedModal, saveOrNotModal } from "../../recoil/recoil";
+import {
+  isSavepositionOpen,
+  loginState,
+  loginModal,
+  visitedModal,
+  saveOrNotModal,
+  loginAgainModal,
+} from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-import { StyledLink } from "../PlaceList";
-import ModalVisited from "../ModalVisited/ModalVisited";
+import { StyledLink } from "../PlaceList/PlaceList";
+
 import Cookies from "universal-cookie";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
+import ModalLoginAgain from "../ModalLoginAgain/ModalLoginAgain";
 
 const Header = ({ handleResponseSuccess }) => {
   const cookies = new Cookies();
@@ -21,7 +29,7 @@ const Header = ({ handleResponseSuccess }) => {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
-
+  const [isLoginAgainOpen, setIsLoginAgainOpen] = useRecoilState(loginAgainModal);
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
       setIsLoginOpen(false);
@@ -59,11 +67,7 @@ const Header = ({ handleResponseSuccess }) => {
   const closeSavePositionModalHandler = (e) => {
     setIsSavePositionOpen(false);
   };
-  const closeVisitedModal = () => {
-    if (isVisitedOpen) {
-      setIsVisitedOpen(false);
-    }
-  };
+
   const closeSaveOrNotModalHandler = (e) => {
     setIsSaveOrNotModal(false);
   };
@@ -81,7 +85,9 @@ const Header = ({ handleResponseSuccess }) => {
       setIsSignupOpen(true);
     }
   };
-
+  const closeLoginAgainModalHandler = () => {
+    setIsLoginAgainOpen(false);
+  };
   const kakaologoutHandler = () => {
     console.log("bye kakao");
     window.location.assign(
@@ -103,6 +109,8 @@ const Header = ({ handleResponseSuccess }) => {
     history.push("/");
     // console.log(cookies);
   };
+
+  // }, [accessToken, kToken]);
   // console.log(isVisitedOpen);
   return (
     <>
@@ -163,6 +171,18 @@ const Header = ({ handleResponseSuccess }) => {
           </>
         ) : null}
       </Styled.ModalContainer>
+      {/* 토큰만료되었을때 */}
+      <Styled.ModalContainer>
+        {isLoginAgainOpen ? (
+          <>
+            <Styled.ModalBackdrop onClick={closeLoginAgainModalHandler}>
+              <Styled.ModalView height="300px" onClick={(e) => e.stopPropagation()}>
+                <ModalLoginAgain />
+              </Styled.ModalView>
+            </Styled.ModalBackdrop>
+          </>
+        ) : null}
+      </Styled.ModalContainer>
 
       <Styled.HeaderContainer>
         <div className="header-wrapper">
@@ -171,6 +191,7 @@ const Header = ({ handleResponseSuccess }) => {
             <img
               src="https://media.discordapp.net/attachments/912244672578089002/912920442157805678/E53C1906-3AF2-4061-AFD3-E6E7A131BDCE.jpeg"
               id="logo"
+              alt="logo"
             ></img>
           </Link>
           <div className="header-button-wrapper">

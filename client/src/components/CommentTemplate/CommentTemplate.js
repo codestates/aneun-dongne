@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Comments from "./Comments";
+import Comments from "../Comments/Comments";
 
 const CommentWrapper = styled.div`
   width: 100%;

@@ -1,35 +1,46 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Styled } from "./style";
-import { cat1_name, cat2_name } from "../../location-data";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { usersaddress, token, kToken } from "../../recoil/recoil";
-import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
-import Loading from "../Loading/Loading";
+
+import { areaNameArr, allSigg } from "../../AreaCodetoName";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { token, kToken, placelist } from "../../recoil/recoil";
+import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
+
+import { Autocomplete } from "./Autocomplete";
+import { getCodes } from "../../AreaCodetoName";
 function HomeRightbar({ setLevel, searchCurrentPlace }) {
-  const [area, setArea] = useState(0); //메인페이지에서 넘어오면 userAddress[0]넣기
+  const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState(0); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
   const [place, setPlace] = useState("");
-  const [add, setAdd] = useRecoilState(usersaddress);
+
   const [hashtag, setHashtag] = useState("null");
+  const setPlaceList = useSetRecoilState(placelist);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-  // console.log(add);
+
   const changeArea = (area) => {
     console.log(area);
     // searchPlace(area);
-    if (area === "도") {
-      setArea("도");
+    if (area === "- 지역선택 -") {
+      setArea("null");
     } else {
+      console.log(getCodes(area));
       setArea(area);
+      setSigg("null");
     }
-    setAreaIdx(cat1_name.indexOf(area));
+    setAreaIdx(areaNameArr.indexOf(area));
   };
   const changeSigg = (sigg) => {
     console.log(area, sigg);
     // searchPlace(`${area} ${sigg}`);
-    setSigg(sigg);
+    if (sigg === "- 지역선택 -") {
+      setSigg("null");
+    } else {
+      console.log(getCodes(area, sigg));
+      setSigg(sigg);
+    }
     setLevel(10);
   };
   const handleSearch = (e) => {
@@ -38,7 +49,24 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
     // e.target.value=''
   };
   console.log(place);
-  const searchPlace = (area, sigg, hashtag, keyword) => {
+  const searchPlace = (area, sigg, hashtag, place) => {
+    console.log(area, sigg);
+    let areaCode = "";
+    let siggCode = "";
+    if (area === "null") {
+      console.log("지역은 ", area);
+      areaCode = 0;
+      siggCode = 0;
+    } else if (area !== "null" && sigg === "null") {
+      areaCode = getCodes(area).areaCode;
+      siggCode = 0;
+    } else if (sigg !== "null") {
+      areaCode = getCodes(area).areaCode;
+      siggCode = getCodes(area, sigg).siggCode;
+    }
+
+    console.log(area, sigg);
+    console.log(areaCode, siggCode);
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
@@ -46,20 +74,36 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
           "Content-Type": "application/json",
         },
         params: {
-          areacode: 33,
-          sigungucode: 1,
+          areacode: areaCode,
+          sigungucode: siggCode,
           radius: 10000,
           clientwtmx: "null",
           clientwtmy: "null",
-          tag: hashtag, //
+          tag: "null", //
           searchWord: place,
         },
         withCredentials: true,
       })
       .then((res) => {
-        setLevel(13);
-        console.log(res.data);
+        console.log(res.data.data);
+        // setLevel(13);
+        if (res.data.data.length === 0) return;
+        const list = res.data.data.map((el) => {
+          return [
+            Number(el.post_mapy),
+            Number(el.post_mapx),
+            el.post_title,
+            el.post_firstimage,
+            el.post_addr1,
+            el.post_contentid,
+          ];
+        });
+        setPlaceList(list);
       });
+    // .then(() => {
+    //   setArea("null");
+    //   setSigg("null");
+    // });
   };
   return (
     <div>
@@ -69,13 +113,15 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
         <Styled.SearchWrapper>
           <Styled.SearchBar>
             <Styled.SearchLocation first value={area} onChange={(e) => changeArea(e.target.value)} name="h_area1">
-              {cat1_name.map((el, idx) => {
+              {/* {cat1_name.map((el, idx) => { */}
+              {areaNameArr.map((el, idx) => {
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>
             {/* //!지역을 선택하세요 추가 - 서버에 null이나 undefined 보내주기. */}
             <Styled.SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
-              {cat2_name[areaIdx].map((el, idx) => {
+              {/* {cat2_name[areaIdx].map((el, idx) => { */}
+              {allSigg[areaIdx].map((el, idx) => {
                 {
                   /* {cat2_name[0].map((el, idx) => { */
                 }
@@ -83,12 +129,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
               })}
             </Styled.SearchLocation>
           </Styled.SearchBar>
-          <Styled.SearchKeyWord value={hashtag} onChange={(e) => setHashtag(e.target.value)} name="hashtag">
-            {keywordDummy.map((el, idx) => {
-              return <option key={idx}>{el}</option>;
-            })}
-          </Styled.SearchKeyWord>
-
+          <Autocomplete hashtag={hashtag} setHashtag={setHashtag} />
           <Styled.SearchPlace
             type="text"
             value={place}
@@ -112,16 +153,3 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
 }
 
 export default HomeRightbar;
-
-const keywordDummy = [
-  "#산책하기좋은",
-  "#절",
-  "#왕릉",
-  "#공원",
-  "#놀이공원",
-  "#데이트",
-  "#자전거코스",
-  "#가을",
-  "#미술관",
-  "#박물관",
-];

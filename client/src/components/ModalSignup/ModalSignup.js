@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-// import { valid } from "../../validator";
 import { valid } from "../../modules/validator";
 import { message } from "../../modules/message";
 

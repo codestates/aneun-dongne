@@ -48,7 +48,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
     setPlace(e.target.value);
     // e.target.value=''
   };
-  console.log(place);
+  // console.log(place);
   const searchPlace = (area, sigg, hashtag, place) => {
     console.log(area, sigg);
     let areaCode = "";

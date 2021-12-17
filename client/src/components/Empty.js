@@ -25,7 +25,7 @@ const Empty = () => {
   return (
     <ContentEmpty>
       텅 비어 있어요!
-      <img src="/Empty.png" />
+      <img src="/images/Empty.png" />
     </ContentEmpty>
   );
 };

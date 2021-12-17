@@ -16,6 +16,7 @@ import {
   deleteCommentmode,
 } from "../../recoil/recoil";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+import Empty from "../../Empty";
 
 const { kakao } = window;
 
@@ -143,9 +144,11 @@ const MyVisited = () => {
   if (placeList.length === 0) {
     return (
       <Styled.Body>
-        <Styled.Div>
-          <div>0개일때 화면 넣어주세요</div>
-        </Styled.Div>
+        <Empty />
+        {/* <Styled.Div>
+          <Empty /> 
+         <div>0개일때 화면 넣어주세요</div> 
+       </Styled.Div>  */}
       </Styled.Body>
     );
   }

@@ -18,15 +18,12 @@ const MyPage = ({ match }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [loading, setLoading] = useState(false);
-  //
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  //
+
   const activeStyle = {
     color: "#172a71",
   };
-  //\
 
-  //
   async function getUserInfo() {
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {

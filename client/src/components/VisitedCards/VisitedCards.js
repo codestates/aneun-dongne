@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-// import notImageYet from "/images/not-image-yet.png";
 import { visitedModal } from "../../recoil/recoil";
 
 export const Styled = {
@@ -56,7 +55,7 @@ export const Styled = {
     }
     .place-cards > img {
       width: 90%;
-      height: 100px;
+      height: 130px;
       margin-left: auto;
       margin-right: auto;
       margin-top: 20px;
@@ -76,6 +75,32 @@ export const Styled = {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      width: 180px;
+      height: 100px;
+      margin: 0px;
+
+      .place-cards > img {
+        width: 160px;
+      }
+    }
+
+    @media screen and (max-width: 438px) {
+      width: 150px;
+
+      .place-cards > img {
+        width: 130px;
+      }
+    }
+
+    @media screen and (max-width: 370px) {
+      width: 140px;
+
+      .place-cards > img {
+        width: 120px;
       }
     }
   `,

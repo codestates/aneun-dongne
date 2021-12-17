@@ -57,7 +57,7 @@ const MyReviewComment = ({ comment, SetComments }) => {
             </div>
             <div className="user-hastag-wrapper">
               {tagArr.map((tag) => (
-                <span className="user-hastag">{tag}</span>
+                <span className="user-hastag">#{tag}</span>
               ))}
             </div>
             <div className="user-content-bottom">

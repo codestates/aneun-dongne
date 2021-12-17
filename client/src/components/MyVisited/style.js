@@ -4,7 +4,6 @@ export const Styled = {
   Body: styled.div``,
 
   Div: styled.div`
-    /* background: red; */
     margin-left: 20px;
     position: relative;
     width: 500px;
@@ -26,6 +25,22 @@ export const Styled = {
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
+
+    @media screen and (max-width: 530px) {
+      width: 450px;
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 400px;
+    }
+
+    @media screen and (max-width: 438px) {
+      width: 350px;
+    }
+
+    @media screen and (max-width: 370px) {
+      width: 320px;
+    }
   `,
   Map: styled.div`
     width: 480px;
@@ -35,5 +50,21 @@ export const Styled = {
     margin-right: auto;
     /* margin: auto; */
     margin-bottom: 1rem;
+
+    @media screen and (max-width: 530px) {
+      width: 440px;
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 380px;
+    }
+
+    @media screen and (max-width: 438px) {
+      width: 330px;
+    }
+
+    @media screen and (max-width: 370px) {
+      width: 300px;
+    }
   `,
 };

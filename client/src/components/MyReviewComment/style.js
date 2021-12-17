@@ -6,7 +6,7 @@ export const Styled = {
     width: 700px;
     border: 1px gray solid;
     border-radius: 10px;
-    margin: 20px 0px;
+    margin: 20px 20px;
     &:hover {
       box-shadow: 1px 1px 3px black;
     }
@@ -83,6 +83,81 @@ export const Styled = {
     .delete-button {
       color: gray;
       cursor: pointer;
+    }
+
+    @media screen and (max-width: 1150px) {
+      width: 600px;
+
+      .user-content-wrapper {
+        width: 400px;
+      }
+
+      .user-content {
+        width: 400px;
+      }
+
+      .user-hastag-wrapper {
+        width: 400px;
+      }
+
+      .user-content-bottom {
+        width: 450px;
+      }
+    }
+
+    @media screen and (max-width: 650px) {
+      width: 450px;
+
+      .user-content-wrapper {
+        width: 250px;
+      }
+
+      .user-content {
+        width: 250px;
+      }
+
+      .user-hastag-wrapper {
+        width: 250px;
+      }
+
+      .user-content-bottom {
+        width: 300px;
+      }
+
+      .user-location-wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user-location {
+        margin-left: 5px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 300px;
+      font-size: 0.7rem;
+
+      .user-image {
+        width: 45px;
+        height: 45px;
+      }
+
+      .user-content-wrapper {
+        width: 150px;
+      }
+
+      .user-content {
+        width: 140px;
+      }
+
+      .user-hastag-wrapper {
+        width: 140px;
+      }
+
+      .user-content-bottom {
+        width: 190px;
+      }
     }
   `,
 };

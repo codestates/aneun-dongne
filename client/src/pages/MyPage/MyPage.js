@@ -145,7 +145,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-heart fa-1x"></i> 좋아요 표시한 장소
+                <i class="fas fa-heart fa-1x"></i> <span className="link-text">좋아요 표시한 장소</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
@@ -157,7 +157,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-map-marker-alt"></i> <span className="">내가 저장한 장소</span>
+                <i class="fas fa-map-marker-alt"></i> <span className="link-text">내가 저장한 장소</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
@@ -169,7 +169,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-pen"></i> 내 리뷰
+                <i class="fas fa-pen"></i> <span className="link-text">내 리뷰</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
@@ -181,8 +181,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-cog"></i> 프로필 수정
-
+                <i class="fas fa-cog"></i> <span className="link-text">프로필 수정</span>
               </Styled.NavLink>
             </li>
           </ul>

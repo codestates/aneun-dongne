@@ -4,9 +4,10 @@ export const Styled = {
   //오른쪽 버튼
   RightBtn: styled.button`
     border-radius: 5px;
-    position: relative;
+    z-index: 0;
     /* left: -10px;
     bottom: 20px; */
+    position:relative
     background-color: rgb(192, 251, 255);
     background-image: linear-gradient(
       to right bottom,
@@ -28,7 +29,7 @@ export const Styled = {
       height: 100%;
       top: 0;
       right: 0;
-      z-index: -1;
+      z-index: 0;
       background-color: rgb(192, 251, 255);
       background-image: linear-gradient(
         to left top,

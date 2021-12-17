@@ -17,7 +17,7 @@
 // 39 제주 427                                  서귀포  제주시
 // 31 경기 1404             가평   고양    과천   광명   광주   구리   군포  김포 남양주 동두천  부천   성남  수원  시흥   안산  안성  안양  양주  양평  여주  연천  오산  용인 의왕  의정부  이천 파주 평택 포천 하남 화성
 
-const areaNameArr = [
+export const areaNameArr = [
   "- 지역선택 -",
   "서울",
   "인천",
@@ -37,11 +37,11 @@ const areaNameArr = [
   "전남",
   "제주",
 ];
-const areaCodeArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 31, 32, 33, 34, 35, 36, 37, 38, 39];
+export const areaCodeArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 31, 32, 33, 34, 35, 36, 37, 38, 39];
 
-const siggNameArrAC0 = ["- 지역선택 -"];
+export const siggNameArrAC0 = ["- 지역선택 -"];
 
-const siggNameArrAC1 = [
+export const siggNameArrAC1 = [
   "- 지역선택 -",
   "강남구",
   "강동구",
@@ -69,7 +69,7 @@ const siggNameArrAC1 = [
   "중구구",
   "중랑구",
 ];
-const siggNameArrAC2 = [
+export const siggNameArrAC2 = [
   "- 지역선택 -",
   "강화군",
   "계양구",
@@ -82,10 +82,10 @@ const siggNameArrAC2 = [
   "옹진군",
   "중구",
 ];
-const siggNameArrAC3 = ["- 지역선택 -", "대덕구", "동구", "서구", "유성구", "중구"];
-const siggNameArrAC4 = ["- 지역선택 -", "남구", "달서구", "달성군", "동구", "북구", "서구", "수성구", "중구"];
-const siggNameArrAC5 = ["- 지역선택 -", "광산구", "남구", "동구", "북구", "서구"];
-const siggNameArrAC6 = [
+export const siggNameArrAC3 = ["- 지역선택 -", "대덕구", "동구", "서구", "유성구", "중구"];
+export const siggNameArrAC4 = ["- 지역선택 -", "남구", "달서구", "달성군", "동구", "북구", "서구", "수성구", "중구"];
+export const siggNameArrAC5 = ["- 지역선택 -", "광산구", "남구", "동구", "북구", "서구"];
+export const siggNameArrAC6 = [
   "- 지역선택 -",
   "강서구",
   "금정구",
@@ -104,9 +104,9 @@ const siggNameArrAC6 = [
   "중구",
   "해운대구",
 ];
-const siggNameArrAC7 = ["- 지역선택 -", "중구", "남구", "동구", "북구", "울주군"];
-const siggNameArrAC8 = ["- 지역선택 -", ""];
-const siggNameArrAC31 = [
+export const siggNameArrAC7 = ["- 지역선택 -", "중구", "남구", "동구", "북구", "울주군"];
+export const siggNameArrAC8 = ["- 지역선택 -", ""];
+export const siggNameArrAC31 = [
   "- 지역선택 -",
   "가평군",
   "고양시",
@@ -140,7 +140,7 @@ const siggNameArrAC31 = [
   "하남시",
   "화성시",
 ];
-const siggNameArrAC32 = [
+export const siggNameArrAC32 = [
   "- 지역선택 -",
   "강릉시",
   "고성군",
@@ -161,7 +161,7 @@ const siggNameArrAC32 = [
   "화천군",
   "횡성군",
 ];
-const siggNameArrAC33 = [
+export const siggNameArrAC33 = [
   "- 지역선택 -",
   "괴산군",
   "단양군",
@@ -176,7 +176,7 @@ const siggNameArrAC33 = [
   "충주군",
   "증평군",
 ];
-const siggNameArrAC34 = [
+export const siggNameArrAC34 = [
   "- 지역선택 -",
   "공주시",
   "금산군",
@@ -195,7 +195,7 @@ const siggNameArrAC34 = [
   "홍성군",
   "계룡군",
 ];
-const siggNameArrAC35 = [
+export const siggNameArrAC35 = [
   "- 지역선택 -",
   "경산시",
   "경주시",
@@ -221,7 +221,7 @@ const siggNameArrAC35 = [
   "칠곡군",
   "포항시",
 ];
-const siggNameArrAC36 = [
+export const siggNameArrAC36 = [
   "- 지역선택 -",
   "거제시",
   "거창군",
@@ -245,7 +245,7 @@ const siggNameArrAC36 = [
   "함양군",
   "합천군",
 ];
-const siggNameArrAC37 = [
+export const siggNameArrAC37 = [
   "- 지역선택 -",
   "고창군",
   "군산시",
@@ -262,7 +262,7 @@ const siggNameArrAC37 = [
   "정읍시",
   "진안군",
 ];
-const siggNameArrAC38 = [
+export const siggNameArrAC38 = [
   "- 지역선택 -",
   "강진군",
   "고흥군",
@@ -289,9 +289,9 @@ const siggNameArrAC38 = [
   "해남군",
   "화순군",
 ];
-const siggNameArrAC39 = ["- 지역선택 -", "x", "x", "서귀포시", "제주시"];
+export const siggNameArrAC39 = ["- 지역선택 -", "x", "x", "서귀포시", "제주시"];
 
-const allSigg = [
+export const allSigg = [
   siggNameArrAC0,
   siggNameArrAC1,
   siggNameArrAC2,

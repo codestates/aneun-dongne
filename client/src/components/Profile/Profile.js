@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { userInfo, loginState, loginModal, token, kToken } from "../../recoil/recoil";
+import { userInfo, loginState, loginModal, token, kToken, warningDeleteUserModal } from "../../recoil/recoil";
 import { Styled } from "./style";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 
@@ -177,6 +177,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
   const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
 
   // console.log(info);
   useEffect(() => {
@@ -314,6 +315,10 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
       .catch((err) => console.log(err));
   };
 
+  const openWarningModalHandler = () => {
+    setWarningModal(true);
+  };
+
   return (
     <div>
       <UserInfopage>
@@ -367,7 +372,7 @@ function Profile({ imgUrl, setImgUrl, prevImg, setPrevImg, nickname, setNickname
                   저장
                 </button>
 
-                <button className="btn-exit" onClick={() => deleteHandler()}>
+                <button className="btn-exit" onClick={openWarningModalHandler}>
                   회원탈퇴
                 </button>
               </div>

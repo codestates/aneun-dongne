@@ -47,8 +47,8 @@ export const InputContainer = styled.div`
   border-radius: 20px;
   /* border: 1px gray solid; */
   border: none;
-
-  z-index: 3;
+  position:relative
+  z-index: 999;
   border-radius: ${(props) => (props.hashtag ? activeBorderRadius : inactiveBorderRadius)};
   &:focus-within {
     box-shadow: ${boxShadow};
@@ -74,6 +74,7 @@ export const InputContainer = styled.div`
 `;
 
 export const DropDownContainer = styled.ul`
+  position:relative
   background-color: #ffffff;
   display: block;
   margin-left: auto;
@@ -89,8 +90,7 @@ export const DropDownContainer = styled.ul`
   /* border: 1px solid rgb(223, 225, 229); */
   border-radius: 0 0 1rem 1rem;
   box-shadow: ${boxShadow};
-  z-index: 3;
-
+  z-index: 999;
   /* > li { */
   .hashtag-drop-down {
     z-index: 999;
@@ -106,6 +106,7 @@ export const DropDownContainer = styled.ul`
   }
 `;
 const DropDownWrapper = styled.div`
+  position:relative
   z-index: 999;
   border-radius: 0 0 5px 5px;
   padding: 5px;
@@ -113,6 +114,7 @@ const DropDownWrapper = styled.div`
 `;
 const DropDownValue = styled.div`
   /* background: white; */
+  position:relative
   border-bottom: 1px gray solid;
   padding: 3px;
   z-index: 999;

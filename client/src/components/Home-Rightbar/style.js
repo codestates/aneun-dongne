@@ -100,7 +100,7 @@ export const Styled = {
       height: 40px;
       top: 0;
       right: 0;
-      z-index: -1;
+      z-index: 200;
       background-color: rgb(192, 251, 255);
       background-image: linear-gradient(
         to left top,
@@ -178,7 +178,7 @@ export const Styled = {
       height: 100%;
       top: 0;
       right: 0;
-      z-index: -1;
+      z-index: 999;
       background-color: rgb(192, 251, 255);
       background-image: linear-gradient(
         to left top,

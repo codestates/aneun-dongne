@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Styled } from "./style";
 import { cat1_name, cat2_name } from "../../location-data";
+import { areaNameArr, allSigg } from "../../AreaCodetoName";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { usersaddress, token, kToken, placelist } from "../../recoil/recoil";
 import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
@@ -113,13 +114,15 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
         <Styled.SearchWrapper>
           <Styled.SearchBar>
             <Styled.SearchLocation first value={area} onChange={(e) => changeArea(e.target.value)} name="h_area1">
-              {cat1_name.map((el, idx) => {
+              {/* {cat1_name.map((el, idx) => { */}
+              {areaNameArr.map((el, idx) => {
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>
             {/* //!지역을 선택하세요 추가 - 서버에 null이나 undefined 보내주기. */}
             <Styled.SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
-              {cat2_name[areaIdx].map((el, idx) => {
+              {/* {cat2_name[areaIdx].map((el, idx) => { */}
+              {allSigg[areaIdx].map((el, idx) => {
                 {
                   /* {cat2_name[0].map((el, idx) => { */
                 }

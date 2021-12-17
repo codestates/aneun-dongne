@@ -5,7 +5,6 @@ export const Styled = {
     margin-top: 80px;
     display: flex;
     flex-direction: column;
-    /* width: 700px; */
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -14,7 +13,6 @@ export const Styled = {
     }
   `,
   Img: styled.img`
-    /* border: 1px red solid; */
     width: 700px;
     height: 466px;
     margin-left: auto;
@@ -35,13 +33,11 @@ export const Styled = {
       height: 406px;
       margin-left: 40px;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
     @media (max-width: 612px) {
       width: 450px;
       margin-left: 20px;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
   `,
 
@@ -54,7 +50,6 @@ export const Styled = {
     color: skyblue;
     &:hover {
       transform: scale(1.05);
-
       transition: all 0.3s ease;
     }
   `,
@@ -66,9 +61,6 @@ export const Styled = {
     color: black;
     cursor: pointer;
     padding: 10px;
-    /* border: 1px gray solid; */
-    /* box-shadow: 4px 4px 4px rgb(85, 85, 85);
-    transition: box-shadow 0.1s, transform 0.1s; */
     text-decoration: inherit;
     &:hover {
       padding: 10px;
@@ -104,16 +96,13 @@ export const Styled = {
     }
     @media (max-width: 768px) {
       width: 80%;
-      /* height: 406px; */
       margin-left: 40px;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
     @media (max-width: 612px) {
       width: 450px;
       margin-left: 20px;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
   `,
   ReadMoreBtn: styled.button`
@@ -133,7 +122,6 @@ export const Styled = {
   LikeBtn: styled.button`
     border: 1px red solid;
     border-radius: 20px;
-    /* background: white; */
     width: 60px;
     height: 30px;
     margin: 40px auto;
@@ -163,16 +151,12 @@ export const Styled = {
     width: 700px;
     @media (max-width: 768px) {
       width: 80%;
-      /* height: 406px; */
       margin-left: auto;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
     @media (max-width: 612px) {
-      /* width: 450px; */
       margin-left: auto;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
   `,
 };

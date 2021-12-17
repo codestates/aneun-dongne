@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { useSetRecoilState } from "recoil";
 import { token } from "../recoil/recoil";
 import Loading from "./Loading/Loading";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
-// const KakaoLogin = (code) => {};
 
 const KakaoRedirectHandler = () => {
   // 인가코드
@@ -21,7 +19,6 @@ const KakaoRedirectHandler = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data.accessToken); // 토큰이 넘어올 것임
         setAccessToken(res.data.data.accessToken);
       })
       .then(() => {

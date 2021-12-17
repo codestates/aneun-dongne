@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -33,7 +33,6 @@ const ModalSavePosition = () => {
   //유저 위치정보
   const [userAddr, setUserAddr] = useRecoilState(usersaddress);
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
-  // console.log(userAddr, defaultPosition);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -64,12 +63,7 @@ const ModalSavePosition = () => {
     formData.append("sigg", userAddr.sigg);
     formData.append("mapx", defaultPosition.lon);
     formData.append("mapy", defaultPosition.lat);
-    console.log(memo);
-    console.log("img", placeImage);
-    console.log("폼데이터", formData);
-    console.log("폼데이터imag", formData.get("image"));
 
-    // headers: { "content-type": "multipart/form-data" },
     axios
       .post(`${process.env.REACT_APP_API_URL}/visited`, formData, {
         headers: {
@@ -88,18 +82,15 @@ const ModalSavePosition = () => {
       .catch((err) => {
         setClickedBtn(true);
         setIsUploaded(false);
-        console.log(err);
         if (!isUploaded && clickedBtn) {
           setErrorMessage({ ...errorMessage, ...{ image: "이미지업로드 실패" } });
         }
       });
   }
-  // console.log(isUploaded && clickedBtn);
   // useEffect(() => {
   //   //onClick으로 하니까 필요없으려나?? 우선 납둬봐
   // }, [isUploaded]);
 
-  console.log(memo);
   return (
     <>
       <Styled.FormContainer>
@@ -113,13 +104,11 @@ const ModalSavePosition = () => {
 
           <div className="form-memo">
             <h3>메모</h3>
-            {/* <label htmlFor="memo">메모</label> */}
             <input
               id="memo"
               value={memo}
               placeholder="기억하고 싶은 내용을 적어주세요"
               onChange={(e) => {
-                // console.log(e.target.value);
                 setMemo(e.target.value);
               }}
             />

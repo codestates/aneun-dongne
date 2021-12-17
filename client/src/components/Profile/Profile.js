@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import {
-  userInfo,
-  loginState,
-  loginModal,
-  loginAgainModal,
-  token,
-  kToken,
-  warningDeleteUserModal,
-} from "../../recoil/recoil";
+import { loginState, loginModal, loginAgainModal, token, kToken, warningDeleteUserModal } from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../modules/message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 import Cookies from "universal-cookie";
 
 function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
-  const history = useHistory();
-
   const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   //   const [imgUrl, setImgUrl] = useState("");
   // const [prevImg, setPrevImg] = useState(
@@ -31,22 +19,16 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputCheckPassword, setInputCheckPassword] = useState("");
   const cookies = new Cookies();
-  const [isDelete, setIsDelete] = useState(false);
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const setIsLoginOpen = useSetRecoilState(loginModal);
 
   const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
   const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
   useEffect(() => {
-    console.log(kakaoToken);
     if (kakaoToken) setErrorMessage(message.kakaoState);
   }, []);
 
-  console.log(inputEmail);
   useEffect(() => {
-    //! 우선 적음 나중에 지우게되도
     axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
@@ -57,11 +39,8 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
-        console.log(typeof res.data.data.userInfo.user_image_path);
         setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
-          console.log(res.data.data.userInfo.user_image_path);
           setImgUrl(res.data.data.userInfo.user_image_path);
           setNickname(res.data.data.userInfo.nickname);
         }
@@ -70,13 +49,11 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         if (err.response) {
           if (err.response.status === 401) {
             //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
-
             setIsLoginAgainOpen(true);
           }
         }
       });
   }, []);
-  console.log(imgUrl);
   const editInfo = async (e) => {
     e.preventDefault();
 
@@ -86,9 +63,6 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
     }
     let a = null;
     let formData = new FormData();
-    // if(!imgUrl){
-    //   formData.append("image", imgUrl);
-    // }
 
     if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
       setErrorMessage(message.checkAgain);
@@ -96,28 +70,22 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
     }
     if (imgUrl) {
       formData.append("image", imgUrl);
-      console.log(imgUrl);
     }
-    console.log(imgUrl);
     formData.append("nickname", inputUsername);
     formData.append("email", inputEmail);
     formData.append("password", inputPassword);
     formData.append("checkPassword", inputCheckPassword);
     formData.append("newPassword", inputNewPassword);
-    // formData.append("")
-    console.log(formData.get("image"));
 
     axios
       .patch(`${process.env.REACT_APP_API_URL}/user/info`, formData, {
         headers: {
           Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         setImgUrl(res.data.data.user_image_path);
         setPrevImg(res.data.data.user_image_path);
         setNickname(res.data.data.nickname);
@@ -200,13 +168,11 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
               </div>
               <div className="userinfo-each-label">
                 <input type="text" value={inputEmail} readOnly />
-                {/* <div>{inputEmail} </div> */}
               </div>
               <div className="userinfo-each-label">
                 <input
                   type="password"
                   name="password"
-                  // defaultValue=""
                   placeholder="현재 비밀번호"
                   value={inputPassword}
                   onChange={(e) => handleInputPassword(e)}
@@ -217,7 +183,6 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                 <input
                   type="password"
                   name="password"
-                  // defaultValue=""
                   placeholder="새로운 비밀번호"
                   value={inputNewPassword}
                   onChange={(e) => handleInputNewPassword(e)}
@@ -228,7 +193,6 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                   type="password"
                   name="password"
                   placeholder="새로운 비밀번호 확인"
-                  // defaultValue=""
                   value={inputCheckPassword}
                   onChange={(e) => handleInputCheckPassword(e)}
                 />

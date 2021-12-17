@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { visitedModal } from "../../recoil/recoil";
 
 export const Styled = {
   PlaceCard: styled.div`
-    /* background: skyblue; */
     margin: auto;
     margin-top: 40px;
     border: 1px #3a6fb0 solid;
@@ -31,7 +30,6 @@ export const Styled = {
       flex-direction: column;
       align-content: center;
       justify-content: center;
-      /* background-color: red; */
       border-radius: 20px;
       width: 100%;
       margin: 10px;
@@ -43,16 +41,12 @@ export const Styled = {
       margin-right: auto;
       margin-top: 20px;
       margin-bottom: 10px;
-
       border-radius: 20px;
-
-      /* object-fit: scale-down; */
     }
     .place-cards-title {
       margin-left: 10px;
       margin-top: 6px;
       .place-cards-memo {
-        /* background: red; */
         width: 90%;
         padding: 0 5px;
         overflow: hidden;
@@ -98,8 +92,6 @@ export const Styled = {
     display: flex;
     justify-content: center;
     backdrop-filter: contrast(50%);
-    /* backdrop-filter: brightness(50%); */
-
     align-items: center;
     width: 100vw;
     height: 100vh;
@@ -124,7 +116,6 @@ function VisitedCards({ area, sigg, image, memo, id }) {
     setIsVisitedOpen(true);
   };
   const closeVisitedModal = () => {
-    console.log(isVisitedOpen);
     if (isVisitedOpen) {
       setVtModal(null);
       setIsVisitedOpen(false);
@@ -135,7 +126,6 @@ function VisitedCards({ area, sigg, image, memo, id }) {
     <>
       <Styled.PlaceCard>
         <div className={`place-cards ${id}`}>
-          {/* <div className={`place-cards ${id}`} onClick={(e) => openModalHandler(id)}> */}
           {image ? <img className={id} src={image} /> : <img className={id} src="/images/not-image-yet.png" />}
           <div className={`place-cards-title ${id}`}>
             <div className={id}>

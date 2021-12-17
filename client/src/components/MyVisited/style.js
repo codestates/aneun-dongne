@@ -42,7 +42,6 @@ export const Styled = {
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
-    /* margin: auto; */
     margin-bottom: 1rem;
 
     @media screen and (max-width: 530px) {
@@ -72,8 +71,6 @@ export const Styled = {
     display: flex;
     justify-content: center;
     backdrop-filter: contrast(50%);
-    /* backdrop-filter: brightness(50%); */
-
     align-items: center;
     width: 100vw;
     height: 100vh;

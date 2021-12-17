@@ -15,7 +15,6 @@ const ImgDiv = styled.div`
   height: 200px;
   cursor: pointer;
   border: 1px gray solid;
-  /* border-radius: 70%; */
   z-index: 999;
 
   @media screen and (max-height: 660px), screen and (max-width: 500px) {
@@ -40,17 +39,12 @@ function ImageUpload({ placeImage, setPlaceImage }) {
   function inputFileHandler(inputValue, setPlaceImage) {
     const image = inputValue.current.files;
     setPlaceImage(image[0]);
-    console.log(image[0]);
   }
 
   function inputBtn(e, inputValue) {
     e.preventDefault();
     inputValue.current.click();
   }
-
-  // function inputImageHandler(){
-  //     const image = placeImage.current.files
-  // }
 
   return (
     <div className="image-upload-box">

@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Styled = {
   RightBtnBox: styled.div`
     @media (min-width: 768px) {
-      /* background: red; */
     }
     z-index: 7.9;
     display: flex;
@@ -13,13 +12,10 @@ export const Styled = {
   //오른쪽 버튼
   RightBtn: styled.button`
     @media (min-width: 768px) {
-      /* background: red; */
     }
     border-radius: 5px;
     position: relative;
     z-index: 7.9;
-    /* left: -10px;
-    bottom: 20px; */
     position: relative;
     background-color: #3a6fb0;
     color: white;

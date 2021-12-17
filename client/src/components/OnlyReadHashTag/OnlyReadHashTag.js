@@ -2,8 +2,6 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 
 export const TagsInput = styled.div`
-  /* z-index: 995; */
-  /* background-color: blue; */
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -11,21 +9,16 @@ export const TagsInput = styled.div`
   width: 400px;
 
   > #tags {
-    /* background-color: purple; */
     display: flex;
     flex-wrap: wrap;
     max-width: 400px;
-
     padding: 0;
     margin: 8px 0 0 0;
   }
   .tag {
     overflow: hidden;
-    /* word-wrap: break-word; */
     text-overflow: ellipsis;
-    /* max-width: 200; */
     height: auto;
-    /* display: flex; */
     align-items: center;
     justify-content: center;
     padding: 0 8px;
@@ -34,24 +27,12 @@ export const TagsInput = styled.div`
     border-radius: 6px;
     margin: 0 8px 8px 0;
     color: #162b71;
-    /* border: 1px solid rgb(192, 251, 255); */
-    /* background-color: rgb(192, 251, 255); */
     max-width: 400px;
-    /* background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    cursor: pointer;
-    transition: all 0.5s ease-in-out; */
   }
 `;
 
-const OnlyReadHashTag = ({ initialTags, uuid }) => {
-  // const [tags, setTags] = useState(initialTags);
+const OnlyReadHashTag = ({ initialTags }) => {
   const tagInput = useRef(null);
-  console.log(initialTags);
   return (
     <>
       <TagsInput ref={tagInput} id="outer-box">

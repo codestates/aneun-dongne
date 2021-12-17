@@ -6,7 +6,6 @@ import { visitedModal } from "../../recoil/recoil";
 import ModalVisited from "../ModalVisited/ModalVisited";
 export const Styled = {
   PlaceCard: styled.div`
-    /* background: skyblue; */
     margin: auto;
     margin-top: 40px;
     border: 1px rgb(107, 217, 224) solid;
@@ -31,7 +30,6 @@ export const Styled = {
       flex-direction: column;
       align-content: center;
       justify-content: center;
-      /* background-color: red; */
       border-radius: 20px;
       width: 100%;
       margin: 10px;
@@ -43,16 +41,12 @@ export const Styled = {
       margin-right: auto;
       margin-top: 20px;
       margin-bottom: 10px;
-
       border-radius: 20px;
-
-      /* object-fit: scale-down; */
     }
     .place-cards-title {
       margin-left: 10px;
       margin-top: 6px;
       .place-cards-memo {
-        /* background: red; */
         width: 90%;
         padding: 0 5px;
         overflow: hidden;
@@ -75,8 +69,6 @@ export const Styled = {
     display: flex;
     justify-content: center;
     backdrop-filter: contrast(50%);
-    /* backdrop-filter: brightness(50%); */
-
     align-items: center;
     width: 100vw;
     height: 100vh;
@@ -103,15 +95,12 @@ export const Styled = {
   `,
 };
 const Body = styled.div`
-  /* display: flex; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 40px;
   text-decoration-line: none;
   margin-left: 30px;
-  /* background: yellow; */
   > .visited-cards-list {
-    /* border: 1px gray solid; */
     margin: 15px;
   }
 
@@ -134,13 +123,11 @@ const Body = styled.div`
 function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerClick, setMarkerClick }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [selectedModal, setSelectedModal] = useState(null);
-  // console.log(placeList);
   useEffect(() => {
     if (selectedPosition !== null) {
-      console.log(selectedPosition.visited_thumbnail_path);
       openModalHandler(selectedPosition);
       setMarkerClick(false);
-    } else console.log(selectedPosition);
+    }
   }, [selectedPosition, markerClick]);
   const openModalHandler = (el) => {
     setSelectedModal(el);
@@ -154,7 +141,7 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
   };
 
   //! 배열을 매핑해서 모달에 넣을때는 array.map()을 작성하는 그 위치에서 모달창을 만들어야함
-  console.log(selectedModal);
+  // console.log(selectedModal);
   return (
     <>
       <Styled.ModalContainer>
@@ -162,10 +149,7 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalVisited
-                  // id={selectedModal && selectedModal.id}
-                  visitedImg={selectedModal && selectedModal.visited_thumbnail_path}
-                />
+                <ModalVisited visitedImg={selectedModal && selectedModal.visited_thumbnail_path} />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>
@@ -173,7 +157,6 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
       </Styled.ModalContainer>
       <Body>
         {placeList.map((el) => {
-          // console.log(el);
           return (
             <div className="visited-cards-list" key={el.id} onClick={() => openModalHandler(el)}>
               <VisitedCards

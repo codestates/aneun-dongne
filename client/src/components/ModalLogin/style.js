@@ -59,7 +59,6 @@ export const Styled = {
       color: white;
       border-radius: 10px;
       font-size: 1.5rem;
-      /* font-weight: bold; */
     }
     .kakao-login-button {
       margin-top: 15px;
@@ -70,7 +69,6 @@ export const Styled = {
       color: black;
       border-radius: 10px;
       font-size: 1.5rem;
-      /* font-weight: bold; */
     }
 
     .error-message {

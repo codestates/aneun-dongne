@@ -1,8 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Icon } from "react-icons-kit";
-import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 
@@ -27,11 +25,7 @@ const PlaceCard = styled.div`
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
   }
-  /* img {
-    align-content: center;
-    width: 100%;
-    border-radius: 20px;
-  } */
+
   .place-cards {
     display: flex;
     flex-direction: column;
@@ -39,8 +33,8 @@ const PlaceCard = styled.div`
     justify-content: center;
     background-color: white;
     border-radius: 20px;
-    /* width: 100%; */
   }
+
   .place-cards > img {
     width: 80%;
     height: 200px;
@@ -49,12 +43,13 @@ const PlaceCard = styled.div`
     margin-top: 20px;
     margin-bottom: 10px;
     border-radius: 20px;
-    /* object-fit: scale-down; */
   }
+
   .place-cards-title {
     margin-left: 10px;
     margin-top: 6px;
   }
+
   @media screen and (max-width: 710px) {
     width: 220px;
     height: 350px;
@@ -87,8 +82,6 @@ const KeyWord = styled.span`
   text-align: center;
   clear: both;
   float: left;
-  /* max-width: 130px; */
-  /* max-height: 25px; */
   margin-left: 6px;
   margin-right: 6px;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
@@ -122,14 +115,7 @@ const KeyWordBox = styled.div`
   margin-top: 5%;
   display: flex;
   justify-content: center;
-  /* background-color: red; */
   flex-wrap: wrap;
-  /* padding: 20px; */
-  /* height: 100%; */
-  /* justify-content: space-evenly; */
-  /* background-color: pink; */
-
-  /* background-color: white; */
 `;
 const LikeBtn = styled.div`
   border: 1px red solid;
@@ -170,16 +156,9 @@ const LikeBtn = styled.div`
 `;
 
 const LikeLists = ({ postsInfo }) => {
-  //const tagArr = postsInfo.post_tags.split(",");
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
-  // const ToScrollTop = (e) => {
-  //   window.scroll({
-  //     top: 0,
-  //     left: 0,
-  //     behavior: "smooth",
-  //   });
-  // };
+
   const handlecontentClick = () => {
     history.push(`/detailpage/${postsInfo.post_contentid}`);
   };
@@ -198,11 +177,6 @@ const LikeLists = ({ postsInfo }) => {
                   return <KeyWord>{tag}</KeyWord>;
                 })}
               </>
-              // <KeyWord>
-              //   {tagArr.map((tag) => (
-              //     <span>#{tag}</span>
-              //   ))}
-              // </KeyWord>
             )}
           </KeyWordBox>
           <div className="place-cards">
@@ -227,13 +201,8 @@ const LikeLists = ({ postsInfo }) => {
           </LikeBtn>
         </PlaceCard>
       )}
-      {/* <TopButton onClick={ToScrollTop}>
-        <Icon size={"60"} icon={angleUp} />
-      </TopButton> */}
     </Lists>
   );
 };
 
 export default LikeLists;
-
-//<KeyWord>{postsInfo.post_tags}</KeyWord>

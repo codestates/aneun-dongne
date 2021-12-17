@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  isSavepositionOpen,
   visitedModal,
   loginState,
   loginModal,
@@ -12,7 +11,6 @@ import {
   deleteCommentmode,
 } from "../../recoil/recoil";
 import { Styled } from "./style";
-import ImageUpload from "../UploadImage/ImageUpload";
 import VisitedUpload from "../UploadImage/VisitedUpload";
 
 function ModalVisited({ id, idx, visitedImg }) {
@@ -21,7 +19,6 @@ function ModalVisited({ id, idx, visitedImg }) {
   const [isVisitedPlaceOpen, setIsVisitedPlaceOpen] = useRecoilState(visitedModal);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
-  const [loading, setLoading] = useState(false);
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   const [placeImage, setPlaceImage] = useState(visitedImg);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -43,8 +40,7 @@ function ModalVisited({ id, idx, visitedImg }) {
 
     formData.append("image", placeImage); // 파일
     formData.append("memo", memo); //메모
-    // headers: { "content-type": "multipart/form-data" },
-    console.log(id);
+
     axios
       .patch(`${process.env.REACT_APP_API_URL}/visited`, formData, {
         params: { visitedId: id },
@@ -56,7 +52,6 @@ function ModalVisited({ id, idx, visitedImg }) {
       })
 
       .then((res) => {
-        console.log(res.data.data);
         setPlaceList(res.data.data);
 
         setIsUploaded(true);
@@ -95,7 +90,7 @@ function ModalVisited({ id, idx, visitedImg }) {
       return;
     }
   }
-  console.log(placeImage);
+
   return (
     <>
       <Styled.FormContainer>
@@ -114,7 +109,6 @@ function ModalVisited({ id, idx, visitedImg }) {
               id="memo"
               value={memo}
               onChange={(e) => {
-                console.log(e.target.value);
                 setMemo(e.target.value);
               }}
             />

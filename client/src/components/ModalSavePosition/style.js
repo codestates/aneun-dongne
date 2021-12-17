@@ -14,7 +14,6 @@ export const Styled = {
   `,
 
   FormContainer: styled.div`
-    /* border: 1px gray solid; */
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -72,14 +71,12 @@ export const Styled = {
       margin: 20px 0px;
       display: flex;
       flex-direction: column;
-      /* background-color: pink; */
       text-align: center;
       > input {
         padding: 10px;
       }
     }
     .form-memo input {
-      /* margin: 20px 0px; */
       width: 300px;
       height: 80px;
     }

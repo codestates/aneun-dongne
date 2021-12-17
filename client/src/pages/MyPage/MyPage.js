@@ -61,11 +61,8 @@ const MyPage = ({ match }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
-
         setNickname(res.data.data.userInfo.nickname);
         if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
-          console.log(res.data.data.userInfo.user_image_path);
           setImgUrl(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
           setPrevImg(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
         }
@@ -129,7 +126,6 @@ const MyPage = ({ match }) => {
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
-            {/* <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div> */}
             <div className="profile-image">
               <img src={prevImg} />
             </div>

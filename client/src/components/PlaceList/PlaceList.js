@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { MemoCards } from "../PlaceCard/PlaceCards";
 
@@ -9,12 +9,9 @@ import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
 
 const PlaceLists = styled.div`
-  /* height: 100vh; */
-
   @media (max-width: 1023px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* background: purple; */
   }
   @media (max-width: 660px) {
     display: grid;
@@ -35,36 +32,8 @@ const PlaceLists = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 40px;
-  text-decoration-line: none;
-  margin-left: 30px; */
 `;
 const MoveToTopBtn = styled.button`
-  /* border-radius: 70%;
-
-  background: rgba(255, 255, 255, 0.7);
-  width: 60px;
-  height: 60px;
-  z-index: 999;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  border: 0.5px solid rgb(192, 251, 255);
-
-  display: ${(props) => (props.BtnStatus ? "inline" : "none")};
-  &:hover {
-    background: rgba(192, 251, 255, 0.7);
-    transform: scale(1.1);
-    bottom: 13px;
-    border: 0.5px solid white;
-  }
-
-  :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-  } */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +45,6 @@ const MoveToTopBtn = styled.button`
   height: 60px;
   border-radius: 100%;
   background-color: #3a6fb0;
-  /* background: rgba(192, 251, 255, 0.7); */
   color: white;
   transition: all 0.3s;
   display: ${(props) => (props.BtnStatus ? "inline" : "none")};
@@ -93,8 +61,6 @@ export const StyledLink = styled(Link)`
 const Div = styled.div`
   color: black;
 `;
-// React.memo 쓰기
-// 아 근데 왜 안돼 우선 제껴,
 
 function PlaceList() {
   const accessToken = useRecoilValue(token);
@@ -138,7 +104,6 @@ function PlaceList() {
   }
 
   function getPlaceLocation(obj, path, title, address) {
-    console.log(path);
     setPlaceLocation(obj);
     setImgURL(path);
     setTitle(title);
@@ -164,7 +129,6 @@ function PlaceList() {
         );
       })}
       <MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
-        {/* Top */}
         <Icon size={"60"} icon={angleUp} />
       </MoveToTopBtn>
     </PlaceLists>

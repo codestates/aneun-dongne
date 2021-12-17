@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
 export const Styled = {
-  //전체 박스
   MapRightBar: styled.div`
     @media (max-width: 1023px) {
       display: flex;
       flex-direction: column;
-      /* background: red; */
       width: 100%;
       margin-left: 20px;
       align-content: center;
@@ -20,7 +18,6 @@ export const Styled = {
       border-radius: 10px;
       margin-left: 10px;
       margin-top: 10px;
-
       width: 600px;
     }
 
@@ -41,7 +38,6 @@ export const Styled = {
   //도|시군구를 감싸고있는 div
   SearchBar: styled.div`
     @media (max-width: 1023px) {
-      /* background: green; */
       display: flex;
 
       justify-content: space-evenly;
@@ -61,11 +57,8 @@ export const Styled = {
   //지역선택 wrapper
   SearchWrapper: styled.div`
     @media (max-width: 1023px) {
-      /* background: blue; */
-
       display: flex;
       flex-direction: column;
-      /* align-content: space-between; */
     }
     @media (min-width: 1024px) {
       height: 40px;
@@ -83,15 +76,12 @@ export const Styled = {
     width: 50%;
     height: 100%;
     background-color: white;
-    /* background-color: red; */
     border: none;
-    /* border: 1px pink solid; */
     border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
   `,
   //도|시군구를 감싸고있는 div
   SearchBar: styled.div`
     margin: 5px 2% 5px 2%;
-    /* margin-right: 5%; */
     display: flex;
     padding: 5px;
     width: 300px;
@@ -104,7 +94,6 @@ export const Styled = {
       width: 48%;
       height: 40px;
       margin: 5px;
-      /* background: yellow; */
       border-radius: 5px;
     }
     @media (min-width: 1024px) {
@@ -152,20 +141,17 @@ export const Styled = {
       width: 98%;
       height: 40px;
       margin: 5px auto;
-      /* background: yellow; */
       border-radius: 5px;
     }
     @media (min-width: 1024px) {
       margin-left: 10px;
     }
-    /* background: red; */
   `,
   SearchPlace: styled.input`
     @media (max-width: 1023px) {
       width: 100%;
       height: 40px;
       border: 1px gray solid;
-      /* background: yellow; */
       border-radius: 5px;
     }
     @media (min-width: 1024px) {

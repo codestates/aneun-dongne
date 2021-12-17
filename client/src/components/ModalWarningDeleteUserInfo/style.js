@@ -15,14 +15,12 @@ export const Styled = {
   `,
 
   FormContainer: styled.div`
-    /* border: 1px gray solid; */
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
 
     > h2 {
-      /* background: red; */
       margin-top: 80px;
       margin-left: 20px;
       margin-right: 20px;

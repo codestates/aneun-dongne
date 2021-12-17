@@ -36,7 +36,6 @@ export const Styled = {
       text-align: center;
       margin-top: 30px;
       font-size: 1.2rem;
-
       letter-spacing: 0.1em;
       transition: all 0.3s ease;
     }
@@ -63,28 +62,19 @@ export const Styled = {
       padding-left: 10px;
     }
     .side-col .info-icon i {
-      /* display: none; */
       padding-right: 20px;
     }
   `,
   User: styled.div`
     display: flex;
-    /* width: 100%; */
     justify-content: space-evenly;
-    /* margin-left: auto;
-    margin-right: auto; */
-    /* background-color: yellow; */
 
     > .user-info {
       display: flex;
       flex-direction: column;
-      /* border: 1px gray solid; */
     }
-    > .user-info .user-name-job-wrapper {
-      /* display: flex; */
-    }
+
     > .user-info .user-name {
-      /* border: 1px gray solid; */
       margin: 10px;
       width: 100px;
       height: 50px;
@@ -92,14 +82,8 @@ export const Styled = {
       padding: 15px 0 15px 0;
       border-radius: 20px;
       transition: all 0.3s ease;
-      /* &:hover {
-        color: rgb(21, 225, 240);
-        padding-left: 10px;
-      } */
     }
     > .user-info .user-job {
-      /* border: 1px gray solid; */
-      /* background-color: rgb(192, 251, 255); */
       background-image: linear-gradient(
         to right bottom,
         rgba(255, 255, 255, 0.9) 0,
@@ -113,20 +97,13 @@ export const Styled = {
       padding: 15px 0 15px 0;
       border-radius: 20px;
       transition: all 0.3s ease;
-      /* &:hover {
-        color: rgb(21, 225, 240);
-        padding-left: 10px;
-      } */
     }
     > .user-info .info-icon {
       padding: 15px 10px 15px 10px;
       display: flex;
       margin: 10px;
-
       height: 50px;
-      /* justify-content: space-evenly; */
 
-      /* border: 1px gray solid; */
       > i {
         padding-right: 10px;
       }
@@ -138,9 +115,7 @@ export const Styled = {
       text-decoration: none;
       color: gray;
     }
-    /* span:hover {
-      color: rgb(21, 225, 240);
-    } */
+
     .user-info .info-icon a:hover {
       color: #2f4d6f;
       padding-left: 10px;

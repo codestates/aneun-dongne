@@ -104,10 +104,10 @@ const ModalSavePosition = () => {
     <>
       <Styled.FormContainer>
         <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
-          <i className="fas fa-times"></i>
+          <i class="fas fa-times"></i>
         </Styled.CloseBtn>
         <form className="form-id" onSubmit={updateInfoRequest}>
-          <h3>이미지</h3>
+          <div className="form-title">이미지 추가</div>
           <ImageUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
           {placeImage !== null ? null : <div className="alert-box">{errorMessage.image}</div>}
 

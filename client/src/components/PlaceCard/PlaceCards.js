@@ -7,7 +7,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 3px rgb(192, 251, 255) solid;
+  border: 1px #3a6fb0 solid;
 
   justify-content: center;
   border-radius: 20px;
@@ -42,8 +42,6 @@ const PlaceCard = styled.div`
     margin-bottom: 10px;
 
     border-radius: 20px;
-
-    /* object-fit: scale-down; */
   }
   .place-cards-title {
     margin-left: 10px;
@@ -72,15 +70,10 @@ const LikeBtn = styled.button`
     color: black;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    transform: scale(1.1);
   }
   &:hover:after {
     left: 0;
     width: 100%;
-  }
-
-  &:active {
-    transform: scale(1.3);
   }
 `;
 

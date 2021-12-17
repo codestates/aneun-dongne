@@ -16,154 +16,6 @@ import { Styled } from "./style";
 import { message } from "../../modules/message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 import Cookies from "universal-cookie";
-const UserInfopage = styled.div`
-  top: 0;
-  /* background: red; */
-  margin-left: auto;
-  margin-right: auto;
-  /* width: 100%; */
-  /* width: 100%; */
-  /* height: 100%; */
-  /* border: 1px gray solid; */
-
-  /* background-color: yellowgreen; */
-  display: flex;
-  justify-content: center;
-`;
-const View = styled.div`
-  margin-top: 40px;
-  margin-left: 20px;
-
-  width: 500px;
-
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-
-  /* background: yellow; */
-`;
-
-// export const ProfileImg = styled.img`
-//   margin: 30px;
-//   width: 170px;
-//   height: 170px;
-//   border-radius: 100%;
-//   cursor: pointer;
-// `;
-const ContentBox = styled.div`
-  /* margin: 40px 100px 0 0; */
-  /* margin-left: 10%; */
-  /* background: green; */
-  width: 100%;
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  /* flex-direction: column; */
-  .alert-box {
-    color: red;
-  }
-  > form {
-    display: flex;
-    flex-direction: column;
-  }
-  > form button {
-    width: 80px;
-    border: none;
-    height: 40px;
-    /* background-color: #8ea1da; */
-    /* background: purple; */
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    transition: all 0.5s ease;
-    border-radius: 20px;
-  }
-  > form .userinfo-each-label {
-    /* background: skyblue; */
-    margin: 23px auto;
-
-    position: relative;
-  }
-  > form .userinfo-each-label span {
-    /* float: left; */
-  }
-  > form .userinfo-each-label input,
-  form .userinfo-each-label div {
-    /* background: yellow; */
-
-    font-size: 1.2rem;
-    width: 300px;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 20px;
-    /* border: 1px gray solid; */
-    /* position: absolute; */
-    /* float: right; */
-  }
-  form .userinfo-button-label {
-    /* background: blue; */
-    display: flex;
-    justify-content: center;
-  }
-  > form .userinfo-button-label .btn-edit {
-    margin: 20px;
-    width: 80px;
-    border: 1px gray solid;
-    height: 40px;
-    /* background-color: #8ea1da; */
-    /* background: purple; */
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    transition: all 0.5s ease;
-    border-radius: 20px;
-  }
-
-  button:hover {
-    transform: scale(1.1);
-  }
-
-  button:active {
-    transform: scale(1.1);
-  }
-  form .userinfo-button-label .btn-exit {
-    margin: 20px;
-    width: 80px;
-    border: 1px gray solid;
-    height: 40px;
-    /* background-color: #8ea1da; */
-    /* background: purple; */
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    transition: all 0.5s ease;
-    border-radius: 20px;
-  }
-  .btn-exit:hover {
-    transform: scale(1.1);
-  }
-`;
-
-const ImgDiv = styled.div`
-  width: 200px;
-  height: 200px;
-  margin: 10px auto;
-`;
-
-//회원수정, 로그아웃시켜줘야힘.
 
 function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const history = useHistory();
@@ -335,13 +187,13 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
 
   return (
     <div>
-      <UserInfopage>
-        <View>
-          <ImgDiv>
+      <Styled.UserInfopage>
+        <Styled.View>
+          <Styled.ImgDiv>
             <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
-          </ImgDiv>
+          </Styled.ImgDiv>
 
-          <ContentBox>
+          <Styled.ContentBox>
             <form onSubmit={editInfo}>
               <div className="userinfo-each-label">
                 <input type="text" name="nickname" placeholder="새로운 닉네임" onChange={handleInputUsername} />
@@ -383,18 +235,17 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
               </div>
               <div className="alert-box">{errorMessage}</div>
               <div className="userinfo-button-label">
-                <button className="btn-edit" type="submit">
-                  저장
-                </button>
-
                 <button className="btn-exit" onClick={openWarningModalHandler}>
                   회원탈퇴
                 </button>
+                <button className="btn-edit" type="submit">
+                  저장
+                </button>
               </div>
             </form>
-          </ContentBox>
-        </View>
-      </UserInfopage>
+          </Styled.ContentBox>
+        </Styled.View>
+      </Styled.UserInfopage>
     </div>
   );
 }

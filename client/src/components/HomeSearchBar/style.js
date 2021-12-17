@@ -10,13 +10,13 @@ export const Styled = {
       width: 100%;
       margin-left: 20px;
       align-content: center;
-      border: 1px rgb(192, 251, 255) solid;
+      border: 1px #3a6fb0 solid;
       border-radius: 10px;
     }
     @media (min-width: 1024px) {
       display: flex;
       flex-direction: column;
-      border: 1px rgb(192, 251, 255) solid;
+      border: 1px #3a6fb0 solid;
       border-radius: 10px;
       margin-left: 10px;
       margin-top: 10px;
@@ -56,16 +56,6 @@ export const Styled = {
       border-radius: 5px;
       border: 1px gray solid;
       transition: all 0.5s ease-in-out;
-      &:hover {
-        color: black;
-        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-          4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-        transform: scale(1.1);
-      }
-      &:hover:after {
-        left: 0;
-        width: 100%;
-      }
     }
   `,
   //지역선택 wrapper
@@ -109,16 +99,7 @@ export const Styled = {
     border-radius: 5px;
     border: 3px gray solid;
     transition: all 0.5s ease-in-out;
-    &:hover {
-      color: black;
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transform: scale(1.1);
-    }
-    &:hover:after {
-      left: 0;
-      width: 100%;
-    }
+
     @media (max-width: 1023px) {
       width: 48%;
       height: 40px;
@@ -163,14 +144,6 @@ export const Styled = {
           4px 4px 5px 0px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
       }
-      &:hover {
-        color: black;
-        transform: scale(1.1);
-      }
-      &:hover:after {
-        left: 0;
-        width: 100%;
-      }
     }
   `,
   //장소검색
@@ -208,16 +181,6 @@ export const Styled = {
       border-radius: 5px;
       padding: 5px;
       transition: all 0.5s ease-in-out;
-      &:hover {
-        color: black;
-        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-          4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-        transform: scale(1.1);
-      }
-      &:hover:after {
-        left: 0;
-        width: 100%;
-      }
     }
   `,
   //검색버튼
@@ -235,6 +198,9 @@ export const Styled = {
     perspective: 230px;
     transition: all 0.5s ease-in-out;
     color: white;
+    &:hover {
+      background-color: #2f4d6f;
+    }
     &:after {
       position: absolute;
       content: "";
@@ -244,14 +210,12 @@ export const Styled = {
       right: 0;
       z-index: 999;
     }
-    &:hover {
-      background-color: #2f4d6f;
-    }
+
     @media (max-width: 1023px) {
       width: 98%;
       height: 40px;
       margin: 5px auto;
-      background: rgb(192, 251, 255);
+      background: #3a6fb0;
       border-radius: 5px;
       border: none;
     }

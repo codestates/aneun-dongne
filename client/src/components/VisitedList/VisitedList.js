@@ -19,24 +19,6 @@ export const Styled = {
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: box-shadow 0.1s, transform 0.1s;
     text-decoration: inherit;
-    animation: color-change 2s infinite;
-    @keyframes color-change {
-      0% {
-        border-left: #c1ff6b 1px solid;
-
-        border-top: #c1ff6b 1px solid;
-      }
-      50% {
-        border-left: #fab4b4 1px solid;
-
-        border-top: #fab4b4 1px solid;
-      }
-      100% {
-        border-left: #46ffff 1px solid;
-
-        border-top: #46ffff 1px solid;
-      }
-    }
     &:hover {
       transform: scale(1.1);
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -108,6 +90,16 @@ export const Styled = {
     z-index: 2;
     border: 1px solid white;
     border-radius: 20px;
+
+    @media screen and (max-height: 900px) {
+      height: 500px;
+      width: 350px;
+    }
+
+    @media screen and (max-width: 500px) {
+      height: 500px;
+      width: 350px;
+    }
   `,
 };
 const Body = styled.div`

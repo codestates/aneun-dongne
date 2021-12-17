@@ -21,7 +21,7 @@ export const Styled = {
     }
 
     .form-title {
-      margin: 70px 0px 30px 0px;
+      margin: 50px 0px 30px 0px;
       width: 90px;
       height: 50px;
       object-fit: cover;

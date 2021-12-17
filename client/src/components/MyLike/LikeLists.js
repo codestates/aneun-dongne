@@ -15,7 +15,7 @@ const Lists = styled.div`
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 3px rgb(107, 217, 224) solid;
+  border: 1px #3a6fb0 solid;
   border-radius: 20px;
   width: 300px;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);

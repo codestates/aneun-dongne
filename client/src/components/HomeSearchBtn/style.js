@@ -28,7 +28,6 @@ export const Styled = {
     border: none;
     cursor: pointer;
     perspective: 230px;
-    transition: all 0.5s ease-in-out;
     &:hover {
       background-color: #2f4d6f;
     }
@@ -40,7 +39,7 @@ export const Styled = {
       top: 0;
       right: 0;
       z-index: 0;
-      background-color: rgb(192, 251, 255);
+      background-color: #3a6fb0;
       background-image: linear-gradient(
         to left top,
         rgba(255, 255, 255, 0.9) 0,
@@ -50,7 +49,6 @@ export const Styled = {
       border-radius: 5px;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
     }
   `,
 };

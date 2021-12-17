@@ -103,7 +103,7 @@ function ModalVisited({ id, idx, visitedImg }) {
           <i className="fas fa-times"></i>
         </Styled.CloseBtn>
         <form id="form-id" onSubmit={updateInfoRequest}>
-          <h3>이미지</h3>
+          <div className="form-title">이미지 수정</div>
           <VisitedUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
           <div className="alert-box">{errorMessage.image}</div>
 

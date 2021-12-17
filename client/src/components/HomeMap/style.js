@@ -19,7 +19,7 @@ export const Styled = {
       width: 100%;
       height: 80%;
 
-      border-bottom: 1px #3a6fb0 solid;
+      /* border-bottom: 1px #3a6fb0 solid; */
 
       > span {
         z-index: -8;

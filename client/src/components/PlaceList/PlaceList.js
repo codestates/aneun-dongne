@@ -75,13 +75,13 @@ const MoveToTopBtn = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 100%;
-  background-color: #b2e0f4;
+  background-color: #3a6fb0;
   /* background: rgba(192, 251, 255, 0.7); */
   color: white;
   transition: all 0.3s;
   display: ${(props) => (props.BtnStatus ? "inline" : "none")};
   :hover {
-    background-color: #9cb1e0;
+    background-color: #2f4d6f;
     transition: all 0.3s;
   }
 `;

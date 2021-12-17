@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import { Styled } from "./style";
 
 import VisitedList from "../VisitedList/VisitedList";

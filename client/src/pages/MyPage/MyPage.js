@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Styled } from "./style";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
@@ -10,9 +10,8 @@ import axios from "axios";
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 const MyPage = ({ match }) => {
-  // const history = useHistory();
-  const [imgUrl, setImgUrl] = useState("/men.png");
-  const [prevImg, setPrevImg] = useState("/men.png");
+  const [imgUrl, setImgUrl] = useState("images/men.png");
+  const [prevImg, setPrevImg] = useState("images/men.png");
   const [nickname, setNickname] = useState("");
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -71,41 +70,43 @@ const MyPage = ({ match }) => {
           <ul className="link-container">
             <li className="link-wrapper">
               <Styled.NavLink to={`${match.url}/like`} activeStyle={activeStyle}>
-                좋아요 한 관광지
+                <i class="fas fa-heart fa-1x"></i> 좋아요 표시한 장소
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
               <Styled.NavLink to={`${match.path}/visited`} activeStyle={activeStyle}>
-                내가 저장한 장소들
+                <i class="fas fa-map-marker-alt"></i> <span className="">내가 저장한 장소</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
               <Styled.NavLink to={`${match.url}/comments`} activeStyle={activeStyle}>
-                내가 쓴 리뷰
+                <i class="fas fa-pen"></i> 내 리뷰
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
               <Styled.NavLink to={`${match.url}/profile`} activeStyle={activeStyle}>
-                프로필 수정
+                <i class="fas fa-cog"></i> 프로필 수정
               </Styled.NavLink>
             </li>
           </ul>
         </nav>
 
         <div className="page-container">
-          <Route exact path={match.url} component={MyLike} />
-          <Route exact path={`${match.url}/like`} component={MyLike} />
-          <Route exact path={`${match.url}/visited`} component={MyVisited} />
-          <Route exact path={`${match.url}/comments`} component={MyReview} />
-          <Route exact path={`${match.url}/profile`}>
-            <Profile
-              imgUrl={imgUrl}
-              setImgUrl={setImgUrl}
-              prevImg={prevImg}
-              setPrevImg={setPrevImg}
-              setNickname={setNickname}
-            />
-          </Route>
+          <Switch>
+            <Route exact path={match.url} component={MyLike} />
+            <Route exact path={`${match.url}/like`} component={MyLike} />
+            <Route exact path={`${match.url}/visited`} component={MyVisited} />
+            <Route exact path={`${match.url}/comments`} component={MyReview} />
+            <Route exact path={`${match.url}/profile`}>
+              <Profile
+                imgUrl={imgUrl}
+                setImgUrl={setImgUrl}
+                prevImg={prevImg}
+                setPrevImg={setPrevImg}
+                setNickname={setNickname}
+              />
+            </Route>
+          </Switch>
         </div>
 
         <div>{/* justify-content:space-between을 위한 빈 태그 */}</div>

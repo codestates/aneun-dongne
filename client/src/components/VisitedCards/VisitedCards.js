@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-// import notImageYet from "../../img/not-image-yet.png";
+// import notImageYet from "/images/not-image-yet.png";
 import { visitedModal } from "../../recoil/recoil";
 
 export const Styled = {
@@ -127,7 +127,8 @@ function VisitedCards({ area, sigg, image, memo, id }) {
     <>
       <Styled.PlaceCard>
         <div className={`place-cards ${id}`}>
-          {image ? <img className={id} src={image} /> : <img className={id} src="/notImageYet.png" />}
+          {/* <div className={`place-cards ${id}`} onClick={(e) => openModalHandler(id)}> */}
+          {image ? <img className={id} src={image} /> : <img className={id} src="/images/not-image-yet.png" />}
           <div className={`place-cards-title ${id}`}>
             <div className={id}>
               [ {area} {sigg} ]

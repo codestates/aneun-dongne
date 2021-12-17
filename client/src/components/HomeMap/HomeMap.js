@@ -403,7 +403,7 @@ const HomeMap = () => {
           </div>
           <div class="body">
               <div class="img">
-                  <img src=${positions[i].img || "/notImageYet.png"} width="73" height="70">
+                  <img src=${positions[i].img || `/images/not-image-yet.png`} width="73" height="70">
              </div>
               <div class="desc">
                   <div class="ellipsis">${positions[i].addr}</div>
@@ -433,7 +433,7 @@ const HomeMap = () => {
                      </div>
                      <div class="body">
                          <div class="img">
-                             <img src=${positions[i].img || "/notImageYet.png"} width="73" height="70">
+                             <img src=${positions[i].img || `/images/not-image-yet.png`} width="73" height="70">
                         </div>
                          <div class="desc">
                              <div class="ellipsis">${positions[i].addr}</div>

@@ -27,6 +27,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.get("/home", controllers.home);
 app.get("/post/:contentId", controllers.postDetails);
 

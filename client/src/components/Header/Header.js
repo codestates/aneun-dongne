@@ -71,6 +71,7 @@ const Header = ({ handleResponseSuccess }) => {
   const closeSaveOrNotModalHandler = (e) => {
     setIsSaveOrNotModal(false);
   };
+
   const ToLoginModal = () => {
     if (isSignupOpen) {
       setIsSignupOpen(false);

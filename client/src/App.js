@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
@@ -56,11 +56,13 @@ const App = () => {
   return (
     <>
       <Header handleResponseSuccess={handleResponseSuccess} />
-      <Route exact path="/" component={Mainpage} />
-      <Route exact path="/home" component={Home} />
-      <Route path="/mypage" component={MyPage} />
-      <Route exact path="/detailpage/:id" component={DetailPage} />
-      <Route path="/user/kakao/callback" component={KakaoRedirectHandler} />
+      <Switch>
+        <Route exact path="/" component={Mainpage} />
+        <Route exact path="/home" component={Home} />
+        <Route path="/mypage" component={MyPage} />
+        <Route exact path="/detailpage/:id" component={DetailPage} />
+        <Route path="/user/kakao/callback" component={KakaoRedirectHandler} />
+      </Switch>
       {/* <Redirect from="*" to="/" /> */}
     </>
   );

@@ -30,6 +30,19 @@ export const Styled = {
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
+    @media (max-width: 768px) {
+      width: 80%;
+      height: 406px;
+      margin-left: 40px;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
+    @media (max-width: 612px) {
+      width: 450px;
+      margin-left: 20px;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
   `,
 
   Title: styled.h2`
@@ -47,8 +60,8 @@ export const Styled = {
   `,
   PageURL: styled.a`
     margin-left: auto;
-    margin-right: 2rem;
-    margin-bottom: 2rem;
+    margin-right: 20px;
+    margin-bottom: 20px;
     text-decoration: none;
     color: black;
     cursor: pointer;
@@ -88,6 +101,19 @@ export const Styled = {
 
     > .hide {
       display: none;
+    }
+    @media (max-width: 768px) {
+      width: 80%;
+      /* height: 406px; */
+      margin-left: 40px;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
+    @media (max-width: 612px) {
+      width: 450px;
+      margin-left: 20px;
+      margin-right: auto;
+      /* margin-left: 10px; */
     }
   `,
   ReadMoreBtn: styled.button`
@@ -135,5 +161,18 @@ export const Styled = {
     margin-left: auto;
     margin-right: auto;
     width: 700px;
+    @media (max-width: 768px) {
+      width: 80%;
+      /* height: 406px; */
+      margin-left: auto;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
+    @media (max-width: 612px) {
+      /* width: 450px; */
+      margin-left: auto;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
   `,
 };

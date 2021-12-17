@@ -1,8 +1,20 @@
 import styled from "styled-components";
 
 export const Styled = {
+  RightBtnBox: styled.div`
+    @media (min-width: 768px) {
+      /* background: red; */
+    }
+    z-index: 7.9;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px 0 10px 0px;
+  `,
   //오른쪽 버튼
   RightBtn: styled.button`
+    @media (min-width: 768px) {
+      /* background: red; */
+    }
     border-radius: 5px;
     position: relative;
     z-index: 7.9; //버튼
@@ -52,12 +64,6 @@ export const Styled = {
     &:active {
       //
     }
-  `,
-  RightBtnBox: styled.div`
-    z-index: 7.9;
-    display: flex;
-    justify-content: space-evenly;
-    margin: 10px 0 10px 0px;
   `,
 };
 

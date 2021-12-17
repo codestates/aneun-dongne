@@ -68,4 +68,4 @@ function ImageUpload({ placeImage, setPlaceImage }) {
   );
 }
 
-export default ImageUpload;
+export default React.memo(ImageUpload);

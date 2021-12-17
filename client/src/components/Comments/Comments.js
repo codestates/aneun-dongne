@@ -29,6 +29,11 @@ const Comment = styled.div`
     left: 0;
     width: 100%;
   }
+  @media (max-width: 768px) {
+    /* width: 80%; */
+    background: red;
+    margin-left: 10px;
+  }
 `;
 const Profile = styled.div`
   position: relative;
@@ -85,15 +90,20 @@ const ContentBox = styled.div`
   button:active {
     transform: scale(1.1);
   }
+  @media (max-width: 768px) {
+    width: 80%;
+    /* background: blue; */
+    /* margin-left: 10px; */
+  }
 `;
-
+//!-- 내가 바꾼거 댓글 높이
 const Content = styled.div`
   display: flex;
   padding: 10px;
   flex-wrap: wrap;
   line-height: 1em;
   word-break: break-all;
-  /* position: absolute; */
+
   top: 0;
   left: 10px;
   width: 370px;
@@ -101,7 +111,7 @@ const Content = styled.div`
   padding-left: 10px;
   padding-right: 10px;
 
-  /* background-color: skyblue; */
+  background-color: skyblue;
 `;
 
 const ContentInput = styled.div`
@@ -133,7 +143,7 @@ const ContentInput = styled.div`
     padding-right: 10px;
   }
 `;
-
+//!----
 const BtnWrapper = styled.div`
   width: 370px;
 
@@ -147,7 +157,8 @@ const BtnWrapper = styled.div`
   }
   .change-comment,
   .complete-change {
-    z-index: 999;
+    /* z-index : 3 내가한거 */
+    z-index: 3;
 
     border: none;
 

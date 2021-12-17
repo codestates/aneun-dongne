@@ -29,6 +29,18 @@ const Comment = styled.div`
     left: 0;
     width: 100%;
   }
+  @media (max-width: 768px) {
+    width: 80%;
+    margin-left: 40px;
+    margin-right: auto;
+    /* margin-left: 10px; */
+  }
+  @media (max-width: 612px) {
+    width: 450px;
+    margin-left: 20px;
+    margin-right: auto;
+    /* margin-left: 10px; */
+  }
 `;
 const Profile = styled.div`
   position: relative;

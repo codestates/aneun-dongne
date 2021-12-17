@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import VisitedCards from "../VisitedCards/VisitedCards";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
@@ -132,11 +132,17 @@ const Body = styled.div`
     margin: 15px;
   }
 `;
-function VisitedList({ placeList }) {
+function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerClick, setMarkerClick }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [selectedModal, setSelectedModal] = useState(null);
   // console.log(placeList);
-
+  useEffect(() => {
+    if (selectedPosition !== null) {
+      console.log(selectedPosition.visited_thumbnail_path);
+      openModalHandler(selectedPosition);
+      setMarkerClick(false);
+    } else console.log(selectedPosition);
+  }, [selectedPosition, markerClick]);
   const openModalHandler = (el) => {
     setSelectedModal(el);
     setIsVisitedOpen(true);
@@ -158,7 +164,7 @@ function VisitedList({ placeList }) {
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
                 <ModalVisited
-                  id={selectedModal && selectedModal.id}
+                  // id={selectedModal && selectedModal.id}
                   visitedImg={selectedModal && selectedModal.visited_thumbnail_path}
                 />
               </Styled.ModalView>
@@ -168,7 +174,7 @@ function VisitedList({ placeList }) {
       </Styled.ModalContainer>
       <Body>
         {placeList.map((el) => {
-          console.log(el);
+          // console.log(el);
           return (
             <div className="visited-cards-list" key={el.id} onClick={() => openModalHandler(el)}>
               <VisitedCards

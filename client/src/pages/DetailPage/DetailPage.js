@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import MapInRoom from "../../components/MapInRoom/MapInRoom";
-
+import Cookies from "universal-cookie";
 import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTagTemplate/HashTagTemplate";
 import CommentTemplate from "../../components/CommentTemplate/CommentTemplate";
@@ -40,7 +40,7 @@ function DetailPage({ match }) {
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   //기존댓글
-
+  const cookies = new Cookies();
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
@@ -83,10 +83,10 @@ function DetailPage({ match }) {
       });
   }, []);
 
-  useEffect(async () => {
-    setCommentLoading(true);
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
+  useEffect(() => {
+    //! 태그 추가될때만 실행 -> 태그 상위2개가 바뀌면 업데이트됨 -> 상위 2개 바뀌었을때만 줄 수 있을까요..
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
           Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
@@ -94,6 +94,23 @@ function DetailPage({ match }) {
         withCredentials: true,
       })
       .then((res) => {
+        if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
+      });
+  }, [defaultComment]);
+
+  useEffect(async () => {
+    setCommentLoading(true);
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
+        headers: {
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.userinfo);
         let arr = res.data.data.map((el) => {
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
@@ -126,9 +143,7 @@ function DetailPage({ match }) {
         setLikeLoading(false);
       });
   }, []);
-  useEffect(() => {
-    console.log(defaultComment);
-  }, [defaultComment]);
+
   const overView = overview.replace(/(<([^>]+)>)/gi, "");
   let FirstOverView = overView.slice(0, 130);
   let SecondOverView = overView.slice(130);

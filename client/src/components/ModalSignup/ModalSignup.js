@@ -12,8 +12,8 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
     email: "",
     password: "",
     passwordConfirm: "",
-    user_image_path: "images/men.png",
-    user_thumbnail_path: "images/men.png",
+    user_image_path: "/images/men.png",
+    user_thumbnail_path: "/images/men.png",
   });
 
   const [errorMessage, setErrorMessage] = useState({
@@ -85,10 +85,13 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
           withCredentials: true,
         }
       )
-      .then(() => {
+      .then((res) => {
+        console.log("hi");
+        console.log(res);
         closeLogoutModalHandler();
         handleResponseSuccess();
-      });
+      })
+      .catch((err) => console.log(err.response));
   };
 
   return (

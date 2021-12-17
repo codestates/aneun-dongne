@@ -94,9 +94,8 @@ function ModalVisited({ id, idx, visitedImg }) {
       setIsLoginOpen(true);
       return;
     }
-    console.log("실행됨?");
   }
-
+  console.log(placeImage);
   return (
     <>
       <Styled.FormContainer>

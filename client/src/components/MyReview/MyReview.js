@@ -6,7 +6,7 @@ import { token, kToken } from "../../recoil/recoil";
 
 import MyReviewComment from "../MyReviewComment/MyReviewComment";
 import LikeLoading from "../Loading/LikeLoading";
-import Empty from "../../Empty";
+import Empty from "../Empty";
 
 const MyReview = () => {
   const accessToken = useRecoilValue(token);

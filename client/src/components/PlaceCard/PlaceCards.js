@@ -208,8 +208,8 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
   return (
     <PlaceCard onClick={onClick}>
       <div className="place-cards">
-        <HashTagTemplate keywordDummy={tags || []} />
-        {img ? <img src={img} /> : <img src="./image/notImageYet.png" />}
+        {/* <HashTagTemplate keywordDummy={tags || []} /> */}
+        {img ? <img src={img} /> : <img src="./images/not-image-yet.png" />}
         <div className="place-cards-title">
           <div>{`[${addr1}] `}</div>
           <span>{title}</span>

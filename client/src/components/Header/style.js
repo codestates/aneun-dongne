@@ -50,8 +50,6 @@ export const Styled = {
     display: flex;
     justify-content: center;
     backdrop-filter: contrast(50%);
-    /* backdrop-filter: brightness(50%); */
-
     align-items: center;
     width: 100vw;
     height: 100vh;
@@ -76,5 +74,10 @@ export const Styled = {
     z-index: 2;
     border: 1px solid white;
     border-radius: 20px;
+
+    @media screen and (max-height: 660px) {
+      height: 500px;
+      width: 350px;
+    }
   `,
 };

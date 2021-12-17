@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import VisitedCards from "../VisitedCards/VisitedCards";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
@@ -78,6 +78,9 @@ export const Styled = {
         white-space: nowrap;
       }
     }
+    @media (max-width: 1000px) {
+      margin: 0px;
+    }
   `,
   ModalContainer: styled.div`
     position: relative;
@@ -109,18 +112,6 @@ export const Styled = {
 };
 const Body = styled.div`
   /* display: flex; */
-  @media (min-width: 1040px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (min-width: 1360px) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (min-width: 1730px) {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 40px;
@@ -131,12 +122,34 @@ const Body = styled.div`
     /* border: 1px gray solid; */
     margin: 15px;
   }
+
+  @media (max-width: 1000px) {
+    margin: 0px;
+    grid-column-gap: 0px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1360px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 1730px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
-function VisitedList({ placeList }) {
+function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerClick, setMarkerClick }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [selectedModal, setSelectedModal] = useState(null);
   // console.log(placeList);
-
+  useEffect(() => {
+    if (selectedPosition !== null) {
+      console.log(selectedPosition.visited_thumbnail_path);
+      openModalHandler(selectedPosition);
+      setMarkerClick(false);
+    } else console.log(selectedPosition);
+  }, [selectedPosition, markerClick]);
   const openModalHandler = (el) => {
     setSelectedModal(el);
     setIsVisitedOpen(true);
@@ -158,7 +171,7 @@ function VisitedList({ placeList }) {
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
                 <ModalVisited
-                  id={selectedModal && selectedModal.id}
+                  // id={selectedModal && selectedModal.id}
                   visitedImg={selectedModal && selectedModal.visited_thumbnail_path}
                 />
               </Styled.ModalView>
@@ -168,7 +181,7 @@ function VisitedList({ placeList }) {
       </Styled.ModalContainer>
       <Body>
         {placeList.map((el) => {
-          console.log(el);
+          // console.log(el);
           return (
             <div className="visited-cards-list" key={el.id} onClick={() => openModalHandler(el)}>
               <VisitedCards

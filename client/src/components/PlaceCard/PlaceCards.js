@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import HashTagTemplate from "../HashTagTemplate/HashTagTemplate";
-import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
+import { token, kToken, loginState, loginModal, pickpoint, placelist } from "../../recoil/recoil";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 3px rgb(107, 217, 224) solid;
+  border: 3px rgb(192, 251, 255) solid;
 
   justify-content: center;
   border-radius: 20px;
   width: 300px;
-  /* min-height: 380px; */
+
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: box-shadow 0.1s, transform 0.1s;
   text-decoration: inherit;
@@ -49,6 +49,13 @@ const PlaceCard = styled.div`
     margin-left: 10px;
     margin-top: 6px;
   }
+  @media (max-width: 1023px) {
+    width: 300px;
+  }
+  @media (max-width: 660px) {
+    width: 80%;
+    /* height: 300px; */
+  }
 `;
 const LikeBtn = styled.button`
   border: 1px red solid;
@@ -78,6 +85,7 @@ const LikeBtn = styled.button`
 `;
 
 function PlaceCards({ title, img, addr1, onClick, contentId }) {
+  const placeList = useRecoilValue(placelist);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [tags, setTags] = useState([]);
@@ -126,7 +134,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
     getHashTag();
     getLike();
     setLikeLoading(false);
-  }, [, like, likeOrNot]);
+  }, [placeList, like, likeOrNot]);
   const LikeHandler = async (e) => {
     e.preventDefault();
     if (!isLogin) {

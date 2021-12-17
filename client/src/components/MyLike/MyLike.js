@@ -13,6 +13,19 @@ import Empty from "../Empty.js";
 // import { getNames } from "../../AreaCodetoName";
 // const [like, setLike] = useState(0);
 
+const Body = styled.div`
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 1600px) {
+    .list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+`;
+
 const MyLike = () => {
   const accessToken = useRecoilValue(token);
   const [postsInfo, setPostsInfo] = useState("");
@@ -22,33 +35,9 @@ const MyLike = () => {
   const history = useHistory();
 
   const Margin = styled.div`
-    // margin-left: 150px;
+    margin-left: 150px;
     font-size: 1.5rem;
     font-weight: bold;
-  `;
-
-  const Lists = styled.div`
-    @media (min-width: 768px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-    }
-    @media (min-width: 1040px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (min-width: 1360px) {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
-    @media (min-width: 1730px) {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 20px;
-    text-decoration-line: none;
-    margin-left: 0px;
   `;
 
   const renderMyLike = async () => {
@@ -76,25 +65,27 @@ const MyLike = () => {
   }, []);
 
   return (
-    <Lists>
-      {/* <div className="like-list"> */}
-      {isLoing ? (
-        <>
-          <LikeLoading />
-        </>
-      ) : (
-        <>
-          {postsInfo.length === 0 ? (
-            <Empty />
+    <>
+      <Body>
+        <div className="like-list">
+          {isLoing ? (
+            <div>
+              <LikeLoading />
+            </div>
           ) : (
-            postsInfo.map((postsInfo) => {
-              return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
-            })
+            <div className="list">
+              {postsInfo.length === 0 ? (
+                <Empty />
+              ) : (
+                postsInfo.map((postsInfo) => {
+                  return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
+                })
+              )}
+            </div>
           )}
-        </>
-      )}
-      {/* </div> */}
-    </Lists>
+        </div>
+      </Body>
+    </>
   );
 };
 

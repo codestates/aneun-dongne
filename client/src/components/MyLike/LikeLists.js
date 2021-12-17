@@ -1,29 +1,23 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Mylike from "./MyLike";
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty";
 import { getAreaNames } from "../../modules/AreaCodetoName";
-// const Body = styled.div`
-//   grid-template-columns: repeat(3, 1fr);
-//   grid-auto-rows: 50px;
-// `;
 
 const Lists = styled.div`
-  display: flex;
-  text-decoration-line: none;
-  margin-left: 30px;
+  padding: 0px 25px;
+  @media screen and (max-width: 400px) {
+    padding: 0px 5px;
+  }
 `;
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
   border: 3px rgb(107, 217, 224) solid;
-
   border-radius: 20px;
   width: 300px;
-
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: box-shadow 0.1s, transform 0.1s;
   text-decoration: inherit;
@@ -45,7 +39,7 @@ const PlaceCard = styled.div`
     justify-content: center;
     background-color: white;
     border-radius: 20px;
-    width: 100%;
+    /* width: 100%; */
   }
   .place-cards > img {
     width: 80%;
@@ -54,21 +48,42 @@ const PlaceCard = styled.div`
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 10px;
-
     border-radius: 20px;
-
     /* object-fit: scale-down; */
   }
   .place-cards-title {
     margin-left: 10px;
     margin-top: 6px;
   }
+  @media screen and (max-width: 710px) {
+    width: 220px;
+    height: 350px;
+    .place-cards > img {
+      height: 150px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    width: 140px;
+    height: 310px;
+    .place-cards > img {
+      height: 120px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.7rem;
+    width: 130px;
+    height: 260px;
+    .place-cards > img {
+      height: 100px;
+    }
+  }
 `;
 
 const KeyWord = styled.span`
   margin-top: auto;
   margin-bottom: 5%;
-
   text-align: center;
   clear: both;
   float: left;
@@ -110,7 +125,7 @@ const KeyWordBox = styled.div`
   /* background-color: red; */
   flex-wrap: wrap;
   /* padding: 20px; */
-  height: 100%;
+  /* height: 100%; */
   /* justify-content: space-evenly; */
   /* background-color: pink; */
 
@@ -148,28 +163,11 @@ const LikeBtn = styled.div`
   &:active {
     transform: scale(1.3);
   }
+  @media screen and (max-width: 400px) {
+    width: 60px;
+    height: 30px;
+  }
 `;
-
-// export const TopButton = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   position: fixed;
-//   bottom: 40px;
-//   right: 40px;
-//   cursor: pointer;
-//   width: 60px;
-//   height: 60px;
-//   border-radius: 100%;
-//   background-color: #b2e0f4;
-//   color: white;
-//   transition: all 0.3s;
-
-//   :hover {
-//     background-color: #9cb1e0;
-//     transition: all 0.3s;
-//   }
-// `;
 
 const LikeLists = ({ postsInfo }) => {
   //const tagArr = postsInfo.post_tags.split(",");

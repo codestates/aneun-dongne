@@ -36,10 +36,16 @@ const activeBorderRadius = "1rem 1rem 0 0";
 const inactiveBorderRadius = "1rem 1rem 1rem 1rem";
 
 export const InputContainer = styled.div`
+  @media (max-width: 1023px) {
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+  }
   /* margin-top: 8rem; */
   margin: 5px 2% 5px 2%;
   height: 40px;
-  /* max-width: 150px; */
+  width: 140px;
   /* background-color: #ffffff; */
   display: flex;
   flex-direction: row;
@@ -55,7 +61,13 @@ export const InputContainer = styled.div`
   }
 
   > input {
+    @media (max-width: 1024px) {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
     padding: 10px;
+    width: 140px;
     /* flex: 1 0 0; */
     /* background-color: red; */
     /* border: none; */

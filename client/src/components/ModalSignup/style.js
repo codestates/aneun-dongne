@@ -57,7 +57,7 @@ export const Styled = {
       color: white;
       border-radius: 10px;
       font-size: 1.5rem;
-      font-weight: bold;
+      /* font-weight: bold; */
     }
 
     .login-link {
@@ -84,6 +84,17 @@ export const Styled = {
       &:hover {
         background-color: #6af4aa;
         transition: all 0.3s;
+      }
+    }
+    @media screen and (max-height: 660px) {
+      label {
+        font-size: 1rem;
+      }
+      .error-message {
+        font-size: 0.8rem;
+        height: 2px;
+        color: red;
+        margin-bottom: 12px;
       }
     }
   `,

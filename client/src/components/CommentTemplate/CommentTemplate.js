@@ -5,6 +5,23 @@ import Comments from "../Comments/Comments";
 const CommentWrapper = styled.div`
   width: 100%;
   /* border: 1px gray solid; */
+  .comment-template {
+    background: yellow;
+    margin-left: auto;
+    margin-right: auto;
+    @media (max-width: 768px) {
+      width: 80%;
+      margin-left: 40px;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
+    @media (max-width: 612px) {
+      width: 450px;
+      margin-left: 20px;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
+  }
 `;
 
 function CommentTemplate({ commentDummy, contentId }) {
@@ -17,7 +34,7 @@ function CommentTemplate({ commentDummy, contentId }) {
           if (comment.text === "\n") return null;
           // if (comment.text === "") alert("내용을 입력해주세요");
           return (
-            <div key={idx}>
+            <div className="comment-template" key={idx}>
               <Comments
                 uuid={comment[0].id}
                 img={comment[0].user_image_path}

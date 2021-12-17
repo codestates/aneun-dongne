@@ -23,7 +23,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
   const changeArea = (area) => {
     console.log(area);
     // searchPlace(area);
-    if (area === "- 지역선택 -") {
+    if (area === "지역선택") {
       setArea("null");
     } else {
       console.log(getCodes(area));
@@ -35,7 +35,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
   const changeSigg = (sigg) => {
     console.log(area, sigg);
     // searchPlace(`${area} ${sigg}`);
-    if (sigg === "- 지역선택 -") {
+    if (sigg === "지역선택") {
       setSigg("null");
     } else {
       console.log(getCodes(area, sigg));
@@ -134,7 +134,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
             type="text"
             value={place}
             onChange={(e) => handleSearch(e)}
-            placeholder="관광지 이름을 입력하세요 ex) 경복궁, 창덕궁"
+            placeholder="관광지 이름을 입력하세요"
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 console.log(area);

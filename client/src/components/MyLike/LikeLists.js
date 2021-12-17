@@ -225,16 +225,16 @@ const LikeLists = ({ postsInfo }) => {
         <div onClick={handlecontentClick}>
           <PlaceCard>
             <KeyWordBox>
-              <KeyWord>{postsInfo.post_tags}</KeyWord>
-              {/* {!postsInfo.post_tags ? (
+              {!postsInfo.post_tags ? (
                 ""
               ) : (
-                <KeyWord>
-                  {tagArr.map((tag) => (
-                    <span>#{tag}</span>
-                  ))}
-                </KeyWord>
-              )} */}
+                <KeyWord>{postsInfo.post_tags}</KeyWord>
+                // <KeyWord>
+                //   {tagArr.map((tag) => (
+                //     <span>#{tag}</span>
+                //   ))}
+                // </KeyWord>
+              )}
             </KeyWordBox>
             <div className="place-cards">
               {!postsInfo.post_firstimage ? (

@@ -28,47 +28,16 @@ export const TagsInput = styled.div`
     padding: 0 8px;
     font-size: 14px;
     list-style: none;
+    color: #162b71;
     border-radius: 6px;
+
     margin: 0 8px 8px 0;
-    border: 1px solid rgb(192, 251, 255);
-    background-color: rgb(192, 251, 255);
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
+
+    > .tag-title {
+      margin-right: 8px;
+    }
   }
-  .tag:after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 100%;
-    top: 0;
-    right: 0;
-    z-index: -1;
-    background-color: rgb(192, 251, 255);
-    background-image: linear-gradient(
-      to left top,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    border-radius: 5px;
-    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-  .tag:hover {
-    color: black;
-    transform: scale(1.1);
-  }
-  .tag:hover:after {
-    left: 0;
-  }
-  .tag:active {
-    //
-  }
+
   .tag-close-icon {
     display: block;
     width: 16px;
@@ -77,9 +46,11 @@ export const TagsInput = styled.div`
     text-align: center;
     font-size: 14px;
     margin-left: 8px;
-    color: #4000c7;
+    /* color: #4000c7; */
+    color: #162b71;
     border-radius: 50%;
-    background: #fff;
+    /* background: #fff; */
+
     cursor: pointer;
   }
 
@@ -132,7 +103,7 @@ const EditableHashTag = ({ setTags, tags }) => {
         <div id="tags">
           {tags.map((tag, index) => (
             <div key={index} className="tag">
-              <span className="tag-title">{tag}</span>
+              <span className="tag-title">#{tag}</span>
               <span className="tag-close-icon" onClick={() => removeTags(index)}>
                 &times;
               </span>

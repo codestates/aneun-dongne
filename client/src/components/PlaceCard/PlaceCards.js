@@ -12,7 +12,7 @@ const PlaceCard = styled.div`
   justify-content: center;
   border-radius: 20px;
   width: 300px;
-  /* height: 275px; */
+  /* min-height: 380px; */
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: box-shadow 0.1s, transform 0.1s;
   text-decoration: inherit;
@@ -142,9 +142,11 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
         setLikeLoading(false);
       }
     };
+    setLikeLoading(true);
     getHashTag();
     getLike();
-  }, []);
+    setLikeLoading(false);
+  }, [, like, likeOrNot]);
   const LikeHandler = async (e) => {
     e.preventDefault();
     if (!isLogin) {

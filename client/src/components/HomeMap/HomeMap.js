@@ -17,6 +17,8 @@ import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
 import Loading from "../Loading/Loading";
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
+import LikeLoading from "../Loading/LikeLoading";
+import MapLoading from "../Loading/MapLoading";
 
 const HomeMap = () => {
   const kakao = window.kakao;
@@ -335,17 +337,14 @@ const HomeMap = () => {
   //   map.setBounds(bounds);
   //   setMap(map);
   // };
-  useEffect(() => {
-    // setMapLoading(true);
-    // setTimeout(() => {
-    //   setMapLoading(false);
-    // }, 1000);
+  useEffect(async () => {
     // return func();
     // // * 위의 useEffect에서 받아온 좌표들을 지도에 노란색 마커로 표시
     // // console.log("effect");
     // //!위경도 -> 평면좌표
     // // console.log(placeList);
     const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(pickPoint[0], pickPoint[1]), //지도의 중심좌표를 마커로 변경-> 밑의 let markerCenter랑 연결
@@ -476,7 +475,7 @@ const HomeMap = () => {
 
     // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
     if (clickedNowLocationBtn) {
-      axios
+      await axios
         .get(
           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84`,
           { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
@@ -518,6 +517,7 @@ const HomeMap = () => {
         //   .then(res=>console.log(meetingPlace))
         .catch((err) => console.log(err)); //
     });
+
     map.setBounds(bounds);
     setMap(map);
     setPending(false);
@@ -539,9 +539,23 @@ const HomeMap = () => {
   if (loc.state === "loading" && getWtm.state === "loading") {
     console.log("로딩");
     return (
-      <div>
-        <Loading />
-      </div>
+      <Styled.Div>
+        <HomeRightbar
+          // area={area}
+          // sigg={sigg}
+          // areaIdx={areaIdx}
+          // changeArea={changeArea}
+          // changeSigg={changeSigg}
+          setLevel={setLevel}
+          // handleSearch={handleSearch}
+          searchCurrentPlace={searchPlace}
+          place={place}
+          pickPoint={pickPoint}
+          setPickPoint={setPickPoint}
+        />
+
+        <MapLoading />
+      </Styled.Div>
     );
   }
   return (
@@ -560,7 +574,8 @@ const HomeMap = () => {
         setPickPoint={setPickPoint}
       />
       {/* <span>위치 :{add.address} </span> */}
-      {mapLoading ? <div>로딩</div> : <Styled.Map id="map"></Styled.Map>}
+      {/* <MapLoading /> */}
+      <Styled.Map id="map"></Styled.Map>
     </Styled.Div>
   );
 };

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 const KeyWordBox = styled.div`
+  position: relative;
+
   display: flex;
   justify-content: center;
   /* background-color: red; */
@@ -12,33 +14,36 @@ const KeyWordBox = styled.div`
 
   /* background-color: white; */
 `;
-const KeyWord = styled.span`
-  margin-top: auto;
-  margin-bottom: auto;
+const KeyWord = styled.div`
+  /* display: block; */
+  /* position: absolute; */
+  /* left: 2px; */
 
-  text-align: center;
-  clear: both;
-  float: left;
+  display: grid;
+  /* text-align: center; */
+  /* clear: both; */
+  /* float: left; */
   /* max-width: 130px; */
   /* max-height: 25px; */
-  margin-left: 6px;
+  margin-top: 6px;
+  /* margin-left: 6px; */
   margin-right: 6px;
-  box-shadow: 4px 4px 4px rgb(85, 85, 85);
+  /* box-shadow: 4px 4px 4px rgb(85, 85, 85); */
   padding: 5px;
-  border-radius: 20px;
-  border: 1px solid rgb(192, 251, 255);
-  background-color: rgba(192, 251, 255, 0.8);
-  background-image: linear-gradient(
+  /* border-radius: 20px; */
+  /* border: 1px solid rgb(192, 251, 255); */
+  /* background-color: rgba(192, 251, 255, 0.8); */
+  /* background-image: linear-gradient(
     to right bottom,
     rgba(255, 255, 255, 0.9) 0,
     rgba(0, 0, 0, 0) 60%,
     rgba(0, 0, 0, 0) 100%
-  );
+  ); */
+  color: #162b71;
+  /* color: black; */
+  /* cursor: pointer; */
 
-  color: black;
-  cursor: pointer;
-
-  &:hover {
+  /* &:hover {
     color: black;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
@@ -48,7 +53,7 @@ const KeyWord = styled.span`
   &:hover:after {
     left: 0;
     width: 100%;
-  }
+  } */
 `;
 
 function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
@@ -56,7 +61,11 @@ function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
     <>
       <KeyWordBox>
         {keywordDummy.map((keyword, idx) => {
-          return <KeyWord key={idx}>#{keyword}</KeyWord>;
+          return (
+            <KeyWord idx={idx + "px"} id={idx} position={"absolute"} key={idx}>
+              #{keyword}
+            </KeyWord>
+          );
         })}
       </KeyWordBox>
     </>

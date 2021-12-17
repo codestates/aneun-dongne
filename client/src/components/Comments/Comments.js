@@ -89,6 +89,7 @@ const ContentBox = styled.div`
 
 const Content = styled.div`
   display: flex;
+  padding: 10px;
   flex-wrap: wrap;
   line-height: 1em;
   word-break: break-all;
@@ -96,7 +97,7 @@ const Content = styled.div`
   top: 0;
   left: 10px;
   width: 370px;
-  height: 70px;
+  min-height: 140px;
   padding-left: 10px;
   padding-right: 10px;
 
@@ -377,11 +378,13 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
           ) : (
             <>
               {!editable ? (
-                <Content name="comment">{text}</Content>
+                <Content name="comment" className="comment-read">
+                  {text}
+                </Content>
               ) : (
                 <ContentInput>
                   {!editMode ? (
-                    <div id="comment-read" name="comment">
+                    <div id="comment-read" className="comment-read" name="comment">
                       <span>{comment}</span>
                     </div>
                   ) : (

@@ -82,6 +82,9 @@ const LikeBtn = styled.button`
   &:active {
     transform: scale(1.3);
   }
+  .fa-heart {
+    color: red;
+  }
 `;
 
 function PlaceCards({ title, img, addr1, onClick, contentId }) {

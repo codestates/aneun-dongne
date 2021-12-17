@@ -42,9 +42,10 @@ const PlaceLists = styled.div`
   margin-left: 30px; */
 `;
 const MoveToTopBtn = styled.button`
-  /* border-radius: 70%;
+  border-radius: 70%;
 
-  background: rgba(255, 255, 255, 0.7);
+  /* background: rgba(255, 255, 255, 0.7); */
+  background-color: #b2e0f4;
   width: 60px;
   height: 60px;
   z-index: 999;
@@ -61,11 +62,11 @@ const MoveToTopBtn = styled.button`
     border: 0.5px solid white;
   }
 
-  :hover {
+  /* :hover {
     background-color: #9cb1e0;
     transition: all 0.3s;
   } */
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -76,14 +77,14 @@ const MoveToTopBtn = styled.button`
   height: 60px;
   border-radius: 100%;
   background-color: #b2e0f4;
-  /* background: rgba(192, 251, 255, 0.7); */
+  
   color: white;
   transition: all 0.3s;
   display: ${(props) => (props.BtnStatus ? "inline" : "none")};
   :hover {
     background-color: #9cb1e0;
     transition: all 0.3s;
-  }
+  } */
 `;
 
 export const StyledLink = styled(Link)`

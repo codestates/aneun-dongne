@@ -143,6 +143,7 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
       setMarkerClick(false);
     } else console.log(selectedPosition);
   }, [selectedPosition, markerClick]);
+
   const openModalHandler = (el) => {
     setSelectedModal(el);
     setIsVisitedOpen(true);

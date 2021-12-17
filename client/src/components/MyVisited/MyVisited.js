@@ -6,9 +6,8 @@ import VisitedList from "../VisitedList/VisitedList";
 import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from "../../recoil/recoil";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import Empty from "../Empty";
-import ModalVisited from "../ModalVisited/ModalVisited";
+
 import MapLoading from "../Loading/MapLoading";
-import LikeLoading from "../Loading/LikeLoading";
 
 const { kakao } = window;
 
@@ -103,7 +102,7 @@ const MyVisited = () => {
       //관광지마커의 infowindow(마우스 올렸을때만)
       let iwContent = `
       <div style="width: 200px">
-        <img style = "width:100px;height:100px" src = ${positions[i].visited_thumbnail_path} />
+        <img style = "width:100%;height:100px" src = ${positions[i].visited_thumbnail_path} />
         <div>[${positions[i].addr}]</div>
         <div style = 
           padding: 0 5px;

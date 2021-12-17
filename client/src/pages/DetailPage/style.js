@@ -134,6 +134,7 @@ export const Styled = {
     border: 1px red solid;
     border-radius: 20px;
     /* background: white; */
+    /* color:red */
     width: 60px;
     height: 30px;
     margin: 40px auto;
@@ -153,6 +154,9 @@ export const Styled = {
 
     &:active {
       transform: scale(1.3);
+    }
+    .fa-heart {
+      color: red;
     }
   `,
   Wrapper: styled.div`

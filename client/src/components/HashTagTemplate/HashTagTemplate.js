@@ -18,7 +18,7 @@ const KeyWord = styled.div`
   /* display: block; */
   /* position: absolute; */
   /* left: 2px; */
-  border-bottom: 1px gray solid;
+  /* border-bottom: 1px gray solid; */
   display: grid;
   /* text-align: center; */
   /* clear: both; */

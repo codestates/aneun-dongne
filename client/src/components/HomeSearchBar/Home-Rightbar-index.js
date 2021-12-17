@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Styled } from "./style";
-<<<<<<< HEAD:client/src/components/Home-Rightbar/Home-Rightbar-index.js
-import { cat1_name, cat2_name } from "../../location-data";
-import { areaNameArr, allSigg } from "../../AreaCodetoName";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { usersaddress, token, kToken, placelist } from "../../recoil/recoil";
-import HomeRightBtn from "../Home-RightBtn/HomeRightBtn-index";
-import Loading from "../Loading/Loading";
-=======
 
 import { areaNameArr, allSigg } from "../../AreaCodetoName";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { token, kToken, placelist } from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
->>>>>>> dev:client/src/components/HomeSearchBar/Home-Rightbar-index.js
 import { Autocomplete } from "./Autocomplete";
 import { getCodes } from "../../AreaCodetoName";
 function HomeRightbar({ setLevel, searchCurrentPlace }) {

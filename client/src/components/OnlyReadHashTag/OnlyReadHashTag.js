@@ -33,19 +33,20 @@ export const TagsInput = styled.div`
     list-style: none;
     border-radius: 6px;
     margin: 0 8px 8px 0;
-    border: 1px solid rgb(192, 251, 255);
-    background-color: rgb(192, 251, 255);
+    color: #162b71;
+    /* border: 1px solid rgb(192, 251, 255); */
+    /* background-color: rgb(192, 251, 255); */
     max-width: 400px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
       rgba(0, 0, 0, 0) 60%,
       rgba(0, 0, 0, 0) 100%
     );
     cursor: pointer;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out; */
   }
-  .tag:after {
+  /* .tag:after {
     position: absolute;
     content: "";
     width: 0;
@@ -63,9 +64,9 @@ export const TagsInput = styled.div`
     border-radius: 5px;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; */
   }
-  .tag:hover {
+  /* .tag:hover {
     //
     color: black;
     transform: scale(1.1);
@@ -75,13 +76,13 @@ export const TagsInput = styled.div`
   }
   .tag:active {
     //
-  }
+  } */
 `;
 
 const OnlyReadHashTag = ({ initialTags, uuid }) => {
   // const [tags, setTags] = useState(initialTags);
   const tagInput = useRef(null);
-  // console.log(initialTags);
+  console.log(initialTags);
   return (
     <>
       <TagsInput ref={tagInput} id="outer-box">

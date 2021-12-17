@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import MapInRoom from "../../components/Map/MapInRoom/MapInRoom-index";
-import notImageYet from "../../img/not-image-yet.png";
+// import notImageYet from "/images/not-image-yet.png";
 import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTag/HashTagTemplate";
 import CommentTemplate from "../../components/Comment/CommentTemplate";
@@ -211,7 +211,7 @@ function DetailPage({ match }) {
           </Styled.PageURL>
         ) : null}
         {/* 여기도 사진 넘기기기능 넣자. */}
-        {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src={notImageYet} />}
+        {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src="/images/not-image-yet.png" />}
         {overView ? (
           // !이거 css로 할수있대 나중에 ㄱ
           <Styled.Overview>

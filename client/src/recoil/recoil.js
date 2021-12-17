@@ -221,11 +221,6 @@ export const saveOrNotModal = atom({
   key: "saveOrNotModal",
   default: false,
 });
-// 댓글 삭제 모달
-export const deleteCommentModal = atom({
-  key: "deleteCommentModal",
-  default: false,
-});
 
 //! 회원탈퇴 재확인모달
 export const warningDeleteUserModal = atom({

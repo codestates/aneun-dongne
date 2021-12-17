@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { token, kToken, deleteCommentModal } from "../../recoil/recoil";
+import { useRecoilValue } from "recoil";
+import { token, kToken } from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
 import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
@@ -10,13 +10,9 @@ import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 import { Styled } from "./style";
 import { getAreaNames } from "../../AreaCodetoName";
 
-import LikeLoading from "../Loading/LikeLoading";
-
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-  const setIsCommentDelete = useSetRecoilState(deleteCommentModal);
-  const [isLoing, SetIsloading] = useState(true);
 
   const history = useHistory();
 
@@ -31,10 +27,6 @@ const MyReviewComment = ({ comment, SetComments }) => {
     history.push(`/detailpage/${comment_post_contentid}`);
   };
 
-  const handleDeleteButtonClick = () => {
-    setIsCommentDelete(true);
-  };
-
   const deleteComment = async () => {
     await axios
       .delete(`${process.env.REACT_APP_API_URL}/comment/${comment_post_contentid}`, {
@@ -47,19 +39,13 @@ const MyReviewComment = ({ comment, SetComments }) => {
         withCredentials: true,
       })
       .then((res) => {
-        SetIsloading(true);
         SetComments(res.data.data);
-      })
-      .then(() => {
-        SetIsloading(false);
       });
   };
 
-  //TODO 모달창에서 로딩걸리게 하기
-
   return (
     <>
-      <Styled.Body>
+      <Styled.Comment>
         <div className="user-container">
           <div className="user-info-wrapper">
             <img src={user_image_path} className="user-image" />
@@ -87,10 +73,10 @@ const MyReviewComment = ({ comment, SetComments }) => {
             </div>
           </div>
         </div>
-        <div className="side-button">
-          <Icon size={28} icon={ic_cancel_outline} onClick={handleDeleteButtonClick} className="delete-button" />
+        <div className="side" onClick={deleteComment}>
+          <Icon size={28} icon={ic_cancel_outline} className="delete-button" />
         </div>
-      </Styled.Body>
+      </Styled.Comment>
     </>
   );
 };

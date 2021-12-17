@@ -97,7 +97,7 @@ const LandingCard = () => {
       <Carousel breakPoints={responsive} renderArrow={myArrow} pagination={false}>
         <Post>
           <Review>
-            <img src="/Designer.png" />
+            <img src="images/Designer.png" />
             <ReviewHeader>
               우리동네에서 <br />
               인기있는 관광지가 <br />
@@ -106,7 +106,7 @@ const LandingCard = () => {
               간편하게 볼 수 있어요.
             </ReviewHeader>
             <Backview>
-              <img src="/Designer.png" />
+              <img src="images/Designer.png" />
               <BackText>
                 김코딩
                 <br /> 2021 / 12 / 10
@@ -116,13 +116,13 @@ const LandingCard = () => {
         </Post>
         <Post>
           <Review>
-            <img src="/Fitness.png" />
+            <img src="images/Fitness.png" />
             <ReviewHeader>
               해시태그로 원하는 곳을 <br />
               쉽고 빠르게 찾을 수 있어서 좋아요!
             </ReviewHeader>
             <Backview>
-              <img src="/Fitness.png" />
+              <img src="images/Fitness.png" />
               <BackText>
                 최코딩
                 <br /> 2021 / 12 / 13
@@ -132,13 +132,13 @@ const LandingCard = () => {
         </Post>
         <Post>
           <Review>
-            <img src="/kite.png" />
+            <img src="images/kite.png" />
             <ReviewHeader>
               새로운 동네로의 이사나 출장도 설레어요! ღ'ᴗ'ღ <br />
               산책하는 재미가 생겼어요!!
             </ReviewHeader>
             <Backview>
-              <img src="/kite.png" />
+              <img src="images/kite.png" />
               <BackText>
                 정코딩
                 <br /> 2021 / 12 / 15
@@ -148,7 +148,7 @@ const LandingCard = () => {
         </Post>
         <Post>
           <Review>
-            <img src="/Notificationsr.png" />
+            <img src="images/Notificationsr.png" />
             <ReviewHeader>
               "나만의 좋았던 곳"을 <br />
               저장해 놓으면 그 리스트를 한 번에 볼 수 있어서 <br />
@@ -156,7 +156,7 @@ const LandingCard = () => {
               <br /> 편리해요!!
             </ReviewHeader>
             <Backview>
-              <img src="/Notificationsr.png" />
+              <img src="images/Notificationsr.png" />
               <BackText>
                 박코딩
                 <br /> 2021 / 12 / 16

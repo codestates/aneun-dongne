@@ -3,14 +3,7 @@ import { useRecoilState } from "recoil";
 import ModalLogin from "../ModalLogin/ModalLogin";
 import ModalSignup from "../ModalSignup/ModalSignup";
 import { Styled } from "./style";
-import {
-  deleteCommentModal,
-  isSavepositionOpen,
-  loginState,
-  loginModal,
-  visitedModal,
-  saveOrNotModal,
-} from "../../recoil/recoil";
+import { isSavepositionOpen, loginState, loginModal, visitedModal, saveOrNotModal } from "../../recoil/recoil";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
@@ -18,7 +11,6 @@ import { StyledLink } from "../PlaceList";
 import ModalVisited from "../ModalVisited/ModalVisited";
 import Cookies from "universal-cookie";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
-import ModalDeleteComment from "../ModalDeleteComment/ModalDeleteComment";
 
 const Header = ({ handleResponseSuccess }) => {
   const cookies = new Cookies();
@@ -29,7 +21,6 @@ const Header = ({ handleResponseSuccess }) => {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
-  const [isCommentDelete, setIsCommentDelete] = useRecoilState(deleteCommentModal);
 
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
@@ -75,10 +66,6 @@ const Header = ({ handleResponseSuccess }) => {
   };
   const closeSaveOrNotModalHandler = (e) => {
     setIsSaveOrNotModal(false);
-  };
-
-  const closeCommentDeleteModalHandler = (e) => {
-    setIsCommentDelete(false);
   };
 
   const ToLoginModal = () => {
@@ -171,18 +158,6 @@ const Header = ({ handleResponseSuccess }) => {
             <Styled.ModalBackdrop onClick={closeSaveOrNotModalHandler}>
               <Styled.ModalView height="300px" onClick={(e) => e.stopPropagation()}>
                 <SaveOrNotModal />
-              </Styled.ModalView>
-            </Styled.ModalBackdrop>
-          </>
-        ) : null}
-      </Styled.ModalContainer>
-
-      <Styled.ModalContainer>
-        {isCommentDelete ? (
-          <>
-            <Styled.ModalBackdrop onClick={closeCommentDeleteModalHandler}>
-              <Styled.ModalView height="200px" onClick={(e) => e.stopPropagation()}>
-                <ModalDeleteComment />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>

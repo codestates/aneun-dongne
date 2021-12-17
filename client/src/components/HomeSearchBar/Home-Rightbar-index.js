@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Styled } from "./style";
 
-import { areaNameArr, allSigg } from "../../AreaCodetoName";
+import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { token, kToken, placelist } from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "./Autocomplete";
-import { getCodes } from "../../AreaCodetoName";
+import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel, searchCurrentPlace }) {
   const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
   const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
@@ -48,7 +48,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
     setPlace(e.target.value);
     // e.target.value=''
   };
-  console.log(place);
+  // console.log(place);
   const searchPlace = (area, sigg, hashtag, place) => {
     console.log(area, sigg);
     let areaCode = "";
@@ -134,7 +134,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
             type="text"
             value={place}
             onChange={(e) => handleSearch(e)}
-            placeholder="ex) 경복궁, 창덕궁"
+            placeholder="관광지 이름을 입력하세요 ex) 경복궁, 창덕궁"
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 console.log(area);

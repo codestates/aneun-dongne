@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { Styled } from "./style";
-import { message } from "../../message";
+import { message } from "../../modules/message";
 import { token } from "../../recoil/recoil";
 import KakaoLogin from "./KakaoLogin";
 
@@ -12,7 +12,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
     email: "",
     password: "",
   });
-  
+
   const [errorMessage, setErrorMessage] = useState("");
   const { email, password } = loginInfo;
   const handleInputValue = (key) => (e) => {

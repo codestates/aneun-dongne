@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import { valid } from "../../validator";
-import { message } from "../../message";
+import { valid } from "../../modules/validator";
+import { message } from "../../modules/message";
 
 import { Styled } from "../ModalSignup/style";
 
@@ -12,8 +12,8 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
     email: "",
     password: "",
     passwordConfirm: "",
-    user_image_path: "images/men.png",
-    user_thumbnail_path: "images/men.png",
+    user_image_path: "/images/men.png",
+    user_thumbnail_path: "/images/men.png",
   });
 
   const [errorMessage, setErrorMessage] = useState({

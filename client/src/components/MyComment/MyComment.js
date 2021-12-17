@@ -90,7 +90,6 @@ const Content = styled.textarea`
   flex-wrap: wrap;
   position: absolute;
   top: 0;
-  left: 10px;
   width: 370px;
   height: 70px;
   padding: 10px;
@@ -111,11 +110,6 @@ const HashTagWrapper = styled.div`
   white-space: nowrap;
   border: none;
   border: 1px gray solid;
-`;
-const Date = styled.div`
-  position: absolute;
-  bottom: 5px;
-  right: 10px;
 `;
 
 function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {

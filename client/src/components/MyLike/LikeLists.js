@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
-import Empty from "../Empty";
+import Empty from "../Empty/Empty";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 
 const Lists = styled.div`

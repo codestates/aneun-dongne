@@ -29,6 +29,11 @@ const Comment = styled.div`
     left: 0;
     width: 100%;
   }
+  @media (max-width: 768px) {
+    /* width: 80%; */
+    background: red;
+    margin-left: 10px;
+  }
 `;
 const Profile = styled.div`
   position: relative;
@@ -85,15 +90,20 @@ const ContentBox = styled.div`
   button:active {
     transform: scale(1.1);
   }
+  @media (max-width: 768px) {
+    width: 80%;
+    /* background: blue; */
+    /* margin-left: 10px; */
+  }
 `;
-
+//!-- 내가 바꾼거 댓글 높이
 const Content = styled.div`
   display: flex;
   padding: 10px;
   flex-wrap: wrap;
   line-height: 1em;
   word-break: break-all;
-  /* position: absolute; */
+
   top: 0;
   left: 10px;
   width: 370px;
@@ -101,12 +111,13 @@ const Content = styled.div`
   padding-left: 10px;
   padding-right: 10px;
 
-  /* background-color: skyblue; */
+  background-color: skyblue;
 `;
 
 const ContentInput = styled.div`
   display: flex;
   padding: 10px;
+  width: 480px;
   /* border: 1px gray solid; */
   /* flex-wrap: wrap; */
   /* background-color: burlywood; */
@@ -119,7 +130,6 @@ const ContentInput = styled.div`
   > #comment-change {
     display: flex;
     flex-wrap: wrap;
-
     width: 370px;
     height: 70px;
   }
@@ -128,12 +138,11 @@ const ContentInput = styled.div`
     /* background-color: whitesmoke; */
 
     width: 370px;
-
     padding-left: 10px;
     padding-right: 10px;
   }
 `;
-
+//!----
 const BtnWrapper = styled.div`
   width: 370px;
 
@@ -142,15 +151,21 @@ const BtnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   > button {
-    margin: 10px 0 10px 0;
+    position: absolute;
+    right: -10px;
+
+    width: 80px;
+    border: none;
+    height: 40px;
+    margin: 0px 0 0 0;
     background-color: rgb(192, 251, 255);
   }
   .change-comment,
   .complete-change {
-    z-index: 999;
-
+    /* z-index : 3 내가한거 */
+    z-index: 3;
     border: none;
-
+    
     background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
@@ -177,7 +192,7 @@ const BtnWrapper = styled.div`
   .delete-comment,
   .get-back {
     border: none;
-
+    top: 65px;
     background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
@@ -211,10 +226,16 @@ const HashTagWrapper = styled.div`
   /* bottom: 0; */
   /* top: 75px; */
   /* margin-top: 75px; */
-  left: 10px;
+
   padding-right: 10px;
   white-space: nowrap;
   border: none;
+`;
+
+const Date = styled.div`
+  position: absolute;
+  bottom: 25px;
+  right: 5px;
 `;
 
 function Comments({ uuid, img, nickname, text, initialTags, date, editable, contentId }) {
@@ -402,34 +423,40 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
                       name="comment"
                     />
                   )}
-                  {!editMode ? (
-                    <BtnWrapper>
-                      <button
-                        className="change-comment"
-                        onClick={(e) => {
-                          getCommentId(e);
-                        }}
-                      >
-                        수정하기
-                      </button>
-
-                      <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
-                        댓글삭제
-                      </button>
-                    </BtnWrapper>
-                  ) : (
-                    <BtnWrapper>
-                      <button className="complete-change" onClick={(e) => getCommentId(e)}>
-                        수정완료
-                      </button>
-
-                      <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
-                        수정취소
-                      </button>
-                    </BtnWrapper>
-                  )}
                 </ContentInput>
               )}
+              <>
+                {!editable ? (
+                  <></>
+                ) : (
+                  <>
+                    {!editMode ? (
+                      <BtnWrapper>
+                        <button
+                          className="change-comment"
+                          onClick={(e) => {
+                            getCommentId(e);
+                          }}
+                        >
+                          수정하기
+                        </button>
+                        <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
+                          댓글삭제
+                        </button>
+                      </BtnWrapper>
+                    ) : (
+                      <BtnWrapper>
+                        <button className="complete-change" onClick={(e) => getCommentId(e)}>
+                          수정완료
+                        </button>
+                        <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
+                          수정취소
+                        </button>
+                      </BtnWrapper>
+                    )}
+                  </>
+                )}
+              </>
               <HashTagWrapper>
                 {/* 편집못함? -> 읽기만가능한해시태그 안에 props로 다른사람의 해시태그 전달
             편집가능? -> 수정못함? : 읽기만가능한 해시태그안에 props로 나의 해시태그 전달
@@ -446,9 +473,8 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
               </HashTagWrapper>
             </>
           )}
+          <Date>작성날짜 : 2016.08.09{date}</Date>
         </ContentBox>
-
-        {/* <Date>작성날짜 : {date}</Date> */}
       </Comment>
     </>
   );

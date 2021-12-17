@@ -64,9 +64,42 @@ export const Styled = {
 
     .page-container {
       margin-top: 75px;
-      /* background: blue; */
       display: flex;
       justify-content: center;
+    }
+
+    .link-text {
+      font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 1024px) {
+      flex-direction: column;
+      .menu-bar {
+        align-items: flex-start;
+        margin-top: 250px;
+        height: 80px;
+        width: 100%;
+      }
+
+      .link-container {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        margin-bottom: 190px;
+      }
+    }
+
+    @media screen and (max-width: 780px) {
+      .link-text {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .link-text {
+        font-size: 0.8rem;
+        padding: 0px 7px;
+      }
     }
   `,
 
@@ -82,6 +115,16 @@ export const Styled = {
     .fas {
       width: 50px;
       text-align: center;
+    }
+
+    @media screen and (max-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+
+      .fas {
+        width: 100%;
+        margin-bottom: 10px;
+      }
     }
   `,
 };

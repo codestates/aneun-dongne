@@ -36,10 +36,16 @@ const activeBorderRadius = "1rem 1rem 0 0";
 const inactiveBorderRadius = "1rem 1rem 1rem 1rem";
 
 export const InputContainer = styled.div`
+  @media (max-width: 1023px) {
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+  }
   /* margin-top: 8rem; */
   margin: 5px 2% 5px 2%;
   height: 40px;
-  width: 150px;
+  width: 140px;
   /* background-color: #ffffff; */
   display: flex;
   flex-direction: row;
@@ -47,16 +53,21 @@ export const InputContainer = styled.div`
   border-radius: 20px;
   /* border: 1px gray solid; */
   border: none;
-
-  z-index: 3;
+  position:relative
+  z-index: 999;
   border-radius: ${(props) => (props.hashtag ? activeBorderRadius : inactiveBorderRadius)};
   &:focus-within {
     box-shadow: ${boxShadow};
   }
 
   > input {
+    @media (max-width: 1024px) {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
     padding: 10px;
-    width: 150px;
+    width: 140px;
     /* flex: 1 0 0; */
     /* background-color: red; */
     /* border: none; */
@@ -75,8 +86,8 @@ export const InputContainer = styled.div`
 `;
 
 export const DropDownContainer = styled.ul`
+  position:relative
   background-color: #ffffff;
-
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -91,8 +102,7 @@ export const DropDownContainer = styled.ul`
   /* border: 1px solid rgb(223, 225, 229); */
   border-radius: 0 0 1rem 1rem;
   box-shadow: ${boxShadow};
-  z-index: 3;
-
+  z-index: 999;
   /* > li { */
   .hashtag-drop-down {
     z-index: 999;
@@ -108,16 +118,18 @@ export const DropDownContainer = styled.ul`
   }
 `;
 const DropDownWrapper = styled.div`
-  z-index: 8;
+  position:relative
+  z-index: 999;
   border-radius: 0 0 5px 5px;
   padding: 5px;
   background: white;
 `;
 const DropDownValue = styled.div`
   /* background: white; */
+  position:relative
   border-bottom: 1px gray solid;
   padding: 3px;
-  z-index: 8; //해시태그
+  z-index: 999;
   display: flex;
   flex-direction: column;
 `;

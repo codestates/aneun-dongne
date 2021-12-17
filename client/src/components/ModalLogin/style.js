@@ -48,18 +48,18 @@ export const Styled = {
       color: white;
       border-radius: 10px;
       font-size: 1.5rem;
-      font-weight: bold;
+      /* font-weight: bold; */
     }
     .kakao-login-button {
       margin-top: 15px;
       cursor: pointer;
       width: 250px;
       height: 50px;
-      background-color: #fff978;
+      background-color: #ffe811;
       color: black;
       border-radius: 10px;
       font-size: 1.5rem;
-      font-weight: bold;
+      /* font-weight: bold; */
     }
 
     .error-message {
@@ -102,6 +102,12 @@ export const Styled = {
       &:hover {
         background-color: yellow;
         transition: all 0.3s;
+      }
+    }
+
+    @media screen and (max-height: 660px) {
+      label {
+        font-size: 1rem;
       }
     }
   `,

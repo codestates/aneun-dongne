@@ -22,6 +22,19 @@ export const Styled = {
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
+    @media (max-width: 768px) {
+      width: 80%;
+      /* height: 406px; */
+      margin-left: 40px;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
+    @media (max-width: 612px) {
+      width: 450px;
+      margin-left: 20px;
+      margin-right: auto;
+      /* margin-left: 10px; */
+    }
   `,
   Map: styled.div`
     width: 600px; //px로 할까요?? 작은모니터 큰모니터 생각하느라 괜히사소한거에 걱정되네요 ㅋㅋ
@@ -29,6 +42,17 @@ export const Styled = {
     border-radius: 10px;
     margin: auto;
     margin-bottom: 1rem;
+    @media (max-width: 768px) {
+      width: 80%;
+      height: 300px;
+      margin: auto;
+      /* margin-left: 10px; */
+    }
+    @media (max-width: 612px) {
+      /* width: 80%; */
+      margin: auto;
+      /* margin-left: 10px; */
+    }
   `,
   Address: styled.div`
     margin-left: auto;

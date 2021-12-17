@@ -248,7 +248,7 @@ AOS.init();
 //   display: flex;
 // `;
 
-function Mainpage() {
+function MainPage() {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const history = useHistory();
   const ToHome = () => {
@@ -347,4 +347,4 @@ function Mainpage() {
     </>
   );
 }
-export default Mainpage;
+export default MainPage;

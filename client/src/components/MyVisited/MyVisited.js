@@ -5,12 +5,18 @@ import { Styled } from "./style";
 import VisitedList from "../VisitedList/VisitedList";
 import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from "../../recoil/recoil";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
-import Empty from "../Empty/Empty";
+
+import Empty from "../Empty";
+import ModalVisited from "../ModalVisited/ModalVisited";
+import MapLoading from "../Loading/MapLoading";
+import LikeLoading from "../Loading/LikeLoading";
 
 const { kakao } = window;
 
 const MyVisited = () => {
-  const setIsVisitedOpen = useSetRecoilState(visitedModal);
+  const [markerClick, setMarkerClick] = useState(false);
+  const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
+  const [selectedPosition, setSelectedPosition] = useState(null);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
@@ -37,10 +43,10 @@ const MyVisited = () => {
     return result;
   }
   useEffect(async () => {
-    await setLoading(true);
-    getVisitedPlace();
-    await setLoading(false);
-    await setDeleteOrNot(false);
+    setLoading(true);
+    await getVisitedPlace();
+    setLoading(false);
+    setDeleteOrNot(false);
     console.log("되나요");
   }, [, deleteOrNot]);
   // console.log(visitedList.contents);
@@ -71,8 +77,9 @@ const MyVisited = () => {
     // }
     for (let i = 0; i < placeList.length; i++) {
       positions.push({
+        id: placeList[i].id,
         addr: `${placeList[i].visited_area} ${placeList[i].visited_sigg}`,
-        img: placeList[i].visited_memo_image_path,
+        visited_thumbnail_path: placeList[i].visited_memo_image_path,
         content: placeList[i].visited_memo,
         latlng: new kakao.maps.LatLng(placeList[i].visited_mapy, placeList[i].visited_mapx),
       });
@@ -97,7 +104,7 @@ const MyVisited = () => {
       //관광지마커의 infowindow(마우스 올렸을때만)
       let iwContent = `
       <div style="width: 200px">
-        <img style = "width:100px;height:100px" src = ${positions[i].img} />
+        <img style = "width:100px;height:100px" src = ${positions[i].visited_thumbnail_path} />
         <div>[${positions[i].addr}]</div>
         <div style = 
           padding: 0 5px;
@@ -123,13 +130,17 @@ const MyVisited = () => {
 
       kakao.maps.event.addListener(marker, "click", function () {
         // infowindowOnClick.open(map, marker);
-        setIsVisitedOpen(true);
+        // setIsVisitedOpen(true);
+        setSelectedPosition(positions[i]);
+        setMarkerClick(true);
+        console.log(positions[i]);
+        // openModalHandler(positions[i]);
       });
     }
     map.setBounds(bounds);
   }, [placeList]);
   // }, [visitedList.contents]);
-  console.log(placeList.length);
+
   if (placeList.length === 0) {
     return (
       <Styled.Body>
@@ -140,24 +151,21 @@ const MyVisited = () => {
        </Styled.Div>  */}
       </Styled.Body>
     );
-  }
-  if (loading === true) {
+  } else
     return (
-      <Styled.Body>
-        <Styled.Div>
-          <div>로딩</div>
-        </Styled.Div>
-      </Styled.Body>
+      <>
+        <Styled.Body>
+          <Styled.Div>{loading ? <MapLoading /> : <Styled.Map id="map"></Styled.Map>}</Styled.Div>
+          <VisitedList
+            placeList={placeList}
+            selectedPosition={selectedPosition}
+            setSelectedPosition={setSelectedPosition}
+            markerClick={markerClick}
+            setMarkerClick={setMarkerClick}
+          />
+        </Styled.Body>
+      </>
     );
-  }
-  return (
-    <Styled.Body>
-      <Styled.Div>
-        <Styled.Map id="map"></Styled.Map>
-      </Styled.Div>
-      <VisitedList placeList={placeList} />
-    </Styled.Body>
-  );
 };
 
 export default MyVisited;

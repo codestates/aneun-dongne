@@ -18,7 +18,7 @@ const KeyWord = styled.div`
   /* display: block; */
   /* position: absolute; */
   /* left: 2px; */
-
+  border-bottom: 1px gray solid;
   display: grid;
   /* text-align: center; */
   /* clear: both; */
@@ -56,14 +56,14 @@ const KeyWord = styled.div`
   } */
 `;
 
-function HashTagTemplate({ keywordDummy, totalWidth, totalHeight }) {
+function HashTagTemplate({ keywordDummy }) {
   return (
     <>
       <KeyWordBox>
         {keywordDummy.map((keyword, idx) => {
           return (
             <KeyWord idx={idx + "px"} id={idx} position={"absolute"} key={idx}>
-              #{keyword}
+              {keyword}
             </KeyWord>
           );
         })}

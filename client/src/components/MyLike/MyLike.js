@@ -13,6 +13,19 @@ import Empty from "../Empty/Empty.js";
 // import { getNames } from "../../AreaCodetoName";
 // const [like, setLike] = useState(0);
 
+const Body = styled.div`
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 1600px) {
+    .list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+`;
+
 const MyLike = () => {
   const accessToken = useRecoilValue(token);
   const [postsInfo, setPostsInfo] = useState("");
@@ -53,23 +66,25 @@ const MyLike = () => {
 
   return (
     <>
-      <div className="like-list">
-        {isLoing ? (
-          <div>
-            <LikeLoading />
-          </div>
-        ) : (
-          <div className="list">
-            {postsInfo.length === 0 ? (
-              <Empty />
-            ) : (
-              postsInfo.map((postsInfo) => {
-                return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
-              })
-            )}
-          </div>
-        )}
-      </div>
+      <Body>
+        <div className="like-list">
+          {isLoing ? (
+            <div>
+              <LikeLoading />
+            </div>
+          ) : (
+            <div className="list">
+              {postsInfo.length === 0 ? (
+                <Empty />
+              ) : (
+                postsInfo.map((postsInfo) => {
+                  return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
+                })
+              )}
+            </div>
+          )}
+        </div>
+      </Body>
     </>
   );
 };

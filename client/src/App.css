@@ -11,104 +11,11 @@
 .menu-img i {
   display: none;
 }
-
+.hashtag-drop-down {
+  z-index: 999;
+}
 /* --- */
 /* img {
   width: 60px;
   height: 30px;
 } */
-#footer-logo-img1 {
-  animation: blink 6s ease-in-out infinite;
-  animation-delay: 1s;
-  @keyframes blink {
-    0% {
-      opacity: 1;
-      /* margin-left: 0; */
-    }
-    25% {
-      opacity: 0;
-      /* margin-left: 20px; */
-    }
-    50% {
-      opacity: 0;
-    }
-    75% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-}
-
-#footer-logo-img2 {
-  animation: blink2 6s ease-in-out infinite;
-  animation-delay: 1s;
-  @keyframes blink2 {
-    0% {
-      opacity: 0;
-      /* margin-left: 0; */
-    }
-    35% {
-      opacity: 1;
-      /* margin-left: 20px; */
-    }
-    50% {
-      opacity: 0;
-    }
-    75% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-}
-#footer-logo-img3 {
-  animation: blink3 6s ease-in-out infinite;
-  animation-delay: 1s;
-
-  @keyframes blink3 {
-    0% {
-      opacity: 0;
-      /* margin-left: 0; */
-    }
-    25% {
-      opacity: 0;
-      /* margin-left: 20px; */
-    }
-    50% {
-      opacity: 1;
-    }
-    75% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-}
-#footer-logo-img4 {
-  animation: blink4 6s ease-in-out infinite;
-  animation-delay: 1s;
-
-  @keyframes blink4 {
-    0% {
-      opacity: 0;
-      /* margin-left: 0; */
-    }
-    25% {
-      opacity: 0;
-      /* margin-left: 20px; */
-    }
-    50% {
-      opacity: 0;
-    }
-    75% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-}

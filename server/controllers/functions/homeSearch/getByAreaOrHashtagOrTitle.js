@@ -2,7 +2,7 @@ const { Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
   console.log("하팅", areacode, sigungucode, tag, searchWord);
-  console.log("하팅2", tag);
+  console.log("하팅 태그", tag);
   let result = [];
   await Post.findAll({
     attributes: [
@@ -70,8 +70,9 @@ module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
       result.sort(function (a, b) {
         return b.likeCount - a.likeCount;
       });
-      result.splice(50);
+      result.splice(30);
+      // console.log("지역선택한 돋보기버튼클릭", result);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log("에러", err));
   return result;
 };

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Styled } from "./style";
-
-import { useRecoilValue, useRecoilState } from "recoil";
-import { token, kToken, loginState } from "../../recoil/recoil";
+import { useHistory } from "react-router-dom";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+import { token, kToken, loginState, loginAgainModal } from "../../recoil/recoil";
 
 import axios from "axios";
 
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
-import LikeLoading from "../../components/Loading/LikeLoading";
-
 const MyPage = ({ match }) => {
+  // const history = useHistory();
   const [imgUrl, setImgUrl] = useState("/men.png");
   const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
@@ -19,7 +18,7 @@ const MyPage = ({ match }) => {
   const kakaoToken = useRecoilValue(kToken);
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-
+  const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   const activeStyle = {
     color: "#172a71",
   };
@@ -38,20 +37,24 @@ const MyPage = ({ match }) => {
 
         setNickname(res.data.data.userInfo.nickname);
         if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
-          setImgUrl(res.data.data.userInfo.user_thumbnail_path);
-          setPrevImg(res.data.data.userInfo.user_image_path);
+          console.log(res.data.data.userInfo.user_image_path);
+          setImgUrl(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
+          setPrevImg(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
         }
         setLoading(false);
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
+            setIsLoginAgainOpen(true);
+          }
+        }
       });
     return result;
   }
-  useEffect(async () => {
-    //! 우선 적음 나중에 지우게되도
-    await setLoading(true);
+  useEffect(() => {
     getUserInfo();
-
-    await setLoading(false);
-    console.log("되나요");
   }, []);
 
   return (

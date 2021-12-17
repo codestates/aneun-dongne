@@ -106,12 +106,12 @@ module.exports = {
 
       if (Object.keys(validUser).length === 0) {
         //유저 없으면 컷
-        await res.status(405).json({ data: null, message: "no such user in the database" });
+        await res.status(400).json({ data: null, message: "no such user in the database" });
       } else {
         if (!validUser.password || validUser.provider === "kakao") {
           //카카오 로그인하면 비번 없음
           console.log("카카오 아닌데");
-          await res.status(400).send({ message: "Cannot edit kakao profile" });
+          await res.status(403).send({ message: "Cannot edit kakao profile" });
         } else if (validUser.password !== password || check_Password !== new_Password) {
           //보통 password 실수한 경우
           console.log("비번문제");
@@ -163,6 +163,7 @@ module.exports = {
             res.json({
               data: {
                 accessToken,
+                email,
                 nickname: new_Nickname,
                 user_image_path: imagePath,
                 user_thumbnail_path: thumbnailPath,

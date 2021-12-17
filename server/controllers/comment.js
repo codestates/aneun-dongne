@@ -44,7 +44,7 @@ module.exports = {
     try {
       if (!accessTokenData) {
         // return res.status(401).send("no token in req.headers['authorization']");
-        await res.status(400).json({ data: null, message: "invalid access token" });
+        await res.status(401).json({ data: null, message: "invalid access token" });
       } else {
         const { id } = accessTokenData;
         await createCommentHashtagData(id, contentId, commentContent, tagsArr);
@@ -86,7 +86,7 @@ module.exports = {
     try {
       if (!accessTokenData) {
         // return res.status(401).send("no token in req.headers['authorization']");
-        return res.status(400).json({ data: null, message: "invalid access token" });
+        return res.status(401).json({ data: null, message: "invalid access token" });
       } else {
         const { id } = accessTokenData;
         await deleteCommentData(commentId, id, contentId);

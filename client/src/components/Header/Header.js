@@ -10,7 +10,9 @@ import {
   visitedModal,
   saveOrNotModal,
   loginAgainModal,
+  warningDeleteUserModal,
 } from "../../recoil/recoil";
+import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteUserInfo";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
@@ -30,6 +32,8 @@ const Header = ({ handleResponseSuccess }) => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const [isLoginAgainOpen, setIsLoginAgainOpen] = useRecoilState(loginAgainModal);
+  const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
+
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
       setIsLoginOpen(false);
@@ -110,6 +114,10 @@ const Header = ({ handleResponseSuccess }) => {
     // console.log(cookies);
   };
 
+  const closeWarningModalHandler = () => {
+    setWarningModal(false);
+  };
+
   // }, [accessToken, kToken]);
   // console.log(isVisitedOpen);
   return (
@@ -158,6 +166,18 @@ const Header = ({ handleResponseSuccess }) => {
           </>
         ) : null}
       </Styled.ModalContainer>
+      {/* // profile.js - 회원탈퇴 경고모달창*/}
+      <Styled.ModalContainer>
+        {isWarningModal ? (
+          <>
+            <Styled.ModalBackdrop onClick={closeWarningModalHandler}>
+              <Styled.ModalView height="300px" onClick={(e) => e.stopPropagation()}>
+                <WarningDeleteUserModal />
+              </Styled.ModalView>
+            </Styled.ModalBackdrop>
+          </>
+        ) : null}
+      </Styled.ModalContainer>
 
       {/* 홈화면에서 내장소 저장 후 뜨는 saveOrNot 모달 */}
       <Styled.ModalContainer>
@@ -186,7 +206,7 @@ const Header = ({ handleResponseSuccess }) => {
 
       <Styled.HeaderContainer>
         <div className="header-wrapper">
-          <Link to="/">
+          <Link to="/home">
             {/* <div id="logo">아는동네</div> */}
             <img
               src="https://media.discordapp.net/attachments/912244672578089002/912920442157805678/E53C1906-3AF2-4061-AFD3-E6E7A131BDCE.jpeg"

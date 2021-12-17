@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Styled } from "./style";
 
@@ -130,20 +130,18 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
             </Styled.SearchLocation>
           </Styled.SearchBar>
           <Autocomplete hashtag={hashtag} setHashtag={setHashtag} />
-          <Styled.SearchPlaceWrapper>
-            <Styled.SearchPlace
-              type="text"
-              value={place}
-              onChange={(e) => handleSearch(e)}
-              placeholder="ex) 경복궁, 창덕궁"
-              onKeyUp={(e) => {
-                if (e.key === "Enter") {
-                  console.log(area);
-                  searchPlace(area, sigg, hashtag, place);
-                }
-              }}
-            ></Styled.SearchPlace>
-          </Styled.SearchPlaceWrapper>
+          <Styled.SearchPlace
+            type="text"
+            value={place}
+            onChange={(e) => handleSearch(e)}
+            placeholder="관광지 이름을 입력하세요"
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                console.log(area);
+                searchPlace(area, sigg, hashtag, place);
+              }
+            }}
+          ></Styled.SearchPlace>
           <Styled.SearchBtn onClick={() => searchPlace(area, sigg, hashtag, place)}>
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>

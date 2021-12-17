@@ -24,7 +24,10 @@ export const Styled = {
 
     > h2 {
       /* background: red; */
-      margin-top: 100px;
+      margin-top: 80px;
+      margin-left: 20px;
+      margin-right: 20px;
+      text-align: center;
     }
     > .button-wrapper {
       margin: 40px;

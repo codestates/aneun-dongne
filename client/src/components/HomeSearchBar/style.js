@@ -89,6 +89,37 @@ export const Styled = {
   `,
   // 도|시군구
   SearchLocation: styled.select`
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    /* background-color: red; */
+    border: none;
+    /* border: 1px pink solid; */
+    //중앙선 더 오른쪽으로 옮기고 싶은데 잘안된다..
+    border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
+  `,
+  //도|시군구를 감싸고있는 div
+  SearchBar: styled.div`
+    margin: 5px 2% 5px 2%;
+    /* margin-right: 5%; */
+    display: flex;
+    padding: 5px;
+    width: 300px;
+    height: 40px;
+    border-radius: 5px;
+    border: 3px gray solid;
+    transition: all 0.5s ease-in-out;
+    &:hover {
+      color: black;
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      transform: scale(1.1);
+    }
+    &:hover:after {
+      left: 0;
+      width: 100%;
     @media (max-width: 1023px) {
       width: 48%;
       height: 40px;
@@ -115,7 +146,10 @@ export const Styled = {
       margin: 5px 2% 5px 2%;
       width: 130px;
       height: 40px;
-      background-color: white;
+      top: 0;
+      right: 0;
+      z-index: 200;
+      background-color: rgb(192, 251, 255);
       background-image: linear-gradient(
         to right bottom,
         rgba(255, 255, 255, 0.9) 0,
@@ -205,6 +239,33 @@ export const Styled = {
   `,
   //검색버튼
   SearchBtn: styled.button`
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width: 80px;
+    height: 40px;
+    background-color: rgb(192, 251, 255);
+    background-image: linear-gradient(
+      to right bottom,
+      rgba(255, 255, 255, 0.9) 0,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    border: white;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    cursor: pointer;
+    perspective: 230px;
+    transition: all 0.5s ease-in-out;
+    &:after {
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 100%;
+      top: 0;
+      right: 0;
+      z-index: 999;
     @media (max-width: 1023px) {
       width: 98%;
       height: 40px;
@@ -219,7 +280,6 @@ export const Styled = {
       margin-left: 5px;
       width: 80px;
       height: 40px;
-
       background-color: rgb(192, 251, 255);
       background-image: linear-gradient(
         to right bottom,

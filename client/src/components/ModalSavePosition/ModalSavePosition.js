@@ -80,7 +80,6 @@ const ModalSavePosition = () => {
       })
 
       .then((res) => {
-        console.log(res.data.message);
         setIsUploaded(true);
         setIsSaveOrNotModal(true);
         setIsSavePositionOpen(false);

@@ -5,6 +5,7 @@ import { Styled } from "./style";
 import VisitedList from "../VisitedList/VisitedList";
 import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from "../../recoil/recoil";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+
 import Empty from "../Empty";
 
 import MapLoading from "../Loading/MapLoading";

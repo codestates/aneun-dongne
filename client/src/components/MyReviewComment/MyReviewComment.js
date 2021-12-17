@@ -8,7 +8,7 @@ import { Icon } from "react-icons-kit";
 import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 
 import { Styled } from "./style";
-import { getAreaNames } from "../../AreaCodetoName";
+import { getAreaNames } from "../../modules/AreaCodetoName";
 
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);

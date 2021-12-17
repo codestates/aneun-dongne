@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { loginState, loginModal, token, kToken, loginAgainModal } from "../../recoil/recoil";
 import { Styled } from "./style";
-import { message } from "../../message";
+import { message } from "../../modules/message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
 
 const UserInfopage = styled.div`

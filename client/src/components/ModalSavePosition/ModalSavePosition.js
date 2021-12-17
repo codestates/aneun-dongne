@@ -12,7 +12,6 @@ import {
   saveOrNotModal,
 } from "../../recoil/recoil";
 import { Styled } from "./style";
-import { message } from "../../message";
 import ImageUpload from "../UploadImage/ImageUpload";
 
 const ModalSavePosition = () => {
@@ -80,7 +79,6 @@ const ModalSavePosition = () => {
       })
 
       .then((res) => {
-        console.log(res.data.message);
         setIsUploaded(true);
         setIsSaveOrNotModal(true);
         setIsSavePositionOpen(false);

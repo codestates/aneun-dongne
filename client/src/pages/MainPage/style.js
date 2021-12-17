@@ -12,7 +12,7 @@ flex-direction: column; */
       flex-direction: column;
       margin: 0 auto;
       padding: 0 2vw;
-      border: 1px solid #aaa;
+
       width: 60%;
       height: 100%;
     }

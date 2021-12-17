@@ -214,7 +214,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         }
       });
   }, []);
-  // console.log(imgUrl);
+  console.log(imgUrl);
   const editInfo = async (e) => {
     e.preventDefault();
 
@@ -236,7 +236,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
       formData.append("image", imgUrl);
       console.log(imgUrl);
     }
-    console.log(inputEmail);
+    console.log(imgUrl);
     formData.append("nickname", inputUsername);
     formData.append("email", inputEmail);
     formData.append("password", inputPassword);

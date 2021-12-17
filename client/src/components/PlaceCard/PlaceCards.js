@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import HashTagTemplate from "../HashTagTemplate/HashTagTemplate";
-import { token, kToken } from "../../recoil/recoil";
-import { useRecoilValue } from "recoil";
+import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
@@ -104,6 +104,9 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
   const [likeLoading, setLikeLoading] = useState(false);
+  //로긴상태,로긴모달
+  const isLogin = useRecoilValue(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
   useEffect(() => {
     const getHashTag = async () => {
       try {
@@ -144,6 +147,10 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
   }, []);
   const LikeHandler = async (e) => {
     e.preventDefault();
+    if (!isLogin) {
+      setIsLoginOpen(true);
+      return;
+    }
     setLikeLoading(true);
     if (!likeOrNot) {
       e.preventDefault();
@@ -165,6 +172,11 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
           setLike(like.likeCount);
 
           setLikeOrNot(like.likeOrNot);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setIsLoginOpen(true);
+          }
         });
     } else {
       e.preventDefault();
@@ -181,6 +193,11 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
 
           setLike(like.likeCount);
           setLikeOrNot(like.likeOrNot);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setIsLoginOpen(true);
+          }
         });
     }
     setLikeLoading(false);

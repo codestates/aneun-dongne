@@ -11,8 +11,8 @@ import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 const MyPage = ({ match }) => {
   // const history = useHistory();
-  const [imgUrl, setImgUrl] = useState("/image/men.png");
-  const [prevImg, setPrevImg] = useState("/image/men.png");
+  const [imgUrl, setImgUrl] = useState("/men.png");
+  const [prevImg, setPrevImg] = useState("/men.png");
   const [nickname, setNickname] = useState("");
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -37,8 +37,9 @@ const MyPage = ({ match }) => {
 
         setNickname(res.data.data.userInfo.nickname);
         if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
-          setImgUrl(res.data.data.userInfo.user_thumbnail_path);
-          setPrevImg(res.data.data.userInfo.user_image_path);
+          console.log(res.data.data.userInfo.user_image_path);
+          setImgUrl(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
+          setPrevImg(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
         }
         setLoading(false);
       })
@@ -54,7 +55,7 @@ const MyPage = ({ match }) => {
   }
   useEffect(() => {
     getUserInfo();
-  });
+  }, []);
 
   return (
     <>

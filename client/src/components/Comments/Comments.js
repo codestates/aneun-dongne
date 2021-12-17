@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { defaultcomments, deleteCommentmode, token, kToken } from "../../recoil/recoil";
+import { defaultcomments, deleteCommentmode, token, kToken, loginState, loginModal } from "../../recoil/recoil";
 
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
 import axios from "axios";
@@ -223,7 +223,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(text);
-
+  //로긴상태,로긴모달
+  const isLogin = useRecoilValue(loginState);
+  const setIsLoginOpen = useSetRecoilState(loginModal);
+  //
   const [changeOrNot, setChangeOrNot] = useState(false);
   const [tags, setTags] = useState(initialTags);
   const setDefaultComment = useSetRecoilState(defaultcomments);
@@ -331,6 +334,11 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         });
         console.log(arr);
         setDefaultComment(arr);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          setIsLoginOpen(true);
+        }
       });
 
     // if (editMode) console.log("수정완료");

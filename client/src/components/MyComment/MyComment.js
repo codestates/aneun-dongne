@@ -120,10 +120,10 @@ const Date = styled.div`
 
 function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
   const kakaoToken = useRecoilValue(kToken);
-  const [pending, setPending] = useState(false);
+  // const [pending, setPending] = useState(false);
   const [something, setSomething] = useState("");
-  const [text, setText] = useState("");
-  const [count, setCount] = useState(0);
+  // const [text, setText] = useState("");
+  // const [count, setCount] = useState(0);
   const [tags, setTags] = useState([]);
   const accessToken = useRecoilValue(token);
   // const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
@@ -185,7 +185,10 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       // });
 
       // setPending(true);
-      console.log(err);
+      console.log(err.response.status);
+      if (err.response.status === 401) {
+        setIsLoginOpen(true);
+      }
     }
     setCommentLoading(false);
   };

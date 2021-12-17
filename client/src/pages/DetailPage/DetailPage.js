@@ -165,6 +165,11 @@ function DetailPage({ match }) {
           setLike(like.likeCount);
 
           setLikeOrNot(like.likeOrNot);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setIsLoginOpen(true);
+          }
         });
     } else {
       axios
@@ -180,6 +185,11 @@ function DetailPage({ match }) {
 
           setLike(like.likeCount);
           setLikeOrNot(like.likeOrNot);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setIsLoginOpen(true);
+          }
         });
     }
     // return setTimeout(() => {

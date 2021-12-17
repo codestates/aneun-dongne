@@ -4,12 +4,13 @@ import { Styled } from "./style";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginAgainModal } from "../../recoil/recoil";
-
+import Cookies from "universal-cookie";
 import axios from "axios";
 
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
 const MyPage = ({ match }) => {
+  const cookies = new Cookies();
   const [imgUrl, setImgUrl] = useState("images/men.png");
   const [prevImg, setPrevImg] = useState("images/men.png");
   const [nickname, setNickname] = useState("");
@@ -26,7 +27,8 @@ const MyPage = ({ match }) => {
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

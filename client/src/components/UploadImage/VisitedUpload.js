@@ -43,7 +43,7 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
   // function inputImageHandler(){
   //     const image = placeImage.current.files
   // }
-  console.log(typeof placeImage);
+  console.log(placeImage);
   return (
     <div className="image-upload-box">
       <input

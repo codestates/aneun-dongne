@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Styled } from "./style";
 import {
   isSavepositionOpen,
   nowlocation,
-  setLo,
+  // setLo,
   usersaddress,
   pickpoint,
   isClickedNowLocation,
@@ -13,11 +13,11 @@ import { useRecoilValue, useSetRecoilState, useRecoilState, useRecoilValueLoadab
 import { Link } from "react-router-dom";
 
 function HomeRightBtn({ pending, setPending }) {
-  const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
+  const setIsSavePositionOpen = useSetRecoilState(isSavepositionOpen);
   const nowLoc = useRecoilValue(nowlocation);
   const setPickPoint = useSetRecoilState(pickpoint);
-  const [add, setAdd] = useRecoilState(usersaddress);
-  const loc = useRecoilValueLoadable(setLo);
+  // const [add, setAdd] = useRecoilState(usersaddress);
+  // const loc = useRecoilValueLoadable(setLo);
   const [clickedNowLocationBtn, setClickedNowLocationBtn] = useRecoilState(isClickedNowLocation);
   const openModalHandler = () => {
     setIsSavePositionOpen(true);

@@ -23,7 +23,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
   const changeArea = (area) => {
     console.log(area);
     // searchPlace(area);
-    if (area === "- 지역선택 -") {
+    if (area === "지역선택") {
       setArea("null");
     } else {
       console.log(getCodes(area));
@@ -35,7 +35,7 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
   const changeSigg = (sigg) => {
     console.log(area, sigg);
     // searchPlace(`${area} ${sigg}`);
-    if (sigg === "- 지역선택 -") {
+    if (sigg === "지역선택") {
       setSigg("null");
     } else {
       console.log(getCodes(area, sigg));
@@ -130,18 +130,20 @@ function HomeRightbar({ setLevel, searchCurrentPlace }) {
             </Styled.SearchLocation>
           </Styled.SearchBar>
           <Autocomplete hashtag={hashtag} setHashtag={setHashtag} />
-          <Styled.SearchPlace
-            type="text"
-            value={place}
-            onChange={(e) => handleSearch(e)}
-            placeholder="ex) 경복궁, 창덕궁"
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                console.log(area);
-                searchPlace(area, sigg, hashtag, place);
-              }
-            }}
-          ></Styled.SearchPlace>
+          <Styled.SearchPlaceWrapper>
+            <Styled.SearchPlace
+              type="text"
+              value={place}
+              onChange={(e) => handleSearch(e)}
+              placeholder="ex) 경복궁, 창덕궁"
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  console.log(area);
+                  searchPlace(area, sigg, hashtag, place);
+                }
+              }}
+            ></Styled.SearchPlace>
+          </Styled.SearchPlaceWrapper>
           <Styled.SearchBtn onClick={() => searchPlace(area, sigg, hashtag, place)}>
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>

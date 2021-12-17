@@ -567,7 +567,8 @@ const HomeMap = () => {
         pickPoint={pickPoint}
         setPickPoint={setPickPoint}
       />
-
+      <br />
+      <div>&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다"}</div>
       <Styled.Map id="map"></Styled.Map>
     </Styled.Div>
   );
@@ -575,7 +576,3 @@ const HomeMap = () => {
 
 export default HomeMap;
 
-//! 남은거 :
-
-//! 무한스크롤
-//! css,반응형

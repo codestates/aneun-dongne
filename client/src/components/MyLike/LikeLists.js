@@ -169,88 +169,68 @@ const LikeBtn = styled.div`
   }
 `;
 
-export const TopButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  background-color: #b2e0f4;
-  color: white;
-  transition: all 0.3s;
-
-  :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-  }
-`;
 const LikeLists = ({ postsInfo }) => {
   //const tagArr = postsInfo.post_tags.split(",");
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
-  const ToScrollTop = (e) => {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
+  // const ToScrollTop = (e) => {
+  //   window.scroll({
+  //     top: 0,
+  //     left: 0,
+  //     behavior: "smooth",
+  //   });
+  // };
   const handlecontentClick = () => {
     history.push(`/detailpage/${postsInfo.post_contentid}`);
   };
   return (
-    <>
-      <Lists>
-        {!postsInfo.length === 0 ? (
-          <Empty />
-        ) : (
-          <div onClick={handlecontentClick}>
-            <PlaceCard>
-              <KeyWordBox>
-                {!postsInfo.post_tags ? (
-                  ""
-                ) : (
-                  <KeyWord>{postsInfo.post_tags}</KeyWord>
-                  // <KeyWord>
-                  //   {tagArr.map((tag) => (
-                  //     <span>#{tag}</span>
-                  //   ))}
-                  // </KeyWord>
-                )}
-              </KeyWordBox>
-              <div className="place-cards">
-                {!postsInfo.post_firstimage ? (
-                  <img src="/images/not-image-yet.png" />
-                ) : (
-                  <img src={postsInfo.post_firstimage} />
-                )}
-              </div>
-              <div className="place-cards-title">
-                <div className="user-area">
-                  [{sigungu.areaName} {sigungu.siggName}]
-                </div>
-
-                <div>{postsInfo.post_title}</div>
-              </div>
-              <LikeBtn>
-                <div>
-                  <i class="fas fa-heart"></i>
-                  {postsInfo["Likes.likeCount"]}
-                </div>
-              </LikeBtn>
-            </PlaceCard>
+    <Lists>
+      {!postsInfo.length === 0 ? (
+        <Empty />
+      ) : (
+        <PlaceCard onClick={handlecontentClick}>
+          <KeyWordBox>
+            {!postsInfo.post_tags ? (
+              ""
+            ) : (
+              <>
+                {postsInfo.post_tags.split(",").map((tag) => {
+                  return <KeyWord>{tag}</KeyWord>;
+                })}
+              </>
+              // <KeyWord>
+              //   {tagArr.map((tag) => (
+              //     <span>#{tag}</span>
+              //   ))}
+              // </KeyWord>
+            )}
+          </KeyWordBox>
+          <div className="place-cards">
+            {!postsInfo.post_firstimage ? (
+              <img src="/images/not-image-yet.png" />
+            ) : (
+              <img src={postsInfo.post_firstimage} />
+            )}
           </div>
-        )}
-        <TopButton onClick={ToScrollTop}>
-          <Icon size={"60"} icon={angleUp} />
-        </TopButton>
-      </Lists>
-    </>
+          <div className="place-cards-title">
+            <div className="user-area">
+              [{sigungu.areaName} {sigungu.siggName}]
+            </div>
+
+            <div>{postsInfo.post_title}</div>
+          </div>
+          <LikeBtn>
+            <div>
+              <i class="fas fa-heart"></i>
+              {postsInfo["Likes.likeCount"]}
+            </div>
+          </LikeBtn>
+        </PlaceCard>
+      )}
+      {/* <TopButton onClick={ToScrollTop}>
+        <Icon size={"60"} icon={angleUp} />
+      </TopButton> */}
+    </Lists>
   );
 };
 

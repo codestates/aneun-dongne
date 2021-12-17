@@ -16,10 +16,15 @@ export const Styled = {
       /* background: red; */
     }
     border-radius: 5px;
+<<<<<<< HEAD:client/src/components/Home-RightBtn/style.js
+    z-index: 0;
+=======
     position: relative;
     z-index: 7.9; //버튼
+>>>>>>> dev:client/src/components/HomeSearchBtn/style.js
     /* left: -10px;
     bottom: 20px; */
+    position:relative
     background-color: rgb(192, 251, 255);
     background-image: linear-gradient(
       to right bottom,
@@ -41,7 +46,7 @@ export const Styled = {
       height: 100%;
       top: 0;
       right: 0;
-      z-index: -1;
+      z-index: 0;
       background-color: rgb(192, 251, 255);
       background-image: linear-gradient(
         to left top,

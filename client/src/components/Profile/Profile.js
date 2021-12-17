@@ -3,7 +3,15 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { loginState, loginModal, token, kToken, loginAgainModal } from "../../recoil/recoil";
+import {
+  userInfo,
+  loginState,
+  loginModal,
+  loginAgainModal,
+  token,
+  kToken,
+  warningDeleteUserModal,
+} from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../modules/message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
@@ -178,6 +186,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
   useEffect(() => {
     console.log(kakaoToken);
     if (kakaoToken) setErrorMessage(message.kakaoState);
@@ -319,26 +328,9 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
     }
   };
 
-  //회원탈퇴
-  const deleteHandler = () => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URL}/user/info`, {
-        headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log("탈퇴가 될지...", res);
-        // isLogout();
-        setIsDelete(true);
-        setIsLogin(false);
-        setTimeout(() => {
-          history.push("/");
-        }, 1000);
-      })
-      .catch((err) => console.log(err));
+  //회원탈퇴모달 오픈 (회원탈퇴로직 ModalWarningDeleteUserInfo/WaringDeleteUserInfo.js)
+  const openWarningModalHandler = () => {
+    setWarningModal(true);
   };
 
   return (
@@ -395,7 +387,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                   저장
                 </button>
 
-                <button className="btn-exit" onClick={() => deleteHandler()}>
+                <button className="btn-exit" onClick={openWarningModalHandler}>
                   회원탈퇴
                 </button>
               </div>

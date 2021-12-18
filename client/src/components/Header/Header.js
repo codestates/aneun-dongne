@@ -16,7 +16,7 @@ import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteU
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-import { StyledLink } from "../PlaceList/PlaceList";
+// import { StyledLink } from "../PlaceList/PlaceList";
 
 import Cookies from "universal-cookie";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
@@ -237,10 +237,10 @@ const Header = ({ handleResponseSuccess }) => {
                   </div>
                 )}
                 {/* 나중에 밑줄뜨는거 처리해야함*/}
-                <StyledLink to="/mypage/like">
+                <Styled.StyledLink to="/mypage/like">
                   <div className="mainpage-button">My Page</div>
                   {/* <div className="mainpage-button">My Page</div> */}
-                </StyledLink>
+                </Styled.StyledLink>
               </>
             )}
           </div>

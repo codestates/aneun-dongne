@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+
 import axios from "axios";
 import MapInRoom from "../../components/MapInRoom/MapInRoom";
 import Cookies from "universal-cookie";

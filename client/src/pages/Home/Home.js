@@ -1,61 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
+import { Styled } from "./style";
 import HomeMap from "../../components/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList/PlaceList";
-import HashTagList from "../../components/HashTagList/HashTagList";
+
 import { useRecoilState } from "recoil";
 import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
 import Loading from "../../components/Loading/Loading";
-
-const FixedComp = styled.div`
-  margin-top: 73px;
-`;
-const DivRow = styled.div`
-  @media (max-width: 1023px) {
-    /* display: flex; */
-
-    /* background: yellow; */
-  }
-  @media (min-width: 1024px) {
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-
-    justify-content: space-evenly;
-  }
-`;
-const DivColumn = styled.div`
-  @media (max-width: 1023px) {
-    display: flex;
-    flex-direction: column;
-    /* margin: auto; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* background: blue; */
-  }
-  @media (min-width: 1024px) {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-  }
-`;
-const DivColumnSecond = styled.div`
-  @media (max-width: 1023px) {
-    display: flex;
-    flex-direction: column;
-    /* background: red; */
-  }
-  @media (min-width: 1024px) {
-    display: flex;
-
-    flex-direction: column;
-    align-content: center;
-
-    position: absolute;
-    right: 3%;
-  }
-`;
 
 function Home() {
   const [nowLocation, setNowLocation] = useRecoilState(nowlocation);
@@ -110,20 +61,20 @@ function Home() {
 
   return (
     <>
-      <FixedComp>
+      <Styled.FixedComp>
         {isLoading ? (
           <Loading />
         ) : (
-          <DivRow>
-            <DivColumn>
+          <Styled.DivRow>
+            <Styled.DivColumn>
               <HomeMap />
-            </DivColumn>
-            <DivColumnSecond>
+            </Styled.DivColumn>
+            <Styled.DivColumnSecond>
               <PlaceList />
-            </DivColumnSecond>
-          </DivRow>
+            </Styled.DivColumnSecond>
+          </Styled.DivRow>
         )}
-      </FixedComp>
+      </Styled.FixedComp>
     </>
   );
 }

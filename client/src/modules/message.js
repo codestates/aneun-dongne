@@ -11,4 +11,7 @@ export const message = {
   kakaoState: "카카오 프로필은 바꿀 수 없습니다.",
   checkAgain: "입력하신 정보를 다시 한번 확인해주세요",
   changedProfile: "프로필이 변경되었습니다.",
+  inputPhotoPlease: "사진을 등록해주세요",
+  inputMemoPlease: "메모를 작성해주세요",
+  failRegisterToImage: "이미지업로드 실패",
 };

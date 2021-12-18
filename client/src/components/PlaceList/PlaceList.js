@@ -1,99 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
-import styled from "styled-components";
+import { Styled } from "./style";
 import { MemoCards } from "../PlaceCard/PlaceCards";
 
 import { placeaddress, placelocation, placeimg, placetitle, placelist, token, kToken } from "../../recoil/recoil";
-import { Link } from "react-router-dom";
+
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
 
-const PlaceLists = styled.div`
-  /* height: 100vh; */
-
-  @media (max-width: 1023px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* background: purple; */
-  }
-  @media (max-width: 660px) {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-  }
-  @media (min-width: 1040px) {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-column-gap: 40px;
-    text-decoration-line: none;
-    margin-left: 30px;
-  }
-  @media (min-width: 1360px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (min-width: 1730px) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 40px;
-  text-decoration-line: none;
-  margin-left: 30px; */
-`;
-const MoveToTopBtn = styled.button`
-  border-radius: 70%;
-
-  /* background: rgba(255, 255, 255, 0.7); */
-  background-color: #b2e0f4;
-  width: 60px;
-  height: 60px;
-  z-index: 999;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  border: 0.5px solid rgb(192, 251, 255);
-
-  display: ${(props) => (props.BtnStatus ? "inline" : "none")};
-  &:hover {
-    background: rgba(192, 251, 255, 0.7);
-    transform: scale(1.1);
-    bottom: 13px;
-    border: 0.5px solid white;
-  }
-
-  /* :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-  } */
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  background-color: #b2e0f4;
-  
-  color: white;
-  transition: all 0.3s;
-  display: ${(props) => (props.BtnStatus ? "inline" : "none")};
-  :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-  } */
-`;
-
-export const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-`;
-const Div = styled.div`
-  color: black;
-`;
 // React.memo 쓰기
 // 아 근데 왜 안돼 우선 제껴,
 
@@ -147,12 +61,12 @@ function PlaceList() {
   }
 
   return (
-    <PlaceLists>
+    <Styled.PlaceLists>
       {placeList.map((place, idx) => {
         return (
-          <Div key={idx}>
+          <Styled.Div key={idx}>
             {/* addr1이 undefined 되는 장소가 있어서 addr1는 임시방편으로 3항연산자 처리함 나중에 살펴보자. */}
-            <StyledLink to={`/detailpage/${place[5]}`}>
+            <Styled.StyledLink to={`/detailpage/${place[5]}`}>
               <MemoCards
                 onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
                 title={place[2]}
@@ -160,15 +74,15 @@ function PlaceList() {
                 addr1={place[4] ? place[4].split(" ")[0] : null}
                 contentId={place[5]}
               ></MemoCards>
-            </StyledLink>
-          </Div>
+            </Styled.StyledLink>
+          </Styled.Div>
         );
       })}
-      <MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
+      <Styled.MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
         {/* Top */}
         <Icon size={"60"} icon={angleUp} />
-      </MoveToTopBtn>
-    </PlaceLists>
+      </Styled.MoveToTopBtn>
+    </Styled.PlaceLists>
   );
 }
 

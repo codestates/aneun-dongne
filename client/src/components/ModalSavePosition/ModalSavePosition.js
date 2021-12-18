@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../modules/message";
-import ImageUpload from "../UploadImage/ImageUpload";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 const ModalSavePosition = () => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
@@ -26,10 +26,7 @@ const ModalSavePosition = () => {
   const [placeImage, setPlaceImage] = useState(null);
   const [isUploaded, setIsUploaded] = useState(false);
   const [clickedBtn, setClickedBtn] = useState(false); //저장버튼 누른 후 인지 아닌지 확인하려는 용도
-  const [errorMessage, setErrorMessage] = useState({
-    image: "",
-    memo: "",
-  });
+  const [errorMessage, setErrorMessage] = useState("");
   //유저 위치정보
   const [userAddr, setUserAddr] = useRecoilState(usersaddress);
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
@@ -47,11 +44,11 @@ const ModalSavePosition = () => {
       return;
     }
     if (placeImage === null) {
-      setErrorMessage({ ...errorMessage, ...{ image: "사진을 등록해주세요" } });
+      setErrorMessage(message.inputPhotoPlease);
       return null;
     }
     if (memo === "") {
-      setErrorMessage({ ...errorMessage, ...{ memo: "메모를 적어주세요" } });
+      setErrorMessage(message.inputMemoPlease);
       return null;
     }
     let formData = new FormData();
@@ -90,7 +87,7 @@ const ModalSavePosition = () => {
         setIsUploaded(false);
         console.log(err);
         if (!isUploaded && clickedBtn) {
-          setErrorMessage({ ...errorMessage, ...{ image: "이미지업로드 실패" } });
+          setErrorMessage(message.failRegisterToImage);
         }
       });
   }
@@ -109,7 +106,7 @@ const ModalSavePosition = () => {
         <form className="form-id" onSubmit={updateInfoRequest}>
           <h3>이미지</h3>
           <ImageUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
-          {placeImage !== null ? null : <div className="alert-box">{errorMessage.image}</div>}
+          {placeImage !== null ? null : <div className="alert-box">{errorMessage}</div>}
 
           <div className="form-memo">
             <h3>메모</h3>
@@ -124,7 +121,7 @@ const ModalSavePosition = () => {
               }}
             />
           </div>
-          {memo !== "" ? null : <div className="alert-box">{errorMessage.memo}</div>}
+          {memo !== "" ? null : <div className="alert-box">{errorMessage}</div>}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <button type="submit" className="save-position-button">
             저장

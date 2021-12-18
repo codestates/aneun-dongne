@@ -11,13 +11,12 @@ import {
   setLo,
   getWTM,
 } from "../../recoil/recoil";
-import "../MapInRoom/kakao-map.css";
 
 import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
-import Loading from "../Loading/Loading";
+
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
-import LikeLoading from "../Loading/LikeLoading";
+
 import MapLoading from "../Loading/MapLoading";
 
 const HomeMap = () => {
@@ -536,28 +535,7 @@ const HomeMap = () => {
   //   setLevel(8);
   // };
   /* margin-top:${(props)=>props.first?'10px':'50px'} */
-  if (loc.state === "loading" && getWtm.state === "loading") {
-    console.log("로딩");
-    return (
-      <Styled.Div>
-        <HomeRightbar
-          // area={area}
-          // sigg={sigg}
-          // areaIdx={areaIdx}
-          // changeArea={changeArea}
-          // changeSigg={changeSigg}
-          setLevel={setLevel}
-          // handleSearch={handleSearch}
-          searchCurrentPlace={searchPlace}
-          place={place}
-          pickPoint={pickPoint}
-          setPickPoint={setPickPoint}
-        />
 
-        <MapLoading />
-      </Styled.Div>
-    );
-  }
   return (
     <Styled.Div>
       <HomeRightbar
@@ -567,12 +545,17 @@ const HomeMap = () => {
         pickPoint={pickPoint}
         setPickPoint={setPickPoint}
       />
-      <br />
-      <div>&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다"}</div>
-      <Styled.Map id="map"></Styled.Map>
+      {loc.state === "loading" && getWtm.state === "loading" ? (
+        <MapLoading />
+      ) : (
+        <>
+          <Styled.Map id="map">
+            <div className="map-experiment">&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다."}</div>
+          </Styled.Map>
+        </>
+      )}
     </Styled.Div>
   );
 };
 
 export default HomeMap;
-

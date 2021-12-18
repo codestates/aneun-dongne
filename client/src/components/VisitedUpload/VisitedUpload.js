@@ -1,27 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
-import "./imageUpload.css";
-const ImgDiv = styled.div`
-  background: ${(props) => `url(${props.photo})`} center;
+import { Styled } from "./style";
 
-  background-size: cover;
-  display: flex;
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-  width: 400px;
-  height: 200px;
-  cursor: pointer;
-  /* border-radius: 70%; */
-
-  z-index: 999;
-`;
-const EditProfile = styled.div`
-  cursor: pointer;
-  display: inline-block;
-  margin-top: 10px;
-`;
 function VisitedUpload({ placeImage, setPlaceImage }) {
   useEffect(() => {
     //언마운트시 메모리 누수 제거하기
@@ -45,7 +24,7 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
   // }
   console.log(placeImage);
   return (
-    <div className="image-upload-box">
+    <Styled.ImageUploadBox className="image-upload-box">
       <input
         name="image"
         className="input-blind"
@@ -55,22 +34,22 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
       />
 
       {typeof placeImage === "object" ? (
-        <ImgDiv
+        <Styled.ImgDiv
           // className="img_preview"
           onClick={(e) => inputBtn(e, inputValue)}
           style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
-        ></ImgDiv>
+        ></Styled.ImgDiv>
       ) : (
-        <ImgDiv
+        <Styled.ImgDiv
           className="good"
           onClick={(e) => inputBtn(e, inputValue)}
           style={{ backgroundImage: `url(${placeImage})` }}
-        ></ImgDiv>
+        ></Styled.ImgDiv>
       )}
-      <EditProfile onClick={(e) => inputBtn(e, inputValue)}>
+      <Styled.EditProfile onClick={(e) => inputBtn(e, inputValue)}>
         <i className="fas fa-edit"></i>
-      </EditProfile>
-    </div>
+      </Styled.EditProfile>
+    </Styled.ImageUploadBox>
   );
 }
 

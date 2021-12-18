@@ -12,8 +12,8 @@ import {
   deleteCommentmode,
 } from "../../recoil/recoil";
 import { Styled } from "./style";
-import ImageUpload from "../UploadImage/ImageUpload";
-import VisitedUpload from "../UploadImage/VisitedUpload";
+import ImageUpload from "../ImageUpload/ImageUpload";
+import VisitedUpload from "../VisitedUpload/VisitedUpload";
 
 function ModalVisited({ id, idx, visitedImg }) {
   const accessToken = useRecoilValue(token);

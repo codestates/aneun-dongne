@@ -4,11 +4,10 @@ import { Styled } from "./style";
 
 import VisitedList from "../VisitedList/VisitedList";
 import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from "../../recoil/recoil";
-import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
-
-import Empty from "../Empty";
+import { useRecoilValue, useRecoilState } from "recoil";
 
 import MapLoading from "../Loading/MapLoading";
+import Empty from "../Empty/Empty";
 
 const { kakao } = window;
 
@@ -128,12 +127,10 @@ const MyVisited = () => {
       });
 
       kakao.maps.event.addListener(marker, "click", function () {
-        // infowindowOnClick.open(map, marker);
-        // setIsVisitedOpen(true);
+        //마커를 클릭하면 positions[i]가 selectedPosition에 담기고
+        // markerClick 상태가 true로 변한다.
         setSelectedPosition(positions[i]);
         setMarkerClick(true);
-        console.log(positions[i]);
-        // openModalHandler(positions[i]);
       });
     }
     map.setBounds(bounds);

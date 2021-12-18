@@ -11,25 +11,25 @@ import { getAreaNames } from "../../modules/AreaCodetoName";
 //   grid-auto-rows: 50px;
 // `;
 
-const Lists = styled.div`
-  @media (min-width: 1040px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (min-width: 1360px) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (min-width: 1730px) {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 40px;
-  text-decoration-line: none;
-  margin-left: 30px;
-`;
+// const Lists = styled.div`
+//   @media (min-width: 1040px) {
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr);
+//   }
+//   @media (min-width: 1360px) {
+//     display: grid;
+//     grid-template-columns: repeat(3, 1fr);
+//   }
+//   @media (min-width: 1730px) {
+//     display: grid;
+//     grid-template-columns: repeat(4, 1fr);
+//   }
+//   display: grid;
+//   grid-template-columns: repeat(3, 1fr);
+//   grid-column-gap: 40px;
+//   text-decoration-line: none;
+//   margin-left: 30px;
+// `;
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;

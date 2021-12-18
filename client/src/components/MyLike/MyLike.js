@@ -65,29 +65,27 @@ const MyLike = () => {
   }, []);
 
   return (
-    <>
-      <div className="like-list">
-        {isLoing ? (
-          <div>
-            <LikeLoading />
-          </div>
-        ) : (
-          <>
-            {postsInfo.length === 0 ? (
-              <Empty />
-            ) : (
-              <Body>
-                <div className="list">
-                  {postsInfo.map((postsInfo) => {
-                    return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
-                  })}
-                </div>
-              </Body>
-            )}
-          </>
-        )}
-      </div>
-    </>
+    <div className="like-list">
+      {isLoing ? (
+        <div>
+          <LikeLoading />
+        </div>
+      ) : (
+        <>
+          {postsInfo.length === 0 ? (
+            <Empty />
+          ) : (
+            <Body>
+              <div className="list">
+                {postsInfo.map((postsInfo) => {
+                  return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
+                })}
+              </div>
+            </Body>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

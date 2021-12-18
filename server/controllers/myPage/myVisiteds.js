@@ -71,7 +71,6 @@ const getMyVisiteds = async (userId) => {
     where: { visited_user_id: userId },
     order: [["createdAt", "DESC"]],
   }).then((data) => {
-    console.log("여기봐라", data);
     result = data;
   });
 
@@ -86,7 +85,6 @@ const getMyVisiteds = async (userId) => {
 
 module.exports = {
   readVisiteds: async (req, res) => {
-    console.log("왔나요왔나요", req.body);
     const accessTokenData = isAuthorized(req);
     try {
       if (!accessTokenData) {
@@ -110,7 +108,6 @@ module.exports = {
         const { area, sigg, mapx, mapy, memo } = req.body;
 
         if (!req.file) {
-          console.log("이미지 없음");
           await createMyVisited(id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id) });
         } else {
@@ -146,9 +143,7 @@ module.exports = {
         const { id } = accessTokenData;
         const { area, sigg, mapx, mapy, memo } = req.body;
         const { visitedId } = req.query;
-        console.log("허이", req.file, req.query);
         if (!req.file) {
-          console.log("이미지 없음");
           await updateMyVisited(visitedId, id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id) });
         } else {
@@ -187,7 +182,7 @@ module.exports = {
         await res.status(200).json({ data: await getMyVisiteds(id) });
       }
     } catch (err) {
-      console.log("에러", err);
+      console.log(err);
       res.status(500).json({ message: "server err" });
     }
   },

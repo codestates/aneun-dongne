@@ -6,7 +6,7 @@ import VisitedList from "../VisitedList/VisitedList";
 import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from "../../recoil/recoil";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 
-import Empty from "../Empty";
+import Empty from "../Empty/Empty";
 import ModalVisited from "../ModalVisited/ModalVisited";
 import MapLoading from "../Loading/MapLoading";
 import LikeLoading from "../Loading/LikeLoading";

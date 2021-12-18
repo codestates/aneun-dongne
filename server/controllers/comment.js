@@ -24,8 +24,6 @@ module.exports = {
         });
       } else {
         const { id, user_image_path, nickname } = accessTokenData;
-
-        console.log("겟커멘트", accessTokenData);
         await res.status(200).json({
           data: await getCommentHashtagData(id, contentId), //이안에 userinfo가 있는건 알아요
           userinfo: { user_image_path, nickname },
@@ -40,7 +38,6 @@ module.exports = {
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
     const { commentContent, tagsArr } = req.body;
-    console.log("포스트커맨드", req.body);
     try {
       if (!accessTokenData) {
         // return res.status(401).send("no token in req.headers['authorization']");
@@ -60,15 +57,12 @@ module.exports = {
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
     const { commentId, commentContent, tagsArr } = req.body;
-    console.log("확인하자", req.headers);
     try {
       if (!accessTokenData) {
-        // console.log("확인하자", req.body);
         // return res.status(401).send("no token in req.headers['authorization']");
         return res.status(400).json({ data: null, message: "invalid access token" });
       } else {
         const { id } = accessTokenData;
-        console.log("패치커맨드", req.body);
         await updateCommentHashtagData(commentId, id, contentId, commentContent, tagsArr);
         await res.status(200).json({
           data: await getCommentHashtagData(id, contentId),

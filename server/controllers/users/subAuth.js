@@ -89,7 +89,6 @@ module.exports = {
         { where: { email: email } }
       )
         .then((result) => {
-          console.log("Result", result);
           // const accessToken = generateAccessToken(data.dataValues);
           User.findOne({
             where: {
@@ -97,13 +96,11 @@ module.exports = {
               password: newPassword,
             },
           }).then((data) => {
-            console.log("하이하이하이", image);
             if (!data) {
               res.status(400).send("invalid user");
             } else {
               delete data.dataValues.password;
               const accessToken = generateAccessToken(data.dataValues);
-              console.log("여기까지왔어요?");
               res.json({
                 data: { accessToken, nickname, email, user_image_path: image, user_thumbnail_path: thumbnail },
                 message: "okkk",
@@ -113,17 +110,9 @@ module.exports = {
           // res.status(201).json({ message: "successfully changed" });
         })
         .catch((err) => {
-          //아마 서버에러겠죠??
           console.log(err);
           res.status(500).json({ message: "server errorr" });
         });
-
-      //   if (!req.file) {
-      //     if(validUser)
-      //   } else {
-      //     img = req.file.location; // 링크를 db 넣기위한 값
-      //   }
-      // }
     }
   },
 };

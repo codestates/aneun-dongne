@@ -30,19 +30,19 @@ module.exports = async (comment_id, comment_user_id, comment_post_contentid) => 
         console("no data");
       } else {
         //태그가 하나라도 있을 경우 실행되는 로직
-        console.log(data);
         //let data = ["a,t,b", "c,d", "a,b,t,h,a", "t", "y,t"]
         let flatdata = await data
           .map((el) => {
             return el.comment_tags.split(",");
           })
           .flat(); // ["a","t","b","c","d","a","b","t","h","a","t","y","t"]
-        console.log(flatdata);
+        flatdata = flatdata.filter((el) => {
+          return el !== "";
+        });
         let set = new Set(flatdata); //{"a","t","b","c","d","h","y"}
         await flatdata.forEach((x) => {
           obj[x] = (obj[x] || 0) + 1;
         }); //{"a":3,"t":4,"b":2,"c":1,"d":1,"h":1,"y":1}
-        console.log(set);
         allTagsOfComments = [...set]; //["a","t","b","c","d","h","y"]
         arrallTagsOfComments = allTagsOfComments.map((el) => {
           return [el];
@@ -63,8 +63,6 @@ module.exports = async (comment_id, comment_user_id, comment_post_contentid) => 
           if (idxA < idxB) return -1;
           return 0;
         });
-        console.log(obj);
-        console.log(arrallTagsOfComments);
       }
     })
     .catch((err) => console.log(err));

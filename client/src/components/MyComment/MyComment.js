@@ -7,6 +7,8 @@ import axios from "axios";
 import CommentLoading from "../Loading/CommentLoading";
 import styled from "styled-components";
 
+import { toast } from "react-toastify";
+
 const CommentWrapper = styled.div`
   width: 100%;
 `;
@@ -186,7 +188,9 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       return;
     }
     if (something === "") {
-      alert("내용을 입력해주세요");
+      toast.error("댓글을 입력해주세요", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return;
     }
     try {

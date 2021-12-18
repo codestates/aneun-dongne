@@ -37,7 +37,10 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
           <>
             <Styled.ModalBackdrop onClick={closeVisitedModal}>
               <Styled.ModalView onClick={(e) => e.stopPropagation()}>
-                <ModalVisited visitedImg={selectedModal && selectedModal.visited_thumbnail_path} />
+                <ModalVisited
+                  id={selectedModal && selectedModal.id}
+                  visitedImg={selectedModal && selectedModal.visited_thumbnail_path}
+                />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
           </>

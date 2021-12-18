@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
 import MapLoading from "../Loading/MapLoading";
+import { toast } from "react-toastify";
 
 const HomeMap = () => {
   const kakao = window.kakao;
@@ -69,7 +70,9 @@ const HomeMap = () => {
         // alert("검색 결과가 없습니다.");
         return;
       } else {
-        alert("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        toast.error("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
       //   setPickPoint()
       setPending(false);

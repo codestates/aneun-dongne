@@ -10,7 +10,7 @@ export const Styled = {
     font-size: 3rem;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 200px;
+    margin-top: 180px;
     font-weight: bold;
 
     > img {

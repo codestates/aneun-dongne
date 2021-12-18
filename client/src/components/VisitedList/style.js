@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Styled = {
   PlaceCard: styled.div`
-    /* background: skyblue; */
     margin: auto;
     margin-top: 40px;
     border: 1px rgb(107, 217, 224) solid;
@@ -21,7 +20,6 @@ export const Styled = {
       flex-direction: column;
       align-content: center;
       justify-content: center;
-      /* background-color: red; */
       border-radius: 20px;
       width: 100%;
       margin: 10px;
@@ -35,14 +33,11 @@ export const Styled = {
       margin-bottom: 10px;
 
       border-radius: 20px;
-
-      /* object-fit: scale-down; */
     }
     .place-cards-title {
       margin-left: 10px;
       margin-top: 6px;
       .place-cards-memo {
-        /* background: red; */
         width: 90%;
         padding: 0 5px;
         overflow: hidden;
@@ -65,8 +60,6 @@ export const Styled = {
     display: flex;
     justify-content: center;
     backdrop-filter: contrast(50%);
-    /* backdrop-filter: brightness(50%); */
-
     align-items: center;
     width: 100vw;
     height: 100vh;
@@ -93,15 +86,12 @@ export const Styled = {
   `,
 
   Body: styled.div`
-    /* display: flex; */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 40px;
     text-decoration-line: none;
     margin-left: 30px;
-    /* background: yellow; */
     > .visited-cards-list {
-      /* border: 1px gray solid; */
       margin: 15px;
     }
 

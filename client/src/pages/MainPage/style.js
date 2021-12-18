@@ -5,11 +5,6 @@ export const Styled = {
     position: relative;
     width: 100%;
     overflow-x: hidden;
-    /* overflow-x: hidden;  */
-    /* margin-right: auto;
-    margin-left: auto; */ /* overflow-x: visible; */
-    /* display: flex;
-    flex-direction: column; */
 
     @media screen and (max-width: 780px) {
       font-size: 1.3rem;
@@ -75,11 +70,6 @@ export const Styled = {
     i {
       justify-content: center;
       margin-right: 50%;
-      /* @media all and (min-width: 768px) and (max-width: 1050px) {
-        margin-top: 1rem;
-        width: 10%;
-        font-size: 0.5rem;
-      } */
     }
   `,
   StartButton: styled.button`
@@ -112,22 +102,6 @@ export const Styled = {
       height: 50px;
       font-size: 1.2rem;
     }
-    /* @media all and (min-width: 768px) and (max-width: 1050px) {
-      margin-top: 10rem;
-      flex-direction: column;
-      margin: 0 auto;
-
-      border: 1px solid #aaa;
-      width: 50%;
-      height: 50%;
-      font-size: 0.5rem;
-    }
-
-    @media only screen and (min-width: 768px) {
-    }
-
-    @media screen and (min-width: 480px) and (max-width: 767px) {
-    } */
   `,
   PopularTitleView: styled.div`
     display: flex;
@@ -140,10 +114,7 @@ export const Styled = {
     .title {
       font-size: 2.5rem;
       font-weight: bold;
-      /* @media all and (min-width: 768px) and (max-width: 1050px) {
-        margin-top: 30px;
-        font-size: 0.8rem;
-      } */
+
       @media screen and (max-width: 780px) {
         font-size: 1.3rem;
       }
@@ -151,7 +122,6 @@ export const Styled = {
 
     @media screen and (max-width: 780px) {
       flex-direction: column;
-      /* margin-top: 20%; */
       width: 100%;
       height: 50%;
     }
@@ -167,24 +137,14 @@ export const Styled = {
     .title {
       font-size: 2.5rem;
       font-weight: bold;
-      /* @media all and (min-width: 768px) and (max-width: 1050px) {
-        margin-top: 30px;
-        font-size: 0.8rem;
-      } */
+
       @media screen and (max-width: 780px) {
         font-size: 1.3rem;
       }
     }
-    /* @media all and (min-width: 768px) and (max-width: 1050px) {
-      flex-direction: column;
-      margin-top: 3px;
-      margin: 0 auto;
-      width: 100%;
-      height: 50%;
-    } */
+
     @media screen and (max-width: 780px) {
       flex-direction: column;
-      /* margin-top: 20%; */
       width: 100%;
       height: 50%;
     }
@@ -199,25 +159,15 @@ export const Styled = {
     .title {
       font-size: 2.5rem;
       font-weight: bold;
-      /* @media all and (min-width: 768px) and (max-width: 1050px) {
-        margin-top: 20px;
-        font-size: 0.8rem;
-      } */
+
       @media screen and (max-width: 780px) {
         font-size: 1.3rem;
         width: 90%;
       }
     }
-    /* @media all and (min-width: 768px) and (max-width: 1050px) {
-      flex-direction: column;
-      margin-top: 3px;
-      margin: 0 auto;
-      width: 100%;
-      height: 50%;
-    } */
+
     @media screen and (max-width: 780px) {
       flex-direction: column;
-      /* margin-top: 20%; */
       width: 100%;
       height: 50%;
     }
@@ -240,10 +190,6 @@ export const Styled = {
       @media screen and (max-width: 780px) {
         font-size: 1.3rem;
       }
-      /* @media all and (min-width: 768px) and (max-width: 1050px) {
-        margin-top: 20px;
-        font-size: 1rem;
-      } */
     }
 
     .peopleTitle {
@@ -257,14 +203,6 @@ export const Styled = {
         cursor: pointer;
       }
     }
-
-    /* @media all and (min-width: 768px) and (max-width: 1050px) {
-      flex-direction: column;
-      margin-top: 3px;
-      margin: 0 auto;
-      width: 100%;
-      height: 50%;
-    } */
   `,
   TitleEndView: styled.div`
     display: flex;
@@ -273,7 +211,6 @@ export const Styled = {
     flex-direction: column;
     height: 50vh;
     background-color: rgb(57 57 57);
-    /* rgb(57 57 57) #5fa6f0*/
     .title {
       position: absolute;
       display: flex;
@@ -287,22 +224,11 @@ export const Styled = {
       width: 800px;
       height: 50px;
 
-      /* @media all and (min-width: 768px) and (max-width: 1050px) {
-        margin-top: 20px;
-        font-size: 1rem;
-      } */
       @media screen and (max-width: 780px) {
         font-size: 1.3rem;
         width: 90%;
       }
     }
-    /* @media all and (min-width: 768px) and (max-width: 1050px) {
-      flex-direction: column;
-      margin-top: 3px;
-      margin: 0 auto;
-      width: 100%;
-      height: 200px;
-    } */
   `,
   Image: styled.div`
     display: flex;
@@ -327,7 +253,6 @@ export const Styled = {
     .play {
       border: 4px dotted rgb(107, 217, 224);
       border-bottom: 7px solid rgb(107, 217, 224);
-      /* border: 5px rgb(107, 217, 224) solid; */
       margin-top: auto;
       margin-left: 5%;
       margin-right: auto;

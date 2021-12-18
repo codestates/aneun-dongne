@@ -126,7 +126,6 @@ const HomeMap = () => {
     if (container === null) {
       return;
     }
-    // console.log(container);
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     //마커가 표시될 위치입니다.
     let markerCenter = new kakao.maps.Marker({
@@ -252,7 +251,7 @@ const HomeMap = () => {
         })
         .then(setClickedNowLocationBtn(false))
 
-        .catch((err) => console.log(err)); //
+        .catch((err) => console.log(err));
     }
     //!! 맵을 클릭시 주소변경
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
@@ -277,7 +276,7 @@ const HomeMap = () => {
           setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
         })
 
-        .catch((err) => console.log(err)); //
+        .catch((err) => console.log(err));
     });
 
     map.setBounds(bounds);

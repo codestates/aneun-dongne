@@ -18,15 +18,15 @@ export const Styled = {
     grid-template-columns: repeat(4, 1fr);
   }
   */
-    @media (max-width: 660px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-    }
+
     @media (max-width: 1023px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
     }
-
+    @media (max-width: 660px) {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+    }
     @media (min-width: 1040px) {
       display: grid;
       grid-template-columns: repeat(1, 1fr);

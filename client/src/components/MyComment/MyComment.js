@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import styled from "styled-components";
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
@@ -227,10 +227,10 @@ const BtnBox = styled.div`
 `;
 
 const BtnWrapper = styled.div`
-  position: absolute;
-  top: 0;
+  position: relative;
+  height: 0;
   width: 100%;
-  padding-height: 40%;
+  padding-top: 40%;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -275,7 +275,6 @@ const Btn = styled.div`
 `;
 
 function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
-
   const kakaoToken = useRecoilValue(kToken);
   const [something, setSomething] = useState("");
   const [tags, setTags] = useState([]);
@@ -355,8 +354,8 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
                     e.target.value = "";
                   }
                 }}
-              ></Styled.Content>
-              <Styled.HashTagWrapper>
+              ></Content>
+              <HashTagWrapper>
                 <EditableHashTag tags={tags} setTags={setTags} />
               </HashTagWrapper>
             </ContentBox>

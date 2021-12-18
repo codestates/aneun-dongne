@@ -72,15 +72,19 @@ const MyLike = () => {
             <LikeLoading />
           </div>
         ) : (
-          <div className="list">
+          <>
             {postsInfo.length === 0 ? (
               <Empty />
             ) : (
-              postsInfo.map((postsInfo) => {
-                return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
-              })
+              <Body>
+                <div className="list">
+                  {postsInfo.map((postsInfo) => {
+                    return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
+                  })}
+                </div>
+              </Body>
             )}
-          </div>
+          </>
         )}
       </div>
     </>

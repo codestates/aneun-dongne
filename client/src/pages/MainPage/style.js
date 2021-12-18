@@ -39,6 +39,7 @@ export const Styled = {
       }
     }
     .icons {
+      color: #ffffff7a;
       margin-top: 10%;
       margin-left: 42%;
       margin-right: auto;
@@ -62,7 +63,7 @@ export const Styled = {
 
       :hover {
         cursor: pointer;
-        color: #3a6fb0;
+        color: white;
         transition: all 0.3s;
       }
       @media screen and (max-width: 780px) {
@@ -105,8 +106,9 @@ export const Styled = {
     background-color: transparent;
 
     :hover {
-      color: #505f7b;
-      background-color: #3a6fb0;
+      color: white;
+      background-color: #ffffff7a;
+
       transition: all 0.3s;
     }
     @media screen and (max-width: 780px) {
@@ -311,6 +313,7 @@ export const Styled = {
   Image: styled.div`
     display: flex;
     justify-content: center;
+    width: 70%;
 
     margin-top: 5%;
     margin-left: auto;
@@ -321,11 +324,9 @@ export const Styled = {
       margin-bottom: 15%;
     }
     img {
-      width: 30%;
+      width: 50%;
       height: 30%;
-
       object-fit: cover;
-
       margin-left: auto;
       margin-right: auto;
     }
@@ -339,27 +340,21 @@ export const Styled = {
       margin-bottom: auto;
     }
     .play-popular {
-      border: 4px dotted #c85647;
-      border-bottom: 7px solid #c85647;
-      /* border: 5px rgb(107, 217, 224) solid; */
+      border: 2px gray solid;
       margin-top: auto;
       margin-left: 5%;
       margin-right: auto;
       margin-bottom: auto;
     }
     .play-focus {
-      border: 4px dotted #74c983;
-      border-bottom: 7px solid #74c983;
-      /* border: 5px rgb(107, 217, 224) solid; */
+      border: 2px gray solid;
       margin-top: auto;
       margin-left: 5%;
       margin-right: auto;
       margin-bottom: auto;
     }
     .play-diy {
-      border: 4px dotted #2c244a;
-      border-bottom: 7px solid #2c244a;
-      /* border: 5px rgb(107, 217, 224) solid; */
+      border: 2px gray solid;
       margin-top: auto;
       margin-left: 5%;
       margin-right: auto;
@@ -369,7 +364,7 @@ export const Styled = {
   VideoContainer: styled.div`
     /* width: 500px;
   height: 300px; */
-    width: 50%;
+    width: 80%;
 
     img {
       width: 80%;

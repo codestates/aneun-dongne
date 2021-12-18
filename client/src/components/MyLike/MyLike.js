@@ -70,7 +70,11 @@ const MyLike = () => {
                 <Empty />
               ) : (
                 postsInfo.map((postsInfo) => {
-                  return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
+                  return (
+                    <div key={postsInfo.id}>
+                      <LikeLists postsInfo={postsInfo} />
+                    </div>
+                  );
                 })
               )}
             </div>

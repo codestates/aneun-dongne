@@ -62,7 +62,7 @@ export const Styled = {
 
       :hover {
         cursor: pointer;
-        color: #b7ecf8;
+        color: #3a6fb0;
         transition: all 0.3s;
       }
       @media screen and (max-width: 780px) {
@@ -106,7 +106,7 @@ export const Styled = {
 
     :hover {
       color: #505f7b;
-      background-color: #b7ecf8;
+      background-color: #3a6fb0;
       transition: all 0.3s;
     }
     @media screen and (max-width: 780px) {

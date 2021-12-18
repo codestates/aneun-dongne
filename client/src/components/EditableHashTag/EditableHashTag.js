@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 export const TagsInput = styled.div`
   z-index: 999;
@@ -99,7 +100,7 @@ const EditableHashTag = ({ setTags, tags }) => {
 
   return (
     <>
-      <Styled.TagsInput>
+      <TagsInput>
         <input
           className="tag-input"
           type="text"
@@ -116,7 +117,7 @@ const EditableHashTag = ({ setTags, tags }) => {
             </div>
           ))}
         </div>
-      </Styled.TagsInput>
+      </TagsInput>
     </>
   );
 };

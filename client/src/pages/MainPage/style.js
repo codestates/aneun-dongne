@@ -28,7 +28,6 @@ export const Styled = {
       margin-top: 10%;
       position: absolute;
       font-size: 3rem;
-      font-family: fantasy;
       color: white;
 
       @media screen and (max-width: 780px) {
@@ -358,7 +357,7 @@ export const Styled = {
   `,
   VideoContainer: styled.div`
     width: 80%;
-    
+
     img {
       width: 80%;
       object-fit: cover;

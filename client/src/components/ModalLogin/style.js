@@ -59,6 +59,7 @@ export const Styled = {
       color: white;
       border-radius: 10px;
       font-size: 1.5rem;
+      font-weight: 600;
     }
     .kakao-login-button {
       margin-top: 15px;
@@ -69,6 +70,7 @@ export const Styled = {
       color: black;
       border-radius: 10px;
       font-size: 1.5rem;
+      font-weight: 600;
     }
 
     .error-message {
@@ -114,7 +116,7 @@ export const Styled = {
       }
     }
 
-    @media screen and (max-height: 660px), screen and (max-width: 500px) {
+    @media screen and (max-width: 500px) {
       label {
         font-size: 1rem;
       }
@@ -122,6 +124,29 @@ export const Styled = {
       input {
         width: 200px;
         height: 30px;
+        margin-bottom: 20px;
+      }
+
+      .login-button {
+        width: 200px;
+        font-size: 1rem;
+      }
+
+      .kakao-login-button {
+        width: 200px;
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-height: 900px) {
+      label {
+        font-size: 1rem;
+      }
+
+      input {
+        width: 200px;
+        height: 30px;
+        margin-bottom: 20px;
       }
 
       .login-button {

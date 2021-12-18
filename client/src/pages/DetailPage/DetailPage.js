@@ -215,7 +215,7 @@ function DetailPage({ match }) {
             </Styled.PageURL>
           ) : null}
           {/* 여기도 사진 넘기기기능 넣자. */}
-          {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src="/images/not-image-yet.png" />}
+          {/* {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src="/images/not-image-yet.png" />} */}
           {overView ? (
             // !이거 css로 할수있대 나중에 ㄱ
             <Styled.Overview>
@@ -230,7 +230,7 @@ function DetailPage({ match }) {
             </Styled.Overview>
           ) : null}
 
-          <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
+          {/* <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} /> */}
 
           <HashTagTemplate keywordDummy={memoTags} />
           {likeLoading ? (

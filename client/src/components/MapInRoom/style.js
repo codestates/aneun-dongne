@@ -14,13 +14,8 @@ export const Styled = {
     border-radius: 10px;
     border: 1px rgb(192, 251, 255) solid;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
-    transition: box-shadow 0.1s, transform 0.1s;
+
     text-decoration: inherit;
-    &:hover {
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
     @media (max-width: 768px) {
       width: 80%;
       margin-left: 40px;

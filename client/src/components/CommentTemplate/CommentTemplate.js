@@ -1,30 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-import Comments from "../Comments/Comments";
 
-const CommentWrapper = styled.div`
-  width: 100%;
-  .comment-template {
-    background: yellow;
-    margin-left: auto;
-    margin-right: auto;
-    @media (max-width: 768px) {
-      width: 80%;
-      margin-left: 40px;
-      margin-right: auto;
-    }
-    @media (max-width: 612px) {
-      width: 450px;
-      margin-left: 20px;
-      margin-right: auto;
-    }
-  }
-`;
+import Comments from "../Comments/Comments";
+import { Styled } from "./style";
 
 function CommentTemplate({ commentDummy, contentId }) {
   return (
     <>
-      <CommentWrapper>
+      <Styled.CommentWrapper>
         {commentDummy.map((comment, idx) => {
           if (comment.text === "\n") return null;
           return (
@@ -43,7 +25,7 @@ function CommentTemplate({ commentDummy, contentId }) {
             </div>
           );
         })}
-      </CommentWrapper>
+      </Styled.CommentWrapper>
     </>
   );
 }

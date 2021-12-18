@@ -7,7 +7,7 @@ import { useSetRecoilState, useRecoilValue } from "recoil";
 import { token, kToken, placelist } from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
-import { Autocomplete } from "./Autocomplete";
+import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
   const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
@@ -109,16 +109,18 @@ function HomeRightbar({ setLevel }) {
             type="text"
             value={place}
             onChange={(e) => handleSearch(e)}
-            placeholder="관광지 이름을 입력하세요"
+            placeholder="관광지 검색"
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 searchPlace(area, sigg, hashtag, place);
               }
             }}
           ></Styled.SearchPlace>
+          {/* <div> */}
           <Styled.SearchBtn onClick={() => searchPlace(area, sigg, hashtag, place)}>
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>
+          {/* </div> */}
         </Styled.SearchWrapper>
         <HomeRightBtn />
       </Styled.MapRightBar>

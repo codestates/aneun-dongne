@@ -1,78 +1,9 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import { Styled } from "./style";
 import axios from "axios";
-import { token, kToken, loginState, loginModal, placelist } from "../../recoil/recoil";
+
+import { token, kToken, loginState, loginModal, pickpoint, placelist } from "../../recoil/recoil";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-const PlaceCard = styled.div`
-  margin: auto;
-  margin-top: 40px;
-  border: 1px #3a6fb0 solid;
-
-  justify-content: center;
-  border-radius: 20px;
-  width: 300px;
-
-  box-shadow: 4px 4px 4px rgb(85, 85, 85);
-  transition: box-shadow 0.1s, transform 0.1s;
-  text-decoration: inherit;
-
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-
-  .place-cards {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 20px;
-    width: 100%;
-  }
-  .place-cards > img {
-    width: 80%;
-    height: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 10px;
-
-    border-radius: 20px;
-  }
-  .place-cards-title {
-    margin-left: 10px;
-    margin-top: 6px;
-  }
-  @media (max-width: 1023px) {
-    width: 300px;
-  }
-  @media (max-width: 660px) {
-    width: 80%;
-  }
-`;
-const LikeBtn = styled.button`
-  border: 1px red solid;
-  border-radius: 20px;
-  width: 60px;
-  height: 30px;
-  margin: 20px auto;
-  cursor: pointer;
-  box-shadow: 4px 4px 4px rgb(85, 85, 85);
-  transition: all 0.1s ease-in-out;
-
-  &:hover {
-    color: black;
-    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-      4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-  }
-  &:hover:after {
-    left: 0;
-    width: 100%;
-  }
-`;
 
 function PlaceCards({ title, img, addr1, onClick, contentId }) {
   const placeList = useRecoilValue(placelist);
@@ -180,7 +111,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
   };
 
   return (
-    <PlaceCard onClick={onClick}>
+    <Styled.PlaceCard onClick={onClick}>
       <div className="place-cards">
         {img ? <img src={img} /> : <img src="./images/not-image-yet.png" />}
         <div className="place-cards-title">
@@ -188,13 +119,13 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
           <span>{title}</span>
         </div>
         {likeLoading ? (
-          <LikeBtn onClick={(e) => e.preventDefault()}>
+          <Styled.LikeBtn onClick={(e) => e.preventDefault()}>
             <i className={likeOrNot ? "fas fa-heart" : "hide"}>
               <span>?</span>
             </i>
-          </LikeBtn>
+          </Styled.LikeBtn>
         ) : (
-          <LikeBtn onClick={(e) => LikeHandler(e)}>
+          <Styled.LikeBtn onClick={(e) => LikeHandler(e)}>
             <i className={likeOrNot ? "fas fa-heart" : "hide"}>
               <span>{like}</span>
             </i>
@@ -202,10 +133,10 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
             <i className={likeOrNot ? "hide" : "far fa-heart"}>
               <span>{like}</span>
             </i>
-          </LikeBtn>
+          </Styled.LikeBtn>
         )}
       </div>
-    </PlaceCard>
+    </Styled.PlaceCard>
   );
 }
 

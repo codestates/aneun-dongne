@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
+import { Styled } from "./style";
 
 const deselectedOptions = [
   "rustic",
@@ -30,93 +30,6 @@ const deselectedOptions = [
   "#미술관",
   "#박물관",
 ];
-
-const boxShadow = "0 4px 6px rgb(32 33 36 / 28%)";
-const activeBorderRadius = "1rem 1rem 0 0";
-const inactiveBorderRadius = "1rem 1rem 1rem 1rem";
-
-export const InputContainer = styled.div`
-  @media (max-width: 1023px) {
-    width: 98%;
-    margin-left: auto;
-    margin-right: auto;
-    height: 40px;
-  }
-  margin: 5px 2% 5px 2%;
-  height: 40px;
-  width: 140px;
-  display: flex;
-  flex-direction: row;
-  border-radius: 20px;
-  border: none;
-  position: relative;
-  z-index: 999;
-  border-radius: ${(props) => (props.hashtag ? activeBorderRadius : inactiveBorderRadius)};
-  &:focus-within {
-    box-shadow: ${boxShadow};
-  }
-
-  > input {
-    @media (max-width: 1024px) {
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    padding: 10px;
-    width: 140px;
-    border-radius: 5px;
-    border: 1px gray solid;
-  }
-
-  background: red;
-  cursor: pointer;
-`;
-
-export const DropDownContainer = styled.ul`
-  position: relative;
-  background-color: #ffffff;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  list-style-type: none;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 0px;
-  margin-top: -1px;
-  padding: 0.5rem 0;
-  border-radius: 0 0 1rem 1rem;
-  box-shadow: ${boxShadow};
-  z-index: 999;
-  .hashtag-drop-down {
-    z-index: 999;
-    padding: 0 1rem;
-
-    &:hover {
-      background-color: #eee;
-    }
-
-    &.selected {
-      background-color: #ebe5f9;
-    }
-  }
-`;
-const DropDownWrapper = styled.div`
-  position: relative;
-  z-index: 999;
-  border-radius: 0 0 5px 5px;
-  padding: 5px;
-  background: white;
-`;
-const DropDownValue = styled.div`
-  position: relative;
-  border-bottom: 1px gray solid;
-  padding: 3px;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-`;
 
 export const Autocomplete = ({ hashtag, setHashtag }) => {
   const [inputValue, setInputValue] = useState("");
@@ -187,7 +100,7 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
   return (
     <div onClick={handleDeleteButtonClick}>
       <div className="autocomplete-wrapper" onKeyUp={handleKeyUp} onClick={(e) => e.preventDefault()}>
-        <InputContainer hashtag={hashtag}>
+        <Styled.InputContainer hashtag={hashtag}>
           <input
             type="text"
             className="autocomplete-input"
@@ -195,7 +108,7 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
             onChange={handleInputChange}
             value={inputValue}
           />
-        </InputContainer>
+        </Styled.InputContainer>
         {hashtag !== "null" ? (
           <DropDown options={options} handleDropDownClick={(e) => handleDropDownClick(e)} selected={selected} />
         ) : null}
@@ -206,16 +119,16 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
 
 export const DropDown = ({ options, handleDropDownClick, selected }) => {
   return (
-    <DropDownWrapper className="hashtag-drop-down">
+    <Styled.DropDownWrapper className="hashtag-drop-down">
       {options.map((option, idx) => (
-        <DropDownValue
+        <Styled.DropDownValue
           key={idx}
           onClick={() => handleDropDownClick(option)}
           className={selected === idx ? "hashtag-drop-down selected" : "hashtag-drop-down"}
         >
           {option}
-        </DropDownValue>
+        </Styled.DropDownValue>
       ))}
-    </DropDownWrapper>
+    </Styled.DropDownWrapper>
   );
 };

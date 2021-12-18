@@ -20,14 +20,9 @@ export const Styled = {
     margin-bottom: 10px;
     border-radius: 10px;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
-    transition: box-shadow 0.1s, transform 0.1s;
+
     text-decoration: inherit;
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
+
     @media (max-width: 768px) {
       width: 80%;
       height: 406px;
@@ -48,10 +43,6 @@ export const Styled = {
     margin-top: 60px;
     padding: 10px;
     color: skyblue;
-    &:hover {
-      transform: scale(1.05);
-      transition: all 0.3s ease;
-    }
   `,
   PageURL: styled.a`
     margin-left: auto;
@@ -62,14 +53,6 @@ export const Styled = {
     cursor: pointer;
     padding: 10px;
     text-decoration: inherit;
-    &:hover {
-      padding: 10px;
-      border-radius: 10px;
-      transform: scale(1.05);
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
   `,
 
   Overview: styled.span`
@@ -78,18 +61,12 @@ export const Styled = {
     margin-right: auto;
     margin-top: 15px;
     line-height: 30px;
-    border: 1px rgb(192, 251, 255) solid;
+    border: 1px #3a6fb0 solid;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: box-shadow 0.1s, transform 0.1s;
     text-decoration: inherit;
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
 
     > .hide {
       display: none;
@@ -127,7 +104,7 @@ export const Styled = {
     margin: 40px auto;
     cursor: pointer;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
-    transition: all 0.1s ease-in-out;
+    transition: all 0.3s ease-in-out;
     &:hover {
       color: black;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -140,7 +117,10 @@ export const Styled = {
     }
 
     &:active {
-      transform: scale(1.3);
+      transform: scale(1.5);
+    }
+    .fa-heart {
+      color: red;
     }
   `,
   Wrapper: styled.div`

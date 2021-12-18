@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 export const Styled = {
   HeaderContainer: styled.div`
     position: fixed;
@@ -93,5 +93,9 @@ export const Styled = {
       height: 500px;
       width: 340px;
     }
+  `,
+  StyledLink: styled(Link)`
+    text-decoration: none;
+    color: black;
   `,
 };

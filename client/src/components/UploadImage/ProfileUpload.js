@@ -1,22 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 // import hamtori from "../../img/hamtori.png";
-import "./profileUpload.css";
-import styled from "styled-components";
-
-const ImgDiv = styled.div`
-  background: ${(props) => `url(${props.photo})`} center;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  border-radius: 70%;
-  z-index: 999;
-`;
-const EditProfile = styled.div`
-  cursor: pointer;
-  display: inline-block;
-  margin-top: 10px;
-`;
+// import "./profileUpload.css";
+import { Styled } from "./style";
 
 function ProfileUpload({ imgUrl, setImgUrl }) {
   useEffect(() => {
@@ -37,12 +22,8 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
     inputValue.current.click();
   }
 
-  // function inputImageHandler(){
-  //     const image = imgUrl.current.files
-  // }
-  // console.log(typeof imgUrl);
   return (
-    <div className="profile-upload-box">
+    <Styled.ImageUploadBox>
       <input
         name="image"
         className="input-blind"
@@ -52,32 +33,23 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
       />
       {/* imgUrl에 데이터일때, 파일일때 */}
       {typeof imgUrl === "object" ? (
-        <ImgDiv
+        <Styled.ImgDiv
           onClick={(e) => inputBtn(e, inputValue)}
           style={{ backgroundImage: `url('${URL.createObjectURL(imgUrl)}')` }}
-        ></ImgDiv>
+        ></Styled.ImgDiv>
       ) : (
-        <ImgDiv
+        <Styled.ImgDiv
           // photo={imgUrl || hamtori}
           onClick={(e) => inputBtn(e, inputValue)}
           style={{ backgroundImage: `url(${imgUrl})` }}
-        ></ImgDiv>
+        ></Styled.ImgDiv>
       )}
 
-      {/* {imgUrl ? (
-        <ImgDiv
-          className="img_preview"
-          onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url('${URL.createObjectURL(imgUrl)}')` }}
-        ></ImgDiv>
-      ) : (
-        <ImgDiv className="img_preview" onClick={(e) => inputBtn(e, inputValue)}></ImgDiv>
-      )} */}
-      <EditProfile onClick={(e) => inputBtn(e, inputValue)}>
+      <Styled.EditProfile onClick={(e) => inputBtn(e, inputValue)}>
         <i className="fas fa-edit"></i>
-      </EditProfile>
-    </div>
+      </Styled.EditProfile>
+    </Styled.ImageUploadBox>
   );
 }
 
-export default ProfileUpload;
+export default React.memo(ProfileUpload);

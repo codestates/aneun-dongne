@@ -93,7 +93,7 @@ const MyVisited = () => {
       //관광지마커의 infowindow(마우스 올렸을때만)
       let iwContent = `
       <div style="width: 200px">
-        <img style = "width:100px;height:100px" src = ${positions[i].visited_thumbnail_path} />
+        <img style = "width:100%;height:100px" src = ${positions[i].visited_thumbnail_path} />
         <div>[${positions[i].addr}]</div>
         <div style = 
           padding: 0 5px;
@@ -117,11 +117,10 @@ const MyVisited = () => {
       });
 
       kakao.maps.event.addListener(marker, "click", function () {
-        // infowindowOnClick.open(map, marker);
-        // setIsVisitedOpen(true);
+        //마커를 클릭하면 positions[i]가 selectedPosition에 담기고
+        // markerClick 상태가 true로 변한다.
         setSelectedPosition(positions[i]);
         setMarkerClick(true);
-        // openModalHandler(positions[i]);
       });
     }
     map.setBounds(bounds);

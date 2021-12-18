@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Empty from "../Empty/Empty";
 import { getAreaNames } from "../../modules/AreaCodetoName";
+import Icon from "react-icons-kit";
+import { angleUp } from "react-icons-kit/fa/angleUp";
 // const Body = styled.div`
 //   grid-template-columns: repeat(3, 1fr);
 //   grid-auto-rows: 50px;
@@ -125,7 +127,7 @@ const KeyWord = styled.span`
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   padding: 5px;
   border-radius: 20px;
-  border: 1px solid rgb(192, 251, 255);
+  border: 1px solid #3a6fb0;
   background-color: rgba(192, 251, 255, 0.8);
   background-image: linear-gradient(
     to right bottom,
@@ -267,8 +269,8 @@ const LikeLists = ({ postsInfo }) => {
                 {postsInfo["Likes.likeCount"]}
               </div>
             </LikeBtn>
-          </PlaceCard>
-        </div>
+          </div>
+        </PlaceCard>
       )}
       <TopButton onClick={ToScrollTop}>
         <Icon size={"60"} icon={angleUp} />

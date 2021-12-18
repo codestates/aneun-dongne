@@ -9,19 +9,12 @@ import { Styled } from "./style";
 
 function MyComment({ userinfo, contentId, setDefaultComment }) {
   const kakaoToken = useRecoilValue(kToken);
-  // const [pending, setPending] = useState(false);
   const [something, setSomething] = useState("");
-  // const [text, setText] = useState("");
-  // const [count, setCount] = useState(0);
   const [tags, setTags] = useState([]);
   const accessToken = useRecoilValue(token);
-  // const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
-  // const [commentLoading, setCommentLoading] = useRecoilState(commentloading);
   const [commentLoading, setCommentLoading] = useState(false);
-  //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const date = new window.Date();
   const writeSomething = (e) => {
     setSomething(e.target.value);
   };
@@ -51,7 +44,6 @@ function MyComment({ userinfo, contentId, setDefaultComment }) {
         withCredentials: true,
       });
       let arr = await result.data.data.map((el) => {
-        console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
         return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
       });
       setDefaultComment(arr);
@@ -59,9 +51,7 @@ function MyComment({ userinfo, contentId, setDefaultComment }) {
       setSomething("");
 
       setIsLoginOpen(false);
-      // .then((res) => {
     } catch (err) {
-      console.log(err.response.status);
       if (err.response.status === 401) {
         setIsLoginOpen(true);
       }
@@ -70,8 +60,6 @@ function MyComment({ userinfo, contentId, setDefaultComment }) {
   };
 
   if (commentLoading) {
-    console.log(commentLoading);
-
     return <CommentLoading userinfo={userinfo} />;
   }
   return (
@@ -108,5 +96,4 @@ function MyComment({ userinfo, contentId, setDefaultComment }) {
     </>
   );
 }
-// export default MyComment;
 export default React.memo(MyComment);

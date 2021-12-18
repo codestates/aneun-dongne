@@ -86,8 +86,6 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
         }
       )
       .then((res) => {
-        console.log("hi");
-        console.log(res);
         closeLogoutModalHandler();
         handleResponseSuccess();
       })
@@ -97,7 +95,10 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
   return (
     <>
       <Styled.FormContainer>
-        <div className="form-title">아는 동네</div>
+        <img src="/images/logo.png" className="form-title" />
+        <div className="close-icon">
+          <i class="fas fa-times" onClick={closeLogoutModalHandler}></i>
+        </div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-nickname">
             <label htmlFor="nickname">Nickname</label>

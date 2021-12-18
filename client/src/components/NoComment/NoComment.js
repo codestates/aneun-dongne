@@ -25,8 +25,6 @@ function NoComment() {
   );
 }
 function PropsEqual(prev, next) {
-  console.log(prev.text === next.text);
   return prev.text === next.text;
 }
 export default NoComment;
-// export default Comments;

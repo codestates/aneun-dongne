@@ -4,7 +4,6 @@ import { Styled } from "./style";
 
 const OnlyReadHashTag = ({ initialTags, uuid }) => {
   const tagInput = useRef(null);
-  console.log(initialTags);
   return (
     <>
       <Styled.TagsInput ref={tagInput} id="outer-box">

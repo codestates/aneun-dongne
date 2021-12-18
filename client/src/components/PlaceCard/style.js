@@ -4,7 +4,7 @@ export const Styled = {
   PlaceCard: styled.div`
     margin: auto;
     margin-top: 40px;
-    border: 3px rgb(192, 251, 255) solid;
+    border: 3px #3a6fb0 solid;
 
     justify-content: center;
     border-radius: 20px;

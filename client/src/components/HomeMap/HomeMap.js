@@ -14,9 +14,7 @@ import {
 
 import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
-
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
-
 import MapLoading from "../Loading/MapLoading";
 
 const HomeMap = () => {
@@ -26,8 +24,6 @@ const HomeMap = () => {
   const history = useHistory();
   const [add, setAdd] = useRecoilState(usersaddress);
   const [placeList, setPlaceList] = useRecoilState(placelist);
-  // const nowLoc = useRecoilValue(nowlocation);
-  // const [add, setAdd] = useState({ area: "", sigg: "", address: "" });
 
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
@@ -55,8 +51,6 @@ const HomeMap = () => {
   const wtm = getWtm.contents;
   const searchPlace = (keyword) => {
     setPending(true);
-    console.log(keyword);
-
     const places = new kakao.maps.services.Places();
     //검색
     places.keywordSearch(keyword, (result, status) => {
@@ -70,8 +64,6 @@ const HomeMap = () => {
         } else {
           moveLatLng = new kakao.maps.LatLng(y, x);
         }
-        console.log(keyword);
-        console.log("중심좌표", moveLatLng);
         map.panTo(moveLatLng);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         // alert("검색 결과가 없습니다.");
@@ -86,7 +78,6 @@ const HomeMap = () => {
 
   useEffect(() => {
     //! 픽포인트, 반경, 검색어 아예 없을때
-    console.log(typeof area);
     //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
 
     axios
@@ -258,7 +249,6 @@ const HomeMap = () => {
         .then((res) => res.data.documents[0].address)
         .then((address) => {
           setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-          console.log(add);
         })
         .then(setClickedNowLocationBtn(false))
 

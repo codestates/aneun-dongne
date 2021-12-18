@@ -2,8 +2,6 @@ import { atom, selector } from "recoil";
 import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-console.log(cookies.get("jwt"));
-console.log(cookies.get("kakao-jwt"));
 export const token = atom({
   key: "token",
   default: cookies.get("jwt"),
@@ -142,7 +140,6 @@ export const defaultposition = atom({
 export const pickpoint = selector({
   key: "pickpoint",
   get: ({ get }) => {
-    // console.log(get(defaultposition).lat, get(defaultposition).lon);
     return [get(defaultposition).lat, get(defaultposition).lon];
   },
   set: ({ set }, arr) => {
@@ -174,7 +171,6 @@ export const getWTM = selector({
     );
     await setTimeout(() => {
       const hi = "hi";
-      console.log(hi);
     }, 1000);
     const data = await { x: result.data.documents[0].x, y: result.data.documents[0].y };
     // .then((res) => {
@@ -255,8 +251,6 @@ export const getVisitedList = selector({
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
-        // setVisitedImg(res.data)
         return res.data.data;
       });
 

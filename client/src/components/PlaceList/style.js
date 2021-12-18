@@ -59,7 +59,7 @@ export const Styled = {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    border: 0.5px solid rgb(192, 251, 255);
+    border: 0.5px solid #3a6fb0;
 
     display: ${(props) => (props.BtnStatus ? "inline" : "none")};
     &:hover {

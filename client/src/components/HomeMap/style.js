@@ -12,28 +12,23 @@ export const Styled = {
     }
     @media (min-width: 1024px) {
       z-index: -8;
-      /* border-left: none; */
-      /* border-right: none; */
       position: fixed;
       left: 0;
       display: flex;
       flex-direction: column;
       background-color: white;
-
       padding-left: 45px;
-
       padding-bottom: 30px;
       border-right: none;
       width: 100%;
       height: 80%;
 
-      border-bottom: 1px skyblue solid;
+      > span {
+        z-index: -8;
+      }
     }
 
     @media (max-width: 1023px) {
-      /* width: 90%; */
-      /* background: red; */
-
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -106,66 +101,3 @@ export const Styled = {
     }
   `,
 };
-// import styled from "styled-components";
-
-// export const Styled = {
-//   Div: styled.div`
-//     position: relative;
-//     .map-experiment {
-//       /* display: none; */
-//       z-index: 9;
-
-//       position: absolute;
-//       left: 1px;
-//     }
-//     @media (min-width: 1024px) {
-//       z-index: -8;
-//       /* border-left: none; */
-//       /* border-right: none; */
-//       position: fixed;
-//       left: 0;
-//       display: flex;
-//       flex-direction: column;
-//       background-color: white;
-//       padding-left: 45px;
-//       padding-bottom: 30px;
-//       border-right: none;
-//       width: 100%;
-//       height: 80%;
-//       border-bottom: 1px skyblue solid;
-//       > span {
-//         z-index: -8;
-//       }
-//     }
-//     @media (max-width: 1023px) {
-//       /* width: 90%; */
-//       /* background: red; */
-
-//       display: flex;
-//       flex-direction: row;
-//       width: 100%;
-//       height: 80%;
-//     }
-//   `,
-//   Map: styled.div`
-//     margin-left: 10px;
-//     margin-top: 20px;
-//     border-radius: 10px;
-//     /* width: 600px; */
-//     /* height: 100%; */
-
-//     @media (min-width: 1024px) {
-//       width: 600px;
-//       height: 300px;
-//     }
-//     @media (max-width: 1023px) {
-//       /* border: 1px red solid; */
-//       margin-left: 30px;
-//       margin-right: 30px;
-//       margin-top: 0;
-
-//       width: 80%;
-//       height: 280px;
-//     }
-//   `,
-// };

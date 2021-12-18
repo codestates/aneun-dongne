@@ -50,10 +50,15 @@ export const ReviewHeader = styled.div`
 
   font-weight: bold;
   font-size: 1.5rem;
+  @media screen and (max-width: 780px) {
+    position: center;
+    text-align: center;
+    font-size: 1rem;
+  }
 `;
 export const Backview = styled(Review)`
-  background: #1e7ed5;
-  /* #5fa6f0 */
+  background: #5fa6f0;
+  /* #1e7ed5 */
   transform: rotateY(180deg);
 `;
 
@@ -69,9 +74,6 @@ export const Post = styled.div`
   &:hover ${Review} {
     transform: rotateY(180deg);
   }
-  /* &:hover ${Backview} {
-    transform: rotateY(180deg);
-  } */
 `;
 
 export const BackText = styled.h2`

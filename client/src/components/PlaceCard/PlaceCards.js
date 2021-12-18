@@ -13,7 +13,6 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
   const [likeLoading, setLikeLoading] = useState(false);
-  //로긴상태,로긴모달
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   useEffect(() => {
@@ -26,7 +25,6 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
           },
           withCredentials: true,
         });
-        // console.log(response.data.post.post_tags);
         if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
       } catch (e) {
         console.log(e);
@@ -79,9 +77,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
         )
         .then((res) => {
           const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
-          console.log(like);
           setLike(like.likeCount);
-
           setLikeOrNot(like.likeOrNot);
         })
         .catch((err) => {
@@ -113,11 +109,10 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
     }
     setLikeLoading(false);
   };
-  // console.log(addr1)
+
   return (
     <Styled.PlaceCard onClick={onClick}>
       <div className="place-cards">
-        {/* <HashTagTemplate keywordDummy={tags || []} /> */}
         {img ? <img src={img} /> : <img src="./images/not-image-yet.png" />}
         <div className="place-cards-title">
           <div>{`[${addr1}] `}</div>
@@ -146,9 +141,6 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
 }
 
 function PropsEqual(prev, next) {
-  // console.log(prev.img === next.img);
   return prev.img === next.img;
 }
-// console.log(React.memo(PlaceCards, PropsEqual));
 export const MemoCards = React.memo(PlaceCards, PropsEqual);
-// export default React.memo(PlaceCards, PropsEqual);

@@ -2,146 +2,89 @@ import styled from "styled-components";
 
 export const Styled = {
   UserInfopage: styled.div`
-  top: 0,
-  /* background: red, */
-  margin-left: auto,
-  margin-right: auto,
-  /* width: 100%, */
-  /* width: 100%, */
-  /* height: 100%, */
-  /* border: 1px gray solid, */
-
-  /* background-color: yellowgreen, */
-  display: flex,
-  justify-content: center,
-`,
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+  `,
   View: styled.div`
-  margin-top: 40px,
-  margin-left: 20px,
+    margin-top: 40px;
+    margin-left: 20px;
 
-  width: 500px,
+    width: 500px;
 
-  border-radius: 10px,
-  display: flex,
-  flex-direction: column,
-  align-self: center,
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+  `,
 
-  /* background: yellow, */
-`,
-
-  // export  ProfileImg : styled.img`
-  //   margin: 30px,
-  //   width: 170px,
-  //   height: 170px,
-  //   border-radius: 100%,
-  //   cursor: pointer,
-  // `,
   ContentBox: styled.div`
-  /* margin: 40px 100px 0 0, */
-  /* margin-left: 10%, */
-  /* background: red, */
-  width: 100%,
-  margin-top: 30px,
-  /* display: flex, */
-  /* flex-direction: column, */
+    width: 100%;
+    margin-top: 30px;
 
-  > form {
-    display: flex,
-    flex-direction: column,
-  }
-  > form button {
-    width: 80px,
-    border: none,
-    height: 40px,
-    /* background-color: #8ea1da, */
-    /* background: purple, */
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    transition: all 0.5s ease,
-    border-radius: 20px,
-  }
-  > form .userinfo-each-label {
-    /* background: skyblue, */
-    margin: 23px auto,
+    > form {
+      display: flex;
+      flex-direction: column;
+    }
+    > form button {
+      width: 80px;
+      border: none;
+      height: 40px;
+      background-color: #3a6fb0;
+      border-radius: 20px;
+      cursor: pointer;
+      color: white;
 
-    position: relative,
-  }
-  > form .userinfo-each-label span {
-    /* float: left, */
-  }
-  > form .userinfo-each-label input,
-  form .userinfo-each-label div {
-    /* background: yellow, */
+      &:hover {
+        background-color: #2f4d6f;
+      }
+    }
+    > form .userinfo-each-label {
+      margin: 23px auto;
 
-    font-size: 1.2rem,
-    width: 300px,
-    border-left: none,
-    border-right: none,
-    border-top: none,
-    padding-left: 10px,
-    padding-right: 10px,
-    border-radius: 20px,
-    /* border: 1px gray solid, */
-    /* position: absolute, */
-    /* float: right, */
-  }
-  form .userinfo-button-label {
-    /* background: blue, */
-    display: flex,
-    justify-content: center,
-  }
-  > form .userinfo-button-label .btn-edit {
-    margin: 20px,
-    width: 80px,
-    border: 1px gray solid,
-    height: 40px,
-    /* background-color: #8ea1da, */
-    /* background: purple, */
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    transition: all 0.5s ease,
-    border-radius: 20px,
-  }
+      position: relative;
+    }
 
-  button:hover {
-    transform: scale(1.1),
-  }
+    > form .userinfo-each-label input,
+    form .userinfo-each-label div {
+      font-size: 1.2rem;
+      width: 300px;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 20px;
+    }
+    form .userinfo-button-label {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    > form .userinfo-button-label .btn-edit {
+      width: 80px;
+      height: 40px;
+      border-radius: 20px;
+      margin-left: 120px;
+    }
 
-  button:active {
-    transform: scale(1.1),
-  }
-  form .userinfo-button-label .btn-exit {
-    margin: 20px,
-    width: 80px,
-    border: 1px gray solid,
-    height: 40px,
-    /* background-color: #8ea1da, */
-    /* background: purple, */
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    transition: all 0.5s ease,
-    border-radius: 20px,
-  }
-  .btn-exit:hover {
-    transform: scale(1.1),
-  }
-`,
+    .btn-exit {
+      width: 80px;
+      height: 40px;
+      border-radius: 20px;
+      background-color: red;
+      color: white;
+      &:hover {
+        background-color: #ff443c;
+      }
+    }
+  `,
 
   ImgDiv: styled.div`
-  width: 200px,
-  height: 200px,
-  margin: 10px auto,
-`,
+    width: 200px;
+    height: 200px;
+    margin: 10px auto;
+  `,
 };

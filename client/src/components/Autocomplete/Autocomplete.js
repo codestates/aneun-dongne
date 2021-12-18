@@ -32,7 +32,6 @@ const deselectedOptions = [
 ];
 
 export const Autocomplete = ({ hashtag, setHashtag }) => {
-  // const [hashtag, setHashtag] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState(deselectedOptions);
   const [selected, setSelected] = useState(-1);
@@ -61,14 +60,13 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
 
   const handleDropDownClick = (clickedOption) => {
     setInputValue(clickedOption);
-    console.log(clickedOption);
 
     const resultOptions = deselectedOptions.filter((option) => option === clickedOption);
     setOptions(resultOptions);
   };
-  useEffect(() => {
-    console.log(inputValue);
-  }, [inputValue]);
+  // useEffect(() => {
+  //   console.log(inputValue);
+  // }, [inputValue]);
   const handleDeleteButtonClick = () => {
     setInputValue("");
   };
@@ -110,7 +108,6 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
             onChange={handleInputChange}
             value={inputValue}
           />
-          {/* onClick={handleDeleteButtonClick}*/}
         </Styled.InputContainer>
         {hashtag !== "null" ? (
           <DropDown options={options} handleDropDownClick={(e) => handleDropDownClick(e)} selected={selected} />
@@ -123,7 +120,6 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
 export const DropDown = ({ options, handleDropDownClick, selected }) => {
   return (
     <Styled.DropDownWrapper className="hashtag-drop-down">
-      {/* <DropDownContainer> */}
       {options.map((option, idx) => (
         <Styled.DropDownValue
           key={idx}
@@ -133,7 +129,6 @@ export const DropDown = ({ options, handleDropDownClick, selected }) => {
           {option}
         </Styled.DropDownValue>
       ))}
-      {/* </DropDownContainer> */}
     </Styled.DropDownWrapper>
   );
 };

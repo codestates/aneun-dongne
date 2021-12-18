@@ -13,19 +13,15 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   // const [pending, setPending] = useState(false);
   function inputFileHandler(inputValue, setImgUrl) {
     const image = inputValue.current.files;
-    console.log(image);
     setImgUrl(image[0]);
-    console.log(typeof image[0]);
   }
 
   function inputBtn(e, inputValue) {
     e.preventDefault();
     // setPending(true);
-    console.log("hi");
     inputValue.current.click();
   }
 
-  console.log(imgUrl);
   return (
     <Styled.ImageUploadBox>
       <input

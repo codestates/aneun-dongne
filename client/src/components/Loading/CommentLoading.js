@@ -6,9 +6,6 @@ import LikeLoading from "./LikeLoading";
 const Comment = styled.div`
   position: relative;
   display: flex;
-
-  /* border: 1px red solid; */
-  /* height: 200px; */
   border-radius: 20px;
   margin-top: 10px;
   margin-bottom: 40px;
@@ -27,7 +24,6 @@ const Comment = styled.div`
 `;
 const Profile = styled.div`
   position: relative;
-  /* background-color: red; */
   display: flex;
   width: 80px;
   height: 140px;
@@ -38,11 +34,9 @@ const ProfileImg = styled.img`
   width: 80px;
   height: 80px;
   position: absolute;
-  /* background-color: white; */
 `;
 
 const NickName = styled.span`
-  /* background-color: yellowgreen; */
   position: absolute;
   bottom: 5px;
   text-align: center;
@@ -50,24 +44,16 @@ const NickName = styled.span`
 `;
 
 const ContentBox = styled.div`
-  /* background-color: yellow; */
-
   > div {
-    /* background: red; */
     margin-left: 0%;
     margin-top: 100px;
   }
 `;
 
 const HashTagWrapper = styled.div`
-  /* margin-top: 100px; */
-  /* position: absolute; */
-  /* background-color: red; */
   margin: 20% auto 0 auto;
   width: 370px;
-
   padding-right: 10px;
-
   border: none;
 `;
 const Date = styled.div`

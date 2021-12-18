@@ -11,7 +11,6 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
   function inputFileHandler(inputValue, setPlaceImage) {
     const image = inputValue.current.files;
     setPlaceImage(image[0]);
-    console.log(image[0]);
   }
 
   function inputBtn(e, inputValue) {
@@ -19,10 +18,6 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
     inputValue.current.click();
   }
 
-  // function inputImageHandler(){
-  //     const image = placeImage.current.files
-  // }
-  console.log(placeImage);
   return (
     <Styled.ImageUploadBox className="image-upload-box">
       <input

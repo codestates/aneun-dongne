@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import { Styled } from "./style";
 import { MemoCards } from "../PlaceCard/PlaceCards";
 
@@ -7,9 +7,6 @@ import { placeaddress, placelocation, placeimg, placetitle, placelist, token, kT
 
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
-
-// React.memo 쓰기
-// 아 근데 왜 안돼 우선 제껴,
 
 function PlaceList() {
   const accessToken = useRecoilValue(token);
@@ -53,7 +50,6 @@ function PlaceList() {
   }
 
   function getPlaceLocation(obj, path, title, address) {
-    console.log(path);
     setPlaceLocation(obj);
     setImgURL(path);
     setTitle(title);
@@ -79,7 +75,6 @@ function PlaceList() {
         );
       })}
       <Styled.MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
-        {/* Top */}
         <Icon size={"60"} icon={angleUp} />
       </Styled.MoveToTopBtn>
     </Styled.PlaceLists>

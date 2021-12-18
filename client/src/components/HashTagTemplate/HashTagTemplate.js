@@ -16,5 +16,4 @@ function HashTagTemplate({ keywordDummy }) {
     </>
   );
 }
-// export default HashTagTemplate;
 export default React.memo(HashTagTemplate);

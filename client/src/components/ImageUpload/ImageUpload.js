@@ -7,17 +7,12 @@ function ImageUpload({ placeImage, setPlaceImage }) {
   function inputFileHandler(inputValue, setPlaceImage) {
     const image = inputValue.current.files;
     setPlaceImage(image[0]);
-    console.log(image[0]);
   }
 
   function inputBtn(e, inputValue) {
     e.preventDefault();
     inputValue.current.click();
   }
-
-  // function inputImageHandler(){
-  //     const image = placeImage.current.files
-  // }
 
   return (
     <Styled.ImageUploadBox>

@@ -5,8 +5,6 @@ export const Styled = {
     position: relative;
     display: flex;
 
-    /* border: 1px red solid; */
-    /* height: 200px; */
     border-radius: 20px;
     margin-top: 10px;
     margin-bottom: 40px;
@@ -15,7 +13,7 @@ export const Styled = {
   `,
   Profile: styled.div`
     position: relative;
-    /* background-color: red; */
+
     display: flex;
     width: 80px;
     height: 140px;
@@ -26,11 +24,9 @@ export const Styled = {
     width: 80px;
     height: 80px;
     position: absolute;
-    /* background-color: white; */
   `,
 
   NickName: styled.span`
-    /* background-color: yellowgreen; */
     position: absolute;
     bottom: 5px;
     text-align: center;
@@ -38,11 +34,10 @@ export const Styled = {
   `,
 
   ContentBox: styled.div`
-    /* background-color: yellow; */
     margin-top: 30px;
     position: relative;
     width: 480px;
-    /* height: 140px; */
+
     > button {
       position: absolute;
       right: -10px;
@@ -50,7 +45,7 @@ export const Styled = {
       width: 80px;
       border: none;
       height: 40px;
-      background-color: rgb(192, 251, 255);
+      background-color: #3a6fb0;
       background-image: linear-gradient(
         to right bottom,
         rgba(255, 255, 255, 0.9) 0,
@@ -62,15 +57,11 @@ export const Styled = {
     }
 
     > div {
-      /* background: red; */
       margin-left: 10%;
     }
   `,
 
   HashTagWrapper: styled.div`
-    /* margin-top: 100px; */
-    /* position: absolute; */
-    /* background-color: red; */
     margin: 20% auto 0 auto;
     width: 370px;
 

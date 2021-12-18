@@ -17,11 +17,7 @@ const App = () => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
 
-  console.log(accessToken);
-
   const isAuthenticated = async () => {
-    console.log(accessToken);
-    // if(!accessToken)
     await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
@@ -32,14 +28,10 @@ const App = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("홈으로 가잔");
         setInfo(res.data.data.userInfo);
         setIsLogin(true);
       });
   };
-
-  // console.log(accessToken);
-  // //쿠키안에 jwt 있는지 보고 로긴상태결정
 
   useEffect(() => {
     if (accessToken || kakaoToken) {
@@ -69,4 +61,3 @@ const App = () => {
 };
 
 export default App;
-// "/detailpage/:id"

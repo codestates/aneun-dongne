@@ -3,20 +3,19 @@ import styled from "styled-components";
 export const Styled = {
   CloseBtn: styled.button`
     position: absolute;
-    right: 10px;
-    top: 10px;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
     background-color: white;
     z-index: 999;
     padding: 5px;
     margin-left: auto;
     cursor: pointer;
-    :hover {
-      transform: scale(1.1);
-    }
+    border: none;
+    font-size: 30px;
   `,
 
   FormContainer: styled.div`
-    /* border: 1px gray solid; */
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -30,18 +29,24 @@ export const Styled = {
       position: relative;
     }
 
-    form h3 {
-      margin-top: 10px;
+    .form-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 30px;
     }
 
     form button {
       margin: 10px;
       border: none;
       border-radius: 10px;
-      background: rgb(192, 251, 255);
+      background-color: #3a6fb0;
       width: 90px;
       height: 30px;
-      transition: all 0.5s ease-in-out;
+      cursor: pointer;
+      color: white;
+      &:hover {
+        background-color: #2f4d6f;
+      }
       &:after {
         position: absolute;
         content: "";
@@ -50,7 +55,7 @@ export const Styled = {
         top: 0;
         right: 0;
         z-index: -1;
-        background-color: rgb(192, 251, 255);
+        background-color: #3a6fb0;
         background-image: linear-gradient(
           to left top,
           rgba(255, 255, 255, 0.9) 0,
@@ -62,35 +67,22 @@ export const Styled = {
           4px 4px 5px 0px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
       }
-      &:hover {
-        color: black;
-        transform: scale(1.1);
-      }
-      &:hover:after {
-        left: 0;
-        width: 100%;
-      }
-      &:active {
-        //
-      }
     }
 
     .form-image {
       cursor: pointer;
-      width: 60px;
+      width: 65px;
       height: 40px;
-      background-color: #a3dcf3;
+      background-color: #3a6fb0;
     }
 
     .form-memo {
       margin: 20px 0px;
       display: flex;
       flex-direction: column;
-      /* background-color: pink; */
       text-align: center;
     }
     .form-memo input {
-      /* margin: 20px 0px; */
       width: 300px;
       height: 80px;
     }

@@ -15,9 +15,7 @@ import "../MapInRoom/kakao-map.css";
 
 import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
-import Loading from "../Loading/Loading";
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
-import LikeLoading from "../Loading/LikeLoading";
 import MapLoading from "../Loading/MapLoading";
 
 const HomeMap = () => {
@@ -27,8 +25,6 @@ const HomeMap = () => {
   const history = useHistory();
   const [add, setAdd] = useRecoilState(usersaddress);
   const [placeList, setPlaceList] = useRecoilState(placelist);
-  // const nowLoc = useRecoilValue(nowlocation);
-  // const [add, setAdd] = useState({ area: "", sigg: "", address: "" });
 
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
@@ -37,7 +33,6 @@ const HomeMap = () => {
   const loc = useRecoilValueLoadable(setLo);
 
   const getWtm = useRecoilValueLoadable(getWTM);
-  //   const [meetingPlace,setMeetingPlace] = useState([region,city,add])
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
   // const [pickPoint, setPickPoint] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
@@ -66,9 +61,6 @@ const HomeMap = () => {
   const wtm = getWtm.contents;
   const searchPlace = (keyword) => {
     setPending(true);
-    console.log(keyword);
-
-    // const places = new kakao.maps.services.Places()
     const places = new kakao.maps.services.Places();
     //검색
     places.keywordSearch(keyword, (result, status) => {
@@ -89,8 +81,6 @@ const HomeMap = () => {
         else {
           moveLatLng = new kakao.maps.LatLng(y, x);
         }
-        console.log(keyword);
-        console.log("중심좌표", moveLatLng);
         map.panTo(moveLatLng);
         //!! setPickPoint를 등록하여 클릭한것과 같은 효과를 낸다.
         //!!setPickPoint([moveLatLng.Ma, moveLatLng.La]);  -> 이거 주석하면 마커 안나옴.. 이게 마커나오는 기능과의 연결고리임..
@@ -128,7 +118,6 @@ const HomeMap = () => {
 
   useEffect(() => {
     //! 픽포인트, 반경, 검색어 아예 없을때
-    console.log(typeof area);
     //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
 
     axios
@@ -484,7 +473,6 @@ const HomeMap = () => {
         .then((address) => {
           // console.log(address)
           setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-          console.log(add);
         })
         .then(setClickedNowLocationBtn(false))
         //   .then(res=>console.log(meetingPlace))
@@ -537,7 +525,6 @@ const HomeMap = () => {
   // };
   /* margin-top:${(props)=>props.first?'10px':'50px'} */
   if (loc.state === "loading" && getWtm.state === "loading") {
-    console.log("로딩");
     return (
       <Styled.Div>
         <HomeRightbar
@@ -575,4 +562,3 @@ const HomeMap = () => {
 };
 
 export default HomeMap;
-

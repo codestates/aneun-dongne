@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import hamtori from "../../img/hamtori.png";
 import "./profileUpload.css";
 import styled from "styled-components";
@@ -25,19 +25,13 @@ function ChangedImg({ imgUrl, setImgUrl }) {
   function inputFileHandler(inputValue, setImgUrl) {
     const image = inputValue.current.files;
     setImg(image[0]);
-    console.log(image[0]);
   }
 
   function inputBtn(e, inputValue) {
     e.preventDefault();
     setPending(true);
-    console.log("hi");
     inputValue.current.click();
   }
-
-  // function inputImageHandler(){
-  //     const image = imgUrl.current.files
-  // }
 
   //프사없을시 랜덤프사
 

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { visitedModal } from "../../recoil/recoil";
 
 export const Styled = {
   PlaceCard: styled.div`
-    /* background: skyblue; */
     margin: auto;
     margin-top: 40px;
-    border: 1px rgb(107, 217, 224) solid;
+    border: 1px #3a6fb0 solid;
     display: flex;
     flex-direction: row;
     border-radius: 20px;
@@ -18,24 +17,7 @@ export const Styled = {
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: box-shadow 0.1s, transform 0.1s;
     text-decoration: inherit;
-    animation: color-change 2s infinite;
-    @keyframes color-change {
-      0% {
-        border-left: #c1ff6b 1px solid;
 
-        border-top: #c1ff6b 1px solid;
-      }
-      50% {
-        border-left: #fab4b4 1px solid;
-
-        border-top: #fab4b4 1px solid;
-      }
-      100% {
-        border-left: #46ffff 1px solid;
-
-        border-top: #46ffff 1px solid;
-      }
-    }
     &:hover {
       transform: scale(1.1);
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -48,7 +30,6 @@ export const Styled = {
       flex-direction: column;
       align-content: center;
       justify-content: center;
-      /* background-color: red; */
       border-radius: 20px;
       width: 100%;
       margin: 10px;
@@ -60,16 +41,12 @@ export const Styled = {
       margin-right: auto;
       margin-top: 20px;
       margin-bottom: 10px;
-
       border-radius: 20px;
-
-      /* object-fit: scale-down; */
     }
     .place-cards-title {
       margin-left: 10px;
       margin-top: 6px;
       .place-cards-memo {
-        /* background: red; */
         width: 90%;
         padding: 0 5px;
         overflow: hidden;
@@ -115,8 +92,6 @@ export const Styled = {
     display: flex;
     justify-content: center;
     backdrop-filter: contrast(50%);
-    /* backdrop-filter: brightness(50%); */
-
     align-items: center;
     width: 100vw;
     height: 100vh;
@@ -141,7 +116,6 @@ function VisitedCards({ area, sigg, image, memo, id }) {
     setIsVisitedOpen(true);
   };
   const closeVisitedModal = () => {
-    console.log(isVisitedOpen);
     if (isVisitedOpen) {
       setVtModal(null);
       setIsVisitedOpen(false);
@@ -152,7 +126,6 @@ function VisitedCards({ area, sigg, image, memo, id }) {
     <>
       <Styled.PlaceCard>
         <div className={`place-cards ${id}`}>
-          {/* <div className={`place-cards ${id}`} onClick={(e) => openModalHandler(id)}> */}
           {image ? <img className={id} src={image} /> : <img className={id} src="/images/not-image-yet.png" />}
           <div className={`place-cards-title ${id}`}>
             <div className={id}>

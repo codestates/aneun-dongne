@@ -5,9 +5,7 @@ export const Styled = {
     position: relative;
     margin-right: auto;
     margin-left: auto;
-    /* overflow-x: visible; */
-    /* display: flex;
-flex-direction: column; */
+
     @media all and (min-width: 768px) and (max-width: 1050px) {
       flex-direction: column;
       margin: 0 auto;
@@ -24,7 +22,6 @@ flex-direction: column; */
     }
   `,
   StartButton: styled.button`
-    /* position: absolute; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,8 +32,6 @@ flex-direction: column; */
     border-style: none;
     cursor: pointer;
     transition: all 0.3s;
-    /* margin-left: 350px;
-  margin-right: 350px; */
     border: 1px solid rgb(194, 194, 194);
     border-radius: 5px;
     margin-top: 20px;
@@ -193,7 +188,6 @@ flex-direction: column; */
       font-weight: bold;
       color: white;
       margin-bottom: 170px;
-      /* background-color: #f0f9ff99; */
       border-radius: 20px;
       width: 800px;
       height: 50px;
@@ -234,8 +228,6 @@ flex-direction: column; */
     }
   `,
   VideoContainer: styled.div`
-    /* width: 500px;
-  height: 300px; */
     width: 50%;
 
     img {

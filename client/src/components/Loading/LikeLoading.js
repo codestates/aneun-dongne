@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Div = styled.div`
-  //! 동그라미 로딩
+  /* //! 동그라미 로딩 */
   /* loading */
   .loadingBox {
     margin-top: 60px;

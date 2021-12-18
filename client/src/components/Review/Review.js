@@ -53,7 +53,6 @@ export const ReviewHeader = styled.div`
 `;
 export const Backview = styled(Review)`
   background: #1e7ed5;
-  /* #5fa6f0 */
   transform: rotateY(180deg);
 `;
 
@@ -69,9 +68,6 @@ export const Post = styled.div`
   &:hover ${Review} {
     transform: rotateY(180deg);
   }
-  /* &:hover ${Backview} {
-    transform: rotateY(180deg);
-  } */
 `;
 
 export const BackText = styled.h2`

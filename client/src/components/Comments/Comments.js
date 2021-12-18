@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { defaultcomments, deleteCommentmode, token, kToken, loginState, loginModal } from "../../recoil/recoil";
 
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
@@ -12,8 +12,6 @@ import LikeLoading from "../Loading/LikeLoading";
 const Comment = styled.div`
   position: relative;
   display: flex;
-  /* border: 1px red solid; */
-  /* height: 200px; */
   border-radius: 20px;
   margin-top: 10px;
   margin-bottom: 40px;
@@ -30,14 +28,12 @@ const Comment = styled.div`
     width: 100%;
   }
   @media (max-width: 768px) {
-    /* width: 80%; */
     background: red;
     margin-left: 10px;
   }
 `;
 const Profile = styled.div`
   position: relative;
-  /* background-color: red; */
   display: flex;
   width: 80px;
   height: 140px;
@@ -48,11 +44,9 @@ const ProfileImg = styled.img`
   width: 80px;
   height: 80px;
   position: absolute;
-  /* background-color: white; */
 `;
 
 const NickName = styled.span`
-  /* background-color: yellowgreen; */
   position: absolute;
   bottom: 5px;
   text-align: center;
@@ -60,11 +54,9 @@ const NickName = styled.span`
 `;
 
 const ContentBox = styled.div`
-  /* background-color: yellow; */
   margin-top: 30px;
   position: relative;
   width: 480px;
-  /* height: 140px; */
   > button {
     position: absolute;
     right: -10px;
@@ -92,8 +84,6 @@ const ContentBox = styled.div`
   }
   @media (max-width: 768px) {
     width: 80%;
-    /* background: blue; */
-    /* margin-left: 10px; */
   }
 `;
 //!-- 내가 바꾼거 댓글 높이
@@ -118,14 +108,9 @@ const ContentInput = styled.div`
   display: flex;
   padding: 10px;
   width: 480px;
-  /* border: 1px gray solid; */
-  /* flex-wrap: wrap; */
-  /* background-color: burlywood; */
+
   > #comment-read {
     word-wrap: break-word;
-    /* background-color: green; */
-    > span {
-    }
   }
   > #comment-change {
     display: flex;
@@ -135,14 +120,11 @@ const ContentInput = styled.div`
   }
   > input,
   div {
-    /* background-color: whitesmoke; */
-
     width: 370px;
     padding-left: 10px;
     padding-right: 10px;
   }
 `;
-//!----
 const BtnWrapper = styled.div`
   width: 370px;
 
@@ -162,10 +144,9 @@ const BtnWrapper = styled.div`
   }
   .change-comment,
   .complete-change {
-    /* z-index : 3 내가한거 */
     z-index: 3;
     border: none;
-    
+
     background-image: linear-gradient(
       to right bottom,
       rgba(255, 255, 255, 0.9) 0,
@@ -218,15 +199,7 @@ const BtnWrapper = styled.div`
 `;
 
 const HashTagWrapper = styled.div`
-  /* margin-top: 100px; */
-  /* position: absolute; */
-  /* background-color: red; */
   width: 370px;
-
-  /* bottom: 0; */
-  /* top: 75px; */
-  /* margin-top: 75px; */
-
   padding-right: 10px;
   white-space: nowrap;
   border: none;
@@ -245,22 +218,15 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState(text);
-  //로긴상태,로긴모달
-  const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  //
   const [changeOrNot, setChangeOrNot] = useState(false);
   const [tags, setTags] = useState(initialTags);
   const setDefaultComment = useSetRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
   const setDeleteOrNot = useSetRecoilState(deleteCommentmode);
-  //댓글로딩
   const [commentLoading, setCommentLoading] = useState(false);
-  //
 
-  // console.log(initialTags);
   useEffect(() => {
-    //text,initialTags초기화
     setComment(text);
     setTags(initialTags);
   }, [text, initialTags]);
@@ -269,13 +235,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     setPrevComment(text);
   }, []);
 
-  //! 이것도 서버에서하래 유저권한 관련된건 다 서버에서 토큰이랑 비교후 결정
-  // const editable = nickname === username; //
-
   function getCommentId(e) {
-    // e.preventDefault(); //필요한가?
-    //누른 버튼의 className으로 실행되는 함수가 결정된다.
-
     setClickedBtn(e.target.className);
   }
 
@@ -290,7 +250,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
       changeComment();
     }
   }, [clickedBtn]);
-  // console.log(tags.map((el) => el.substr(0, el.length - 1)));
 
   // 댓글 삭제요청 보내는 함수
   async function deleteComment() {
@@ -312,13 +271,9 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         // { params: { commentId: uuid }, withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data.data);
         let arr = res.data.data.map((el) => {
-          console.log(el.comments.comment_tags.split(","));
-          console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
-        console.log(arr);
         setDefaultComment(arr);
         setDeleteOrNot(true);
       });
@@ -328,12 +283,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   function changeComment() {
     setPrevComment(comment);
     setEditMode(true);
-    console.log(editMode);
   }
   async function completeChange() {
-    console.log(tags, comment);
     const body = {
-      commentId: uuid, //댓글아뒤
+      commentId: uuid, //댓글아이디
       commentContent: comment, //댓글내용
       tagsArr: tags, //해시태그
     };
@@ -348,13 +301,9 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
         withCredentials: true,
       })
       .then((res) => {
-        console.log("코맨트로딩", commentLoading);
         let arr = res.data.data.map((el) => {
-          console.log(el.comments.comment_tags.split(","));
-          console.log([{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }]);
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
-        console.log(arr);
         setDefaultComment(arr);
       })
       .catch((err) => {
@@ -362,9 +311,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
           setIsLoginOpen(true);
         }
       });
-
-    // if (editMode) console.log("수정완료");
-    // else console.log("댓글수정 클릭");
 
     setEditMode(false);
 
@@ -380,9 +326,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     setEditMode(false);
     setClickedBtn("");
   }, [changeOrNot]);
-  // useEffect(() => {
-
-  // }, [commentLoading]);
 
   return (
     <>
@@ -412,7 +355,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
                     <textarea
                       id="comment-change"
                       type="text"
-                      // value={comment}
                       defaultValue={prevComment}
                       onChange={(e) => ChangeHandler(e)}
                       onKeyUp={(e) => {
@@ -479,9 +421,5 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     </>
   );
 }
-// function PropsEqual(prev, next) {
-//   console.log(prev.text === next.text);
-//   return prev.text === next.text;
-// }
+
 export default React.memo(Comments);
-// export default Comments;

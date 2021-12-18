@@ -16,14 +16,12 @@ export const Styled = {
   `,
 
   FormContainer: styled.div`
-    /* border: 1px gray solid; */
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
 
     > h2 {
-      /* background: red; */
       margin-top: 100px;
     }
     > .button-wrapper {
@@ -65,9 +63,6 @@ export const Styled = {
       &:hover:after {
         left: 0;
         width: 100%;
-      }
-      &:active {
-        //
       }
     }
 

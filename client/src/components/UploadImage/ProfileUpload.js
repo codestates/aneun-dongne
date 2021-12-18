@@ -28,15 +28,12 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   // const [pending, setPending] = useState(false);
   function inputFileHandler(inputValue, setImgUrl) {
     const image = inputValue.current.files;
-    console.log(image);
     setImgUrl(image[0]);
-    console.log(typeof image[0]);
   }
 
   function inputBtn(e, inputValue) {
     e.preventDefault();
     // setPending(true);
-    console.log("hi");
     inputValue.current.click();
   }
 
@@ -44,7 +41,6 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   //     const image = imgUrl.current.files
   // }
   // console.log(typeof imgUrl);
-  console.log(imgUrl);
   return (
     <div className="profile-upload-box">
       <input

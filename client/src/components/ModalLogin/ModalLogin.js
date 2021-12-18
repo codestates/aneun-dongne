@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { Styled } from "./style";
@@ -52,7 +52,10 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
   return (
     <>
       <Styled.FormContainer>
-        <div className="form-title">아는 동네</div>
+        <div className="close-button" onClick={closeLoginModalHandler}>
+          <i class="fas fa-times"></i>
+        </div>
+        <img className="form-title" src="/images/logo.png" />
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-email">
             <label htmlFor="email">Email</label>
@@ -63,13 +66,10 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
             <input id="password" type="password" value={password} onChange={handleInputValue("password")} />
           </div>
           <div className="error-message">{errorMessage}</div>
-
           <button type="submit" className="login-button" onClick={handleLogin}>
             로그인
           </button>
-          {/* <button type="submit" className="kakao-login-button" onClick={handleLogin}>
-            카카오톡 로그인
-          </button> */}
+
           <KakaoLogin />
 
           <div className="signup-text">아직 회원이 아니신가요?</div>

@@ -16,7 +16,7 @@ import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteU
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-import { StyledLink } from "../PlaceList/PlaceList";
+// import { StyledLink } from "../PlaceList/PlaceList";
 
 import Cookies from "universal-cookie";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
@@ -28,7 +28,6 @@ const Header = ({ handleResponseSuccess }) => {
   const [isLoginOpen, setIsLoginOpen] = useRecoilState(loginModal);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
-  const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const [isLoginAgainOpen, setIsLoginAgainOpen] = useRecoilState(loginAgainModal);
@@ -93,33 +92,24 @@ const Header = ({ handleResponseSuccess }) => {
     setIsLoginAgainOpen(false);
   };
   const kakaologoutHandler = () => {
-    console.log("bye kakao");
     window.location.assign(
       `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_API_URL}/signout`
     );
     setIsLogin(false);
-    // history.push("/");
-    // console.log(cookies);
   };
 
   const logoutHandler = () => {
-    console.log("bye");
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
-      //로긴상태 해제
-      // cookies.remove("jwt");
       setIsLogin(false);
     });
 
     history.push("/");
-    // console.log(cookies);
   };
 
   const closeWarningModalHandler = () => {
     setWarningModal(false);
   };
 
-  // }, [accessToken, kToken]);
-  // console.log(isVisitedOpen);
   return (
     <>
       {/* // 로그인 모달 */}
@@ -207,12 +197,7 @@ const Header = ({ handleResponseSuccess }) => {
       <Styled.HeaderContainer>
         <div className="header-wrapper">
           <Link to="/home">
-            {/* <div id="logo">아는동네</div> */}
-            <img
-              src="https://media.discordapp.net/attachments/912244672578089002/912920442157805678/E53C1906-3AF2-4061-AFD3-E6E7A131BDCE.jpeg"
-              id="logo"
-              alt="logo"
-            ></img>
+            <img src="/images/logo.png" id="logo" alt="logo"></img>
           </Link>
           <div className="header-button-wrapper">
             {!isLogin ? (
@@ -228,7 +213,6 @@ const Header = ({ handleResponseSuccess }) => {
               <>
                 {cookies.get("kakao-jwt") ? (
                   <div className="kakao_mainpage-button mainpage-button" onClick={kakaologoutHandler}>
-                    {/* <div className="kakao_mainpage-button" onClick={logoutHandler}> */}
                     Log Out
                   </div>
                 ) : (
@@ -236,11 +220,10 @@ const Header = ({ handleResponseSuccess }) => {
                     Log Out
                   </div>
                 )}
-                {/* 나중에 밑줄뜨는거 처리해야함*/}
-                <StyledLink to="/mypage/like">
+
+                <Styled.StyledLink to="/mypage/like">
                   <div className="mainpage-button">My Page</div>
-                  {/* <div className="mainpage-button">My Page</div> */}
-                </StyledLink>
+                </Styled.StyledLink>
               </>
             )}
           </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import LikeLists from "./LikeLists.js";
 import { useRecoilValue } from "recoil";
@@ -9,9 +8,6 @@ import styled from "styled-components";
 
 import LikeLoading from "../Loading/LikeLoading";
 import Empty from "../Empty/Empty.js";
-
-// import { getNames } from "../../AreaCodetoName";
-// const [like, setLike] = useState(0);
 
 const Body = styled.div`
   .list {
@@ -32,8 +28,6 @@ const MyLike = () => {
   const [isLoing, setIsloading] = useState(true);
   const kakaoToken = useRecoilValue(kToken);
 
-  const history = useHistory();
-
   const Margin = styled.div`
     margin-left: 150px;
     font-size: 1.5rem;
@@ -52,8 +46,6 @@ const MyLike = () => {
       .then((res) => {
         setIsloading(true);
         setPostsInfo(res.data.data);
-
-        console.log("정보가 들어오면 확인하자", res.data.data);
       })
       .then(() => {
         setIsloading(false);
@@ -78,7 +70,11 @@ const MyLike = () => {
                 <Empty />
               ) : (
                 postsInfo.map((postsInfo) => {
-                  return <LikeLists postsInfo={postsInfo} key={postsInfo.id} />;
+                  return (
+                    <div key={postsInfo.id}>
+                      <LikeLists postsInfo={postsInfo} />
+                    </div>
+                  );
                 })
               )}
             </div>

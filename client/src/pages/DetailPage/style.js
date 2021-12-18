@@ -51,11 +51,6 @@ export const Styled = {
     margin-top: 10%;
     padding: 10px;
     color: skyblue;
-    &:hover {
-      transform: scale(1.05);
-
-      transition: all 0.3s ease;
-    }
   `,
   PageURL: styled.a`
     margin-left: auto;
@@ -67,15 +62,8 @@ export const Styled = {
     /* border: 1px gray solid; */
     /* box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: box-shadow 0.1s, transform 0.1s; */
+    padding: 10px;
     text-decoration: inherit;
-    &:hover {
-      padding: 10px;
-      border-radius: 10px;
-      transform: scale(1.05);
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
   `,
 
   Overview: styled.span`
@@ -84,7 +72,7 @@ export const Styled = {
     margin-right: auto;
     margin-bottom: 5%;
     line-height: 30px;
-    border: 1px rgb(192, 251, 255) solid;
+    border: 1px #3a6fb0 solid;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
@@ -130,13 +118,12 @@ export const Styled = {
   LikeBtn: styled.button`
     border: 1px red solid;
     border-radius: 20px;
-    /* background: white; */
     width: 60px;
     height: 30px;
     margin: 40px auto;
     cursor: pointer;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
-    transition: all 0.1s ease-in-out;
+    transition: all 0.3s ease-in-out;
     &:hover {
       color: black;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
@@ -149,7 +136,10 @@ export const Styled = {
     }
 
     &:active {
-      transform: scale(1.3);
+      transform: scale(1.5);
+    }
+    .fa-heart {
+      color: red;
     }
   `,
   Wrapper: styled.div`
@@ -163,14 +153,12 @@ export const Styled = {
       /* height: 406px; */
       margin-left: auto;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
     @media (max-width: 320px) {
       width: 90%;
       /* width: 450px; */
       margin-left: auto;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
   `,
 };

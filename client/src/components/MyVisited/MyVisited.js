@@ -7,6 +7,7 @@ import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from 
 import { useRecoilValue, useRecoilState } from "recoil";
 
 import Empty from "../Empty/Empty";
+import ModalVisited from "../ModalVisited/ModalVisited";
 import MapLoading from "../Loading/MapLoading";
 
 const { kakao } = window;

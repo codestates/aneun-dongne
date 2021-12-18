@@ -14,11 +14,6 @@ const getMyComments = async (userId) => {
     },
   })
     .then((data) => {
-      if (data.length === 0) {
-        console.log("no data");
-        //res.status(400).json({message: "Comments do not exist"})
-        //return "Comments do not exist";
-      }
       onlyCommentData = data;
     })
     .catch((err) => console.log(err));
@@ -65,7 +60,6 @@ const getMyComments = async (userId) => {
     // 오래된게 밑으로가고 최신이 가장위에있는게 맞는것같아서 unshift로 바꿨어요
     result.unshift(adduser);
   }
-  // console.log(result);
 
   return result;
 };

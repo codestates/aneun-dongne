@@ -203,30 +203,31 @@ function DetailPage({ match }) {
   return (
     <>
       <Styled.Div>
-        <Styled.Title>{title}</Styled.Title>
-        {pageURL ? (
-          <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title} 홈페이지`}>
-            홈페이지로 이동
-          </Styled.PageURL>
-        ) : null}
-        {/* 여기도 사진 넘기기기능 넣자. */}
-        {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src="/images/not-image-yet.png" />}
-        {overView ? (
-          // !이거 css로 할수있대 나중에 ㄱ
-          <Styled.Overview>
-            <span className="first-overview">{FirstOverView}</span>
-            <Styled.ReadMoreBtn className={!readMore ? null : "hide"} onClick={readMoreHandler}>
-              ...더보기
-            </Styled.ReadMoreBtn>
-            <span className={readMore ? null : "hide"}>{SecondOverView}</span>
-            <Styled.CutDownBtn className={readMore ? null : "hide"} onClick={readMoreHandler}>
-              간략히
-            </Styled.CutDownBtn>
-          </Styled.Overview>
-        ) : null}
-
-        <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
         <Styled.Wrapper>
+          <Styled.Title>{title}</Styled.Title>
+          {pageURL ? (
+            <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title} 홈페이지`}>
+              홈페이지로 이동
+            </Styled.PageURL>
+          ) : null}
+          {/* 여기도 사진 넘기기기능 넣자. */}
+          {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src="/images/not-image-yet.png" />}
+          {overView ? (
+            // !이거 css로 할수있대 나중에 ㄱ
+            <Styled.Overview>
+              <span className="first-overview">{FirstOverView}</span>
+              <Styled.ReadMoreBtn className={!readMore ? null : "hide"} onClick={readMoreHandler}>
+                ...더보기
+              </Styled.ReadMoreBtn>
+              <span className={readMore ? null : "hide"}>{SecondOverView}</span>
+              <Styled.CutDownBtn className={readMore ? null : "hide"} onClick={readMoreHandler}>
+                간략히
+              </Styled.CutDownBtn>
+            </Styled.Overview>
+          ) : null}
+
+          <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
+
           <HashTagTemplate keywordDummy={tags} />
           {likeLoading ? (
             <LikeLoading />

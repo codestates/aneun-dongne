@@ -35,7 +35,6 @@ const getMyLikes = async (userId) => {
     },
   })
     .then((data) => {
-      // console.log(data);
       result = data;
     })
     .catch((err) => console.log(err));

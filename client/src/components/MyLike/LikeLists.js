@@ -12,7 +12,6 @@ import { getAreaNames } from "../../modules/AreaCodetoName";
 // `;
 
 const Lists = styled.div`
-  /* display: flex; */
   @media (min-width: 1040px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -152,7 +151,8 @@ const KeyWordBox = styled.div`
 const LikeBtn = styled.div`
   border: 1px red solid;
   border-radius: 20px;
-
+  color: red;
+  font-weight: bolder;
   width: 80px;
   height: 40px;
   margin: 20px auto;
@@ -162,6 +162,8 @@ const LikeBtn = styled.div`
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: all 0.1s ease-in-out;
   i {
+    color: red;
+
     justify-content: center;
     margin-left: 25px;
     margin-right: 3px;

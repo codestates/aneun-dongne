@@ -82,11 +82,12 @@ export const Styled = {
   `,
 
   KeyWord: styled.span`
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+    width: 120px;
     color: #3a6fb0;
     cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     &:hover {
       color: #2f4d6f;

@@ -59,7 +59,6 @@ module.exports = {
     }
   },
   addLike: async (req, res) => {
-    console.log("더하기", req.cookies);
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
     try {
@@ -78,7 +77,6 @@ module.exports = {
     }
   },
   deleteLike: async (req, res) => {
-    console.log("딜리트", req.cookies);
     const accessTokenData = isAuthorized(req);
     const { contentId } = req.params;
     try {

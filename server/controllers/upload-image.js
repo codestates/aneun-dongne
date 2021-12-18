@@ -1,29 +1,7 @@
-// const multer = require("multer");
-// const upload = multer({ dest: "../upload" });
-// const path = require("path");
-// const fs = require("fs");
 const multer = require("multer");
 const multerS3 = require("multer-s3-transform");
 const sharp = require("sharp");
 const s3 = require("../aws/s3");
-
-// module.exports = {
-//   post: async (req, res) => {
-//     console.log(req.file);
-//     if (req.body) {
-//       await user.create({
-//         username: req.body["username"],
-//         email: req.body["email"],
-//         password: req.body["password"],
-//         blog: req.body["sign-up-url"],
-//         /*image: req.body['image']*/
-//       });
-//       res.status(201).json({ message: "ok" });
-//     } else {
-//       res.status(409).json({ message: "This user already exists in the database" });
-//     }
-//   },
-// };
 
 const upload = multer({
   storage: multerS3({

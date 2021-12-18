@@ -4,29 +4,24 @@ import { Styled } from "./style";
 
 import VisitedList from "../VisitedList/VisitedList";
 import { token, kToken, visitedModal, newVisitedPlace, deleteCommentmode } from "../../recoil/recoil";
-import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 
 import Empty from "../Empty/Empty";
 import ModalVisited from "../ModalVisited/ModalVisited";
 import MapLoading from "../Loading/MapLoading";
-import LikeLoading from "../Loading/LikeLoading";
 
 const { kakao } = window;
 
 const MyVisited = () => {
   const [markerClick, setMarkerClick] = useState(false);
-  const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   const [loading, setLoading] = useState(false);
-  // const visitedList = useRecoilValueLoadable(getVisitedList);
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
 
   async function getVisitedPlace() {
-    // await setLoading(true);
-    console.log(accessToken);
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/visited`, {
         headers: {
@@ -36,10 +31,8 @@ const MyVisited = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
         setPlaceList(res.data.data);
       });
-    // await setLoading(false);
     return result;
   }
   useEffect(async () => {
@@ -47,10 +40,8 @@ const MyVisited = () => {
     await getVisitedPlace();
     setLoading(false);
     setDeleteOrNot(false);
-    console.log("되나요");
   }, [, deleteOrNot]);
-  // console.log(visitedList.contents);
-  //!---------
+
   useEffect(() => {
     const container = document.querySelector("#map");
     const options = {
@@ -84,7 +75,6 @@ const MyVisited = () => {
         latlng: new kakao.maps.LatLng(placeList[i].visited_mapy, placeList[i].visited_mapx),
       });
     }
-    console.log("hi");
     for (let i = 0; i < positions.length; i++) {
       // 마커 이미지의 이미지 크기 입니다
       const imageSize = new kakao.maps.Size(24, 35);
@@ -104,7 +94,7 @@ const MyVisited = () => {
       //관광지마커의 infowindow(마우스 올렸을때만)
       let iwContent = `
       <div style="width: 200px">
-        <img style = "width:100px;height:100px" src = ${positions[i].visited_thumbnail_path} />
+        <img style = "width:100%;height:100px" src = ${positions[i].visited_thumbnail_path} />
         <div>[${positions[i].addr}]</div>
         <div style = 
           padding: 0 5px;
@@ -115,7 +105,6 @@ const MyVisited = () => {
         </div>
       </div>`,
         iwPosition = new kakao.maps.LatLng(positions[i].latlng.Ma, positions[i].latlng.La);
-      console.log(positions[i].latlng.Ma, positions[i].latlng.La);
       let infowindow = new kakao.maps.InfoWindow({
         position: iwPosition,
         content: iwContent,
@@ -129,26 +118,19 @@ const MyVisited = () => {
       });
 
       kakao.maps.event.addListener(marker, "click", function () {
-        // infowindowOnClick.open(map, marker);
-        // setIsVisitedOpen(true);
+        //마커를 클릭하면 positions[i]가 selectedPosition에 담기고
+        // markerClick 상태가 true로 변한다.
         setSelectedPosition(positions[i]);
         setMarkerClick(true);
-        console.log(positions[i]);
-        // openModalHandler(positions[i]);
       });
     }
     map.setBounds(bounds);
   }, [placeList]);
-  // }, [visitedList.contents]);
 
   if (placeList.length === 0) {
     return (
       <Styled.Body>
         <Empty />
-        {/* <Styled.Div>
-          <Empty /> 
-         <div>0개일때 화면 넣어주세요</div> 
-       </Styled.Div>  */}
       </Styled.Body>
     );
   } else

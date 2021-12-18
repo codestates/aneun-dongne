@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import MapInRoom from "../../components/MapInRoom/MapInRoom";
 import Cookies from "universal-cookie";
@@ -20,7 +19,6 @@ import {
 
 import LikeLoading from "../../components/Loading/LikeLoading";
 import NoComment from "../../components/NoComment/NoComment";
-import CommentLoading from "../../components/Loading/CommentLoading";
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
@@ -62,9 +60,7 @@ function DetailPage({ match }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.post);
         const { post_mapx, post_mapy } = res.data.post;
-        console.log(post_mapx, post_mapy);
 
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
@@ -74,12 +70,10 @@ function DetailPage({ match }) {
         if (res.data.post.post_homepage_path) {
           if (res.data.post.post_homepage_path.split('<a href="')[1]) {
             setPageURL(res.data.post.post_homepage_path.split('<a href="')[1].split(`"`)[0]);
-            // setPageURL(res.data.response.body.items.item.homepage);
           }
         }
         setNavi(`https://map.kakao.com/link/to/${res.data.post.post_title},${post_mapy},${post_mapx}`);
         if (res.data.post.post_content) setOverview(res.data.post.post_content);
-        // ?
       });
   }, []);
 
@@ -103,14 +97,13 @@ function DetailPage({ match }) {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
-          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.userinfo);
         let arr = res.data.data.map((el) => {
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
@@ -135,7 +128,6 @@ function DetailPage({ match }) {
       })
       .then((res) => {
         const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
-        console.log(like);
         setLike(like.likeCount);
         setLikeOrNot(like.likeOrNot);
       })
@@ -176,9 +168,7 @@ function DetailPage({ match }) {
         )
         .then((res) => {
           const like = { likeOrNot: res.data.data.isLiked, likeCount: res.data.data.likeCount };
-          console.log(like);
           setLike(like.likeCount);
-
           setLikeOrNot(like.likeOrNot);
         })
         .catch((err) => {
@@ -207,42 +197,37 @@ function DetailPage({ match }) {
           }
         });
     }
-    // return setTimeout(() => {
-    //   console.log("hi");
-    //   setLikeLoading(false);
-    //   console.log(likeOrNot);
-    // }, 2000);
     setLikeLoading(false);
   };
-  console.log(userinfo);
-  // console.log("좋아요로딩", likeLoading);
+
   return (
     <>
       <Styled.Div>
-        <Styled.Title>{title}</Styled.Title>
-        {pageURL ? (
-          <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title} 홈페이지`}>
-            홈페이지로 이동
-          </Styled.PageURL>
-        ) : null}
-        {/* 여기도 사진 넘기기기능 넣자. */}
-        {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src="/images/not-image-yet.png" />}
-        {overView ? (
-          // !이거 css로 할수있대 나중에 ㄱ
-          <Styled.Overview>
-            <span className="first-overview">{FirstOverView}</span>
-            <Styled.ReadMoreBtn className={!readMore ? null : "hide"} onClick={readMoreHandler}>
-              ...더보기
-            </Styled.ReadMoreBtn>
-            <span className={readMore ? null : "hide"}>{SecondOverView}</span>
-            <Styled.CutDownBtn className={readMore ? null : "hide"} onClick={readMoreHandler}>
-              간략히
-            </Styled.CutDownBtn>
-          </Styled.Overview>
-        ) : null}
-
-        <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
         <Styled.Wrapper>
+          <Styled.Title>{title}</Styled.Title>
+          {pageURL ? (
+            <Styled.PageURL href={pageURL} target="_blank" title={`새창 : ${title} 홈페이지`}>
+              홈페이지로 이동
+            </Styled.PageURL>
+          ) : null}
+          {/* 여기도 사진 넘기기기능 넣자. */}
+          {imgURL ? <Styled.Img src={imgURL} /> : <Styled.Img src="/images/not-image-yet.png" />}
+          {overView ? (
+            // !이거 css로 할수있대 나중에 ㄱ
+            <Styled.Overview>
+              <span className="first-overview">{FirstOverView}</span>
+              <Styled.ReadMoreBtn className={!readMore ? null : "hide"} onClick={readMoreHandler}>
+                ...더보기
+              </Styled.ReadMoreBtn>
+              <span className={readMore ? null : "hide"}>{SecondOverView}</span>
+              <Styled.CutDownBtn className={readMore ? null : "hide"} onClick={readMoreHandler}>
+                간략히
+              </Styled.CutDownBtn>
+            </Styled.Overview>
+          ) : null}
+
+          <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
+
           <HashTagTemplate keywordDummy={tags} />
           {likeLoading ? (
             <LikeLoading />

@@ -3,9 +3,7 @@ import { Styled } from "./style";
 
 const MapInRoom = ({ placeLocation, placeAddress, title, navi }) => {
   const { kakao } = window;
-  //   console.log("관광지좌표 placeLocation", placeLocation);
-  //   console.log("관광지주소 placeAddress", placeAddress);
-  //   console.log("관광지이름 title", title);
+
   useEffect(() => {
     const container = document.querySelector("#map");
     const options = {
@@ -20,7 +18,6 @@ const MapInRoom = ({ placeLocation, placeAddress, title, navi }) => {
       geocoder.addressSearch(placeAddress, function (result, status) {
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
-          console.log(result);
           let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
           // 결과값으로 받은 위치를 마커로 표시합니다

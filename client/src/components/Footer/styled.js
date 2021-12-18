@@ -6,19 +6,28 @@ export const Styled = {
     padding: 20px;
     margin-left: 20px;
     margin-right: 20px;
-    border-top: 1px rgb(192, 251, 255) solid;
-    border-bottom: 1px rgb(192, 251, 255) solid;
+    border-top: 2px #2f4d6f solid;
+    border-bottom: 2px #2f4d6f solid;
     margin-bottom: 10px;
-    /* background-color: green; */
+    @media screen and (max-width: 780px) {
+      width: 100%;
+      font-size: 0.5rem;
+      margin-left: 5px;
+      margin-right: 5px;
+      padding: 0px 0 0px 0;
+    }
   `,
   Side: styled.div`
-    /* border: 1px gray solid; */
-    /* background-color: skyblue; */
-    min-width: 200px;
-    border-right: 1px rgb(192, 251, 255) solid;
+    min-width: 20%;
+    border-right: 2px #2f4d6f solid;
     display: flex;
     flex-direction: column;
     width: 30%;
+    @media screen and (max-width: 780px) {
+      font-size: 0.5rem;
+      min-width: 80px;
+      width: 5%;
+    }
 
     .footer-logo {
       display: flex;
@@ -28,6 +37,12 @@ export const Styled = {
       margin-left: auto;
       padding-top: 20px;
       padding-bottom: 30px;
+      @media screen and (max-width: 780px) {
+        width: 100%;
+        font-size: 0.5rem;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
     }
     img {
       width: 60px;
@@ -35,82 +50,135 @@ export const Styled = {
     }
 
     .footer-logo-text {
-      margin: 0;
-      text-align: center;
       margin-top: 30px;
       font-size: 1.2rem;
-
       letter-spacing: 0.1em;
       transition: all 0.3s ease;
-
-      /* &:hover {
-        color: rgb(21, 225, 240);
-        padding-left: 10px;
-      } */
+      padding-top: 20px;
+      padding-bottom: 30px;
+      padding-left: 25%;
+      @media screen and (max-width: 780px) {
+        width: 100%;
+        font-size: 0.8rem;
+        margin-top: 30px;
+        padding-left: 15%;
+      }
+      @media screen and (max-width: 640px) {
+        width: 100%;
+        font-size: 0.8rem;
+        margin-top: 30px;
+        padding-left: 15%;
+      }
     }
 
     .side-col {
-      /* width: 50%; */
       display: flex;
       background-color: red;
       flex-direction: column;
       justify-content: space-between;
+      @media screen and (max-width: 780px) {
+        width: 100%;
+        font-size: 0.5rem;
+      }
     }
     .side-col .info-icon {
       display: flex;
-      /* justify-content: space-evenly; */
       padding: 10px;
       background-color: white;
-      /* border: 1px gray solid; */
       padding-left: 20%;
+      @media screen and (max-width: 780px) {
+        padding: 5px;
+      }
       a {
         transition: all 0.3s ease;
         text-decoration: none;
         color: gray;
+        @media screen and (max-width: 780px) {
+          width: 100%;
+          font-size: 0.5rem;
+        }
+      }
+      @media screen and (max-width: 640px) {
+        width: 100%;
+        font-size: 0.5rem;
+        padding-left: 5%;
       }
     }
     .side-col .info-icon a:hover {
-      color: rgb(21, 225, 240);
+      color: #2f4d6f;
       padding-left: 10px;
     }
     .side-col .info-icon i {
-      /* display: none; */
       padding-right: 20px;
+      @media screen and (max-width: 780px) {
+        padding: 0px 3px 3px 0;
+      }
     }
   `,
   User: styled.div`
-    display: flex;
-    /* width: 100%; */
-    justify-content: space-evenly;
-    /* margin-left: auto;
-    margin-right: auto; */
-    /* background-color: yellow; */
+    /* display: flex;
+    justify-content: space-evenly; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 30px;
+    margin-left: 50px;
+    @media screen and (max-width: 1500px) {
+      /* display: grid; */
+      /* display: flex; */
+
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 130px;
+    }
+    @media screen and (max-width: 780px) {
+      font-size: 0.5rem;
+      margin-left: 5px;
+      margin-right: 5px;
+      padding: 0px 0 0px 0;
+    }
+
+    @media screen and (max-width: 640px) {
+      /* display: grid; */
+      /* display: flex; */
+
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 100px;
+    }
+    @media screen and (max-width: 400px) {
+      /* display: grid; */
+      /* display: flex; */
+
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 10px;
+    }
 
     > .user-info {
       display: flex;
       flex-direction: column;
-      /* border: 1px gray solid; */
+      @media screen and (max-width: 780px) {
+        width: 100%;
+        font-size: 0.5rem;
+        padding: 0px 0 0px 0;
+      }
     }
-    > .user-info .user-name-job-wrapper {
-      /* display: flex; */
-    }
+
     > .user-info .user-name {
-      /* border: 1px gray solid; */
       margin: 10px;
       width: 100px;
-      height: 50px;
+      height: 40px;
       text-align: center;
       padding: 15px 0 15px 0;
       border-radius: 20px;
       transition: all 0.3s ease;
-      /* &:hover {
-        color: rgb(21, 225, 240);
-        padding-left: 10px;
-      } */
+      @media screen and (max-width: 780px) {
+        /* width: 100%; */
+        font-size: 0.5rem;
+        /* margin: 5px; */
+        text-align: start;
+        /* margin: 0px; */
+        padding: 20px 0 0px 0;
+      }
     }
     > .user-info .user-job {
-      /* border: 1px gray solid; */
-      /* background-color: rgb(192, 251, 255); */
       background-image: linear-gradient(
         to right bottom,
         rgba(255, 255, 255, 0.9) 0,
@@ -124,22 +192,30 @@ export const Styled = {
       padding: 15px 0 15px 0;
       border-radius: 20px;
       transition: all 0.3s ease;
-      /* &:hover {
-        color: rgb(21, 225, 240);
-        padding-left: 10px;
-      } */
+      @media screen and (max-width: 780px) {
+        font-size: 0.5rem;
+        text-align: start;
+        padding: 0px 0 0px 0;
+        height: 10px;
+      }
     }
     > .user-info .info-icon {
       padding: 15px 10px 15px 10px;
       display: flex;
       margin: 10px;
-
       height: 50px;
-      /* justify-content: space-evenly; */
+      @media screen and (max-width: 780px) {
+        font-size: 0.5rem;
+        padding: 0px 0 0px 0;
+        height: 10px;
+      }
 
-      /* border: 1px gray solid; */
       > i {
         padding-right: 10px;
+        @media screen and (max-width: 780px) {
+          font-size: 0.5rem;
+          padding-right: 3px;
+        }
       }
     }
     a,
@@ -148,13 +224,20 @@ export const Styled = {
       transition: all 0.3s ease;
       text-decoration: none;
       color: gray;
+      @media screen and (max-width: 780px) {
+        width: 100%;
+        font-size: 0.5rem;
+      }
     }
-    /* span:hover {
-      color: rgb(21, 225, 240);
-    } */
+
     .user-info .info-icon a:hover {
-      color: rgb(21, 225, 240);
+      color: #2f4d6f;
       padding-left: 10px;
+      @media screen and (max-width: 780px) {
+        width: 100%;
+        font-size: 0.5rem;
+        padding-left: 3px;
+      }
     }
   `,
   TeamName: styled.div`
@@ -163,6 +246,11 @@ export const Styled = {
     justify-content: center;
     > h2 {
       text-align: center;
+      @media screen and (max-width: 780px) {
+        width: 100%;
+        font-size: 0.5rem;
+        padding-left: 3px;
+      }
     }
     > div {
       display: flex;

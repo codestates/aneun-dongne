@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 export const Styled = {
   HeaderContainer: styled.div`
     position: fixed;
@@ -12,6 +12,8 @@ export const Styled = {
       justify-content: space-between;
     }
     #logo {
+      margin-left: 15px;
+      padding: 10px;
       cursor: pointer;
       font-size: 2rem;
       font-weight: bold;
@@ -38,6 +40,13 @@ export const Styled = {
       text-align: center;
       font-size: 1.5rem;
       font-weight: bold;
+    }
+
+    @media screen and (max-width: 480px) {
+      .mainpage-button {
+        font-size: 1rem;
+        margin: 30px 5px;
+      }
     }
   `,
 
@@ -75,9 +84,18 @@ export const Styled = {
     border: 1px solid white;
     border-radius: 20px;
 
-    @media screen and (max-height: 660px) {
+    @media screen and (max-height: 900px) {
       height: 500px;
       width: 350px;
     }
+
+    @media screen and (max-width: 500px) {
+      height: 500px;
+      width: 340px;
+    }
+  `,
+  StyledLink: styled(Link)`
+    text-decoration: none;
+    color: black;
   `,
 };

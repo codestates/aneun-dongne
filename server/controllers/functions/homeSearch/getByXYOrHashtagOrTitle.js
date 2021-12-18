@@ -1,8 +1,8 @@
 const { User, Post, Like, sequelize, Sequelize } = require("../../../models");
 
 module.exports = async (userId, radius, clientwtmx, clientwtmy, tag, searchWord) => {
+  console.log("xy 함수에 변수가 어떻게 들어오는지", radius, clientwtmx, clientwtmy, tag, searchWord);
   let result = [];
-
   await Post.findAll({
     attributes: [
       "id",

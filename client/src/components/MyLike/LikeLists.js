@@ -1,40 +1,39 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Mylike from "./MyLike";
-import { Icon } from "react-icons-kit";
-import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
 import { getAreaNames } from "../../modules/AreaCodetoName";
+import Icon from "react-icons-kit";
+import { angleUp } from "react-icons-kit/fa/angleUp";
 // const Body = styled.div`
 //   grid-template-columns: repeat(3, 1fr);
 //   grid-auto-rows: 50px;
 // `;
 
-// const Lists = styled.div`
-//   @media (min-width: 1040px) {
-//     display: grid;
-//     grid-template-columns: repeat(2, 1fr);
-//   }
-//   @media (min-width: 1360px) {
-//     display: grid;
-//     grid-template-columns: repeat(3, 1fr);
-//   }
-//   @media (min-width: 1730px) {
-//     display: grid;
-//     grid-template-columns: repeat(4, 1fr);
-//   }
-//   display: grid;
-//   grid-template-columns: repeat(3, 1fr);
-//   grid-column-gap: 40px;
-//   text-decoration-line: none;
-//   margin-left: 30px;
-// `;
+const Lists = styled.div`
+  @media (min-width: 1040px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1360px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 1730px) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 40px;
+  text-decoration-line: none;
+  margin-left: 30px;
+`;
+
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 3px rgb(107, 217, 224) solid;
-
+  border: 1px #3a6fb0 solid;
   border-radius: 20px;
   width: 300px;
 
@@ -65,11 +64,7 @@ const PlaceCard = styled.div`
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
   }
-  /* img {
-    align-content: center;
-    width: 100%;
-    border-radius: 20px;
-  } */
+
   .place-cards {
     display: flex;
     flex-direction: column;
@@ -77,8 +72,9 @@ const PlaceCard = styled.div`
     justify-content: center;
     background-color: white;
     border-radius: 20px;
-    width: 100%;
+    /* width: 100%; */
   }
+
   .place-cards > img {
     width: 80%;
     height: 200px;
@@ -86,14 +82,37 @@ const PlaceCard = styled.div`
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 10px;
-
     border-radius: 20px;
-
-    /* object-fit: scale-down; */
   }
+
   .place-cards-title {
     margin-left: 10px;
     margin-top: 6px;
+  }
+
+  @media screen and (max-width: 710px) {
+    width: 220px;
+    height: 350px;
+    .place-cards > img {
+      height: 150px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    width: 140px;
+    height: 310px;
+    .place-cards > img {
+      height: 120px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.7rem;
+    width: 130px;
+    height: 260px;
+    .place-cards > img {
+      height: 100px;
+    }
   }
 `;
 
@@ -104,14 +123,12 @@ const KeyWord = styled.span`
   text-align: center;
   clear: both;
   float: left;
-  /* max-width: 130px; */
-  /* max-height: 25px; */
   margin-left: 6px;
   margin-right: 6px;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   padding: 5px;
   border-radius: 20px;
-  border: 1px solid rgb(192, 251, 255);
+  border: 1px solid #3a6fb0;
   background-color: rgba(192, 251, 255, 0.8);
   background-image: linear-gradient(
     to right bottom,
@@ -139,14 +156,7 @@ const KeyWordBox = styled.div`
   margin-top: 5%;
   display: flex;
   justify-content: center;
-  /* background-color: red; */
   flex-wrap: wrap;
-  /* padding: 20px; */
-  height: 100%;
-  /* justify-content: space-evenly; */
-  /* background-color: pink; */
-
-  /* background-color: white; */
 `;
 const LikeBtn = styled.div`
   border: 1px red solid;
@@ -207,7 +217,6 @@ export const TopButton = styled.div`
 `;
 
 const LikeLists = ({ postsInfo }) => {
-  //const tagArr = postsInfo.post_tags.split(",");
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
   const ToScrollTop = (e) => {
@@ -217,58 +226,58 @@ const LikeLists = ({ postsInfo }) => {
       behavior: "smooth",
     });
   };
+
   const handlecontentClick = () => {
     history.push(`/detailpage/${postsInfo.post_contentid}`);
   };
   return (
-    <Lists>
+    <>
       {!postsInfo.length === 0 ? (
         <Empty />
       ) : (
-        <div onClick={handlecontentClick}>
-          <PlaceCard>
-            <KeyWordBox>
-              {!postsInfo.post_tags ? (
-                ""
-              ) : (
-                <KeyWord>{postsInfo.post_tags}</KeyWord>
-                // <KeyWord>
-                //   {tagArr.map((tag) => (
-                //     <span>#{tag}</span>
-                //   ))}
-                // </KeyWord>
-              )}
-            </KeyWordBox>
-            <div className="place-cards">
-              {!postsInfo.post_firstimage ? (
-                <img src="/images/not-image-yet.png" />
-              ) : (
-                <img src={postsInfo.post_firstimage} />
-              )}
+        <PlaceCard onClick={handlecontentClick}>
+          <KeyWordBox>
+            {!postsInfo.post_tags ? (
+              ""
+            ) : (
+              <>
+                {postsInfo.post_tags.split(",").map((tag) => {
+                  return <KeyWord>{tag}</KeyWord>;
+                })}
+              </>
+            )}
+          </KeyWordBox>
+          <div className="place-cards">
+            {!postsInfo.post_firstimage ? (
+              <img src="/images/not-image-yet.png" />
+            ) : (
+              <img src={postsInfo.post_firstimage} />
+            )}
+          </div>
+          <div className="place-cards-title">
+            <div className="user-area">
+              [{sigungu.areaName} {sigungu.siggName}]
             </div>
             <div className="place-cards-title">
               <div className="user-area">
                 [{sigungu.areaName} {sigungu.siggName}]
               </div>
-
               <div>{postsInfo.post_title}</div>
             </div>
             <LikeBtn>
               <div>
-                <i class="fas fa-heart"></i>
+                <i className="fas fa-heart"></i>
                 {postsInfo["Likes.likeCount"]}
               </div>
             </LikeBtn>
-          </PlaceCard>
-        </div>
+          </div>
+        </PlaceCard>
       )}
       <TopButton onClick={ToScrollTop}>
         <Icon size={"60"} icon={angleUp} />
       </TopButton>
-    </Lists>
+    </>
   );
 };
 
 export default LikeLists;
-
-//<KeyWord>{postsInfo.post_tags}</KeyWord>

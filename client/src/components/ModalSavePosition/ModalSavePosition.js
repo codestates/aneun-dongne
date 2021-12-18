@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../modules/message";
-import ImageUpload from "../UploadImage/ImageUpload";
+import ImageUpload from "../ImageUpload/ImageUpload";
 
 const ModalSavePosition = () => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
@@ -26,14 +26,10 @@ const ModalSavePosition = () => {
   const [placeImage, setPlaceImage] = useState(null);
   const [isUploaded, setIsUploaded] = useState(false);
   const [clickedBtn, setClickedBtn] = useState(false); //저장버튼 누른 후 인지 아닌지 확인하려는 용도
-  const [errorMessage, setErrorMessage] = useState({
-    image: "",
-    memo: "",
-  });
+  const [errorMessage, setErrorMessage] = useState("");
   //유저 위치정보
   const [userAddr, setUserAddr] = useRecoilState(usersaddress);
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
-  // console.log(userAddr, defaultPosition);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
@@ -47,11 +43,11 @@ const ModalSavePosition = () => {
       return;
     }
     if (placeImage === null) {
-      setErrorMessage({ ...errorMessage, ...{ image: "사진을 등록해주세요" } });
+      setErrorMessage(message.inputPhotoPlease);
       return null;
     }
     if (memo === "") {
-      setErrorMessage({ ...errorMessage, ...{ memo: "메모를 적어주세요" } });
+      setErrorMessage(message.inputMemoPlease);
       return null;
     }
     let formData = new FormData();
@@ -64,12 +60,7 @@ const ModalSavePosition = () => {
     formData.append("sigg", userAddr.sigg);
     formData.append("mapx", defaultPosition.lon);
     formData.append("mapy", defaultPosition.lat);
-    console.log(memo);
-    console.log("img", placeImage);
-    console.log("폼데이터", formData);
-    console.log("폼데이터imag", formData.get("image"));
 
-    // headers: { "content-type": "multipart/form-data" },
     axios
       .post(`${process.env.REACT_APP_API_URL}/visited`, formData, {
         headers: {
@@ -88,43 +79,38 @@ const ModalSavePosition = () => {
       .catch((err) => {
         setClickedBtn(true);
         setIsUploaded(false);
-        console.log(err);
         if (!isUploaded && clickedBtn) {
-          setErrorMessage({ ...errorMessage, ...{ image: "이미지업로드 실패" } });
+          setErrorMessage(message.failRegisterToImage);
         }
       });
   }
-  // console.log(isUploaded && clickedBtn);
   // useEffect(() => {
   //   //onClick으로 하니까 필요없으려나?? 우선 납둬봐
   // }, [isUploaded]);
 
-  console.log(memo);
   return (
     <>
       <Styled.FormContainer>
         <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
-          <i className="fas fa-times"></i>
+          <i class="fas fa-times"></i>
         </Styled.CloseBtn>
         <form className="form-id" onSubmit={updateInfoRequest}>
-          <h3>이미지</h3>
+          <div className="form-title">이미지 추가</div>
           <ImageUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
-          {placeImage !== null ? null : <div className="alert-box">{errorMessage.image}</div>}
+          {placeImage !== null ? null : <div className="alert-box">{errorMessage}</div>}
 
           <div className="form-memo">
             <h3>메모</h3>
-            {/* <label htmlFor="memo">메모</label> */}
             <input
               id="memo"
               value={memo}
               placeholder="기억하고 싶은 내용을 적어주세요"
               onChange={(e) => {
-                // console.log(e.target.value);
                 setMemo(e.target.value);
               }}
             />
           </div>
-          {memo !== "" ? null : <div className="alert-box">{errorMessage.memo}</div>}
+          {memo !== "" ? null : <div className="alert-box">{errorMessage}</div>}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <button type="submit" className="save-position-button">
             저장

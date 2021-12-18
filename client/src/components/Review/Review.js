@@ -17,17 +17,19 @@ export const CardFront = styled.div`
   height: 100%;
   transform-style: preserve-3d;
   transition: 0.5s all ease-out;
-
   backface-visibility: hidden;
   border-radius: 5px;
   flex-direction: column;
+  @media screen and (max-width: 780px) {
+    width: 100%;
+    height: 92%;
+  }
 `;
 
 export const Review = styled(CardFront)`
   background-color: #183152;
   display: flex;
   flex-direction: column;
-
   & img {
     clip-path: circle();
     object-fit: cover;
@@ -47,13 +49,13 @@ export const ReviewHeader = styled.div`
   margin-left: 10%;
   margin-right: 10%;
   margin-top: 10%;
-
   font-weight: bold;
   font-size: 1.5rem;
   @media screen and (max-width: 780px) {
     position: center;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.7rem;
+    height: 300px;
   }
 `;
 export const Backview = styled(Review)`
@@ -64,19 +66,14 @@ export const Backview = styled(Review)`
 
 export const Post = styled.div`
   min-width: 20rem;
-
   min-height: 26.4rem;
   transform-style: preserve-3d;
   &:not(:first-child) {
     margin-left: 3rem;
   }
-
   &:hover ${Review} {
     transform: rotateY(180deg);
   }
-  /* &:hover ${Backview} {
-    transform: rotateY(180deg);
-  } */
 `;
 
 export const BackText = styled.h2`
@@ -90,9 +87,14 @@ export const BackText = styled.h2`
   margin-right: 20%;
   overflow-y: scroll;
   margin-top: 30%;
-
   &::-webkit-scrollbar {
     display: none;
+  }
+  @media screen and (max-width: 780px) {
+    position: center;
+    text-align: center;
+    font-size: 1rem;
+    height: 300px;
   }
 `;
 

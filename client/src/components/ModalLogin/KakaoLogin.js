@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 function KakaoLogin() {
   // const client_id = process.env.KAKAO_REST_API_KEY;

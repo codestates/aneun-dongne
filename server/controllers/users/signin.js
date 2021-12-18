@@ -10,7 +10,6 @@ module.exports = (req, res) => {
     },
   })
     .then((data) => {
-      // console.log("하이하이하이", data);
       if (!data) {
         res.status(404).send("invalid user");
       } else {

@@ -105,7 +105,7 @@ function Footer() {
       </Styled.Body>
 
       <Styled.TeamName>
-        <h2>Team : TenTen</h2>
+        <h2>Copyright © 2021.TenTen.All Rights Reserved.</h2>
       </Styled.TeamName>
     </>
   );

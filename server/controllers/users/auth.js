@@ -34,7 +34,6 @@ const getUserInfo = async (userId) => {
       id: userId,
     },
   }).then((data) => {
-    // console.log("하이하이하이", data);
     if (!data) {
       result = {};
     } else {
@@ -47,9 +46,7 @@ const getUserInfo = async (userId) => {
 
 module.exports = {
   get: async (req, res) => {
-    console.log("AUTH 겟 토큰", req.headers);
     const accessTokenData = isAuthorized(req);
-    console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
@@ -58,11 +55,7 @@ module.exports = {
     }
   },
   patch: async (req, res) => {
-    console.log("리코그바디, auth.put", req.file);
-    console.log("AUTH 겟 토큰", req.headers);
-
     const accessTokenData = isAuthorized(req);
-    console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
@@ -82,7 +75,6 @@ module.exports = {
           email: email,
         },
       }).then((data) => {
-        console.log("data", data);
         validUser = data;
       }); // 유저정보 조회
 
@@ -110,17 +102,13 @@ module.exports = {
       } else {
         if (!validUser.password || validUser.provider === "kakao") {
           //카카오 로그인하면 비번 없음
-          console.log("카카오 아닌데");
           await res.status(403).send({ message: "Cannot edit kakao profile" });
         } else if (validUser.password !== password || check_Password !== new_Password) {
           //보통 password 실수한 경우
-          console.log("비번문제");
           await res.status(400).send({ message: "Type your password again" });
         } else {
           //validUser가 존재하며 카카오로그인도 아니고 비번도 일치할 때
           // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
-          console.log("여기오는데 성공");
-          console.log("image", req.file);
           let imagePath =
             "https://aneun-dongne.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B5.png";
           let thumbnailPath =
@@ -149,7 +137,6 @@ module.exports = {
 
           await updateUserInfo(id, new_Nickname, new_Password, imagePath, thumbnailPath).then(async () => {
             const userInfo = await getUserInfo(id);
-            console.log("업뎃된 유저", userInfo);
             const accessToken = generateAccessToken(userInfo);
             // await res.status(200).json({ data: userInfo, message: "ok" });
             await res.cookie("jwt", accessToken, {
@@ -177,9 +164,8 @@ module.exports = {
   },
   delete: async (req, res) => {
     //회원탈퇴
-    console.log("AUTH 겟 토큰", req.headers);
+
     const accessTokenData = isAuthorized(req);
-    console.log("토큰도착", accessTokenData);
 
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });

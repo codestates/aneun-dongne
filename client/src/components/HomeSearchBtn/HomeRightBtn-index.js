@@ -1,23 +1,14 @@
 import React from "react";
 
 import { Styled } from "./style";
-import {
-  isSavepositionOpen,
-  nowlocation,
-  // setLo,
-  usersaddress,
-  pickpoint,
-  isClickedNowLocation,
-} from "../../recoil/recoil";
-import { useRecoilValue, useSetRecoilState, useRecoilState, useRecoilValueLoadable } from "recoil";
+import { isSavepositionOpen, nowlocation, pickpoint, isClickedNowLocation } from "../../recoil/recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
 
-function HomeRightBtn({ pending, setPending }) {
+function HomeRightBtn() {
   const setIsSavePositionOpen = useSetRecoilState(isSavepositionOpen);
   const nowLoc = useRecoilValue(nowlocation);
   const setPickPoint = useSetRecoilState(pickpoint);
-  // const [add, setAdd] = useRecoilState(usersaddress);
-  // const loc = useRecoilValueLoadable(setLo);
   const [clickedNowLocationBtn, setClickedNowLocationBtn] = useRecoilState(isClickedNowLocation);
   const openModalHandler = () => {
     setIsSavePositionOpen(true);

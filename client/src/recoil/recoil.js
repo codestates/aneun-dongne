@@ -160,7 +160,7 @@ export const isClickedNowLocation = atom({
   default: false,
 });
 
-// ! 위치기반 API
+// ! 위치기반 API - Homemap.js랑 연결
 export const getWTM = selector({
   key: "getWTN",
   get: async ({ get }) => {

@@ -5,7 +5,6 @@ export const Styled = {
     position: relative;
     width: 100%;
     overflow-x: hidden;
-
     /* overflow-x: hidden;  */
     /* margin-right: auto;
     margin-left: auto; */ /* overflow-x: visible; */
@@ -85,7 +84,6 @@ export const Styled = {
     }
   `,
   StartButton: styled.button`
-    /* position: absolute; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,8 +94,6 @@ export const Styled = {
     border-style: none;
     cursor: pointer;
     transition: all 0.3s;
-    /* margin-left: 350px;
-  margin-right: 350px; */
     border: 2px solid rgb(194, 194, 194);
     border-radius: 5px;
     margin-top: 20px;
@@ -288,7 +284,6 @@ export const Styled = {
       font-weight: bold;
       color: white;
       margin-bottom: 170px;
-      /* background-color: #f0f9ff99; */
       border-radius: 20px;
       width: 800px;
       height: 50px;
@@ -362,10 +357,8 @@ export const Styled = {
     }
   `,
   VideoContainer: styled.div`
-    /* width: 500px;
-  height: 300px; */
     width: 80%;
-
+    
     img {
       width: 80%;
       object-fit: cover;

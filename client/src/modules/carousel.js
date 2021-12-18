@@ -16,7 +16,8 @@ const style = {
 const Arrow = styled.div`
   position: relative;
   top: 50%;
-  transform: translateY(-10%); // 상하(수직 방향)의 이동 거리 값
+  transform: translateY(-10%);
+  /* // 상하(수직 방향)의 이동 거리 값 */
 `;
 
 export const myArrow = ({ type, onClick }) => {

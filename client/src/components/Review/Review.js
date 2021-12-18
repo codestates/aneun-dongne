@@ -74,9 +74,6 @@ export const Post = styled.div`
   &:hover ${Review} {
     transform: rotateY(180deg);
   }
-  /* &:hover ${Backview} {
-    transform: rotateY(180deg);
-  } */
 `;
 
 export const BackText = styled.h2`

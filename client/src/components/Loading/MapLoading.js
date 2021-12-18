@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 const Div = styled.div`
-  /* background: red; */
   width: 700px;
-  /* height: 400px; */
   .loadingBox {
     margin-top: 200px;
-    /* margin-left: 30px; */
   }
   .loadingBox h1 {
     text-align: center;

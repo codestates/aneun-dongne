@@ -13,9 +13,17 @@ const ImgDiv = styled.div`
   width: 400px;
   height: 200px;
   cursor: pointer;
-  /* border-radius: 70%; */
 
   z-index: 999;
+  @media screen and (max-height: 900px) {
+    width: 300px;
+    height: 150px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 300px;
+    height: 150px;
+  }
 `;
 const EditProfile = styled.div`
   cursor: pointer;
@@ -32,7 +40,6 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
   function inputFileHandler(inputValue, setPlaceImage) {
     const image = inputValue.current.files;
     setPlaceImage(image[0]);
-    console.log(image[0]);
   }
 
   function inputBtn(e, inputValue) {
@@ -40,10 +47,6 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
     inputValue.current.click();
   }
 
-  // function inputImageHandler(){
-  //     const image = placeImage.current.files
-  // }
-  console.log(placeImage);
   return (
     <div className="image-upload-box">
       <input
@@ -56,7 +59,6 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
 
       {typeof placeImage === "object" ? (
         <ImgDiv
-          // className="img_preview"
           onClick={(e) => inputBtn(e, inputValue)}
           style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
         ></ImgDiv>

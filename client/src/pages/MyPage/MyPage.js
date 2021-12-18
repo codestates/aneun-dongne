@@ -61,11 +61,8 @@ const MyPage = ({ match }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
-
         setNickname(res.data.data.userInfo.nickname);
         if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
-          console.log(res.data.data.userInfo.user_image_path);
           setImgUrl(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
           setPrevImg(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
         }
@@ -129,7 +126,6 @@ const MyPage = ({ match }) => {
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
-            {/* <div className="profile-image">{loading ? <LikeLoading /> : <img src={prevImg} />}</div> */}
             <div className="profile-image">
               <img src={prevImg} />
             </div>
@@ -145,7 +141,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-heart fa-1x"></i> 좋아요 표시한 장소
+                <i className="fas fa-heart fa-1x"></i> <span className="link-text">좋아요 표시한 장소</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
@@ -157,7 +153,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-map-marker-alt"></i> <span className="">내가 저장한 장소</span>
+                <i className="fas fa-map-marker-alt"></i> <span className="link-text">내가 저장한 장소</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
@@ -169,7 +165,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-pen"></i> 내 리뷰
+                <i className="fas fa-pen"></i> <span className="link-text">내 리뷰</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
@@ -181,8 +177,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-cog"></i> 프로필 수정
-
+                <i className="fas fa-cog"></i> <span className="link-text">프로필 수정</span>
               </Styled.NavLink>
             </li>
           </ul>

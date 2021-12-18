@@ -1,9 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Mylike from "./MyLike";
-import { Icon } from "react-icons-kit";
-import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 // const Body = styled.div`
@@ -33,8 +30,7 @@ const Lists = styled.div`
 const PlaceCard = styled.div`
   margin: auto;
   margin-top: 40px;
-  border: 3px rgb(107, 217, 224) solid;
-
+  border: 1px #3a6fb0 solid;
   border-radius: 20px;
   width: 300px;
 
@@ -65,11 +61,7 @@ const PlaceCard = styled.div`
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
   }
-  /* img {
-    align-content: center;
-    width: 100%;
-    border-radius: 20px;
-  } */
+
   .place-cards {
     display: flex;
     flex-direction: column;
@@ -77,8 +69,9 @@ const PlaceCard = styled.div`
     justify-content: center;
     background-color: white;
     border-radius: 20px;
-    width: 100%;
+    /* width: 100%; */
   }
+
   .place-cards > img {
     width: 80%;
     height: 200px;
@@ -86,14 +79,37 @@ const PlaceCard = styled.div`
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 10px;
-
     border-radius: 20px;
-
-    /* object-fit: scale-down; */
   }
+
   .place-cards-title {
     margin-left: 10px;
     margin-top: 6px;
+  }
+
+  @media screen and (max-width: 710px) {
+    width: 220px;
+    height: 350px;
+    .place-cards > img {
+      height: 150px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    width: 140px;
+    height: 310px;
+    .place-cards > img {
+      height: 120px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.7rem;
+    width: 130px;
+    height: 260px;
+    .place-cards > img {
+      height: 100px;
+    }
   }
 `;
 
@@ -104,8 +120,6 @@ const KeyWord = styled.span`
   text-align: center;
   clear: both;
   float: left;
-  /* max-width: 130px; */
-  /* max-height: 25px; */
   margin-left: 6px;
   margin-right: 6px;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
@@ -139,14 +153,7 @@ const KeyWordBox = styled.div`
   margin-top: 5%;
   display: flex;
   justify-content: center;
-  /* background-color: red; */
   flex-wrap: wrap;
-  /* padding: 20px; */
-  height: 100%;
-  /* justify-content: space-evenly; */
-  /* background-color: pink; */
-
-  /* background-color: white; */
 `;
 const LikeBtn = styled.div`
   border: 1px red solid;
@@ -207,7 +214,6 @@ export const TopButton = styled.div`
 `;
 
 const LikeLists = ({ postsInfo }) => {
-  //const tagArr = postsInfo.post_tags.split(",");
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
   const ToScrollTop = (e) => {
@@ -217,6 +223,7 @@ const LikeLists = ({ postsInfo }) => {
       behavior: "smooth",
     });
   };
+
   const handlecontentClick = () => {
     history.push(`/detailpage/${postsInfo.post_contentid}`);
   };
@@ -225,32 +232,33 @@ const LikeLists = ({ postsInfo }) => {
       {!postsInfo.length === 0 ? (
         <Empty />
       ) : (
-        <div onClick={handlecontentClick}>
-          <PlaceCard>
-            <KeyWordBox>
-              {!postsInfo.post_tags ? (
-                ""
-              ) : (
-                <KeyWord>{postsInfo.post_tags}</KeyWord>
-                // <KeyWord>
-                //   {tagArr.map((tag) => (
-                //     <span>#{tag}</span>
-                //   ))}
-                // </KeyWord>
-              )}
-            </KeyWordBox>
-            <div className="place-cards">
-              {!postsInfo.post_firstimage ? (
-                <img src="/images/not-image-yet.png" />
-              ) : (
-                <img src={postsInfo.post_firstimage} />
-              )}
+        <PlaceCard onClick={handlecontentClick}>
+          <KeyWordBox>
+            {!postsInfo.post_tags ? (
+              ""
+            ) : (
+              <>
+                {postsInfo.post_tags.split(",").map((tag) => {
+                  return <KeyWord>{tag}</KeyWord>;
+                })}
+              </>
+            )}
+          </KeyWordBox>
+          <div className="place-cards">
+            {!postsInfo.post_firstimage ? (
+              <img src="/images/not-image-yet.png" />
+            ) : (
+              <img src={postsInfo.post_firstimage} />
+            )}
+          </div>
+          <div className="place-cards-title">
+            <div className="user-area">
+              [{sigungu.areaName} {sigungu.siggName}]
             </div>
             <div className="place-cards-title">
               <div className="user-area">
                 [{sigungu.areaName} {sigungu.siggName}]
               </div>
-
               <div>{postsInfo.post_title}</div>
             </div>
             <LikeBtn>
@@ -270,5 +278,3 @@ const LikeLists = ({ postsInfo }) => {
 };
 
 export default LikeLists;
-
-//<KeyWord>{postsInfo.post_tags}</KeyWord>

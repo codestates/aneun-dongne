@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Styled = {
   RightBtnBox: styled.div`
     @media (min-width: 768px) {
-      /* background: red; */
     }
     z-index: 7.9;
     display: flex;
@@ -13,32 +12,21 @@ export const Styled = {
   //오른쪽 버튼
   RightBtn: styled.button`
     @media (min-width: 768px) {
-      /* background: red; */
     }
     border-radius: 5px;
-<<<<<<< HEAD:client/src/components/Home-RightBtn/style.js
-    z-index: 0;
-=======
     position: relative;
-    z-index: 7.9; //버튼
->>>>>>> dev:client/src/components/HomeSearchBtn/style.js
-    /* left: -10px;
-    bottom: 20px; */
-    position:relative
-    background-color: rgb(192, 251, 255);
-    background-image: linear-gradient(
-      to right bottom,
-      rgba(255, 255, 255, 0.9) 0,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
+    z-index: 7.9;
+    position: relative;
+    background-color: #3a6fb0;
+    color: white;
     height: 40px;
     width: 100px;
-
     border: none;
     cursor: pointer;
     perspective: 230px;
-    transition: all 0.5s ease-in-out;
+    &:hover {
+      background-color: #2f4d6f;
+    }
     &:after {
       position: absolute;
       content: "";
@@ -47,7 +35,7 @@ export const Styled = {
       top: 0;
       right: 0;
       z-index: 0;
-      background-color: rgb(192, 251, 255);
+      background-color: #3a6fb0;
       background-image: linear-gradient(
         to left top,
         rgba(255, 255, 255, 0.9) 0,
@@ -57,28 +45,6 @@ export const Styled = {
       border-radius: 5px;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
-    &:hover {
-      color: black;
-      transform: scale(1.1);
-    }
-    &:hover:after {
-      left: 0;
-    }
-    &:active {
-      //
     }
   `,
 };
-
-// &:hover {
-// 	/* box-shadow: inset 2px 2px 0px 0px rgba(255, 255, 255, 0.5), 0px 7px 7px 7px rgba(0, 0, 0, 0.1),
-// 		5px 5px 0px 0px rgba(0, 0, 0, 0.1); */
-// 	background-image: linear-gradient(
-// 		to left top,
-// 		rgba(255, 255, 255, 0.9) 0,
-// 		rgba(0, 0, 0, 0) 60%,
-// 		rgba(0, 0, 0, 0) 100%
-// 	);
-// }

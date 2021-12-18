@@ -6,9 +6,6 @@ import OnlyReadHashTag from "../OnlyReadHashTag/OnlyReadHashTag";
 const Comment = styled.div`
   position: relative;
   display: flex;
-
-  /* border: 1px red solid; */
-  /* height: 200px; */
   border-radius: 20px;
   margin-top: 10px;
   margin-bottom: 40px;
@@ -27,7 +24,6 @@ const Comment = styled.div`
 `;
 const Profile = styled.div`
   position: relative;
-  /* background-color: red; */
   display: flex;
   width: 80px;
   height: 140px;
@@ -38,11 +34,9 @@ const ProfileImg = styled.img`
   width: 80px;
   height: 80px;
   position: absolute;
-  /* background-color: white; */
 `;
 
 const NickName = styled.span`
-  /* background-color: yellowgreen; */
   position: absolute;
   bottom: 5px;
   text-align: center;
@@ -50,11 +44,9 @@ const NickName = styled.span`
 `;
 
 const ContentBox = styled.div`
-  /* background-color: yellow; */
   margin-top: 30px;
   position: relative;
   width: 480px;
-  /* height: 140px; */
   > button {
     position: absolute;
     right: -10px;
@@ -81,18 +73,13 @@ const ContentBox = styled.div`
     transform: scale(1.1);
   }
   > div {
-    /* background: red; */
     margin-left: 10%;
   }
 `;
 
 const HashTagWrapper = styled.div`
-  /* margin-top: 100px; */
-  /* position: absolute; */
-  /* background-color: red; */
   margin: 20% auto 0 auto;
   width: 370px;
-
   left: 10px;
   padding-right: 10px;
   white-space: nowrap;
@@ -124,8 +111,6 @@ function NoComment() {
   );
 }
 function PropsEqual(prev, next) {
-  console.log(prev.text === next.text);
   return prev.text === next.text;
 }
 export default NoComment;
-// export default Comments;

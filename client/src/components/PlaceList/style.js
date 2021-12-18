@@ -27,6 +27,7 @@ export const Styled = {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
     }
+
     @media (min-width: 1040px) {
       display: grid;
       grid-template-columns: repeat(1, 1fr);

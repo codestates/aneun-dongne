@@ -47,7 +47,6 @@ const HomeMap = () => {
    *! 장소 검색시 실행되는 함수 serachPlace
    * @param keyword 검색어
    */
-
   const wtm = getWtm.contents;
   const searchPlace = (keyword) => {
     setPending(true);
@@ -77,9 +76,8 @@ const HomeMap = () => {
   };
 
   useEffect(() => {
-    //! 픽포인트, 반경, 검색어 아예 없을때
-    //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
-
+    // ! 픽포인트, 반경, 검색어 아예 없을때
+    //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
@@ -137,6 +135,7 @@ const HomeMap = () => {
     let bounds = new kakao.maps.LatLngBounds();
 
     let positions = [];
+
     for (let i = 0; i < placeList.length; i++) {
       positions.push({
         addr: placeList[i][4],
@@ -146,6 +145,7 @@ const HomeMap = () => {
         contentId: placeList[i][5],
       });
     }
+
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     for (let i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(24, 35);
@@ -191,28 +191,6 @@ const HomeMap = () => {
         infowindow.close();
       });
       //관광지 마커 클릭하면 정보나오기
-      let onClickContent = `<div class="wrap">
-                 <div class="info">
-                     <div class="title">
-                     ${positions[i].content}
-
-                     </div>
-                     <div class="body">
-                         <div class="img">
-                             <img src=${positions[i].img || `/images/not-image-yet.png`} width="73" height="70">
-                        </div>
-                         <div class="desc">
-                             <div class="ellipsis">${positions[i].addr}</div>
-                         </div>
-                     </div>
-                 </div>
-            </div>`,
-        iwRemoveable = true;
-      let infowindowOnClick = new kakao.maps.InfoWindow({
-        position: iwPosition,
-        content: onClickContent,
-        removable: iwRemoveable,
-      });
 
       kakao.maps.event.addListener(marker, "click", function () {
         // infowindowOnClick.open(map, marker);
@@ -252,12 +230,10 @@ const HomeMap = () => {
         })
         .then(setClickedNowLocationBtn(false))
 
-        .catch((err) => console.log(err)); //
+        .catch((err) => console.log("에러", err)); //
     }
     //!! 맵을 클릭시 주소변경
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-      //* 내위치마커에 infowindow 생성
-
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;
 
@@ -277,13 +253,13 @@ const HomeMap = () => {
           setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
         })
 
-        .catch((err) => console.log(err)); //
+        .catch((err) => console.log("에러", err)); //
     });
 
     map.setBounds(bounds);
     setMap(map);
     setPending(false);
-  }, [placeList, level]);
+  }, [placeList]);
 
   return (
     <Styled.Div>

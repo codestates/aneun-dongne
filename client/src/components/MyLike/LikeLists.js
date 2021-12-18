@@ -240,8 +240,8 @@ const LikeLists = ({ postsInfo }) => {
               ""
             ) : (
               <>
-                {postsInfo.post_tags.split(",").map((tag) => {
-                  return <KeyWord>{tag}</KeyWord>;
+                {postsInfo.post_tags.split(",").map((tag, idx) => {
+                  return <KeyWord key={idx}>{tag}</KeyWord>;
                 })}
               </>
             )}
@@ -279,4 +279,4 @@ const LikeLists = ({ postsInfo }) => {
   );
 };
 
-export default LikeLists;
+export default React.memo(LikeLists);

@@ -370,4 +370,8 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     </>
   );
 }
-export default React.memo(MyComment);
+
+export default React.memo(MyComment, (prev, next) => {
+  console.log(prev, next);
+  return prev.userinfo.nickname === next.userinfo.nickname;
+});

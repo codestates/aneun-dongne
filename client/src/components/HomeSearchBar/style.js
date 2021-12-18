@@ -95,33 +95,23 @@ export const Styled = {
     height: 100%;
     background-color: white;
     border: none;
-    //중앙선 더 오른쪽으로 옮기고 싶은데 잘안된다..
     border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
     @media (max-width: 1023px) {
       width: 500px;
-
-      /* margin: 5px auto; */
-
       border-radius: 5px;
     }
     @media (max-width: 700px) {
       width: 300px;
-
-      /* margin: 5px auto; */
     }
   `,
 
   SearchPlace: styled.input`
     @media (max-width: 1023px) {
-      /* width: 100%;
-      height: 40px;*/
       border: 1px gray solid;
       padding: 10px;
-      /*border-radius: 5px; */
       width: 80%;
       height: 30px;
       margin: 5px auto;
-
       border-radius: 5px;
     }
     @media (max-width: 600px) {
@@ -155,12 +145,14 @@ export const Styled = {
     padding: 5px;
     cursor: pointer;
     perspective: 230px;
-    /* transition: all 0.5s ease-in-out; */
+    color: white;
+
+    &:hover {
+      background-color: #2f4d6f;
+    }
 
     @media (max-width: 1023px) {
-     
       border-radius: 5px;
-
       width: 80%;
       height: 30px;
       margin: 5px auto;
@@ -171,12 +163,6 @@ export const Styled = {
       width: 200px;
       height: 30px;
       background-color: #3a6fb0;
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
     }
     @media (min-width: 1024px) {
       margin-top: 5px;
@@ -184,19 +170,7 @@ export const Styled = {
       margin-left: 5px;
       width: 80px;
       height: 40px;
-      
       background-color: #3a6fb0;
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
-    }
-
-    
-
-      
     }
   `,
 };

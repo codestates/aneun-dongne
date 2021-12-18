@@ -80,6 +80,16 @@ export const Styled = {
     z-index: 2;
     border: 1px solid white;
     border-radius: 20px;
+
+    @media screen and (max-height: 900px) {
+      width: 350px;
+      height: 450px;
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 350px;
+      height: 450px;
+    }
   `,
 
   Body: styled.div`

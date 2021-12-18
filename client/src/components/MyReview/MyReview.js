@@ -8,6 +8,8 @@ import MyReviewComment from "../MyReviewComment/MyReviewComment";
 import LikeLoading from "../Loading/LikeLoading";
 import Empty from "../Empty/Empty";
 
+import { v4 as uuidv4 } from "uuid";
+
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -50,7 +52,7 @@ const MyReview = () => {
             ) : (
               comments.map((comment) => {
                 return (
-                  <div key={comment.comments.id}>
+                  <div key={uuidv4()}>
                     <MyReviewComment comment={comment} SetComments={SetComments} />
                   </div>
                 );

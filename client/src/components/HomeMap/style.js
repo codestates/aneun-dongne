@@ -4,9 +4,7 @@ export const Styled = {
   Div: styled.div`
     position: relative;
     .map-experiment {
-      /* display: none; */
       z-index: 9;
-
       position: absolute;
       left: 1px;
     }
@@ -45,15 +43,10 @@ export const Styled = {
     }
   `,
   Map: styled.div`
-    /* z-index: -8; */
     margin-left: 10px;
     margin-top: 10px;
     border-radius: 10px;
-    position: sticky;
     top: 0;
-    /* background: red; */
-    /* width: 600px; */
-    /* height: 100%; */
 
     @media (min-width: 1024px) {
       width: 600px;
@@ -62,39 +55,23 @@ export const Styled = {
     @media (max-width: 1023px) {
       width: 600px;
       margin: 5px auto;
-      /* margin-left: 30px; */
-      /* margin-right: 30px; */
-
       margin-top: 0;
-
       height: 300px;
     }
     @media (max-width: 800px) {
-      /* min-width: 500px; */
       margin: 5px auto;
-      /* margin-left: 30px; */
-      /* margin-right: 30px; */
-
       margin-top: 0;
       width: 600px;
       height: 200px;
     }
     @media (max-width: 700px) {
-      /* min-width: 500px; */
       margin: 5px auto;
-      /* margin-left: 30px; */
-      /* margin-right: 30px; */
-
       margin-top: 0;
       width: 500px;
       height: 200px;
     }
     @media (max-width: 600px) {
-      /* min-width: 500px; */
       margin: 5px auto;
-      /* margin-left: 30px; */
-      /* margin-right: 30px; */
-
       margin-top: 0;
       width: 400px;
       height: 200px;

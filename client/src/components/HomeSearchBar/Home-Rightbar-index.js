@@ -10,9 +10,9 @@ import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
-  const [area, setArea] = useState("null"); //메인페이지에서 넘어오면 userAddress[0]넣기
-  const [areaIdx, setAreaIdx] = useState(0); //메인페이지에서 넘어오면 (cat1_name.indexOf(area))넣기
-  const [sigg, setSigg] = useState("null"); //메인페이지에서 넘어오면 userAddress[1]넣기
+  const [area, setArea] = useState("null");
+  const [areaIdx, setAreaIdx] = useState(0);
+  const [sigg, setSigg] = useState("null");
   const [place, setPlace] = useState("");
 
   const [hashtag, setHashtag] = useState("null");
@@ -39,9 +39,9 @@ function HomeRightbar({ setLevel }) {
   };
   const handleSearch = (e) => {
     setPlace(e.target.value);
-    console.log(place);
   };
   const searchPlace = (area, sigg, place) => {
+    console.log(place);
     let areaCode = "";
     let siggCode = "";
     if (area === "null") {
@@ -118,12 +118,12 @@ function HomeRightbar({ setLevel }) {
             placeholder="관광지 검색"
             onKeyUp={(e) => {
               if (e.key === "Enter") {
-                searchPlace(area, sigg, hashtag, place);
+                searchPlace(area, sigg, place);
               }
             }}
           ></Styled.SearchPlace>
           {/* <div> */}
-          <Styled.SearchBtn onClick={() => searchPlace(area, sigg, hashtag, place)}>
+          <Styled.SearchBtn onClick={() => searchPlace(area, sigg, place)}>
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>
           {/* </div> */}

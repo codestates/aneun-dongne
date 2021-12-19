@@ -69,6 +69,7 @@ module.exports = async (userId, areacode, sigungucode, tag, searchWord) => {
       result.sort(function (a, b) {
         return b.likeCount - a.likeCount;
       });
+      //16개 이상으로 하면 대구 북구가 값을 못받네요 하..
       result.splice(30);
       // console.log("지역선택한 돋보기버튼클릭", result);
     })

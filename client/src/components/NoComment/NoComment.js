@@ -32,4 +32,5 @@ function NoComment() {
 function PropsEqual(prev, next) {
   return prev.text === next.text;
 }
-export default NoComment;
+// export default NoComment;
+export default React.memo(NoComment);

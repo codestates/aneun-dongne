@@ -5,8 +5,12 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
 import axios from "axios";
 import CommentLoading from "../Loading/CommentLoading";
+
 import { Styled } from "./style";
 import styled from "styled-components";
+
+import { toast } from "react-toastify";
+
 
 const CommentWrapper = styled.div`
   width: 100%;
@@ -51,24 +55,11 @@ const ProfileBox = styled.form`
   margin-right: auto;
   margin-top: 20%;
   margin-bottom: auto;
-  // width: 480px;
-  /* height: 140px; */
-  // @media (max-width: 768px) {
-  //   width: 400px;
-  // }
-  // @media (max-width: 415px) {
-  //   width: 300px;
-  // }
-  // @media (max-width: 380px) {
-  //   width: 360px;
-  // }
-  // @media (max-width: 325px) {
-  //   width: 320px;
-  // }
 `;
 
 const Profile = styled.div`
   position: relative;
+
   // top: 0;
   /* background-color: red; */
   display: grid;
@@ -97,6 +88,7 @@ const Profile = styled.div`
   //   height: 60px;
   //   margin: 10px;
   // }
+
 `;
 
 const ProfileImgBox = styled.div`
@@ -131,10 +123,10 @@ const ProfileImg = styled.img`
   //   width: 30px;
   //   height: 30px;
   // }
+
 `;
 
 const NickName = styled.div`
-  /* background-color: yellowgreen; */
   position: relative;
   font-size: 14px;
   // bottom: 5px;
@@ -316,7 +308,9 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       return;
     }
     if (something === "") {
-      alert("내용을 입력해주세요");
+      toast.error("댓글을 입력해주세요", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return;
     }
     try {
@@ -395,4 +389,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     </div>
   );
 }
-export default React.memo(MyComment);
+
+export default React.memo(MyComment, (prev, next) => {
+  return prev.userinfo.nickname === next.userinfo.nickname;
+});

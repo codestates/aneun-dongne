@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Styled = {
   CommentWrapper: styled.div`
+
     // width: 100%;
     // /* border: 1px gray solid; */
     // .comment-template {
@@ -20,5 +21,6 @@ export const Styled = {
     //     /* margin-left: 10px; */
     //   }
     // }
+
   `,
 };

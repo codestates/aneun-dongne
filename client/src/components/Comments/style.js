@@ -3,8 +3,10 @@ import styled from "styled-components";
 export const Styled = {
   CommentWrapper: styled.div`
     position: relative;
+
     width: 100%;
     height: auto;
+
     border-radius: 20px;
     margin-bottom: 5%;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
@@ -20,6 +22,8 @@ export const Styled = {
       width: auto;
     }
     @media (max-width: 768px) {
+
+
     }
   `,
 
@@ -72,11 +76,13 @@ export const Styled = {
 
   Profile: styled.div`
     position: relative;
+
     display: grid;
     grid-template-rows: 1fr 1fr;
     margin-left: auto;
     margin-right: auto;
     height: auto;
+
   `,
 
   ProfileImgBox: styled.div`
@@ -95,6 +101,7 @@ export const Styled = {
     width: 100%;
     height: 100%;
     position: absolute;
+
     top: 0;
   `,
 
@@ -264,51 +271,6 @@ export const Styled = {
         padding-left: 15%;
         height: 120%;
       }
-    }
-  `,
-
-  BtnContent: styled.div`
-    cursor: pointer;
-    font-size: 0.8rem;
-    padding-top: 12%;
-    padding-bottom: 12%;
-    padding-right: 12%;
-    padding-left: 12%;
-    text-align: center;
-    position: relative;
-    color: #ffffff;
-    height: 100%;
-    width: 100%;
-    border: none;
-    border-radius: 20px;
-    background-color: #3a6fb0;
-    :hover {
-      background-color: #2f4d6f;
-      transition: all 0.5s ease;
-      border-radius: 20px;
-      // transform: scale(1.1);
-    }
-    :active {
-      // transform: scale(1.1);
-    }
-    @media (max-width: 768px) {
-      font-size: 0.8rem;
-    }
-    @media (max-width: 640px) {
-      font-size: 0.8rem;
-    }
-    @media (max-width: 535px) {
-      font-size: 0.7rem;
-    }
-    @media (max-width: 470px) {
-      font-size: 0.7rem;
-      padding-right: 20%;
-      padding-left: 20%;
-    }
-    @media (max-width: 360px) {
-      font-size: 0.7rem;
-      padding-right: 15%;
-      padding-left: 15%;
     }
   `,
 };

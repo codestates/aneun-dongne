@@ -16,7 +16,6 @@ import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteU
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-// import { StyledLink } from "../PlaceList/PlaceList";
 
 import Cookies from "universal-cookie";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";

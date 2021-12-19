@@ -61,7 +61,7 @@ export const Styled = {
     form .userinfo-button-label {
       display: flex;
       justify-content: center;
-      margin-top: 20px;
+      margin: 40px 0;
     }
     > form .userinfo-button-label .btn-edit {
       width: 80px;
@@ -69,7 +69,10 @@ export const Styled = {
       border-radius: 20px;
       margin-left: 120px;
     }
-
+    > form .alert-box {
+      text-align: center;
+      color: red;
+    }
     .btn-exit {
       width: 80px;
       height: 40px;

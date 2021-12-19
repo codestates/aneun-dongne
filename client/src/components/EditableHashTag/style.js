@@ -13,7 +13,6 @@ export const Styled = {
     font-size: 0.8rem;
     > #tags {
       display: flex;
-      /* display: inline-block; */
       flex-wrap: wrap;
       padding: 0;
       margin: 8px 0 0 0;
@@ -39,7 +38,6 @@ export const Styled = {
       text-align: center;
       font-size: 12px;
       margin-left: 8px;
-      // color: #4000c7;
       border-radius: 50%;
       background: #fff;
       cursor: pointer;

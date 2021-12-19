@@ -53,14 +53,12 @@ function ModalVisited({ id, idx, visitedImg }) {
 
       .then((res) => {
         setPlaceList(res.data.data);
-
         setIsUploaded(true);
         setIsVisitedPlaceOpen(false);
       })
       .catch((err) => {
         setClickedBtn(true);
         setIsUploaded(false);
-        console.log(err);
         if (!isUploaded && clickedBtn) {
           setErrorMessage({ ...errorMessage, ...{ image: "이미지업로드 실패" } });
         }

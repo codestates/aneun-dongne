@@ -11,6 +11,7 @@ export const Styled = {
 
   > #tags {
     display: flex;
+    align-items: flex-start;
     flex-wrap: wrap;
     padding: 0;
     margin: auto 0 2% 0;

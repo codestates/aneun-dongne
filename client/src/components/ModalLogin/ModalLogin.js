@@ -53,7 +53,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
     <>
       <Styled.FormContainer>
         <div className="close-button" onClick={closeLoginModalHandler}>
-          <i class="fas fa-times"></i>
+          <i className="fas fa-times"></i>
         </div>
         <img className="form-title" src="/images/logo.png" />
         <form onSubmit={(e) => e.preventDefault()}>

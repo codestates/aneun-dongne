@@ -5,9 +5,6 @@ export const Styled = {
   `,
   DivRow: styled.div`
     @media (max-width: 1023px) {
-      /* display: flex; */
-
-      /* background: yellow; */
     }
     @media (min-width: 1024px) {
       margin-left: auto;
@@ -21,10 +18,6 @@ export const Styled = {
     @media (max-width: 1023px) {
       display: flex;
       flex-direction: column;
-      /* margin: auto; */
-      /* display: flex; */
-      /* flex-direction: column; */
-      /* background: blue; */
     }
     @media (min-width: 1024px) {
       display: flex;
@@ -36,7 +29,6 @@ export const Styled = {
     @media (max-width: 1023px) {
       display: flex;
       flex-direction: column;
-      /* background: red; */
     }
     @media (min-width: 1024px) {
       display: flex;

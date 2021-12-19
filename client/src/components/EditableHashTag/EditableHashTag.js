@@ -12,7 +12,6 @@ const EditableHashTag = ({ setTags, tags }) => {
       let newTagsObj = new Set([...tags, event.target.value.replace(" ", "").replace(",", "").replace("#", "")]);
       setTags([...newTagsObj]);
       event.target.value = "";
-      console.log("tags", tags);
       if (event.target.value === " ") {
         return;
       }
@@ -27,7 +26,7 @@ const EditableHashTag = ({ setTags, tags }) => {
 
   return (
     <>
-      <Styled.TagsInput>
+      <TagsInput>
         <input
           className="tag-input"
           type="text"
@@ -44,7 +43,7 @@ const EditableHashTag = ({ setTags, tags }) => {
             </div>
           ))}
         </div>
-      </Styled.TagsInput>
+      </TagsInput>
     </>
   );
 };

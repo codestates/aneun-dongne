@@ -97,7 +97,7 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
       <Styled.FormContainer>
         <img src="/images/logo.png" className="form-title" />
         <div className="close-icon">
-          <i class="fas fa-times" onClick={closeLogoutModalHandler}></i>
+          <i className="fas fa-times" onClick={closeLogoutModalHandler}></i>
         </div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-nickname">

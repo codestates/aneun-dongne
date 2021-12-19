@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
-// import hamtori from "../../img/hamtori.png";
-// import "./profileUpload.css";
+import React, { useRef, useEffect } from "react";
+
 import { Styled } from "./style";
 
 function ProfileUpload({ imgUrl, setImgUrl }) {
@@ -9,8 +8,6 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
     return () => window.URL.revokeObjectURL(imgUrl);
   }, []);
   const inputValue = useRef(null);
-  // const [img, setImg] = useState(""); //이 컴퍼넌트안에서만 사용하는 이미지.
-  // const [pending, setPending] = useState(false);
   function inputFileHandler(inputValue, setImgUrl) {
     const image = inputValue.current.files;
     setImgUrl(image[0]);
@@ -18,7 +15,6 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
 
   function inputBtn(e, inputValue) {
     e.preventDefault();
-    // setPending(true);
     inputValue.current.click();
   }
 
@@ -39,7 +35,6 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
         ></Styled.ImgDiv>
       ) : (
         <Styled.ImgDiv
-          // photo={imgUrl || hamtori}
           onClick={(e) => inputBtn(e, inputValue)}
           style={{ backgroundImage: `url(${imgUrl})` }}
         ></Styled.ImgDiv>
@@ -52,4 +47,7 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   );
 }
 
-export default React.memo(ProfileUpload);
+export default React.memo(ProfileUpload, (prev, next) => {
+  console.log(prev.imgUrl === next.imgUrl);
+  return prev.imgUrl === next.imgUrl;
+});

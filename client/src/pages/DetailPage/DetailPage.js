@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 import MapInRoom from "../../components/MapInRoom/MapInRoom";
 import Cookies from "universal-cookie";
@@ -49,8 +49,10 @@ function DetailPage({ match }) {
   //로딩창
   const [likeLoading, setLikeLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(commentloading);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
+
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
@@ -75,7 +77,7 @@ function DetailPage({ match }) {
         setNavi(`https://map.kakao.com/link/to/${res.data.post.post_title},${post_mapy},${post_mapx}`);
         if (res.data.post.post_content) setOverview(res.data.post.post_content);
       });
-  }, []);
+  }, [contentId]);
 
   useEffect(() => {
     //! 태그 추가될때만 실행 -> 태그 상위2개가 바뀌면 업데이트됨 -> 상위 2개 바뀌었을때만 줄 수 있을까요..
@@ -107,7 +109,8 @@ function DetailPage({ match }) {
         let arr = res.data.data.map((el) => {
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
-
+        // arr = arr.reverse();
+        // console.log(arr, arr.reverse());
         setDefaultComment(arr);
         setUserinfo(res.data.userinfo);
       });
@@ -145,8 +148,6 @@ function DetailPage({ match }) {
     setReadMore(!readMore);
   };
 
-  //! 이 글에 내가 좋아요를 눌렀는지 싫었는지도 DB에 저장해야할듯
-  //! 초기화 안되게
   const LikeHandler = async () => {
     if (!isLogin) {
       setIsLoginOpen(true);
@@ -199,6 +200,8 @@ function DetailPage({ match }) {
     }
     setLikeLoading(false);
   };
+  //해시태그는 매번렌더링되지 않고 상위 2개의 값이 바뀌었을때만 렌더링되도록 최적화
+  const memoTags = useMemo(() => tags, [tags[0], tags[1]]);
 
   return (
     <>
@@ -226,18 +229,11 @@ function DetailPage({ match }) {
 
           <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
 
-          <HashTagTemplate keywordDummy={tags} />
+          <HashTagTemplate keywordDummy={memoTags} />
           {likeLoading ? (
             <LikeLoading />
           ) : (
-            <Styled.LikeBtn onClick={LikeHandler}>
-              <i className={likeOrNot ? "fas fa-heart" : "hide"}>
-                <span>{like}</span>
-              </i>
-              <i className={likeOrNot ? "hide" : "far fa-heart"}>
-                <span>{like}</span>
-              </i>
-            </Styled.LikeBtn>
+            <LikeComponent like={like} likeOrNot={likeOrNot} LikeHandler={LikeHandler} />
           )}
           <MyComment
             userinfo={userinfo}
@@ -258,3 +254,23 @@ function DetailPage({ match }) {
 }
 
 export default DetailPage;
+
+export const LikeComponent = React.memo(
+  ({ like, likeOrNot, LikeHandler }) => {
+    return (
+      <Styled.LikeBtn onClick={LikeHandler}>
+        <i className={likeOrNot ? "fas fa-heart" : "hide"}>
+          <span>{like}</span>
+        </i>
+
+        <i className={likeOrNot ? "hide" : "far fa-heart"}>
+          <span>{like}</span>
+        </i>
+      </Styled.LikeBtn>
+    );
+  },
+  (prev, next) => {
+    //이전렌더링과 다음렌더링의 좋아요 상태가 다를때만 렌더링한다.
+    return prev.likeOrNot === next.likeOrNot;
+  }
+);

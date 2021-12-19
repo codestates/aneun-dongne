@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import styled from "styled-components";
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
@@ -267,4 +267,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     </>
   );
 }
-export default React.memo(MyComment);
+
+export default React.memo(MyComment, (prev, next) => {
+  return prev.userinfo.nickname === next.userinfo.nickname;
+});

@@ -39,6 +39,7 @@ function MainPage() {
             </div>
           </div>
         </Styled.MainTitleView>
+
         <Styled.PopularTitleView className="populartitle" data-aos="fade-up" data-aos-duration="1000">
           <div className="title">우리 동네에서 인기있는 관광지는?</div>
 

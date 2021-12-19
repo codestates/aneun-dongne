@@ -16,43 +16,49 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
   useEffect(() => {
-    const getHashTag = async () => {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken || kakaoToken}`,
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        });
-        if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
-      } catch (e) {
-        console.log(e);
-      }
+    let mounted = true;
+    if (mounted) {
+      const getHashTag = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken || kakaoToken}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          });
+          if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      const getLike = async () => {
+        try {
+          setLikeLoading(true);
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken || kakaoToken}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          });
+          const like = { likeOrNot: response.data.data.isLiked, likeCount: response.data.data.likeCount };
+          setLike(like.likeCount);
+          setLikeOrNot(like.likeOrNot);
+          setLikeLoading(false);
+        } catch (e) {
+          console.log(e);
+          setLikeLoading(false);
+        }
+      };
+      setLikeLoading(true);
+      getHashTag();
+      getLike();
+      setLikeLoading(false);
+    }
+    return () => {
+      mounted = false;
     };
-    const getLike = async () => {
-      try {
-        setLikeLoading(true);
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken || kakaoToken}`,
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        });
-        const like = { likeOrNot: response.data.data.isLiked, likeCount: response.data.data.likeCount };
-        setLike(like.likeCount);
-        setLikeOrNot(like.likeOrNot);
-        setLikeLoading(false);
-      } catch (e) {
-        console.log(e);
-        setLikeLoading(false);
-      }
-    };
-    setLikeLoading(true);
-    getHashTag();
-    getLike();
-    setLikeLoading(false);
   }, [placeList, like, likeOrNot]);
   const LikeHandler = async (e) => {
     e.preventDefault();
@@ -139,8 +145,5 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
     </Styled.PlaceCard>
   );
 }
-
-function PropsEqual(prev, next) {
-  return prev.img === next.img;
-}
-export const MemoCards = React.memo(PlaceCards, PropsEqual);
+//값이 바뀌는 상황이 더 많을것이라 생각해 memo안함.
+export const MemoCards = PlaceCards;

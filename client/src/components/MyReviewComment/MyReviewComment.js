@@ -10,8 +10,6 @@ import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 import { Styled } from "./style";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 
-import { v4 as uuidv4 } from "uuid";
-
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -58,8 +56,8 @@ const MyReviewComment = ({ comment, SetComments }) => {
               {comment_content}
             </div>
             <div className="user-hastag-wrapper">
-              {tagArr.map((tag) => (
-                <span className="user-hastag" key={uuidv4()}>
+              {tagArr.map((tag, idx) => (
+                <span key={idx} className="user-hastag">
                   #{tag}
                 </span>
               ))}
@@ -85,4 +83,4 @@ const MyReviewComment = ({ comment, SetComments }) => {
   );
 };
 
-export default MyReviewComment;
+export default React.memo(MyReviewComment);

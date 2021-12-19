@@ -7,16 +7,14 @@ export const Styled = {
       grid-column-gap: 0px;
       grid-template-columns: repeat(2, 1fr);
     }
-
-    @media (max-width: 660px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-    }
     @media (max-width: 1023px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
     }
-
+    @media (max-width: 660px) {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+    }
     @media (min-width: 1040px) {
       display: grid;
       grid-template-columns: repeat(1, 1fr);

@@ -220,4 +220,4 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   );
 }
 
-export default React.memo(Comments);
+export default Comments;

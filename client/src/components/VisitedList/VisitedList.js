@@ -14,7 +14,7 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
       //markerClick상태를 false로 전환
       setMarkerClick(false);
     }
-  }, [selectedPosition, markerClick]);
+  }, [markerClick]);
 
   //selectedModal에 매개변수 el, 즉 클릭한 정보가 들어간다.
   const openModalHandler = (el) => {
@@ -29,7 +29,6 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
   };
 
   //! 배열을 매핑해서 모달에 넣을때는 array.map()을 작성하는 그 위치에서 모달창을 만들어야함
-  // console.log(selectedModal);
   return (
     <>
       <Styled.ModalContainer>

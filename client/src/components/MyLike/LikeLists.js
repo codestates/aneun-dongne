@@ -7,8 +7,6 @@ import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
 import { Styled } from "./style";
 
-import { v4 as uuidv4 } from "uuid";
-
 const LikeLists = ({ postsInfo }) => {
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
@@ -35,8 +33,8 @@ const LikeLists = ({ postsInfo }) => {
               ""
             ) : (
               <>
-                {postsInfo.post_tags.split(",").map((tag) => {
-                  return <Styled.KeyWord key={uuidv4()}>#{tag}</Styled.KeyWord>;
+                {postsInfo.post_tags.split(",").map((tag, idx) => {
+                  return <KeyWord key={idx}>{tag}</KeyWord>;
                 })}
               </>
             )}
@@ -71,4 +69,4 @@ const LikeLists = ({ postsInfo }) => {
   );
 };
 
-export default LikeLists;
+export default React.memo(LikeLists);

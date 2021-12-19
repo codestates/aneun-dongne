@@ -47,4 +47,7 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
   );
 }
 
-export default React.memo(ProfileUpload);
+export default React.memo(ProfileUpload, (prev, next) => {
+  console.log(prev.imgUrl === next.imgUrl);
+  return prev.imgUrl === next.imgUrl;
+});

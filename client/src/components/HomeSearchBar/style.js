@@ -8,14 +8,24 @@ export const Styled = {
     border: 1px #3a6fb0 solid;
     border-radius: 10px;
     flex-direction: column;
+
+    @media (max-width: 1023px) {
+      margin: 2% auto;
+    }
+    @media (max-width: 700px) {
+      width: 500px;
+
+      margin: 2% auto;
+    }
     @media (max-width: 600px) {
       width: 400px;
-      margin: 1px auto;
-    }
-    @media (max-width: 1023px) {
-      /* background: blue; */
 
-      margin: 2px auto;
+      margin: 2% auto;
+    }
+    @media (max-width: 400px) {
+      margin: 2% auto;
+
+      width: 300px;
     }
     @media (min-width: 1024px) {
       margin-left: 10px;
@@ -40,18 +50,15 @@ export const Styled = {
   //지역선택 wrapper
   SearchWrapper: styled.div`
     @media (max-width: 1023px) {
-      /* background: blue; */
       margin: 0 auto;
       display: flex;
       flex-direction: column;
 
       width: 550px;
-      /* align-content: space-between; */
     }
     @media (max-width: 700px) {
       width: 300px;
       margin: 5px auto;
-      /* border: 1px red solid; */
     }
     @media (min-width: 1024px) {
       height: 20px;
@@ -83,7 +90,7 @@ export const Styled = {
       width: 200px;
       height: 30px;
       margin: 5px auto;
-      /* background: red; */
+
       border-radius: 5px;
     }
   `,
@@ -118,6 +125,7 @@ export const Styled = {
       width: 200px;
       margin: 5px auto;
     }
+
     @media (min-width: 1024px) {
       border: 1px gray solid;
       margin-top: 5px;
@@ -146,7 +154,6 @@ export const Styled = {
     cursor: pointer;
     perspective: 230px;
     color: white;
-
     &:hover {
       background-color: #2f4d6f;
     }
@@ -171,6 +178,7 @@ export const Styled = {
       width: 80px;
       height: 40px;
       background-color: #3a6fb0;
+    }
     }
   `,
 };

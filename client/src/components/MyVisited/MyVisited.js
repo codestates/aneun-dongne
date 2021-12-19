@@ -9,6 +9,7 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import Empty from "../Empty/Empty";
 import ModalVisited from "../ModalVisited/ModalVisited";
 import MapLoading from "../Loading/MapLoading";
+import Cookies from "universal-cookie";
 
 const { kakao } = window;
 
@@ -20,12 +21,13 @@ const MyVisited = () => {
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   const [loading, setLoading] = useState(false);
   const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
+  const cookies = new Cookies();
 
   async function getVisitedPlace() {
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/visited`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

@@ -69,6 +69,7 @@ function PlaceList() {
                 img={place[3]}
                 addr1={place[4] ? place[4].split(" ")[0] : null}
                 contentId={place[5]}
+                tags={place[6]}
               ></MemoCards>
             </Styled.StyledLink>
           </Styled.Div>

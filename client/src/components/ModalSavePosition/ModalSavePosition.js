@@ -15,6 +15,8 @@ import { Styled } from "./style";
 import { message } from "../../modules/message";
 import ImageUpload from "../ImageUpload/ImageUpload";
 
+import { toast } from "react-toastify";
+
 const ModalSavePosition = () => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const accessToken = useRecoilValue(token);
@@ -69,7 +71,6 @@ const ModalSavePosition = () => {
         },
         withCredentials: true,
       })
-
       .then((res) => {
         setIsUploaded(true);
         setIsSaveOrNotModal(true);
@@ -92,7 +93,7 @@ const ModalSavePosition = () => {
     <>
       <Styled.FormContainer>
         <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
-          <i class="fas fa-times"></i>
+          <i className="fas fa-times"></i>
         </Styled.CloseBtn>
         <form className="form-id" onSubmit={updateInfoRequest}>
           <div className="form-title">이미지 추가</div>
@@ -112,7 +113,15 @@ const ModalSavePosition = () => {
           </div>
           {memo !== "" ? null : <div className="alert-box">{errorMessage}</div>}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
-          <button type="submit" className="save-position-button">
+          <button
+            type="submit"
+            className="save-position-button"
+            onClick={() => {
+              toast.info("업로드 중입니다", {
+                position: toast.POSITION.TOP_CENTER,
+              });
+            }}
+          >
             저장
           </button>
         </form>

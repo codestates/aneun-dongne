@@ -26,7 +26,7 @@ const EditableHashTag = ({ setTags, tags }) => {
 
   return (
     <>
-      <TagsInput>
+      <Styled.TagsInput>
         <input
           className="tag-input"
           type="text"
@@ -43,7 +43,7 @@ const EditableHashTag = ({ setTags, tags }) => {
             </div>
           ))}
         </div>
-      </TagsInput>
+      </Styled.TagsInput>
     </>
   );
 };

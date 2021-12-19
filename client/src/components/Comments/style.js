@@ -22,8 +22,6 @@ export const Styled = {
       width: auto;
     }
     @media (max-width: 768px) {
-
-
     }
   `,
 
@@ -82,7 +80,6 @@ export const Styled = {
     margin-left: auto;
     margin-right: auto;
     height: auto;
-
   `,
 
   ProfileImgBox: styled.div`
@@ -178,7 +175,11 @@ export const Styled = {
       padding-top: 250%;
     }
   `,
+  ContentInput: styled.textarea`
+    width: 100%;
 
+    height: 80px;
+  `,
   BtnOne: styled.div`
     position: absolute;
     top: 0;

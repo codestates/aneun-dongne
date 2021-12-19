@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 import Icon from "react-icons-kit";
@@ -34,7 +34,7 @@ const LikeLists = ({ postsInfo }) => {
             ) : (
               <>
                 {postsInfo.post_tags.split(",").map((tag, idx) => {
-                  return <KeyWord key={idx}>{tag}</KeyWord>;
+                  return <Styled.KeyWord key={idx}>#{tag}</Styled.KeyWord>;
                 })}
               </>
             )}

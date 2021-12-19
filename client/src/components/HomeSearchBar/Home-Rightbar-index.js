@@ -109,7 +109,7 @@ function HomeRightbar({ setLevel }) {
               })}
             </Styled.SearchLocation>
           </Styled.SearchBar>
-          <Autocomplete hashtag={hashtag} setHashtag={setHashtag} />
+          {/* <Autocomplete hashtag={hashtag} setHashtag={setHashtag} /> */}
           <Styled.SearchPlace
             type="text"
             value={place}

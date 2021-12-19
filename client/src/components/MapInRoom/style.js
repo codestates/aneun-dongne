@@ -4,6 +4,9 @@ export const Styled = {
   Div: styled.div`
     position: relative;
     width: 100%;
+
+    height: 100%:
+
     margin-top: 3%;
     margin-bottom: 50px;
     margin-left: auto;
@@ -12,7 +15,8 @@ export const Styled = {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 1px rgb(192, 251, 255) solid;
+    border: 1px;
+    border-color: #3a6fb0;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
 
     text-decoration: inherit;
@@ -29,13 +33,29 @@ export const Styled = {
     border-radius: 10px;
     margin: auto;
     margin-bottom: 1rem;
-    @media (max-width: 768px) {
-      width: 80%;
-      height: 300px;
-      margin: auto;
+    @media (max-width: 740px) {
+      width: 510px;
+      height: 340px;
     }
-    @media (max-width: 612px) {
-      margin: auto;
+    @media (max-width: 672px) {
+      width: 480px;
+      height: 320px;
+    }
+    @media (max-width: 620px) {
+      width: 420px;
+      height: 280px;
+    }
+    @media (max-width: 560px) {
+      width: 360px;
+      height: 240px;
+    }
+    @media (max-width: 460px) {
+      width: 270px;
+      height: 180px;
+    }
+    @media (max-width: 360px) {
+      width: 210px;
+      height: 140px;
     }
   `,
   Address: styled.div`
@@ -60,6 +80,21 @@ export const Styled = {
       &:hover {
         opacity: 1;
       }
+    }
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+    @media (max-width: 640px) {
+      font-size: 1rem;
+    }
+    @media (max-width: 535px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 470px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 360px) {
+      font-size: 0.8rem;
     }
   `,
 };

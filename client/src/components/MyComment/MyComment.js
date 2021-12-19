@@ -5,9 +5,12 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
 import axios from "axios";
 import CommentLoading from "../Loading/CommentLoading";
+
+import { Styled } from "./style";
 import styled from "styled-components";
 
 import { toast } from "react-toastify";
+
 
 const CommentWrapper = styled.div`
   width: 100%;
@@ -19,44 +22,78 @@ const Comment = styled.div`
   height: auto;
   grid-template-columns: 1fr 3fr 1fr;
   border-radius: 20px;
-  margin-top: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 5%;
   box-shadow: 4px 4px 4px rgb(85, 85, 85);
   transition: all 0.1s ease-in-out;
   &:hover {
     color: black;
     box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
       4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    transform: scale(1.1);
+    transform: scale(1.02);
   }
   &:hover:after {
     left: 0;
     width: auto;
   }
+  @media (max-width: 768px) {
+  }
+  // @media (max-width: 415px) {
+  //   width: 300px;
+  // }
+  @media (max-width: 380px) {
+  }
+  // @media (max-width: 325px) {
+  //   width: 320px;
+  // }
 `;
 
 const ProfileBox = styled.form`
   position: relative;
-  width: 95%;
-  height: 70%;
+  width: 70%;
+  height: 50%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: auto;
+  margin-top: 20%;
   margin-bottom: auto;
 `;
 
 const Profile = styled.div`
   position: relative;
-  display: flex;
+
+  // top: 0;
+  /* background-color: red; */
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   margin-left: auto;
   margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  height: auto;
+  // margin: 40px;
+  // @media (max-width: 768px) {
+  //   width: 80px;
+  //   height: 140px;
+  //   margin: 30px;
+  // }
+  // @media (max-width: 414px) {
+  //   width: 80px;
+  //   height: 140px;
+  //   margin: 25px;
+  // }
+  // @media (max-width: 375px) {
+  //   width: 40px;
+  //   height: 80px;
+  //   margin: 10px;
+  // }
+  // @media (max-width: 320px) {
+  //   width: 30px;
+  //   height: 60px;
+  //   margin: 10px;
+  // }
+
 `;
 
 const ProfileImgBox = styled.div`
-  display: grid;
-  grid-template-rows: 3fr 2fr;
+  // display: grid;
+  // grid-template-rows: 3fr 2fr;
   width: 50%;
   height: 0;
   padding-top: 50%;
@@ -72,34 +109,88 @@ const ProfileImg = styled.img`
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 30;
+  top: 0;
+  /* background-color: white; */
+  // @media (max-width: 768px) {
+  //   width: 80px;
+  //   height: 80px;
+  // }
+  // @media (max-width: 375px) {
+  //   width: 40px;
+  //   height: 40px;
+  // }
+  // @media (max-width: 320px) {
+  //   width: 30px;
+  //   height: 30px;
+  // }
+
 `;
 
 const NickName = styled.div`
   position: relative;
+  font-size: 14px;
+  // bottom: 5px;
   text-align: center;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (max-width: 640px) {
+    font-size: 10px;
+  }
+  @media (max-width: 535px) {
+    font-size: 7px;
+  }
+  // @media (max-width: 325px) {
+  //   width: 320px;
+  // }
 `;
 
 const ContentBox = styled.form`
-  margin-top: 25px;
-  margin-bottom: 20px;
-  margin-right: 5px;
-  margin-left: 5px;
+  // margin-right: 3%;
+  // margin-left: 3%;
   position: relative;
   display: grid;
   grid-template-rows: auto auto;
   width: auto;
   height: auto;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  // @media (max-width: 768px) {
+  // }
+  // @media (max-width: 415px) {
+  // }
+  // @media (max-width: 380px) {
+  // }
+  // @media (max-width: 325px) {
+  // }
 `;
 
 const Content = styled.textarea`
   // display: flex;
   flex-wrap: wrap;
   position: relative;
-  bottom: 10px;
   width: 100%;
   height: auto;
-  padding: 10px;
+  padding: 1%;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (max-width: 640px) {
+    font-size: 10px;
+  }
+  @media (max-width: 535px) {
+    padding: 2%;
+    font-size: 7px;
+  }
+  // @media (max-width: 325px) {
+  //   width: 320px;
+  // }
+`;
+
+const ContentWrapper = styled.div`
+  position: relative;
+  width: auto;
+  height: auto;
 `;
 
 const HashTagWrapper = styled.div`
@@ -112,40 +203,50 @@ const HashTagWrapper = styled.div`
 const BtnBox = styled.div`
   position: relative;
   width: 70%;
-  height: 80%;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: auto;
+  margin-top: 15%;
   margin-bottom: auto;
+  @media (max-width: 470px) {
+    width: 60%;
+  }
 `;
 
 const BtnWrapper = styled.div`
   position: relative;
   height: 0;
-  top: 0;
   width: 100%;
-  padding-top: 40%;
+  padding-top: 50%;
   margin-left: auto;
   margin-right: auto;
+  @media (max-width: 470px) {
+    padding-top: 100%;
+  }
 `;
 
 const Btn = styled.div`
   position: absolute;
   top: 0;
-  font-size: 14px;
-  text-align: center;
+  height: 100%;
+  width: 100%;
+`;
+
+const BtnContent = styled.div`
   cursor: pointer;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 10%;
-  padding-bottom: 10%;
-  padding-right: 10%;
-  padding-left: 10%;
+  font-size: 14px;
+  padding-top: 12%;
+  padding-bottom: 12%;
+  padding-right: 12%;
+  padding-left: 12%;
+  text-align: center;
+  position: relative;
+  color: #ffffff;
   height: 100%;
   width: 100%;
   border: none;
   border-radius: 20px;
-  background-color: rgb(192, 251, 255);
+  background-color: #3a6fb0;
   background-image: linear-gradient(
     to right bottom,
     rgba(255, 255, 255, 0.9) 0,
@@ -153,7 +254,7 @@ const Btn = styled.div`
     rgba(0, 0, 0, 0) 100%
   );
   :hover {
-    background-color: rgb(192, 251, 255);
+    background-color: #2f4d6f;
     background-image: linear-gradient(
       to left top,
       rgba(255, 255, 255, 0.9) 0,
@@ -162,10 +263,29 @@ const Btn = styled.div`
     );
     transition: all 0.5s ease;
     border-radius: 20px;
-    transform: scale(1.1);
+    // transform: scale(1.1);
   }
   :active {
-    transform: scale(1.1);
+    // transform: scale(1.1);
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (max-width: 640px) {
+    font-size: 10px;
+  }
+  @media (max-width: 535px) {
+    font-size: 7px;
+  }
+  @media (max-width: 470px) {
+    font-size: 5px;
+    padding-right: 25%;
+    padding-left: 25%;
+  }
+  @media (max-width: 360px) {
+    font-size: 5px;
+    padding-right: 15%;
+    padding-left: 15%;
   }
 `;
 
@@ -227,20 +347,20 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     return <CommentLoading userinfo={userinfo} />;
   }
   return (
-    <>
-      <div>
-        <CommentWrapper>
-          <Comment>
-            <ProfileBox>
-              <Profile>
-                <ProfileImgBox>
-                  <ProfileImg src={userinfo.user_image_path} />
-                  <NickName>{userinfo.nickname}</NickName>
-                </ProfileImgBox>
-              </Profile>
-            </ProfileBox>
-            <ContentBox>
-              <Content
+    <div>
+      <Styled.CommentWrapper>
+        <Styled.Comment>
+          <Styled.ProfileBox>
+            <Styled.Profile>
+              <Styled.ProfileImgBox>
+                <Styled.ProfileImg src={userinfo.user_image_path} />
+              </Styled.ProfileImgBox>
+              <Styled.NickName>{userinfo.nickname}</Styled.NickName>
+            </Styled.Profile>
+          </Styled.ProfileBox>
+          <Styled.ContentBox>
+            <Styled.ContentWrapper>
+              <Styled.Content
                 type="text"
                 value={something}
                 placeholder="여러분의 소중한 댓글을 입력해주세요"
@@ -251,20 +371,22 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
                     e.target.value = "";
                   }
                 }}
-              ></Content>
-              <HashTagWrapper>
-                <EditableHashTag tags={tags} setTags={setTags} />
-              </HashTagWrapper>
-            </ContentBox>
-            <BtnBox>
-              <BtnWrapper>
-                <Btn onClick={registerMyComment}>작성하기</Btn>
-              </BtnWrapper>
-            </BtnBox>
-          </Comment>
-        </CommentWrapper>
-      </div>
-    </>
+              />
+            </Styled.ContentWrapper>
+            <Styled.HashTagWrapper>
+              <EditableHashTag tags={tags} setTags={setTags} />
+            </Styled.HashTagWrapper>
+          </Styled.ContentBox>
+          <Styled.BtnBox>
+            <Styled.BtnWrapper>
+              <Styled.Btn onClick={registerMyComment}>
+                <Styled.BtnContent>작성하기</Styled.BtnContent>
+              </Styled.Btn>
+            </Styled.BtnWrapper>
+          </Styled.BtnBox>
+        </Styled.Comment>
+      </Styled.CommentWrapper>
+    </div>
   );
 }
 

@@ -34,6 +34,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   }, []);
 
   function getCommentId(e) {
+    console.log(e);
     setClickedBtn(e.target.className);
   }
 
@@ -126,97 +127,115 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   }, [changeOrNot]);
 
   return (
-    <>
+    <Styled.CommentWrapper>
       <Styled.Comment>
-        <Styled.Profile>
-          <Styled.ProfileImg src={img}></Styled.ProfileImg>
-          <Styled.NickName>{nickname}</Styled.NickName>
-        </Styled.Profile>
+        <Styled.ProfileBox>
+          <Styled.Profile>
+            <Styled.ProfileImgBox>
+              <Styled.ProfileImg src={img} />
+            </Styled.ProfileImgBox>
+            <Styled.NickName>{nickname}</Styled.NickName>
+          </Styled.Profile>
+        </Styled.ProfileBox>
         <Styled.ContentBox>
-          {commentLoading ? (
-            <div>
-              <LikeLoading />
-            </div>
-          ) : (
+          <Styled.ContentWrapper>
             <>
-              {!editable ? (
-                <Styled.Content name="comment" className="comment-read">
-                  {text}
-                </Styled.Content>
+              {commentLoading ? (
+                <div>
+                  <LikeLoading />
+                </div>
               ) : (
-                <Styled.ContentInput>
-                  {!editMode ? (
-                    <div id="comment-read" className="comment-read" name="comment">
-                      <span>{comment}</span>
-                    </div>
+                <>
+                  {!editable ? (
+                    <Styled.Content name="comment" className="comment-read">
+                      {text}
+                    </Styled.Content>
                   ) : (
-                    <textarea
-                      id="comment-change"
-                      type="text"
-                      defaultValue={prevComment}
-                      onChange={(e) => ChangeHandler(e)}
-                      onKeyUp={(e) => {
-                        if (e.key === "Enter") {
-                          completeChange();
-                        }
-                      }}
-                      name="comment"
-                    />
+                    <>
+                      {!editMode ? (
+                        <Styled.Content name="comment">
+                          <span>{comment}</span>
+                        </Styled.Content>
+                      ) : (
+                        <Styled.Content>
+                          <Styled.ContentInput
+                            id="comment-change"
+                            className="comment-read"
+                            type="text"
+                            defaultValue={prevComment}
+                            onChange={(e) => ChangeHandler(e)}
+                            onKeyUp={(e) => {
+                              if (e.key === "Enter") {
+                                completeChange();
+                              }
+                            }}
+                            name="comment"
+                          />
+                        </Styled.Content>
+                      )}
+                    </>
                   )}
-                </Styled.ContentInput>
+                </>
               )}
-              <>
-                {!editable ? (
-                  <></>
+            </>
+            <Styled.HashTagWrapper>
+              {editable ? (
+                editMode ? (
+                  <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
                 ) : (
-                  <>
-                    {!editMode ? (
-                      <Styled.BtnWrapper>
-                        <button
-                          className="change-comment"
-                          onClick={(e) => {
-                            getCommentId(e);
-                          }}
-                        >
-                          수정하기
-                        </button>
-                        <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
-                          댓글삭제
-                        </button>
-                      </Styled.BtnWrapper>
-                    ) : (
-                      <Styled.BtnWrapper>
-                        <button className="complete-change" onClick={(e) => getCommentId(e)}>
-                          수정완료
-                        </button>
-                        <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
-                          수정취소
-                        </button>
-                      </Styled.BtnWrapper>
-                    )}
-                  </>
+                  <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
+                )
+              ) : (
+                <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />
+              )}
+            </Styled.HashTagWrapper>
+          </Styled.ContentWrapper>
+        </Styled.ContentBox>
+        <Styled.BtnBox>
+          <>
+            {!editable ? (
+              <></>
+            ) : (
+              <>
+                {!editMode ? (
+                  <Styled.BtnWrapper>
+                    <Styled.BtnOne>
+                      <button
+                        className="change-comment"
+                        onClick={(e) => {
+                          getCommentId(e);
+                        }}
+                      >
+                        수정하기
+                      </button>
+                    </Styled.BtnOne>
+                    <Styled.BtnTwo>
+                      <button type="submit" className="delete-comment" onClick={(e) => getCommentId(e)}>
+                        댓글삭제
+                      </button>
+                    </Styled.BtnTwo>
+                  </Styled.BtnWrapper>
+                ) : (
+                  <Styled.BtnWrapper>
+                    <Styled.BtnOne>
+                      <button className="complete-change" onClick={(e) => getCommentId(e)}>
+                        수정완료
+                      </button>
+                    </Styled.BtnOne>
+                    <Styled.BtnTwo>
+                      <button className="get-back" onClick={() => setChangeOrNot(!changeOrNot)}>
+                        수정취소
+                      </button>
+                    </Styled.BtnTwo>
+                  </Styled.BtnWrapper>
                 )}
               </>
-              <Styled.HashTagWrapper>
-                {/* 편집못함? -> 읽기만가능한해시태그 안에 props로 다른사람의 해시태그 전달
-            편집가능? -> 수정못함? : 읽기만가능한 해시태그안에 props로 나의 해시태그 전달
-            편집가능? -? 수정가능? : 수정가능한 해시태그  */}
-                {editable ? (
-                  editMode ? (
-                    <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
-                  ) : (
-                    <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
-                  )
-                ) : (
-                  <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />
-                )}
-              </Styled.HashTagWrapper>
-            </>
-          )}
-          <Styled.Date>작성날짜 : 2016.08.09{date}</Styled.Date>
-        </Styled.ContentBox>
+            )}
+          </>
+        </Styled.BtnBox>
+        {/* <Styled.Date>{`작성날짜: ${date}`}</Styled.Date> */}
       </Styled.Comment>
-    </>
+    </Styled.CommentWrapper>
   );
 }
 

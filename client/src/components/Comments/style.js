@@ -168,7 +168,7 @@ export const Styled = {
     margin-left: auto;
     margin-right: auto;
     @media (max-width: 520px) {
-      padding-top: 230%;
+      padding-top: 250%;
     }
   `,
 
@@ -204,15 +204,17 @@ export const Styled = {
       @media (max-width: 600px) {
         font-size: 0.7rem;
       }
-      @media (max-width: 470px) {
+      @media (max-width: 520px) {
         font-size: 0.7rem;
         padding-right: 20%;
         padding-left: 20%;
+        height: 120%;
       }
       @media (max-width: 360px) {
         font-size: 0.7rem;
         padding-right: 15%;
         padding-left: 15%;
+        height: 120%;
       }
     }
   `,
@@ -250,15 +252,17 @@ export const Styled = {
       @media (max-width: 600px) {
         font-size: 0.7rem;
       }
-      @media (max-width: 470px) {
+      @media (max-width: 520px) {
         font-size: 0.7rem;
         padding-right: 20%;
         padding-left: 20%;
+        height: 120%;
       }
       @media (max-width: 360px) {
         font-size: 0.7rem;
         padding-right: 15%;
         padding-left: 15%;
+        height: 120%;
       }
     }
   `,

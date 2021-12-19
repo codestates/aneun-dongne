@@ -153,7 +153,9 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
                   ) : (
                     <>
                       {!editMode ? (
-                        <Styled.Content name="comment">{comment}</Styled.Content>
+                        <Styled.Content name="comment">
+                          <span>{comment}</span>
+                        </Styled.Content>
                       ) : (
                         <Styled.Content>
                           <Styled.ContentInput
@@ -231,7 +233,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
             )}
           </>
         </Styled.BtnBox>
-        <Styled.Date>{`작성날짜: ${date}`}</Styled.Date>
+        {/* <Styled.Date>{`작성날짜: ${date}`}</Styled.Date> */}
       </Styled.Comment>
     </Styled.CommentWrapper>
   );

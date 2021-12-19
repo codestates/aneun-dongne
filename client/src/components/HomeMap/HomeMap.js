@@ -49,7 +49,7 @@ const HomeMap = () => {
    * @param keyword 검색어
    */
   const wtm = getWtm.contents;
-  
+
   const searchPlace = (keyword) => {
     setPending(true);
     const places = new kakao.maps.services.Places();
@@ -148,7 +148,6 @@ const HomeMap = () => {
         contentId: placeList[i][5],
       });
     }
-
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     for (let i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(24, 35);
@@ -236,7 +235,7 @@ const HomeMap = () => {
     //     .catch((err) => console.log("에러", err)); //
     // }
     // //!! 맵을 클릭시 주소변경
-    
+
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;
@@ -246,7 +245,7 @@ const HomeMap = () => {
       markerCenter.setPosition(latlng);
 
       // ?  좌표를 주소로 변환 -> 버튼 클릭시 onClick이벤트를 통해 91번줄로 이동
-      
+
       // axios
       //   .get(
       //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,

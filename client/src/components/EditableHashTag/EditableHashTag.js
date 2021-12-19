@@ -68,6 +68,7 @@ export const TagsInput = styled.div`
     border: 1px solid #4000c7;
   }
 `;
+// import { Styled } from "./style";
 
 const EditableHashTag = ({ setTags, tags }) => {
   const removeTags = (indexToRemove) => {

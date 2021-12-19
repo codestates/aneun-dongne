@@ -19,7 +19,6 @@ import {
 
 import LikeLoading from "../../components/Loading/LikeLoading";
 import NoComment from "../../components/NoComment/NoComment";
-
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);

@@ -52,7 +52,7 @@ const MyReview = () => {
             ) : (
               comments.map((comment) => {
                 return (
-                  <div key={uuidv4()}>
+                  <div key={comment.comments.id}>
                     <MyReviewComment comment={comment} SetComments={SetComments} />
                   </div>
                 );

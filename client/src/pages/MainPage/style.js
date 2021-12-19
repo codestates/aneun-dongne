@@ -15,9 +15,21 @@ export const Styled = {
     justify-content: center;
     align-items: center;
 
+    @media screen and (max-width: 780px) {
+      width: 100%;
+
+      margin-top: 10%;
+      font-size: 1.2rem;
+    }
+
     img {
       position: relative;
       width: 100%;
+      @media screen and (max-width: 780px) {
+        max-width: 100%;
+
+        height: auto;
+      }
     }
     .main-title {
       margin-top: 10%;
@@ -26,16 +38,18 @@ export const Styled = {
       color: white;
 
       @media screen and (max-width: 780px) {
-        margin-top: 30%;
-        width: 65%;
-        font-size: 2rem;
+        position: absolute;
+        text-align: center;
+
+        width: 100%;
+        margin-top: 40px;
+        font-size: 1rem;
       }
     }
     .icons {
       color: #ffffff7a;
-      margin-top: 10%;
-      margin-left: 42%;
-      margin-right: auto;
+      width: 100px;
+      margin: 0 auto;
       animation-name: updown;
       animation-duration: 1s;
       animation-timing-function: linear;
@@ -60,10 +74,10 @@ export const Styled = {
         transition: all 0.3s;
       }
       @media screen and (max-width: 780px) {
-        width: 20%;
-        margin-left: 41%;
-        margin-right: auto;
-        margin-bottom: 25%;
+        width: 100px;
+        margin-top: 50px;
+        size: 0.5rem;
+        display: none;
       }
     }
 
@@ -97,10 +111,9 @@ export const Styled = {
       transition: all 0.3s;
     }
     @media screen and (max-width: 780px) {
-      margin-top: 7%;
-      width: 35%;
-      height: 50px;
-      font-size: 1.2rem;
+      width: 20%;
+      height: 30px;
+      font-size: 0.5rem;
     }
   `,
   PopularTitleView: styled.div`
@@ -116,7 +129,7 @@ export const Styled = {
       font-weight: bold;
 
       @media screen and (max-width: 780px) {
-        font-size: 1.3rem;
+        font-size: 0.8rem;
       }
     }
 
@@ -139,7 +152,7 @@ export const Styled = {
       font-weight: bold;
 
       @media screen and (max-width: 780px) {
-        font-size: 1.3rem;
+        font-size: 0.8rem;
       }
     }
 
@@ -161,8 +174,7 @@ export const Styled = {
       font-weight: bold;
 
       @media screen and (max-width: 780px) {
-        font-size: 1.3rem;
-        width: 90%;
+        font-size: 0.8rem;
       }
     }
 
@@ -209,8 +221,13 @@ export const Styled = {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 50vh;
+    height: 40vh;
     background-color: rgb(57 57 57);
+
+    @media screen and (max-width: 780px) {
+      height: 30vh;
+    }
+
     .title {
       position: absolute;
       display: flex;
@@ -218,29 +235,35 @@ export const Styled = {
       align-items: center;
       font-size: 2rem;
       font-weight: bold;
+      text-align: center;
       color: white;
-      margin-bottom: 170px;
+      margin-bottom: 200px;
+      margin-top: 20px;
       border-radius: 20px;
       width: 800px;
       height: 50px;
 
       @media screen and (max-width: 780px) {
-        font-size: 1.3rem;
-        width: 90%;
+        margin-top: 80px;
+        font-size: 1rem;
+        width: 80%;
+        text-align: center;
       }
     }
   `,
+
   Image: styled.div`
+    position: relative;
     display: flex;
     justify-content: center;
-    width: 70%;
+    width: 100%;
 
     margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
 
     @media screen and (max-width: 780px) {
-      width: 90%;
+      width: 60%;
       margin-bottom: 15%;
     }
     img {
@@ -251,33 +274,33 @@ export const Styled = {
       margin-right: auto;
     }
     .play {
-      border: 4px dotted rgb(107, 217, 224);
-      border-bottom: 7px solid rgb(107, 217, 224);
       margin-top: auto;
       margin-left: 5%;
       margin-right: auto;
       margin-bottom: auto;
     }
     .play-popular {
-      border: 2px gray solid;
       margin-top: auto;
-      margin-left: 5%;
       margin-right: auto;
       margin-bottom: auto;
     }
     .play-focus {
-      border: 2px gray solid;
       margin-top: auto;
-      margin-left: 5%;
       margin-right: auto;
       margin-bottom: auto;
     }
     .play-diy {
-      border: 2px gray solid;
       margin-top: auto;
-      margin-left: 5%;
+      margin-left: 3%;
       margin-right: auto;
       margin-bottom: auto;
+    }
+    .illust {
+      margin-top: 7%;
+      display: flex;
+      justify-content: center;
+      width: 40%;
+      margin-left: 5px;
     }
   `,
   VideoContainer: styled.div`

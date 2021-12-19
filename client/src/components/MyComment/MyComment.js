@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";

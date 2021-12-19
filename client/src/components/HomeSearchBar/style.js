@@ -60,6 +60,11 @@ export const Styled = {
       width: 300px;
       margin: 5px auto;
     }
+    @media (max-width: 700px) {
+      width: 300px;
+      margin: 5px auto;
+      /* border: 1px red solid; */
+    }
     @media (min-width: 1024px) {
       height: 20px;
       width: 550px;
@@ -90,7 +95,6 @@ export const Styled = {
       width: 200px;
       height: 30px;
       margin: 5px auto;
-
       border-radius: 5px;
     }
   `,
@@ -125,7 +129,6 @@ export const Styled = {
       width: 200px;
       margin: 5px auto;
     }
-
     @media (min-width: 1024px) {
       border: 1px gray solid;
       margin-top: 5px;
@@ -178,7 +181,6 @@ export const Styled = {
       width: 80px;
       height: 40px;
       background-color: #3a6fb0;
-    }
     }
   `,
 };

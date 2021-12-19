@@ -200,7 +200,7 @@ export const setLo = selector({
         })
         //   .then(res=>console.log(meetingPlace))
         .catch((err) => console.log(err))
-    ); //237줄에 console.log(meetingPlace)있음.
+    );
   },
 });
 

@@ -60,7 +60,7 @@ function ModalVisited({ id, idx, visitedImg }) {
         setClickedBtn(true);
         setIsUploaded(false);
         if (!isUploaded && clickedBtn) {
-          setErrorMessage({ ...errorMessage, ...{ image: "이미지업로드 실패" } });
+          // setErrorMessage({ ...errorMessage, ...{ image: "이미지업로드 실패" } });
         }
       });
   }
@@ -98,7 +98,7 @@ function ModalVisited({ id, idx, visitedImg }) {
         <form id="form-id" onSubmit={updateInfoRequest}>
           <div className="form-title">이미지 수정</div>
           <VisitedUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
-          <div className="alert-box">{errorMessage.image}</div>
+          {/* <div className="alert-box">{errorMessage.image}</div> */}
 
           <div className="form-memo">
             <h3>메모</h3>
@@ -111,7 +111,7 @@ function ModalVisited({ id, idx, visitedImg }) {
               }}
             />
           </div>
-          <div className="alert-box">{errorMessage.memo}</div>
+          {/* <div className="alert-box">{errorMessage.memo}</div> */}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <div className="button-wraaper">
             <button type="submit" value="update" className="edit-position-button" onClick={updateInfo}>

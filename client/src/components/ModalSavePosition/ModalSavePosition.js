@@ -97,7 +97,7 @@ const ModalSavePosition = () => {
         <form className="form-id" onSubmit={updateInfoRequest}>
           <div className="form-title">이미지 추가</div>
           <ImageUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
-          {placeImage !== null ? null : <div className="alert-box">{errorMessage}</div>}
+          {/* {placeImage !== null ? null : <div className="alert-box">{errorMessage}</div>} */}
 
           <div className="form-memo">
             <h3>메모</h3>
@@ -110,7 +110,7 @@ const ModalSavePosition = () => {
               }}
             />
           </div>
-          {memo !== "" ? null : <div className="alert-box">{errorMessage}</div>}
+          {/* {memo !== "" ? null : <div className="alert-box">{errorMessage}</div>} */}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <button type="submit" className="save-position-button">
             저장

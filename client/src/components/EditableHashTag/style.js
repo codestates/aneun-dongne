@@ -2,15 +2,13 @@ import styled from "styled-components";
 
 export const Styled = {
   TagsInput: styled.div`
-    z-index: 999;
-
+    z-index: 100;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     flex-wrap: wrap;
     min-height: 48px;
-    width: 320px;
-
+    width: 100%;
     border-radius: 6px;
     > #tags {
       display: flex;
@@ -21,45 +19,36 @@ export const Styled = {
     }
     .tag {
       width: auto;
-      height: 25px;
+      height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 8px;
-      font-size: 14px;
+      font-size: 0.8rem;
       list-style: none;
-      color: #162b71;
       border-radius: 6px;
-
       margin: 0 8px 8px 0;
-
-      > .tag-title {
-        margin-right: 8px;
-      }
     }
 
     .tag-close-icon {
       display: block;
-      width: 16px;
-      height: 16px;
-      line-height: 16px;
+      width: 14px;
+      height: 14px;
+      line-height: 14px;
       text-align: center;
-      font-size: 14px;
+      font-size: 12px;
       margin-left: 8px;
-      /* color: #4000c7; */
-      color: #162b71;
+      // color: #4000c7;
       border-radius: 50%;
-      /* background: #fff; */
-
+      background: #fff;
       cursor: pointer;
     }
-
     > input {
       flex: 1;
       border: none;
       padding-left: 10px;
       padding-right: 10px;
-      width: 400px;
+      width: 100%;
       height: 46px;
       font-size: 14px;
       /* padding: 4px 0 0 0; */

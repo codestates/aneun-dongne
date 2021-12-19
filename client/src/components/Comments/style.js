@@ -1,232 +1,310 @@
 import styled from "styled-components";
 
 export const Styled = {
-  Comment: styled.div`
+  CommentWrapper: styled.div`
     position: relative;
-    display: flex;
-    /* border: 1px red solid; */
-    /* height: 200px; */
+    width: 100%;
+    height: auto;
     border-radius: 20px;
-    margin-top: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 5%;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: all 0.1s ease-in-out;
     &:hover {
       color: black;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transform: scale(1.1);
+      transform: scale(1.02);
     }
     &:hover:after {
       left: 0;
-      width: 100%;
+      width: auto;
     }
     @media (max-width: 768px) {
-      /* width: 80%; */
-      background: red;
-      margin-left: 10px;
     }
   `,
-  Profile: styled.div`
-    position: relative;
-    /* background-color: red; */
-    display: flex;
-    width: 80px;
-    height: 140px;
-    margin: 40px;
-  `,
-  ProfileImg: styled.img`
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    /* background-color: white; */
-  `,
 
-  NickName: styled.span`
-    /* background-color: yellowgreen; */
-    position: absolute;
-    bottom: 5px;
-    text-align: center;
+  Comment: styled.div`
+    position: relative;
+    display: grid;
     width: 100%;
-  `,
-
-  ContentBox: styled.div`
-    /* background-color: yellow; */
-    margin-top: 30px;
-    position: relative;
-    width: 480px;
-    /* height: 140px; */
-    > button {
-      position: absolute;
-      right: -10px;
-      top: 20px;
-      width: 80px;
-      border: none;
-      height: 40px;
-      background-color: rgb(192, 251, 255);
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
-      transition: all 0.5s ease;
-      border-radius: 20px;
-    }
-
-    button:hover {
-      transform: scale(1.1);
-    }
-
-    button:active {
-      transform: scale(1.1);
-    }
-    @media (max-width: 768px) {
-      width: 80%;
-      /* background: blue; */
-      /* margin-left: 10px; */
-    }
-  `,
-  //!-- 내가 바꾼거 댓글 높이
-  Content: styled.div`
-    display: flex;
-    padding: 10px;
-    flex-wrap: wrap;
-    line-height: 1em;
-    word-break: break-all;
-
-    top: 0;
-    left: 10px;
-    width: 370px;
-    min-height: 140px;
-    padding-left: 10px;
-    padding-right: 10px;
-
-    background-color: skyblue;
-  `,
-
-  ContentInput: styled.div`
-    display: flex;
-    padding: 10px;
-    width: 480px;
-    /* border: 1px gray solid; */
-    /* flex-wrap: wrap; */
-    /* background-color: burlywood; */
-    > #comment-read {
-      word-wrap: break-word;
-      /* background-color: green; */
-      > span {
-      }
-    }
-    > #comment-change {
-      display: flex;
-      flex-wrap: wrap;
-      width: 370px;
-      height: 70px;
-    }
-    > input,
-    div {
-      /* background-color: whitesmoke; */
-
-      width: 370px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  `,
-  //!----
-  BtnWrapper: styled.div`
-    width: 370px;
-
-    padding-left: 10px;
-    padding-right: 10px;
-    display: flex;
-    flex-direction: column;
-    > button {
-      position: absolute;
-      right: -10px;
-
-      width: 80px;
-      border: none;
-      height: 40px;
-      margin: 0px 0 0 0;
-      background-color: rgb(192, 251, 255);
-    }
-    .change-comment,
-    .complete-change {
-      /* z-index : 3 내가한거 */
-      z-index: 3;
-      border: none;
-
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
-      width: 80px;
-      height: 40px;
-      transition: all 0.5s ease;
-      border-radius: 20px;
-    }
-
-    > .change-comment:hover,
-    .complete-change:hover {
-      transform: scale(1.1);
-      background-image: linear-gradient(
-        to left top,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
-    }
-
-    .delete-comment,
-    .get-back {
-      border: none;
-      top: 65px;
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
-      width: 80px;
-      height: 40px;
-      transition: all 0.5s ease;
-      border-radius: 20px;
-    }
-
-    .delete-comment:hover,
-    .get-back:hover {
-      transform: scale(1.1);
-      background-image: linear-gradient(
-        to left top,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
-    }
-  `,
-
-  HashTagWrapper: styled.div`
-    /* margin-top: 100px; */
-    /* position: absolute; */
-    /* background-color: red; */
-    width: 370px;
-
-    /* bottom: 0; */
-    /* top: 75px; */
-    /* margin-top: 75px; */
-
-    padding-right: 10px;
-    white-space: nowrap;
-    border: none;
+    height: auto;
+    grid-template-columns: 1fr 3fr 1fr;
+    border-radius: 20px;
   `,
 
   Date: styled.div`
+  position: absolute;
+  bottom 5%;
+  right 5%;
+  color:gray;
+  font-size: 0.8rem;
+  `,
+
+  ProfileBox: styled.form`
+    position: relative;
+    width: 70%;
+    height: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20%;
+    margin-bottom: auto;
+    @media (max-width: 768px) {
+      width: 70%;
+      height: 50%;
+    }
+    @media (max-width: 640px) {
+      width: 75%;
+      height: 45%;
+    }
+    @media (max-width: 535px) {
+      width: 80%;
+      height: 40%;
+    }
+    @media (max-width: 470px) {
+      width: 80%;
+      height: 40%;
+    }
+    @media (max-width: 360px) {
+      width: 80%;
+      height: 40%;
+    }
+  `,
+
+  Profile: styled.div`
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+  `,
+
+  ProfileImgBox: styled.div`
+    width: 50%;
+    height: 0;
+    padding-top: 50%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+  `,
+
+  ProfileImg: styled.img`
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
     position: absolute;
-    bottom: 25px;
-    right: 5px;
+    top: 0;
+  `,
+
+  NickName: styled.div`
+    position: relative;
+    font-size: 0.8rem;
+    text-align: center;
+  `,
+
+  ContentBox: styled.form`
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto;
+    width: auto;
+    height: auto;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  `,
+
+  Content: styled.div`
+    flex-wrap: wrap;
+    position: relative;
+    width: auto;
+
+    height: auto;
+    padding: 1%;
+    font-size: 0.8rem;
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 640px) {
+      font-size: 0.8rem;
+    }
+    // @media (max-width: 535px) {
+    //   padding: 2%;
+    //   font-size: 0.7rem;
+    // }
+  `,
+
+  ContentWrapper: styled.div`
+    position: relative;
+    width: auto;
+    height: auto;
+  `,
+
+  HashTagWrapper: styled.div`
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    // border: 1px gray solid;
+  `,
+
+  BtnBox: styled.div`
+    position: relative;
+    width: 60%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    @media (max-width: 470px) {
+      width: 60%;
+    }
+  `,
+
+  BtnWrapper: styled.div`
+    position: relative;
+    height: 0;
+    width: 100%;
+    padding-top: 150%;
+    margin-left: auto;
+    margin-right: auto;
+    @media (max-width: 520px) {
+      padding-top: 230%;
+    }
+  `,
+
+  BtnOne: styled.div`
+    position: absolute;
+    top: 0;
+    height: 33.33%;
+    width: 100%;
+    > button {
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding-top: 12%;
+      padding-bottom: 12%;
+      padding-right: 12%;
+      padding-left: 12%;
+      text-align: center;
+      position: relative;
+      color: #ffffff;
+      height: 100%;
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      background-color: #3a6fb0;
+      :hover {
+        background-color: #2f4d6f;
+        transition: all 0.5s ease;
+        border-radius: 20px;
+        // transform: scale(1.1);
+      }
+      :active {
+        // transform: scale(1.1);
+      }
+      @media (max-width: 600px) {
+        font-size: 0.7rem;
+      }
+      @media (max-width: 470px) {
+        font-size: 0.7rem;
+        padding-right: 20%;
+        padding-left: 20%;
+      }
+      @media (max-width: 360px) {
+        font-size: 0.7rem;
+        padding-right: 15%;
+        padding-left: 15%;
+      }
+    }
+  `,
+
+  BtnTwo: styled.div`
+    position: absolute;
+    bottom: 0;
+    height: 33.33%;
+    width: 100%;
+    margin-bottom: 40%;
+    > button {
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding-top: 12%;
+      padding-bottom: 12%;
+      padding-right: 12%;
+      padding-left: 12%;
+      text-align: center;
+      position: relative;
+      color: #ffffff;
+      height: 100%;
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      background-color: #3a6fb0;
+      :hover {
+        background-color: #2f4d6f;
+        transition: all 0.5s ease;
+        border-radius: 20px;
+        // transform: scale(1.1);
+      }
+      :active {
+        // transform: scale(1.1);
+      }
+      @media (max-width: 600px) {
+        font-size: 0.7rem;
+      }
+      @media (max-width: 470px) {
+        font-size: 0.7rem;
+        padding-right: 20%;
+        padding-left: 20%;
+      }
+      @media (max-width: 360px) {
+        font-size: 0.7rem;
+        padding-right: 15%;
+        padding-left: 15%;
+      }
+    }
+  `,
+
+  BtnContent: styled.div`
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding-top: 12%;
+    padding-bottom: 12%;
+    padding-right: 12%;
+    padding-left: 12%;
+    text-align: center;
+    position: relative;
+    color: #ffffff;
+    height: 100%;
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    background-color: #3a6fb0;
+    :hover {
+      background-color: #2f4d6f;
+      transition: all 0.5s ease;
+      border-radius: 20px;
+      // transform: scale(1.1);
+    }
+    :active {
+      // transform: scale(1.1);
+    }
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 640px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 535px) {
+      font-size: 0.7rem;
+    }
+    @media (max-width: 470px) {
+      font-size: 0.7rem;
+      padding-right: 20%;
+      padding-left: 20%;
+    }
+    @media (max-width: 360px) {
+      font-size: 0.7rem;
+      padding-right: 15%;
+      padding-left: 15%;
+    }
   `,
 };

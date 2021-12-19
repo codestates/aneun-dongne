@@ -265,7 +265,7 @@ const LikeLists = ({ postsInfo }) => {
             </div>
             <LikeBtn>
               <div>
-                <i class="fas fa-heart"></i>
+                <i className="fas fa-heart"></i>
                 {postsInfo["Likes.likeCount"]}
               </div>
             </LikeBtn>

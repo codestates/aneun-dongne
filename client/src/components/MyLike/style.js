@@ -101,7 +101,7 @@ export const Styled = {
     font-weight: bolder;
     width: 80px;
     height: 40px;
-    margin: 20px auto;
+    margin: 5px auto;
     cursor: pointer;
     text-justify: center;
     flex-direction: row-reverse;
@@ -109,7 +109,6 @@ export const Styled = {
     transition: all 0.1s ease-in-out;
     i {
       color: red;
-
       justify-content: center;
       margin-left: 25px;
       margin-right: 3px;
@@ -130,9 +129,22 @@ export const Styled = {
       transform: scale(1.3);
     }
 
+    @media screen and (max-width: 710px) {
+      width: 70px;
+      height: 25px;
+      margin: 0px auto;
+      i {
+        margin-top: 4px;
+      }
+    }
+
     @media screen and (max-width: 400px) {
       width: 70px;
-      height: 30px;
+      height: 20px;
+      margin: 0px auto;
+      i {
+        margin-top: 5px;
+      }
     }
   `,
 

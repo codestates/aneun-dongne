@@ -34,7 +34,7 @@ const LikeLists = ({ postsInfo }) => {
             ) : (
               <>
                 {postsInfo.post_tags.split(",").map((tag, idx) => {
-                  return <KeyWord key={idx}>{tag}</KeyWord>;
+                  return <Styled.KeyWord key={idx}>#{tag}</Styled.KeyWord>;
                 })}
               </>
             )}
@@ -54,10 +54,8 @@ const LikeLists = ({ postsInfo }) => {
               <div>{postsInfo.post_title}</div>
             </div>
             <Styled.LikeBtn>
-              <div>
-                <i className="fas fa-heart"></i>
-                {postsInfo["Likes.likeCount"]}
-              </div>
+              <i className="fas fa-heart"></i>
+              {postsInfo["Likes.likeCount"]}
             </Styled.LikeBtn>
           </div>
         </Styled.PlaceCard>

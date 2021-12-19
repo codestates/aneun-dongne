@@ -8,14 +8,24 @@ export const Styled = {
     border: 1px #3a6fb0 solid;
     border-radius: 10px;
     flex-direction: column;
+
+    @media (max-width: 1023px) {
+      margin: 2% auto;
+    }
+    @media (max-width: 700px) {
+      width: 500px;
+
+      margin: 2% auto;
+    }
     @media (max-width: 600px) {
       width: 400px;
-      margin: 1px auto;
-    }
-    @media (max-width: 1023px) {
-      /* background: blue; */
 
-      margin: 2px auto;
+      margin: 2% auto;
+    }
+    @media (max-width: 400px) {
+      margin: 2% auto;
+
+      width: 300px;
     }
     @media (min-width: 1024px) {
       margin-left: 10px;
@@ -40,18 +50,15 @@ export const Styled = {
   //지역선택 wrapper
   SearchWrapper: styled.div`
     @media (max-width: 1023px) {
-      /* background: blue; */
       margin: 0 auto;
       display: flex;
       flex-direction: column;
 
       width: 550px;
-      /* align-content: space-between; */
     }
     @media (max-width: 700px) {
       width: 300px;
       margin: 5px auto;
-      /* border: 1px red solid; */
     }
     @media (min-width: 1024px) {
       height: 20px;
@@ -83,7 +90,7 @@ export const Styled = {
       width: 200px;
       height: 30px;
       margin: 5px auto;
-      /* background: red; */
+
       border-radius: 5px;
     }
   `,
@@ -95,29 +102,23 @@ export const Styled = {
     height: 100%;
     background-color: white;
     border: none;
-    //중앙선 더 오른쪽으로 옮기고 싶은데 잘안된다..
+
     border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
     @media (max-width: 1023px) {
       width: 500px;
-
-      /* margin: 5px auto; */
 
       border-radius: 5px;
     }
     @media (max-width: 700px) {
       width: 300px;
-
-      /* margin: 5px auto; */
     }
   `,
 
   SearchPlace: styled.input`
     @media (max-width: 1023px) {
-      /* width: 100%;
-      height: 40px;*/
       border: 1px gray solid;
       padding: 10px;
-      /*border-radius: 5px; */
+
       width: 80%;
       height: 30px;
       margin: 5px auto;
@@ -128,6 +129,7 @@ export const Styled = {
       width: 200px;
       margin: 5px auto;
     }
+
     @media (min-width: 1024px) {
       border: 1px gray solid;
       margin-top: 5px;
@@ -155,7 +157,10 @@ export const Styled = {
     padding: 5px;
     cursor: pointer;
     perspective: 230px;
-    /* transition: all 0.5s ease-in-out; */
+    &:hover {
+      background-color: #2f4d6f;
+    }
+
 
     @media (max-width: 1023px) {
      
@@ -171,12 +176,7 @@ export const Styled = {
       width: 200px;
       height: 30px;
       background-color: #3a6fb0;
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
+      
     }
     @media (min-width: 1024px) {
       margin-top: 5px;
@@ -186,17 +186,8 @@ export const Styled = {
       height: 40px;
       
       background-color: #3a6fb0;
-      background-image: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.9) 0,
-        rgba(0, 0, 0, 0) 60%,
-        rgba(0, 0, 0, 0) 100%
-      );
-    }
-
-    
-
       
+    }
     }
   `,
 };

@@ -39,6 +39,7 @@ function HomeRightbar({ setLevel }) {
   };
   const handleSearch = (e) => {
     setPlace(e.target.value);
+    console.log(place);
   };
   const searchPlace = (area, sigg, place) => {
     let areaCode = "";
@@ -53,7 +54,7 @@ function HomeRightbar({ setLevel }) {
       areaCode = getCodes(area).areaCode;
       siggCode = getCodes(area, sigg).siggCode;
     }
-
+    console.log(areaCode, siggCode);
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
@@ -73,18 +74,23 @@ function HomeRightbar({ setLevel }) {
       })
       .then((res) => {
         if (res.data.data.length === 0) return;
-        const list = res.data.data.map((el) => {
-          return [
-            Number(el.post_mapy),
-            Number(el.post_mapx),
-            el.post_title,
-            el.post_firstimage,
-            el.post_addr1,
-            el.post_contentid,
-          ];
-        });
+        console.log(res.data.data);
+        const list = res.data.data
+          .filter((el) => el.post_mapy !== "0.00000000000000000000" && el.post_mapx !== "0.00000000000000000000")
+          .map((el) => {
+            return [
+              Number(el.post_mapy),
+              Number(el.post_mapx),
+              el.post_title,
+              el.post_firstimage,
+              el.post_addr1,
+              el.post_contentid,
+            ];
+          });
+        console.log(list);
         setPlaceList(list);
-      });
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div>

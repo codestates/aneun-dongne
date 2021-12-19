@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { loginState, loginModal, loginAgainModal, token, kToken, warningDeleteUserModal } from "../../recoil/recoil";
+import { loginAgainModal, token, kToken, warningDeleteUserModal } from "../../recoil/recoil";
 import { Styled } from "./style";
 import { message } from "../../modules/message";
 import ProfileUpload from "../../components/UploadImage/ProfileUpload";
@@ -61,7 +61,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
       setIsLoginAgainOpen(true);
       return;
     }
-    let a = null;
+
     let formData = new FormData();
 
     if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
@@ -130,22 +130,6 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   };
   const handleInputCheckPassword = (e) => {
     setInputCheckPassword(e.target.value);
-  };
-
-  //유효성검사
-  const validPassword = (inputCheckPassword, inputNewPassword) => {
-    if (inputCheckPassword !== inputNewPassword) {
-      setErrorMessage({ ...errorMessage, ...{ checkPasswordErr: "비밀번호가 일치하지 않습니다." } });
-      return false;
-    }
-  };
-
-  //빈칸이 있는지 확인
-  const handleEdit = () => {
-    if (imgUrl === "" || inputUsername === "" || inputEmail === "" || inputPassword === "") {
-      alert("빈칸이 있어요!");
-      return;
-    }
   };
 
   //회원탈퇴모달 오픈 (회원탈퇴로직 ModalWarningDeleteUserInfo/WaringDeleteUserInfo.js)

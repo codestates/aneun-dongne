@@ -56,8 +56,10 @@ const MyReviewComment = ({ comment, SetComments }) => {
               {comment_content}
             </div>
             <div className="user-hastag-wrapper">
-              {tagArr.map((tag) => (
-                <span className="user-hastag">#{tag}</span>
+              {tagArr.map((tag, idx) => (
+                <span key={idx} className="user-hastag">
+                  #{tag}
+                </span>
               ))}
             </div>
             <div className="user-content-bottom">
@@ -81,4 +83,4 @@ const MyReviewComment = ({ comment, SetComments }) => {
   );
 };
 
-export default MyReviewComment;
+export default React.memo(MyReviewComment);

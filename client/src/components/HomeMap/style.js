@@ -57,7 +57,7 @@ export const Styled = {
 
     @media (min-width: 1024px) {
       width: 600px;
-      height: 300px;
+      height: 600px;
     }
     @media (max-width: 1023px) {
       width: 600px;
@@ -97,6 +97,16 @@ export const Styled = {
 
       margin-top: 0;
       width: 400px;
+      height: 200px;
+    }
+    @media (max-width: 400px) {
+      /* min-width: 500px; */
+      margin: 5px auto;
+      /* margin-left: 30px; */
+      /* margin-right: 30px; */
+
+      margin-top: 0;
+      width: 300px;
       height: 200px;
     }
   `,

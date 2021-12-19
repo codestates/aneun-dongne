@@ -50,7 +50,7 @@ export const ReviewHeader = styled.div`
   margin-right: 10%;
   margin-top: 10%;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   @media screen and (max-width: 780px) {
     position: center;
     text-align: center;
@@ -141,7 +141,8 @@ const LandingCard = () => {
           <Review>
             <img src="images/kite.png" />
             <ReviewHeader>
-              새로운 동네로의 이사나 출장도 설레어요! ღ'ᴗ'ღ <br />
+              새로운 동네로의 이사나 출장도 설레어요!
+              <br />
               산책하는 재미가 생겼어요!!
             </ReviewHeader>
             <Backview>

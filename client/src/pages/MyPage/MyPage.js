@@ -73,6 +73,7 @@ const MyPage = ({ match }) => {
           if (err.response.status === 401) {
             //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
             setIsLoginAgainOpen(true);
+            // console.log(err.response);
           }
         }
       });

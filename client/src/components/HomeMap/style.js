@@ -7,6 +7,8 @@ export const Styled = {
       z-index: 9;
       position: absolute;
       left: 1px;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.6);
     }
     @media (min-width: 1024px) {
       z-index: -8;
@@ -86,5 +88,8 @@ export const Styled = {
       width: 300px;
       height: 200px;
     }
+  `,
+  MapBox: styled.div`
+    width: auto;
   `,
 };

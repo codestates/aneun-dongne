@@ -101,7 +101,7 @@ export const Styled = {
     font-weight: bolder;
     width: 80px;
     height: 40px;
-    margin: 20px auto;
+    margin: 5px auto;
     cursor: pointer;
     text-justify: center;
     flex-direction: row-reverse;
@@ -109,14 +109,13 @@ export const Styled = {
     transition: all 0.1s ease-in-out;
     i {
       color: red;
-
       justify-content: center;
       margin-left: 25px;
       margin-right: 3px;
       margin-top: 10px;
     }
     &:hover {
-      color: black;
+      color: red;
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
       transform: scale(1.1);
@@ -130,9 +129,22 @@ export const Styled = {
       transform: scale(1.3);
     }
 
+    @media screen and (max-width: 710px) {
+      width: 70px;
+      height: 25px;
+      margin: 0px auto;
+      i {
+        margin-top: 4px;
+      }
+    }
+
     @media screen and (max-width: 400px) {
       width: 70px;
-      height: 30px;
+      height: 20px;
+      margin: 0px auto;
+      i {
+        margin-top: 5px;
+      }
     }
   `,
 

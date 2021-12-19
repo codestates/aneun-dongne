@@ -15,7 +15,7 @@ function HomeRightbar({ setLevel }) {
   const [sigg, setSigg] = useState("null");
   const [place, setPlace] = useState("");
 
-  const [hashtag, setHashtag] = useState("null");
+  const [hashtag, setHashtag] = useState("");
   const setPlaceList = useSetRecoilState(placelist);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -40,8 +40,13 @@ function HomeRightbar({ setLevel }) {
   const handleSearch = (e) => {
     setPlace(e.target.value);
   };
-  const searchPlace = (area, sigg, place) => {
+  const handleTagSearch = (e) => {
+    setHashtag(e.target.value);
+    console.log("handleTagSearch", hashtag);
+  };
+  const searchPlace = (area, sigg, place, hashtag) => {
     console.log(place);
+    console.log("hash", hashtag);
     let areaCode = "";
     let siggCode = "";
     if (area === "null") {
@@ -66,7 +71,7 @@ function HomeRightbar({ setLevel }) {
           radius: 10000,
           clientwtmx: "null",
           clientwtmy: "null",
-          tag: "null", //
+          tag: hashtag,
           searchWord: place,
         },
         withCredentials: true,
@@ -84,6 +89,7 @@ function HomeRightbar({ setLevel }) {
               el.post_firstimage,
               el.post_addr1,
               el.post_contentid,
+              el.post_tags.split(",") || [],
             ];
           });
         console.log(list);
@@ -112,17 +118,28 @@ function HomeRightbar({ setLevel }) {
           {/* <Autocomplete hashtag={hashtag} setHashtag={setHashtag} /> */}
           <Styled.SearchPlace
             type="text"
+            value={hashtag}
+            onChange={(e) => handleTagSearch(e)}
+            placeholder="#해시태그 검색"
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                searchPlace(area, sigg, place, hashtag);
+              }
+            }}
+          ></Styled.SearchPlace>
+          <Styled.SearchPlace
+            type="text"
             value={place}
             onChange={(e) => handleSearch(e)}
             placeholder="관광지 검색"
             onKeyUp={(e) => {
               if (e.key === "Enter") {
-                searchPlace(area, sigg, place);
+                searchPlace(area, sigg, place, hashtag);
               }
             }}
           ></Styled.SearchPlace>
           {/* <div> */}
-          <Styled.SearchBtn onClick={() => searchPlace(area, sigg, place)}>
+          <Styled.SearchBtn onClick={() => searchPlace(area, sigg, place, hashtag)}>
             <i className="fas fa-search"></i>
           </Styled.SearchBtn>
           {/* </div> */}

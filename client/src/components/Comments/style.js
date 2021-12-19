@@ -35,11 +35,11 @@ export const Styled = {
   `,
 
   Date: styled.div`
-  position: absolute;
-  bottom 5%;
-  right 5%;
-  color:gray;
-  font-size: 0.8rem;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    color: gray;
+    font-size: 0.8rem;
   `,
 
   ProfileBox: styled.form`
@@ -136,6 +136,14 @@ export const Styled = {
     //   padding: 2%;
     //   font-size: 0.7rem;
     // }
+  `,
+
+  ContentInput: styled.textarea`
+    width: 100%;
+    height: 80px;
+    @media (max-width: 535px) {
+      height: 50px;
+    }
   `,
 
   ContentWrapper: styled.div`

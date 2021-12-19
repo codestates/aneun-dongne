@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
-import {
-  token,
-  kToken,
-  pickpoint,
-  usersaddress,
-  isClickedNowLocation,
-  placelist,
-  setLo,
-  getWTM,
-} from "../../recoil/recoil";
+import { token, kToken, pickpoint, placelist, getWTM } from "../../recoil/recoil";
 
 import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
@@ -23,14 +14,11 @@ const HomeMap = () => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const history = useHistory();
-  const [add, setAdd] = useRecoilState(usersaddress);
+
   const [placeList, setPlaceList] = useRecoilState(placelist);
 
   const [pending, setPending] = useState(true);
   const [map, setMap] = useState(null);
-  const [place, setPlace] = useState("");
-  const [clickedNowLocationBtn, setClickedNowLocationBtn] = useRecoilState(isClickedNowLocation);
-  const loc = useRecoilValueLoadable(setLo);
 
   const getWtm = useRecoilValueLoadable(getWTM);
 
@@ -49,35 +37,6 @@ const HomeMap = () => {
    * @param keyword 검색어
    */
   const wtm = getWtm.contents;
-
-  const searchPlace = (keyword) => {
-    setPending(true);
-    const places = new kakao.maps.services.Places();
-    //검색
-    places.keywordSearch(keyword, (result, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const firstItem = result[0];
-        const { x, y } = firstItem;
-        let moveLatLng = {};
-
-        if (keyword === "도") {
-          moveLatLng = new kakao.maps.LatLng(37, 128);
-        } else {
-          moveLatLng = new kakao.maps.LatLng(y, x);
-        }
-        map.panTo(moveLatLng);
-      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        // alert("검색 결과가 없습니다.");
-        return;
-      } else {
-        toast.error("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      }
-      //   setPickPoint()
-      setPending(false);
-    });
-  };
 
   useEffect(() => {
     // ! 픽포인트, 반경, 검색어 아예 없을때
@@ -219,23 +178,6 @@ const HomeMap = () => {
       infowindowCenter.open(map, markerCenter);
     });
 
-    // // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
-    // if (clickedNowLocationBtn) {
-    //   await axios
-    //     .get(
-    //       `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84`,
-    //       { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
-    //     )
-    //     .then((res) => res.data.documents[0].address)
-    //     .then((address) => {
-    //       setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-    //     })
-    //     .then(setClickedNowLocationBtn(false))
-
-    //     .catch((err) => console.log("에러", err)); //
-    // }
-    // //!! 맵을 클릭시 주소변경
-
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;
@@ -243,20 +185,6 @@ const HomeMap = () => {
       setPickPoint([latlng.Ma, latlng.La]);
       //?  마커 위치를 클릭한 위치로 옮깁니다
       markerCenter.setPosition(latlng);
-
-      // ?  좌표를 주소로 변환 -> 버튼 클릭시 onClick이벤트를 통해 91번줄로 이동
-
-      // axios
-      //   .get(
-      //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
-      //     { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
-      //   )
-      //   .then((res) => res.data.documents[0].address)
-      //   .then((address) => {
-      //     setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-      //   })
-
-      //   .catch((err) => console.log("에러", err)); //
     });
 
     map.setBounds(bounds);
@@ -273,7 +201,7 @@ const HomeMap = () => {
         // pickPoint={pickPoint}
         // setPickPoint={setPickPoint}
       />
-      {loc.state === "loading" && getWtm.state === "loading" ? (
+      {getWtm.state === "loading" ? (
         <MapLoading />
       ) : (
         <Styled.Map id="map">

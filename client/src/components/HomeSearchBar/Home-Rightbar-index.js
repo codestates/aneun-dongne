@@ -89,7 +89,7 @@ function HomeRightbar({ setLevel }) {
               el.post_firstimage,
               el.post_addr1,
               el.post_contentid,
-              el.post_tags.split(",") || [],
+              el.post_tags ? el.post_tags.split(",") : [],
             ];
           });
         console.log(list);

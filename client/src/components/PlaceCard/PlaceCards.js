@@ -32,41 +32,37 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
       console.log(e);
     }
   };
-  const getLike = async () => {
-    try {
-      setLikeLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
+
+  useEffect(() => {
+    setLikeLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
         headers: {
           Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
+      })
+      .then((response) => {
+        setLike(response.data.data.likeCount);
+        setLikeOrNot(response.data.data.isLiked);
+        setLikeLoading(false);
+      })
+      .then((res) => {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken || kakaoToken}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          })
+          .then((response) => {
+            if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
+          });
       });
-      const like = { likeOrNot: response.data.data.isLiked, likeCount: response.data.data.likeCount };
-      setLike(like.likeCount);
-      setLikeOrNot(like.likeOrNot);
-      setLikeLoading(false);
-    } catch (e) {
-      console.log(e);
-      setLikeLoading(false);
-    }
-  };
-  useEffect(() => {
-    let abortController = new AbortController();
-    // let mounted = true;
-    // if (mounted) {
 
-    setLikeLoading(true);
-    getHashTag();
-    getLike();
     setLikeLoading(false);
-    // }
-    // return () => {
-    //   mounted = false;
-    // };
-    return () => {
-      abortController.abort();
-    };
   }, [placeList, like, likeOrNot]);
   const LikeHandler = async (e) => {
     e.preventDefault();

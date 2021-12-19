@@ -39,6 +39,7 @@ function HomeRightbar({ setLevel }) {
   };
   const handleSearch = (e) => {
     setPlace(e.target.value);
+    console.log(place);
   };
   const searchPlace = (area, sigg, place) => {
     let areaCode = "";

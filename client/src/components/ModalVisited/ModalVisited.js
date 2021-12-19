@@ -12,13 +12,14 @@ import {
 } from "../../recoil/recoil";
 import { Styled } from "./style";
 import VisitedUpload from "../VisitedUpload/VisitedUpload";
+import { toast } from "react-toastify";
 
-function ModalVisited({ id, idx, visitedImg }) {
+function ModalVisited({ id, kmemo, visitedImg }) {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [isVisitedPlaceOpen, setIsVisitedPlaceOpen] = useRecoilState(visitedModal);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
-  const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
+  const [memo, setMemo] = useState(kmemo); //마찬가지 전역으로 바꿀수도
   const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   const [placeImage, setPlaceImage] = useState(visitedImg);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -60,7 +61,9 @@ function ModalVisited({ id, idx, visitedImg }) {
         setClickedBtn(true);
         setIsUploaded(false);
         if (!isUploaded && clickedBtn) {
-          setErrorMessage({ ...errorMessage, ...{ image: "이미지업로드 실패" } });
+          toast.error("이미지 업로드 실패", {
+            position: toast.POSITION.TOP_CENTER,
+          });
         }
       });
   }
@@ -98,7 +101,6 @@ function ModalVisited({ id, idx, visitedImg }) {
         <form id="form-id" onSubmit={updateInfoRequest}>
           <div className="form-title">이미지 수정</div>
           <VisitedUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
-          <div className="alert-box">{errorMessage.image}</div>
 
           <div className="form-memo">
             <h3>메모</h3>
@@ -111,7 +113,6 @@ function ModalVisited({ id, idx, visitedImg }) {
               }}
             />
           </div>
-          <div className="alert-box">{errorMessage.memo}</div>
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <div className="button-wraaper">
             <button type="submit" value="update" className="edit-position-button" onClick={updateInfo}>

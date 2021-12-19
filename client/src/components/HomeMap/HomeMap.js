@@ -276,11 +276,9 @@ const HomeMap = () => {
       {loc.state === "loading" && getWtm.state === "loading" ? (
         <MapLoading />
       ) : (
-        <>
-          <Styled.Map id="map">
-            <div className="map-experiment">&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다."}</div>
-          </Styled.Map>
-        </>
+        <Styled.Map id="map">
+          <div className="map-experiment">&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다."}</div>
+        </Styled.Map>
       )}
     </Styled.Div>
   );

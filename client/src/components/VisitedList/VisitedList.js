@@ -39,6 +39,7 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
                 <ModalVisited
                   id={selectedModal && selectedModal.id}
                   visitedImg={selectedModal && selectedModal.visited_thumbnail_path}
+                  kmemo={selectedModal && selectedModal.visited_memo}
                 />
               </Styled.ModalView>
             </Styled.ModalBackdrop>

@@ -14,6 +14,7 @@ import {
 import { Styled } from "./style";
 import { message } from "../../modules/message";
 import ImageUpload from "../ImageUpload/ImageUpload";
+import { toast } from "react-toastify";
 
 const ModalSavePosition = () => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
@@ -42,12 +43,10 @@ const ModalSavePosition = () => {
       setIsLoginOpen(true);
       return;
     }
-    if (placeImage === null) {
-      setErrorMessage(message.inputPhotoPlease);
-      return null;
-    }
     if (memo === "") {
-      setErrorMessage(message.inputMemoPlease);
+      toast.error("메모를 입력해주세요", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return null;
     }
     let formData = new FormData();
@@ -74,13 +73,19 @@ const ModalSavePosition = () => {
         setIsUploaded(true);
         setIsSaveOrNotModal(true);
         setIsSavePositionOpen(false);
-        setErrorMessage({});
+        toast.info("업로드 중입니다", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        setIsSavePositionOpen(false);
       })
       .catch((err) => {
         setClickedBtn(true);
         setIsUploaded(false);
         if (!isUploaded && clickedBtn) {
-          setErrorMessage(message.failRegisterToImage);
+          toast.error("이미지 업로드 실패", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          setIsSavePositionOpen(false);
         }
       });
   }
@@ -92,12 +97,11 @@ const ModalSavePosition = () => {
     <>
       <Styled.FormContainer>
         <Styled.CloseBtn onClick={() => setIsSavePositionOpen(false)}>
-          <i class="fas fa-times"></i>
+          <i className="fas fa-times"></i>
         </Styled.CloseBtn>
         <form className="form-id" onSubmit={updateInfoRequest}>
           <div className="form-title">이미지 추가</div>
           <ImageUpload placeImage={placeImage} setPlaceImage={setPlaceImage} />
-          {placeImage !== null ? null : <div className="alert-box">{errorMessage}</div>}
 
           <div className="form-memo">
             <h3>메모</h3>
@@ -110,7 +114,6 @@ const ModalSavePosition = () => {
               }}
             />
           </div>
-          {memo !== "" ? null : <div className="alert-box">{errorMessage}</div>}
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
           <button type="submit" className="save-position-button">
             저장

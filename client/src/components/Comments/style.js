@@ -183,7 +183,11 @@ export const Styled = {
       padding-top: 250%;
     }
   `,
+  ContentInput: styled.textarea`
+    width: 100%;
 
+    height: 80px;
+  `,
   BtnOne: styled.div`
     position: absolute;
     top: 0;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 import Icon from "react-icons-kit";

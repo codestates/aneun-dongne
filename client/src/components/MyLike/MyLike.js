@@ -44,6 +44,7 @@ const MyLike = () => {
 
   useEffect(() => {
     renderMyLike();
+    return () => null;
   }, []);
 
   return (

@@ -7,20 +7,20 @@ import { token, kToken } from "../../recoil/recoil";
 import MyReviewComment from "../MyReviewComment/MyReviewComment";
 import LikeLoading from "../Loading/LikeLoading";
 import Empty from "../Empty/Empty";
-
-import { v4 as uuidv4 } from "uuid";
+import Cookies from "universal-cookie";
 
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [comments, SetComments] = useState([]);
   const [isLoing, SetIsloading] = useState(true);
+  const cookies = new Cookies();
 
   const renderMyComments = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/mypage/commentlists`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

@@ -5,7 +5,10 @@ import axios from "axios";
 import { token, kToken, loginState, loginModal, pickpoint, placelist } from "../../recoil/recoil";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-function PlaceCards({ title, img, addr1, onClick, contentId }) {
+import HashTagTemplate from "../HashTagTemplate/HashTagTemplate";
+//<HashTagTemplate keywordDummy={tags || []} />
+
+function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
   const placeList = useRecoilValue(placelist);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -119,6 +122,15 @@ function PlaceCards({ title, img, addr1, onClick, contentId }) {
   return (
     <Styled.PlaceCard onClick={onClick}>
       <div className="place-cards">
+        {!tags[0] ? (
+          <Styled.Tags>&nbsp;</Styled.Tags>
+        ) : (
+          <Styled.Tags>
+            {tags.map((el) => {
+              return <Styled.Tag>{"#" + el}</Styled.Tag>;
+            })}
+          </Styled.Tags>
+        )}
         {img ? <img src={img} /> : <img src="./images/not-image-yet.png" />}
         <div className="place-cards-title">
           <div>{`[${addr1}] `}</div>

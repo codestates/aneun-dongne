@@ -83,4 +83,26 @@ export const Styled = {
       color: red;
     }
   `,
+
+  Tags: styled.div`
+    display: flex;
+    // flex: 1;
+    max-width: 400px;
+    font-size: 1rem;
+    color: #3a6fb0;
+    margin-left: 40px;
+    margin-top: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  `,
+
+  Tag: styled.div`
+    // display: flex;
+    // flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+    overflow: hidden;
+  `,
 };

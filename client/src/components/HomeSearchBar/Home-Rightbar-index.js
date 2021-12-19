@@ -84,6 +84,7 @@ function HomeRightbar({ setLevel }) {
               el.post_firstimage,
               el.post_addr1,
               el.post_contentid,
+              el.post_tags.split(",") || [],
             ];
           });
         console.log(list);
@@ -109,7 +110,7 @@ function HomeRightbar({ setLevel }) {
               })}
             </Styled.SearchLocation>
           </Styled.SearchBar>
-          <Autocomplete hashtag={hashtag} setHashtag={setHashtag} />
+          {/* <Autocomplete hashtag={hashtag} setHashtag={setHashtag} /> */}
           <Styled.SearchPlace
             type="text"
             value={place}

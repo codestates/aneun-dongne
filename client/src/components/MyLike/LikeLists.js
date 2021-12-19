@@ -34,7 +34,7 @@ const LikeLists = ({ postsInfo }) => {
             ) : (
               <>
                 {postsInfo.post_tags.split(",").map((tag, idx) => {
-                  return <KeyWord key={idx}>{tag}</KeyWord>;
+                  return <Styled.KeyWord key={idx}>#{tag}</Styled.KeyWord>;
                 })}
               </>
             )}

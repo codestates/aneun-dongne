@@ -169,9 +169,6 @@ export const getWTM = selector({
         headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
       }
     );
-    await setTimeout(() => {
-      const hi = "hi";
-    }, 1000);
     const data = await { x: result.data.documents[0].x, y: result.data.documents[0].y };
     // .then((res) => {
     //   return { x: res.data.documents[0].x, y: res.data.documents[0].y };

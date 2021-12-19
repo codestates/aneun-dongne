@@ -1,11 +1,6 @@
 import styled from "styled-components";
 export const Styled = {
   ImageUploadBox: styled.div`
-    /* width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px; */
     width: 100%;
     height: 100%;
     text-align: center;

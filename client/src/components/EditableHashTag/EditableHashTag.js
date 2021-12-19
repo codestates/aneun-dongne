@@ -13,7 +13,6 @@ export const TagsInput = styled.div`
   border-radius: 6px;
   > #tags {
     display: flex;
-    /* display: inline-block; */
     flex-wrap: wrap;
     margin: 8px 0 0 0;
   }
@@ -48,10 +47,8 @@ export const TagsInput = styled.div`
     line-height: 16px;
     text-align: center;
     font-size: 14px;
-    /* color: #4000c7; */
     color: #162b71;
     border-radius: 50%;
-    /* background: #fff; */
     cursor: pointer;
   }
 
@@ -63,7 +60,6 @@ export const TagsInput = styled.div`
     padding-top: 5px;
     width: 100%;
     font-size: 14px;
-    /* padding: 4px 0 0 0; */
     :focus {
       outline: transparent;
     }
@@ -85,7 +81,6 @@ const EditableHashTag = ({ setTags, tags }) => {
       let newTagsObj = new Set([...tags, event.target.value.replace(" ", "").replace(",", "").replace("#", "")]);
       setTags([...newTagsObj]);
       event.target.value = "";
-      console.log("tags", tags);
       if (event.target.value === " ") {
         return;
       }

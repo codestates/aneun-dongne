@@ -5,8 +5,9 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
 import axios from "axios";
 import CommentLoading from "../Loading/CommentLoading";
-import { Styled } from "./style";
 import styled from "styled-components";
+
+import { toast } from "react-toastify";
 
 const CommentWrapper = styled.div`
   width: 100%;
@@ -42,55 +43,15 @@ const ProfileBox = styled.form`
   margin-right: auto;
   margin-top: auto;
   margin-bottom: auto;
-  // width: 480px;
-  /* height: 140px; */
-  // @media (max-width: 768px) {
-  //   width: 400px;
-  // }
-  // @media (max-width: 415px) {
-  //   width: 300px;
-  // }
-  // @media (max-width: 380px) {
-  //   width: 360px;
-  // }
-  // @media (max-width: 325px) {
-  //   width: 320px;
-  // }
 `;
 
 const Profile = styled.div`
   position: relative;
-  // top: 0;
-  /* background-color: red; */
   display: flex;
-  // grid-template-rows: 3fr 1fr;
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;
   margin-bottom: auto;
-
-  // height: 40%;
-  // margin: 40px;
-  // @media (max-width: 768px) {
-  //   width: 80px;
-  //   height: 140px;
-  //   margin: 30px;
-  // }
-  // @media (max-width: 414px) {
-  //   width: 80px;
-  //   height: 140px;
-  //   margin: 25px;
-  // }
-  // @media (max-width: 375px) {
-  //   width: 40px;
-  //   height: 80px;
-  //   margin: 10px;
-  // }
-  // @media (max-width: 320px) {
-  //   width: 30px;
-  //   height: 60px;
-  //   margin: 10px;
-  // }
 `;
 
 const ProfileImgBox = styled.div`
@@ -112,39 +73,11 @@ const ProfileImg = styled.img`
   height: 100%;
   position: absolute;
   top: 30;
-  /* background-color: white; */
-  // @media (max-width: 768px) {
-  //   width: 80px;
-  //   height: 80px;
-  // }
-  // @media (max-width: 375px) {
-  //   width: 40px;
-  //   height: 40px;
-  // }
-  // @media (max-width: 320px) {
-  //   width: 30px;
-  //   height: 30px;
-  // }
 `;
 
 const NickName = styled.div`
-  /* background-color: yellowgreen; */
   position: relative;
-  // bottom: 5px;
   text-align: center;
-  // width: 80px;
-  // @media (max-width: 768px) {
-  //   width: 80px;
-  // }
-  // @media (max-width: 415px) {
-  //   width: 80px;
-  // }
-  // @media (max-width: 380px) {
-  //   width: 40px;
-  // }
-  // @media (max-width: 325px) {
-  //   width: 30px;
-  // }
 `;
 
 const ContentBox = styled.form`
@@ -157,18 +90,6 @@ const ContentBox = styled.form`
   grid-template-rows: auto auto;
   width: auto;
   height: auto;
-  // @media (max-width: 768px) {
-  //   width: 400px;
-  // }
-  // @media (max-width: 415px) {
-  //   width: 300px;
-  // }
-  // @media (max-width: 380px) {
-  //   width: 360px;
-  // }
-  // @media (max-width: 325px) {
-  //   width: 320px;
-  // }
 `;
 
 const Content = styled.textarea`
@@ -179,35 +100,6 @@ const Content = styled.textarea`
   width: 100%;
   height: auto;
   padding: 10px;
-  // @media (max-width: 768px) {
-  //   width: 300px;
-  // }
-  // @media (max-width: 415px) {
-  //   width: 300px;
-  // }
-  // @media (max-width: 380px) {
-  //   width: 280px;
-  // }
-  // @media (max-width: 325px) {
-  //   width: 200px;
-  // }
-`;
-
-const ContentWrapper = styled.div`
-  /* display: flex; */
-  /* position: absolute; */
-  /* background-color: pink; */
-  // width: 370px;
-  /* height: 60px; */
-  // top: 75px;
-  // margin-top: 75px;
-  // left: 10px;
-  // /* padding-left: 10px; */
-  // padding-right: 10px;
-
-  // white-space: nowrap;
-  // border: none;
-  // border: 1px gray solid;
 `;
 
 const HashTagWrapper = styled.div`
@@ -230,6 +122,7 @@ const BtnBox = styled.div`
 const BtnWrapper = styled.div`
   position: relative;
   height: 0;
+  top: 0;
   width: 100%;
   padding-top: 40%;
   margin-left: auto;
@@ -295,7 +188,9 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       return;
     }
     if (something === "") {
-      alert("내용을 입력해주세요");
+      toast.error("댓글을 입력해주세요", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return;
     }
     try {
@@ -372,4 +267,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
     </>
   );
 }
-export default React.memo(MyComment);
+
+export default React.memo(MyComment, (prev, next) => {
+  return prev.userinfo.nickname === next.userinfo.nickname;
+});

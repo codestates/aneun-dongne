@@ -55,7 +55,6 @@ const App = () => {
         <Route exact path="/detailpage/:id" component={DetailPage} />
         <Route path="/user/kakao/callback" component={KakaoRedirectHandler} />
       </Switch>
-      {/* <Redirect from="*" to="/" /> */}
     </>
   );
 };

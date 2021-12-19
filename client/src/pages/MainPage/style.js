@@ -35,7 +35,6 @@ export const Styled = {
       margin-top: 10%;
       position: absolute;
       font-size: 3rem;
-      font-family: fantasy;
       color: white;
 
       @media screen and (max-width: 780px) {
@@ -159,7 +158,6 @@ export const Styled = {
 
     @media screen and (max-width: 780px) {
       flex-direction: column;
-
       width: 100%;
       height: 50%;
     }
@@ -182,7 +180,6 @@ export const Styled = {
 
     @media screen and (max-width: 780px) {
       flex-direction: column;
-
       width: 100%;
       height: 50%;
     }

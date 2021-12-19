@@ -4,8 +4,6 @@ export const Styled = {
   Comment: styled.div`
     position: relative;
     display: flex;
-    /* border: 1px red solid; */
-    /* height: 200px; */
     border-radius: 20px;
     margin-top: 10px;
     margin-bottom: 40px;
@@ -22,14 +20,12 @@ export const Styled = {
       width: 100%;
     }
     @media (max-width: 768px) {
-      /* width: 80%; */
       background: red;
       margin-left: 10px;
     }
   `,
   Profile: styled.div`
     position: relative;
-    /* background-color: red; */
     display: flex;
     width: 80px;
     height: 140px;
@@ -40,11 +36,9 @@ export const Styled = {
     width: 80px;
     height: 80px;
     position: absolute;
-    /* background-color: white; */
   `,
 
   NickName: styled.span`
-    /* background-color: yellowgreen; */
     position: absolute;
     bottom: 5px;
     text-align: center;
@@ -52,11 +46,9 @@ export const Styled = {
   `,
 
   ContentBox: styled.div`
-    /* background-color: yellow; */
     margin-top: 30px;
     position: relative;
     width: 480px;
-    /* height: 140px; */
     > button {
       position: absolute;
       right: -10px;
@@ -84,25 +76,20 @@ export const Styled = {
     }
     @media (max-width: 768px) {
       width: 80%;
-      /* background: blue; */
-      /* margin-left: 10px; */
     }
   `,
-  //!-- 내가 바꾼거 댓글 높이
   Content: styled.div`
     display: flex;
     padding: 10px;
     flex-wrap: wrap;
     line-height: 1em;
     word-break: break-all;
-
     top: 0;
     left: 10px;
     width: 370px;
     min-height: 140px;
     padding-left: 10px;
     padding-right: 10px;
-
     background-color: skyblue;
   `,
 
@@ -110,12 +97,8 @@ export const Styled = {
     display: flex;
     padding: 10px;
     width: 480px;
-    /* border: 1px gray solid; */
-    /* flex-wrap: wrap; */
-    /* background-color: burlywood; */
     > #comment-read {
       word-wrap: break-word;
-      /* background-color: green; */
       > span {
       }
     }
@@ -127,8 +110,6 @@ export const Styled = {
     }
     > input,
     div {
-      /* background-color: whitesmoke; */
-
       width: 370px;
       padding-left: 10px;
       padding-right: 10px;
@@ -154,7 +135,6 @@ export const Styled = {
     }
     .change-comment,
     .complete-change {
-      /* z-index : 3 내가한거 */
       z-index: 3;
       border: none;
 
@@ -210,15 +190,7 @@ export const Styled = {
   `,
 
   HashTagWrapper: styled.div`
-    /* margin-top: 100px; */
-    /* position: absolute; */
-    /* background-color: red; */
     width: 370px;
-
-    /* bottom: 0; */
-    /* top: 75px; */
-    /* margin-top: 75px; */
-
     padding-right: 10px;
     white-space: nowrap;
     border: none;

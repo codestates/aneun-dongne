@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
 import MapLoading from "../Loading/MapLoading";
+import { toast } from "react-toastify";
 
 const HomeMap = () => {
   const kakao = window.kakao;
@@ -47,8 +48,8 @@ const HomeMap = () => {
    *! 장소 검색시 실행되는 함수 serachPlace
    * @param keyword 검색어
    */
-
   const wtm = getWtm.contents;
+
   const searchPlace = (keyword) => {
     setPending(true);
     const places = new kakao.maps.services.Places();
@@ -69,7 +70,9 @@ const HomeMap = () => {
         // alert("검색 결과가 없습니다.");
         return;
       } else {
-        alert("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        toast.error("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
       //   setPickPoint()
       setPending(false);
@@ -77,9 +80,8 @@ const HomeMap = () => {
   };
 
   useEffect(() => {
-    //! 픽포인트, 반경, 검색어 아예 없을때
-    //   //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
-
+    // ! 픽포인트, 반경, 검색어 아예 없을때
+    //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
@@ -126,7 +128,6 @@ const HomeMap = () => {
     if (container === null) {
       return;
     }
-    // console.log(container);
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     //마커가 표시될 위치입니다.
     let markerCenter = new kakao.maps.Marker({
@@ -137,6 +138,7 @@ const HomeMap = () => {
     let bounds = new kakao.maps.LatLngBounds();
 
     let positions = [];
+
     for (let i = 0; i < placeList.length; i++) {
       positions.push({
         addr: placeList[i][4],
@@ -191,28 +193,6 @@ const HomeMap = () => {
         infowindow.close();
       });
       //관광지 마커 클릭하면 정보나오기
-      let onClickContent = `<div class="wrap">
-                 <div class="info">
-                     <div class="title">
-                     ${positions[i].content}
-
-                     </div>
-                     <div class="body">
-                         <div class="img">
-                             <img src=${positions[i].img || `/images/not-image-yet.png`} width="73" height="70">
-                        </div>
-                         <div class="desc">
-                             <div class="ellipsis">${positions[i].addr}</div>
-                         </div>
-                     </div>
-                 </div>
-            </div>`,
-        iwRemoveable = true;
-      let infowindowOnClick = new kakao.maps.InfoWindow({
-        position: iwPosition,
-        content: onClickContent,
-        removable: iwRemoveable,
-      });
 
       kakao.maps.event.addListener(marker, "click", function () {
         // infowindowOnClick.open(map, marker);
@@ -239,25 +219,24 @@ const HomeMap = () => {
       infowindowCenter.open(map, markerCenter);
     });
 
-    // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
-    if (clickedNowLocationBtn) {
-      await axios
-        .get(
-          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84`,
-          { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
-        )
-        .then((res) => res.data.documents[0].address)
-        .then((address) => {
-          setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-        })
-        .then(setClickedNowLocationBtn(false))
+    // // //!내위치 클릭시 작동. 주소값을 얻어서 도/시군구 select에 입력시킨다.
+    // if (clickedNowLocationBtn) {
+    //   await axios
+    //     .get(
+    //       `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${pickPoint[1]}&y=${pickPoint[0]}&input_coord=WGS84`,
+    //       { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
+    //     )
+    //     .then((res) => res.data.documents[0].address)
+    //     .then((address) => {
+    //       setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
+    //     })
+    //     .then(setClickedNowLocationBtn(false))
 
-        .catch((err) => console.log(err)); //
-    }
-    //!! 맵을 클릭시 주소변경
+    //     .catch((err) => console.log("에러", err)); //
+    // }
+    // //!! 맵을 클릭시 주소변경
+
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-      //* 내위치마커에 infowindow 생성
-
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;
 
@@ -267,32 +246,32 @@ const HomeMap = () => {
 
       // ?  좌표를 주소로 변환 -> 버튼 클릭시 onClick이벤트를 통해 91번줄로 이동
 
-      axios
-        .get(
-          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
-          { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
-        )
-        .then((res) => res.data.documents[0].address)
-        .then((address) => {
-          setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
-        })
+      // axios
+      //   .get(
+      //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.getLng()}&y=${latlng.getLat()}&input_coord=WGS84`,
+      //     { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
+      //   )
+      //   .then((res) => res.data.documents[0].address)
+      //   .then((address) => {
+      //     setAdd({ area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name });
+      //   })
 
-        .catch((err) => console.log(err)); //
+      //   .catch((err) => console.log("에러", err)); //
     });
 
     map.setBounds(bounds);
     setMap(map);
     setPending(false);
-  }, [placeList, level]);
+  }, [placeList]);
 
   return (
     <Styled.Div>
       <HomeRightbar
         setLevel={setLevel}
-        searchCurrentPlace={searchPlace}
-        place={place}
-        pickPoint={pickPoint}
-        setPickPoint={setPickPoint}
+        // searchCurrentPlace={searchPlace}
+        // place={place}
+        // pickPoint={pickPoint}
+        // setPickPoint={setPickPoint}
       />
       {loc.state === "loading" && getWtm.state === "loading" ? (
         <MapLoading />

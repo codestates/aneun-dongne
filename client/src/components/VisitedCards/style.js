@@ -1,10 +1,9 @@
 import styled from "styled-components";
-
 export const Styled = {
   PlaceCard: styled.div`
     margin: auto;
     margin-top: 40px;
-    border: 1px rgb(107, 217, 224) solid;
+    border: 1px #3a6fb0 solid;
     display: flex;
     flex-direction: row;
     border-radius: 20px;
@@ -14,6 +13,13 @@ export const Styled = {
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
     transition: box-shadow 0.1s, transform 0.1s;
     text-decoration: inherit;
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
 
     .place-cards {
       display: flex;
@@ -26,12 +32,11 @@ export const Styled = {
     }
     .place-cards > img {
       width: 90%;
-      height: 100px;
+      height: 130px;
       margin-left: auto;
       margin-right: auto;
       margin-top: 20px;
       margin-bottom: 10px;
-
       border-radius: 20px;
     }
     .place-cards-title {
@@ -45,8 +50,31 @@ export const Styled = {
         white-space: nowrap;
       }
     }
-    @media (max-width: 1000px) {
+
+    @media screen and (max-width: 600px) {
+      width: 180px;
+      height: 100px;
       margin: 0px;
+
+      .place-cards > img {
+        width: 160px;
+      }
+    }
+
+    @media screen and (max-width: 438px) {
+      width: 150px;
+
+      .place-cards > img {
+        width: 130px;
+      }
+    }
+
+    @media screen and (max-width: 370px) {
+      width: 140px;
+
+      .place-cards > img {
+        width: 120px;
+      }
     }
   `,
   ModalContainer: styled.div`
@@ -73,42 +101,5 @@ export const Styled = {
     z-index: 2;
     border: 1px solid white;
     border-radius: 20px;
-
-    @media screen and (max-height: 900px) {
-      width: 350px;
-      height: 450px;
-    }
-
-    @media screen and (max-width: 500px) {
-      width: 350px;
-      height: 450px;
-    }
-  `,
-
-  Body: styled.div`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 40px;
-    text-decoration-line: none;
-    margin-left: 30px;
-    > .visited-cards-list {
-      margin: 15px;
-    }
-
-    @media (max-width: 1000px) {
-      margin: 0px;
-      grid-column-gap: 0px;
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (min-width: 1025px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (min-width: 1360px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    @media (min-width: 1730px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
   `,
 };

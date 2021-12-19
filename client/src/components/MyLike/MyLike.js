@@ -9,6 +9,8 @@ import styled from "styled-components";
 import LikeLoading from "../Loading/LikeLoading";
 import Empty from "../Empty/Empty.js";
 
+import Cookies from "universal-cookie";
+
 const List = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -23,12 +25,13 @@ const MyLike = () => {
   const [postsInfo, setPostsInfo] = useState([]);
   const [isLoing, setIsloading] = useState(true);
   const kakaoToken = useRecoilValue(kToken);
+  const cookies = new Cookies();
 
   const renderMyLike = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/mypage/likelists`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: "true",

@@ -12,10 +12,7 @@ import {
   saveOrNotModal,
 } from "../../recoil/recoil";
 import { Styled } from "./style";
-import { message } from "../../modules/message";
 import ImageUpload from "../ImageUpload/ImageUpload";
-import { toast } from "react-toastify";
-
 import { toast } from "react-toastify";
 
 const ModalSavePosition = () => {
@@ -116,15 +113,7 @@ const ModalSavePosition = () => {
             />
           </div>
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
-          <button
-            type="submit"
-            className="save-position-button"
-            onClick={() => {
-              toast.info("업로드 중입니다", {
-                position: toast.POSITION.TOP_CENTER,
-              });
-            }}
-          >
+          <button type="submit" className="save-position-button">
             저장
           </button>
         </form>

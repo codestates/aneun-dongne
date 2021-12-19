@@ -9,12 +9,14 @@ import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 
 import { Styled } from "./style";
 import { getAreaNames } from "../../modules/AreaCodetoName";
+import Cookies from "universal-cookie";
 
 const MyReviewComment = ({ comment, SetComments }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
 
   const history = useHistory();
+  const cookies = new Cookies();
 
   const sigungu = getAreaNames(comment.post.areacode, comment.post.sigungucode);
   const { user_image_path, nickname } = comment.user;
@@ -31,7 +33,7 @@ const MyReviewComment = ({ comment, SetComments }) => {
     await axios
       .delete(`${process.env.REACT_APP_API_URL}/comment/${comment_post_contentid}`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

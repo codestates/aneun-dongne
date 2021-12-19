@@ -131,8 +131,12 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
           <Styled.Tags>&nbsp;</Styled.Tags>
         ) : (
           <Styled.Tags>
-            {tags.map((el) => {
-              return <Styled.Tag>{"#" + el}</Styled.Tag>;
+            {tags.map((el, idx) => {
+              return (
+                <div key={idx}>
+                  <Styled.Tag>{"#" + el}</Styled.Tag>
+                </div>
+              );
             })}
           </Styled.Tags>
         )}

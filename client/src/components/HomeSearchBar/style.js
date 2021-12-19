@@ -60,6 +60,11 @@ export const Styled = {
       width: 300px;
       margin: 5px auto;
     }
+    @media (max-width: 700px) {
+      width: 300px;
+      margin: 5px auto;
+      /* border: 1px red solid; */
+    }
     @media (min-width: 1024px) {
       height: 20px;
       width: 550px;
@@ -90,7 +95,6 @@ export const Styled = {
       width: 200px;
       height: 30px;
       margin: 5px auto;
-
       border-radius: 5px;
     }
   `,
@@ -102,11 +106,9 @@ export const Styled = {
     height: 100%;
     background-color: white;
     border: none;
-
     border-right: ${(props) => (props.first ? "1px gray solid" : "none")};
     @media (max-width: 1023px) {
       width: 500px;
-
       border-radius: 5px;
     }
     @media (max-width: 700px) {
@@ -118,18 +120,15 @@ export const Styled = {
     @media (max-width: 1023px) {
       border: 1px gray solid;
       padding: 10px;
-
       width: 80%;
       height: 30px;
       margin: 5px auto;
-
       border-radius: 5px;
     }
     @media (max-width: 600px) {
       width: 200px;
       margin: 5px auto;
     }
-
     @media (min-width: 1024px) {
       border: 1px gray solid;
       margin-top: 5px;
@@ -157,15 +156,13 @@ export const Styled = {
     padding: 5px;
     cursor: pointer;
     perspective: 230px;
+    color: white;
     &:hover {
       background-color: #2f4d6f;
     }
 
-
     @media (max-width: 1023px) {
-     
       border-radius: 5px;
-
       width: 80%;
       height: 30px;
       margin: 5px auto;
@@ -176,7 +173,6 @@ export const Styled = {
       width: 200px;
       height: 30px;
       background-color: #3a6fb0;
-      
     }
     @media (min-width: 1024px) {
       margin-top: 5px;
@@ -184,10 +180,7 @@ export const Styled = {
       margin-left: 5px;
       width: 80px;
       height: 40px;
-      
       background-color: #3a6fb0;
-      
-    }
     }
   `,
 };

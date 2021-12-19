@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
 import Loading from "../../components/Loading/Loading";
 
+import { toast } from "react-toastify";
+
 function Home() {
   const [nowLocation, setNowLocation] = useRecoilState(nowlocation);
   const [isLoading, setIsLoading] = useRecoilState(loading);
@@ -37,7 +39,11 @@ function Home() {
           .catch((err) => console.log(err));
         setIsLoading(false);
       },
-      (err) => alert("위치권한을 허용해주세요")
+      (err) => {
+        toast.error("위치권한을 허용해주세요", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
     );
   };
   useEffect(() => {

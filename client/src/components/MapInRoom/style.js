@@ -4,7 +4,9 @@ export const Styled = {
   Div: styled.div`
     position: relative;
     width: 100%;
-    height: auto:
+
+    height: 100%:
+
     margin-top: 3%;
     margin-bottom: 50px;
     margin-left: auto;
@@ -13,7 +15,8 @@ export const Styled = {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 1px rgb(192, 251, 255) solid;
+    border: 1px;
+    border-color: #3a6fb0;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
 
     text-decoration: inherit;
@@ -23,19 +26,6 @@ export const Styled = {
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
-    // @media (max-width: 768px) {
-    //   width: 80%;
-    //   /* height: 406px; */
-    //   margin-left: 40px;
-    //   margin-right: auto;
-    //   /* margin-left: 10px; */
-    // }
-    // @media (max-width: 612px) {
-    //   width: 450px;
-    //   margin-left: 20px;
-    //   margin-right: auto;
-    //   /* margin-left: 10px; */
-    // }
   `,
   Map: styled.div`
     width: 600px;
@@ -43,13 +33,29 @@ export const Styled = {
     border-radius: 10px;
     margin: auto;
     margin-bottom: 1rem;
-    @media (max-width: 768px) {
-      width: 80%;
-      height: 300px;
-      margin: auto;
+    @media (max-width: 740px) {
+      width: 510px;
+      height: 340px;
     }
-    @media (max-width: 612px) {
-      margin: auto;
+    @media (max-width: 672px) {
+      width: 480px;
+      height: 320px;
+    }
+    @media (max-width: 620px) {
+      width: 420px;
+      height: 280px;
+    }
+    @media (max-width: 560px) {
+      width: 360px;
+      height: 240px;
+    }
+    @media (max-width: 460px) {
+      width: 270px;
+      height: 180px;
+    }
+    @media (max-width: 360px) {
+      width: 210px;
+      height: 140px;
     }
   `,
   Address: styled.div`
@@ -74,6 +80,21 @@ export const Styled = {
       &:hover {
         opacity: 1;
       }
+    }
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+    @media (max-width: 640px) {
+      font-size: 1rem;
+    }
+    @media (max-width: 535px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 470px) {
+      font-size: 0.8rem;
+    }
+    @media (max-width: 360px) {
+      font-size: 0.8rem;
     }
   `,
 };

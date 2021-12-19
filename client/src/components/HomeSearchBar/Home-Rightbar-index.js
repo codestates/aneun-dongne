@@ -54,7 +54,6 @@ function HomeRightbar({ setLevel }) {
       areaCode = getCodes(area).areaCode;
       siggCode = getCodes(area, sigg).siggCode;
     }
-    console.log(areaCode, siggCode);
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {

@@ -76,7 +76,7 @@ export const Styled = {
       flex-direction: column;
       .menu-bar {
         align-items: flex-start;
-        margin-top: 250px;
+        margin-top: 260px;
         height: 80px;
         width: 100%;
       }

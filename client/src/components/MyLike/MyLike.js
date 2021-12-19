@@ -9,30 +9,20 @@ import styled from "styled-components";
 import LikeLoading from "../Loading/LikeLoading";
 import Empty from "../Empty/Empty.js";
 
-const Body = styled.div`
-  .list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
+const List = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
-  @media screen and (max-width: 1600px) {
-    .list {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
 const MyLike = () => {
   const accessToken = useRecoilValue(token);
-  const [postsInfo, setPostsInfo] = useState("");
+  const [postsInfo, setPostsInfo] = useState([]);
   const [isLoing, setIsloading] = useState(true);
   const kakaoToken = useRecoilValue(kToken);
-
-  const Margin = styled.div`
-    margin-left: 150px;
-    font-size: 1.5rem;
-    font-weight: bold;
-  `;
 
   const renderMyLike = async () => {
     await axios
@@ -57,31 +47,25 @@ const MyLike = () => {
   }, []);
 
   return (
-    <>
-      <Body>
-        <div className="like-list">
-          {isLoing ? (
-            <div>
-              <LikeLoading />
-            </div>
-          ) : (
-            <div className="list">
-              {postsInfo.length === 0 ? (
-                <Empty />
-              ) : (
-                postsInfo.map((postsInfo) => {
-                  return (
-                    <div key={postsInfo.id}>
-                      <LikeLists postsInfo={postsInfo} />
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          )}
+    <div className="like-list">
+      {isLoing ? (
+        <div>
+          <LikeLoading />
         </div>
-      </Body>
-    </>
+      ) : (
+        <>
+          {postsInfo.length === 0 ? (
+            <Empty />
+          ) : (
+            <List>
+              {postsInfo.map((postsInfo) => (
+                <LikeLists key={postsInfo.id} postsInfo={postsInfo} />
+              ))}
+            </List>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

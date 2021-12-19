@@ -2,23 +2,16 @@ import styled from "styled-components";
 export const Styled = {
   KeyWordBox: styled.div`
     position: relative;
-
     display: flex;
     justify-content: center;
-
     flex-wrap: wrap;
-
-    height: 100%;
+    height: auto;
   `,
   KeyWord: styled.div`
     display: grid;
-
-    margin-top: 6px;
-
-    margin-right: 6px;
-
-    padding: 5px;
-
+    margin-right: 2%;
+    padding: 1%;
     color: #162b71;
+    font-size: 0.8rem;
   `,
 };

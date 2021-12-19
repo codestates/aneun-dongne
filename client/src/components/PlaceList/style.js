@@ -2,14 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 export const Styled = {
   PlaceLists: styled.div`
-    /* height: 100vh; */
-
     @media (max-width: 1000px) {
       margin: 0px;
       grid-column-gap: 0px;
       grid-template-columns: repeat(2, 1fr);
     }
-
     @media (max-width: 1023px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -18,7 +15,6 @@ export const Styled = {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
     }
-
     @media (min-width: 1040px) {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
@@ -60,30 +56,6 @@ export const Styled = {
       bottom: 13px;
       border: 0.5px solid white;
     }
-
-    /* :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-  } */
-    /* display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  background-color: #b2e0f4;
-  
-  color: white;
-  transition: all 0.3s;
-  display: ${(props) => (props.BtnStatus ? "inline" : "none")};
-  :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-  } */
   `,
 
   StyledLink: styled(Link)`

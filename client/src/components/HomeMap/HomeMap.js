@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
 import MapLoading from "../Loading/MapLoading";
+import { toast } from "react-toastify";
 
 const HomeMap = () => {
   const kakao = window.kakao;
@@ -48,32 +49,35 @@ const HomeMap = () => {
    * @param keyword 검색어
    */
   const wtm = getWtm.contents;
-  // const searchPlace = (keyword) => {
-  //   setPending(true);
-  //   const places = new kakao.maps.services.Places();
-  //   //검색
-  //   places.keywordSearch(keyword, (result, status) => {
-  //     if (status === kakao.maps.services.Status.OK) {
-  //       const firstItem = result[0];
-  //       const { x, y } = firstItem;
-  //       let moveLatLng = {};
 
-  //       if (keyword === "도") {
-  //         moveLatLng = new kakao.maps.LatLng(37, 128);
-  //       } else {
-  //         moveLatLng = new kakao.maps.LatLng(y, x);
-  //       }
-  //       map.panTo(moveLatLng);
-  //     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-  //       // alert("검색 결과가 없습니다.");
-  //       return;
-  //     } else {
-  //       alert("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
-  //     }
-  //     //   setPickPoint()
-  //     setPending(false);
-  //   });
-  // };
+  const searchPlace = (keyword) => {
+    setPending(true);
+    const places = new kakao.maps.services.Places();
+    //검색
+    places.keywordSearch(keyword, (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const firstItem = result[0];
+        const { x, y } = firstItem;
+        let moveLatLng = {};
+
+        if (keyword === "도") {
+          moveLatLng = new kakao.maps.LatLng(37, 128);
+        } else {
+          moveLatLng = new kakao.maps.LatLng(y, x);
+        }
+        map.panTo(moveLatLng);
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        // alert("검색 결과가 없습니다.");
+        return;
+      } else {
+        toast.error("서비스에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+      //   setPickPoint()
+      setPending(false);
+    });
+  };
 
   useEffect(() => {
     // ! 픽포인트, 반경, 검색어 아예 없을때
@@ -124,7 +128,6 @@ const HomeMap = () => {
     if (container === null) {
       return;
     }
-    // console.log(container);
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     //마커가 표시될 위치입니다.
     let markerCenter = new kakao.maps.Marker({
@@ -145,7 +148,6 @@ const HomeMap = () => {
         contentId: placeList[i][5],
       });
     }
-
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
     for (let i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(24, 35);
@@ -233,6 +235,7 @@ const HomeMap = () => {
     //     .catch((err) => console.log("에러", err)); //
     // }
     // //!! 맵을 클릭시 주소변경
+
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;

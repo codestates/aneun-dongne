@@ -34,7 +34,9 @@ function MainPage() {
           <div className="main-title">
             <div className="title">어디론가 떠나고 싶으신가요?</div>
             <Styled.StartButton onClick={ToHome}>시작하기</Styled.StartButton>
-            <div className="icons">{<Icon size={"100"} icon={angleDoubleDown} onClick={ToScrollBottom} />}</div>
+            <div className="icons">
+              <Icon size={100} icon={angleDoubleDown} onClick={ToScrollBottom} />
+            </div>
           </div>
         </Styled.MainTitleView>
 
@@ -43,9 +45,9 @@ function MainPage() {
 
           <Styled.VideoContainer>
             <Styled.Image>
-              <img src="images/mapclick.png" />
+              <img className="illust" src="images/mapclick.png" />
 
-              <img className="play-popular" src="/images/location.gif" muted autoPlay loop playsInline />
+              <img className="play-popular" src="/images/location03.gif" muted autoPlay loop playsInline />
             </Styled.Image>
           </Styled.VideoContainer>
         </Styled.PopularTitleView>
@@ -54,8 +56,8 @@ function MainPage() {
           <div className="title">여러분의 관심사에 알맞는 관광지를 찾아드릴 수 있어요.</div>
           <Styled.VideoContainer>
             <Styled.Image>
-              <img className="play-focus" src="/images/location.gif" muted autoPlay loop playsInline />
-              <img src="images/mapimgpeople.png" />
+              <img className="play-focus" src="/images/hashtag02.gif" muted autoPlay loop playsInline />
+              <img className="illust" src="images/mapimgpeople.png" />
             </Styled.Image>
           </Styled.VideoContainer>
         </Styled.FocusTitleView>
@@ -64,9 +66,9 @@ function MainPage() {
           <div className="title">그곳이 어디라도 간직하고 싶다면 내가 서있는 바로 그곳을 저장할 수 있어요.</div>
           <Styled.VideoContainer>
             <Styled.Image>
-              <img src="images/likeimg.png" />
+              <img className="illust" src="images/likeimg.png" />
 
-              <img className="play-diy" src="/images/location.gif" muted autoPlay loop playsInline />
+              <img className="play-diy" src="/images/diy02.gif" muted autoPlay loop playsInline />
             </Styled.Image>
           </Styled.VideoContainer>
         </Styled.DiyTitleView>

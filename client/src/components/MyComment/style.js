@@ -149,12 +149,12 @@ export const Styled = {
   BtnBox: styled.div`
     position: relative;
     width: 60%;
-    height: auto;
+    height: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 15%;
     margin-bottom: auto;
-    @media (max-width: 470px) {
+    @media (max-width: 520px) {
       width: 60%;
     }
   `,
@@ -174,7 +174,7 @@ export const Styled = {
   Btn: styled.div`
     position: absolute;
     top: 0;
-    height: auto;
+    height: 100%;
     width: 100%;
   `,
 

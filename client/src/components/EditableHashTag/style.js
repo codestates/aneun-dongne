@@ -7,9 +7,10 @@ export const Styled = {
     flex-direction: column;
     align-items: flex-start;
     flex-wrap: wrap;
-    min-height: 48px;
+    min-height: 30px;
     width: 100%;
     border-radius: 6px;
+    font-size: 0.8rem;
     > #tags {
       display: flex;
       /* display: inline-block; */
@@ -45,12 +46,12 @@ export const Styled = {
     }
     > input {
       flex: 1;
+      font-size: 0.7rem;
       border: none;
       padding-left: 10px;
       padding-right: 10px;
       width: 100%;
-      height: 46px;
-      font-size: 14px;
+      min-height: 25px;
       /* padding: 4px 0 0 0; */
       :focus {
         outline: transparent;

@@ -68,13 +68,14 @@ export const Styled = {
       color: white;
       border-radius: 10px;
       font-size: 1.5rem;
+      font-weight: 600;
     }
 
     .login-link {
       cursor: pointer;
       color: #3a6fb0;
       font-size: 1rem;
-      margin-top: 20px;
+      margin-top: 12px;
     }
 
     .login-link:hover {
@@ -97,7 +98,30 @@ export const Styled = {
       }
     }
 
-    @media screen and (max-height: 660px), screen and (max-width: 500px) {
+    @media screen and (max-width: 500px) {
+      label {
+        font-size: 1rem;
+      }
+
+      input {
+        width: 200px;
+        height: 30px;
+      }
+
+      .signup-button {
+        width: 200px;
+        font-size: 1rem;
+      }
+
+      .error-message {
+        font-size: 0.8rem;
+        height: 2px;
+        color: red;
+        margin-bottom: 12px;
+      }
+    }
+
+    @media screen and (max-height: 900px) {
       label {
         font-size: 1rem;
       }

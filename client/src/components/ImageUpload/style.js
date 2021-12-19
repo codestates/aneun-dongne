@@ -24,6 +24,14 @@ export const Styled = {
 
     border: 1px gray solid;
     z-index: 999;
+
+    @media screen and (max-width: 500px) {
+      width: 300px;
+    }
+
+    @media screen and (max-height: 900px) {
+      width: 300px;
+    }
   `,
   EditProfile: styled.div`
     cursor: pointer;

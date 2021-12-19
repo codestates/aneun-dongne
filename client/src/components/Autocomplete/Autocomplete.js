@@ -64,9 +64,7 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
     const resultOptions = deselectedOptions.filter((option) => option === clickedOption);
     setOptions(resultOptions);
   };
-  // useEffect(() => {
-  //   console.log(inputValue);
-  // }, [inputValue]);
+
   const handleDeleteButtonClick = () => {
     setInputValue("");
   };

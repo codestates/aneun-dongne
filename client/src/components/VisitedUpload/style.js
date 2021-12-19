@@ -1,11 +1,6 @@
 import styled from "styled-components";
 export const Styled = {
   ImageUploadBox: styled.div`
-    /* width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px; */
     width: 100%;
     height: 100%;
     text-align: center;
@@ -28,6 +23,18 @@ export const Styled = {
     cursor: pointer;
 
     z-index: 999;
+
+    @media screen and (max-height: 900px) {
+      margin-top: 10px;
+      height: 120px;
+      width: 300px;
+    }
+
+    @media screen and (max-width: 500px) {
+      margin-top: 10px;
+      height: 120px;
+      width: 300px;
+    }
   `,
   EditProfile: styled.div`
     cursor: pointer;

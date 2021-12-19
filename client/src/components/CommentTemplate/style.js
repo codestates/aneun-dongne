@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Styled = {
   CommentWrapper: styled.div`
     width: 100%;
-    /* border: 1px gray solid; */
     .comment-template {
       background: yellow;
       margin-left: auto;
@@ -12,13 +11,11 @@ export const Styled = {
         width: 80%;
         margin-left: 40px;
         margin-right: auto;
-        /* margin-left: 10px; */
       }
       @media (max-width: 612px) {
         width: 450px;
         margin-left: 20px;
         margin-right: auto;
-        /* margin-left: 10px; */
       }
     }
   `,

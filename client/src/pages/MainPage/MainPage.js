@@ -34,7 +34,9 @@ function MainPage() {
           <div className="main-title">
             <div className="title">어디론가 떠나고 싶으신가요?</div>
             <Styled.StartButton onClick={ToHome}>시작하기</Styled.StartButton>
-            <div className="icons">{<Icon size={"100"} icon={angleDoubleDown} onClick={ToScrollBottom} />}</div>
+            <div className="icons">
+              <Icon size={100} icon={angleDoubleDown} onClick={ToScrollBottom} />
+            </div>
           </div>
         </Styled.MainTitleView>
 

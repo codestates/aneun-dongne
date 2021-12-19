@@ -14,7 +14,6 @@ export const Styled = {
     border-radius: 6px;
     > #tags {
       display: flex;
-      /* display: inline-block; */
       flex-wrap: wrap;
       padding: 0;
       margin: 8px 0 0 0;
@@ -46,11 +45,8 @@ export const Styled = {
       text-align: center;
       font-size: 14px;
       margin-left: 8px;
-      /* color: #4000c7; */
       color: #162b71;
       border-radius: 50%;
-      /* background: #fff; */
-
       cursor: pointer;
     }
 
@@ -62,7 +58,6 @@ export const Styled = {
       width: 400px;
       height: 46px;
       font-size: 14px;
-      /* padding: 4px 0 0 0; */
       :focus {
         outline: transparent;
       }

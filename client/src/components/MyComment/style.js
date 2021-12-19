@@ -6,8 +6,6 @@ export const Styled = {
   Comment: styled.div`
     position: relative;
     display: flex;
-    /* border: 1px red solid; */
-    /* height: 200px; */
     border-radius: 20px;
     margin-top: 10px;
     margin-bottom: 40px;
@@ -17,18 +15,15 @@ export const Styled = {
       width: 80%;
       margin-left: 40px;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
     @media (max-width: 612px) {
       width: 450px;
       margin-left: 20px;
       margin-right: auto;
-      /* margin-left: 10px; */
     }
   `,
   Profile: styled.div`
     position: relative;
-    /* background-color: red; */
     width: 80px;
     height: 140px;
     margin: 40px;
@@ -38,11 +33,9 @@ export const Styled = {
     width: 80px;
     height: 80px;
     position: absolute;
-    /* background-color: white; */
   `,
 
   NickName: styled.span`
-    /* background-color: yellowgreen; */
     position: absolute;
     bottom: 5px;
     text-align: center;
@@ -53,7 +46,6 @@ export const Styled = {
     margin-top: 30px;
     position: relative;
     width: 480px;
-    /* height: 140px; */
     > button {
       position: absolute;
       right: -10px;
@@ -84,17 +76,11 @@ export const Styled = {
   `,
 
   HashTagWrapper: styled.div`
-    /* display: flex; */
-    /* position: absolute; */
-    /* background-color: pink; */
     width: 370px;
-    /* height: 60px; */
     top: 75px;
     margin-top: 75px;
     left: 10px;
-    /* padding-left: 10px; */
     padding-right: 10px;
-
     white-space: nowrap;
     border: none;
     border: 1px gray solid;

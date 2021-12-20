@@ -35,6 +35,20 @@
   <li><a href="https://dbdiagram.io/d/61a48f748c901501c0d6dc5b">DB schema</a></li>
 </ul>
 
+<h2>🎥  기능 시연</h2>
+    <aside>💡 토클을 켠 이후 GIF 로딩 까지 조금만 기다려주세요 🙏</aside>
+    <details>
+      <summary>관광지 세부정보 페이지</summary>
+      <div markdown="1">
+        <details>
+          <summary>로그인상태에서 댓글작성</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+      </div>
+    </details>
+    
 <h2> 👩‍👩‍👦‍👦 Team </h2>
 <table border="1">
 	<th>Back</th>

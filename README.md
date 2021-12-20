@@ -37,10 +37,10 @@
 
 <h2> 👩‍👩‍👦‍👦 Team </h2>
 <table border="1">
-	<th>이미지</th>
-	<th>미모지</th>
-  <th>이미지</th>
-  <th>미모지</th>
+	<th>Back</th>
+	<th>Front</th>
+  <th>Front</th>
+  <th>Full</th>
 	<tr><!-- 첫번째 줄 시작 -->
     <td><a href="https://github.com/tmddl0807">손승이</a></td>
     <td><a href="https://github.com/hwa7879">남경화</a></td>

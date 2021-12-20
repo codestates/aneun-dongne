@@ -1,5 +1,7 @@
 <h1>🏡 아는동네 🏡</h1>
 
+<img src="https://user-images.githubusercontent.com/72595163/146793091-a8a213ce-1480-4fba-93e2-747901863b7b.png" />
+
 <h3>우리 동네 매력을 발견하는 관광지 추천 서비스, 아는동네</h3>
 
 <h3><a href="https://aneun-dongne.com">아는동네 바로가기</a></h3>

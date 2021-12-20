@@ -154,19 +154,25 @@
         </details>           
       </div>
     </details>
-    <details>
+       <details>
       <summary>마이페이지 프로필</summary>
       <div markdown="1">
         <details>
-          <summary>하위1</summary>
+          <summary>프로필 유효성 검사</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+  <img src = "https://user-images.githubusercontent.com/72595163/146788995-f179d152-3335-43ae-a78c-12d641d5ea18.gif"/>    
           </div>
         </details>
-	<details>
-          <summary>하위2</summary>
+<details>
+          <summary>프로필 변경</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+  <img src = "https://user-images.githubusercontent.com/72595163/146789104-dec8b01a-9e1e-4fac-8a74-ce7044c4062c.gif"/>    
+          </div>
+        </details>
+<details>
+          <summary>회원탈퇴</summary>
+          <div markdown="1">
+  <img src = "https://user-images.githubusercontent.com/72595163/146789207-f5446486-c09b-4d9b-9846-fad689b4c3c0.gif"/>    
           </div>
         </details>
       </div>
@@ -175,15 +181,15 @@
       <summary>마이페이지 내가 저장한 장소</summary>
       <div markdown="1">
         <details>
-          <summary>하위1</summary>
+          <summary>장소 정보 수정</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+  <img src = "https://user-images.githubusercontent.com/72595163/146789346-98d71024-68ea-4372-86b8-60e0bacf3e8e.gif"/>  
           </div>
         </details>
-	<details>
-          <summary>하위2</summary>
+<details>
+          <summary>장소 정보 삭제</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+  <img src = "https://user-images.githubusercontent.com/72595163/146789376-deed40ad-b4a6-408b-aafc-c4ac8bffaa7e.gif"/>  
           </div>
         </details>
       </div>
@@ -192,34 +198,17 @@
       <summary>마이페이지 내가 쓴 댓글</summary>
       <div markdown="1">
         <details>
-          <summary>하위1</summary>
+          <summary>댓글 삭제</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
-          </div>
-        </details>
-	<details>
-          <summary>하위2</summary>
-          <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+  <img src = "https://user-images.githubusercontent.com/72595163/146789654-c65cf559-e61f-4bfa-ad01-f69d743148d9.gif"/>  
           </div>
         </details>
       </div>
     </details>
     <details>
-      <summary>마이페이지 좋아요 </summary>
+      <summary>마이페이지 좋아요</summary>
       <div markdown="1">
-        <details>
-          <summary>하위1</summary>
-          <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
-          </div>
-        </details>
-	<details>
-          <summary>하위2</summary>
-          <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
-          </div>
-        </details>
+  <img src = "https://user-images.githubusercontent.com/72595163/146790253-46c57547-ea59-4193-beda-ec2991787984.gif"/>        
       </div>
     </details>
     

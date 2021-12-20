@@ -16,7 +16,14 @@ export const usersaddress = atom({
   key: "usersaddress",
   default: { area: "", sigg: "", addr: "" },
 });
-
+export const usersArea = atom({
+  key: "usersArea",
+  default: "null",
+});
+export const usersSigg = atom({
+  key: "usersSigg",
+  default: "null",
+});
 export const placelist = atom({
   key: "placelist",
   default: [],

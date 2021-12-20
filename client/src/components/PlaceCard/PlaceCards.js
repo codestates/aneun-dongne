@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Styled } from "./style";
 import axios from "axios";
-
-import { token, kToken, loginState, loginModal, pickpoint, placelist } from "../../recoil/recoil";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import Cookies from "universal-cookie";
+import { token, kToken, loginState, loginModal, pickpoint, placelist, usersArea, usersSigg } from "../../recoil/recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 
 import HashTagTemplate from "../HashTagTemplate/HashTagTemplate";
 //<HashTagTemplate keywordDummy={tags || []} />
@@ -18,27 +18,15 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
   const [likeLoading, setLikeLoading] = useState(false);
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const getHashTag = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-      if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+  const cookies = new Cookies();
+  const [area, setArea] = useState(usersArea);
+  const [sigg, setSigg] = useState(usersSigg);
   useEffect(() => {
     setLikeLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -47,23 +35,38 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
         setLike(response.data.data.likeCount);
         setLikeOrNot(response.data.data.isLiked);
         setLikeLoading(false);
-      })
-      .then((res) => {
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken || kakaoToken}`,
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          })
-          .then((response) => {
-            if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
-          });
       });
+    // .then((res) => {
+    //   axios
+    //     .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
+    //       headers: {
+    //         Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //       withCredentials: true,
+    //     })
+    //     .then((response) => {
+    //       if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
+    //     });
+    // });
 
     setLikeLoading(false);
-  }, [placeList, like, likeOrNot]);
+  }, [placeList, likeOrNot]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
+        headers: {
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        // console.log(response.data.post.post_tags);
+        if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
+        else if (response.data.post.post_tags === null) setTags([]);
+      });
+  }, [placeList]);
   const LikeHandler = async (e) => {
     e.preventDefault();
     if (!isLogin) {
@@ -79,7 +82,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
           {},
           {
             headers: {
-              Authorization: `Bearer ${accessToken || kakaoToken}`,
+              Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
               "Content-Type": "application/json",
             },
             withCredentials: true,
@@ -100,7 +103,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
           headers: {
-            Authorization: `Bearer ${accessToken || kakaoToken}`,
+            Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,

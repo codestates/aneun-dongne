@@ -4,15 +4,17 @@ import { Styled } from "./style";
 
 import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
 import { useSetRecoilState, useRecoilValue } from "recoil";
-import { token, kToken, placelist } from "../../recoil/recoil";
+import { token, kToken, placelist, usersArea, usersSigg } from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
-  const [area, setArea] = useState("null");
+  // const [area, setArea] = useState("null");
   const [areaIdx, setAreaIdx] = useState(0);
-  const [sigg, setSigg] = useState("null");
+  // const [sigg, setSigg] = useState("null");
+  const [area, setArea] = useState(usersArea);
+  const [sigg, setSigg] = useState(usersSigg);
   const [place, setPlace] = useState("");
 
   const [hashtag, setHashtag] = useState("");

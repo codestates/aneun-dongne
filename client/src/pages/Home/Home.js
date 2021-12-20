@@ -4,7 +4,7 @@ import { Styled } from "./style";
 import HomeMap from "../../components/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList/PlaceList";
 import { useRecoilState } from "recoil";
-import { loading, defaultposition, usersaddress, nowlocation } from "../../recoil/recoil";
+import { loading, defaultposition, nowlocation, usersaddress } from "../../recoil/recoil";
 import Loading from "../../components/Loading/Loading";
 
 import { toast } from "react-toastify";

@@ -15,10 +15,10 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   const kakaoToken = useRecoilValue(kToken);
   //editMode가 전역변수면 모든댓글창이 영향을받는다.
   const [editMode, setEditMode] = useState(false);
-  const [comment, setComment] = useState(text);
+  const [comment, setComment] = useState("");
   const setIsLoginOpen = useSetRecoilState(loginModal);
   const [changeOrNot, setChangeOrNot] = useState(false);
-  const [tags, setTags] = useState(initialTags);
+  const [tags, setTags] = useState([]);
   const setDefaultComment = useSetRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
   const setDeleteOrNot = useSetRecoilState(deleteCommentmode);
@@ -26,8 +26,11 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
 
   useEffect(() => {
     setComment(text);
+  }, [text]);
+
+  useEffect(() => {
     setTags(initialTags);
-  }, [text, initialTags]);
+  }, [initialTags]);
 
   useEffect(() => {
     setPrevComment(text);
@@ -48,77 +51,79 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
     if (clickedBtn === "change-comment") {
       changeComment();
     }
-  }, [clickedBtn]);
+    async function deleteComment() {
+      setCommentLoading(true);
+      await axios
+        .delete(
+          `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken || kakaoToken}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+            params: { commentId: uuid },
+          }
 
-  // 댓글 삭제요청 보내는 함수
-  async function deleteComment() {
-    setCommentLoading(true);
-    await axios
-      .delete(
-        `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
-        {
+          //! axios에선 params지만 express에선 req.query래요.
+          //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
+          // { params: { commentId: uuid }, withCredentials: true }
+        )
+        .then((res) => {
+          let arr = res.data.data.map((el) => {
+            return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+          });
+          setDefaultComment(arr);
+          setDeleteOrNot(true);
+        });
+      setClickedBtn("");
+      setCommentLoading(false);
+    }
+    function changeComment() {
+      setPrevComment(comment);
+      setEditMode(true);
+    }
+    async function completeChange() {
+      const body = {
+        commentId: uuid, //댓글아이디
+        commentContent: comment, //댓글내용
+        tagsArr: tags, //해시태그
+      };
+      setCommentLoading(true);
+
+      await axios
+        .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
           headers: {
             Authorization: `Bearer ${accessToken || kakaoToken}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
-          params: { commentId: uuid },
-        }
-
-        //! axios에선 params지만 express에선 req.query래요.
-        //! 전송되는 url은 https://localhost:80/126508/?commentId=18  이래요
-        // { params: { commentId: uuid }, withCredentials: true }
-      )
-      .then((res) => {
-        let arr = res.data.data.map((el) => {
-          return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+        })
+        .then((res) => {
+          let arr = res.data.data.map((el) => {
+            return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
+          });
+          setDefaultComment(arr);
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setIsLoginOpen(true);
+          }
         });
-        setDefaultComment(arr);
-        setDeleteOrNot(true);
-      });
-    setClickedBtn("");
-    setCommentLoading(false);
-  }
-  function changeComment() {
-    setPrevComment(comment);
-    setEditMode(true);
-  }
-  async function completeChange() {
-    const body = {
-      commentId: uuid, //댓글아이디
-      commentContent: comment, //댓글내용
-      tagsArr: tags, //해시태그
-    };
-    setCommentLoading(true);
 
-    await axios
-      .patch(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
-        headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        let arr = res.data.data.map((el) => {
-          return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
-        });
-        setDefaultComment(arr);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          setIsLoginOpen(true);
-        }
-      });
+      setEditMode(false);
 
-    setEditMode(false);
+      setClickedBtn("");
+      setCommentLoading(false);
+    }
+  }, [clickedBtn]);
 
-    setClickedBtn("");
-    setCommentLoading(false);
-  }
+  // 댓글 삭제요청 보내는 함수
+
   //댓글 바꾸는 함수
   const ChangeHandler = (e) => {
     setComment(e.target.value);
+    console.log(comment);
   };
   useEffect(() => {
     setComment(prevComment);
@@ -160,13 +165,14 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
                         <Styled.Content>
                           <Styled.ContentInput
                             id="comment-change"
-                            className="comment-read"
+                            className="comment-read complete-change"
                             type="text"
                             defaultValue={prevComment}
                             onChange={(e) => ChangeHandler(e)}
                             onKeyUp={(e) => {
                               if (e.key === "Enter") {
-                                completeChange();
+                                // completeChange();
+                                getCommentId(e);
                               }
                             }}
                             name="comment"

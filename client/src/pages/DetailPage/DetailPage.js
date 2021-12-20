@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import MapInRoom from "../../components/MapInRoom/MapInRoom";
 import Cookies from "universal-cookie";
@@ -112,6 +112,7 @@ function DetailPage({ match }) {
         // arr = arr.reverse();
         // console.log(arr, arr.reverse());
         setDefaultComment(arr);
+        console.log(res.data.userinfo);
         setUserinfo(res.data.userinfo);
       });
     setCommentLoading(false);
@@ -200,7 +201,8 @@ function DetailPage({ match }) {
     }
     setLikeLoading(false);
   };
-  //해시태그는 매번렌더링되지 않고 상위 2개의 값이 바뀌었을때만 렌더링되도록 최적화
+  //해시태그는 매번렌더링되지 않고 상위 2개의 값이 바뀌었을때만 재할당하도록 최적화
+  //값에 변화가 없다면 이전값을 다시 사용한다.
   const memoTags = useMemo(() => tags, [tags[0], tags[1]]);
 
   return (
@@ -270,6 +272,8 @@ export const LikeComponent = React.memo(
     );
   },
   (prev, next) => {
+    console.log("이전props는 prev", prev);
+    console.log("현재props는 next", next);
     //이전렌더링과 다음렌더링의 좋아요 상태가 다를때만 렌더링한다.
     return prev.likeOrNot === next.likeOrNot;
   }

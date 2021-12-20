@@ -25,7 +25,7 @@
 계획이 없어도, 즉흥적으로 오늘 하루는 발이 이끄는 대로 우리동네 여행을 시작해 보세요.
 
 <h2> 🛠 기술 스택 </h2>
-![aneung-dongne](https://user-images.githubusercontent.com/85859084/146774208-efc0a688-0eb7-4726-af87-b46d9ef79452.png)
+<img src="https://user-images.githubusercontent.com/85859084/146774208-efc0a688-0eb7-4726-af87-b46d9ef79452.png" />
 
 
 <h2> 📃 Documents </h2>

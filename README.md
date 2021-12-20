@@ -38,10 +38,118 @@
 <h2>🎥  기능 시연</h2>
     <aside>💡 토클을 켠 이후 GIF 로딩 까지 조금만 기다려주세요 🙏</aside>
     <details>
+      <summary>메인페이지</summary>
+      <div markdown="1">
+        <details>
+          <summary>하위1</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+	              <details>
+          <summary>하위2</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+      </div>
+    </details>
+    <details>
+      <summary>홈화면</summary>
+      <div markdown="1">
+        <details>
+          <summary>하위1</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+	              <details>
+          <summary>하위2</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+      </div>
+    </details>
+    <details>
       <summary>관광지 세부정보 페이지</summary>
       <div markdown="1">
         <details>
           <summary>로그인상태에서 댓글작성</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+	              <details>
+          <summary>비로그인상태에서 댓글작성</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+      </div>
+    </details>
+    <details>
+      <summary>마이페이지 프로필</summary>
+      <div markdown="1">
+        <details>
+          <summary>하위1</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+	              <details>
+          <summary>하위2</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+      </div>
+    </details>
+    <details>
+      <summary>마이페이지 내가 저장한 장소</summary>
+      <div markdown="1">
+        <details>
+          <summary>하위1</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+	              <details>
+          <summary>하위2</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+      </div>
+    </details>
+    <details>
+      <summary>마이페이지 내가 쓴 댓글</summary>
+      <div markdown="1">
+        <details>
+          <summary>하위1</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+	              <details>
+          <summary>하위2</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+      </div>
+    </details>
+    <details>
+      <summary>마이페이지 좋아요 </summary>
+      <div markdown="1">
+        <details>
+          <summary>하위1</summary>
+          <div markdown="1">
+ <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+          </div>
+        </details>
+	              <details>
+          <summary>하위2</summary>
           <div markdown="1">
  <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>

@@ -46,7 +46,6 @@
 		 <img src = ""/>     
           </div>
         </details>
-	
       </div>
     </details>
     <details>

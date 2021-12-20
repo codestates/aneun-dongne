@@ -43,7 +43,7 @@
         <details>
           <summary>메인페이지 렌더링</summary>
           <div markdown="1">
-		 <img src = ""/>     
+		 <img src = "https://user-images.githubusercontent.com/72595163/146792356-7ca32d18-5039-4434-9d2f-c2616efd3a5a.gif"/>   
           </div>
         </details>
       </div>

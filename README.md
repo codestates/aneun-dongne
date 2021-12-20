@@ -43,13 +43,13 @@
         <details>
           <summary>하위1</summary>
           <div markdown="1">
-		 <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+		 <img src = ""/>     
           </div>
         </details>
 	<details>
           <summary>하위2</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = ""/>     
           </div>
         </details>
       </div>
@@ -58,17 +58,59 @@
       <summary>홈화면</summary>
       <div markdown="1">
         <details>
-          <summary>하위1</summary>
+          <summary>홈화면 기본 랜딩</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+		 <img src = "https://user-images.githubusercontent.com/66232436/146788606-0ea029f0-c583-4aef-abc6-b1f9377e501e.gif"/>     
           </div>
         </details>
 	<details>
-          <summary>하위2</summary>
+          <summary>홈화면 현재위치 버튼 클릭</summary>
           <div markdown="1">
- 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146789058-5ed87448-6ce7-4ddd-82e1-e1ffedf46d3b.gif"/>     
           </div>
         </details>
+	<details>
+          <summary>홈화면 지도 클릭</summary>
+          <div markdown="1">
+		 <img src = "https://user-images.githubusercontent.com/66232436/146788862-4a7f6d2d-5e12-45c1-a3fd-90045f585413.gif"/>     
+          </div>
+        </details>
+	<details>
+          <summary>홈화면 지역 검색</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146789264-54f57dfe-ce08-4cc5-ace8-6cd7cbe4d0d2.gif"/>     
+          </div>
+        </details>
+	<details>
+          <summary>홈화면 해시태그 검색</summary>
+          <div markdown="1">
+		 <img src = "https://user-images.githubusercontent.com/66232436/146788673-88d8aab0-7d76-4c01-bc65-fea7719752a4.gif"/>     
+          </div>
+        </details>
+	<details>
+          <summary>홈화면 관광지 검색</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146788695-f3ffc9cb-1b59-4ec0-b9d9-91a7d20564d1.gif"/>     
+          </div>
+        </details> 
+	<details>
+          <summary>홈화면 로그인 상태에서 좋아요 클릭</summary>
+          <div markdown="1">
+		 <img src = "https://user-images.githubusercontent.com/66232436/146788709-cf84f138-eb0e-4189-869a-b97b8213ff32.gif"/>     
+          </div>
+        </details>
+	<details>
+          <summary>홈화면 비로그인 상태에서 좋아요 클릭</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146788720-30d60546-2035-4693-88aa-46ff12887a98.gif"/>     
+          </div>
+        </details>
+	<details>
+          <summary>홈화면 마이페이지에 "내 장소 저장"</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146788801-b8a4f495-a0eb-45cb-ae92-75cdb8ef29ac.gif"/>     
+          </div>
+        </details>  
       </div>
     </details>
     <details>

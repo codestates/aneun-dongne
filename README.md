@@ -41,17 +41,12 @@
       <summary>메인페이지</summary>
       <div markdown="1">
         <details>
-          <summary>하위1</summary>
+          <summary>메인페이지 렌더링</summary>
           <div markdown="1">
 		 <img src = ""/>     
           </div>
         </details>
-	<details>
-          <summary>하위2</summary>
-          <div markdown="1">
- 		<img src = ""/>     
-          </div>
-        </details>
+	
       </div>
     </details>
     <details>

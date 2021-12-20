@@ -43,13 +43,13 @@
         <details>
           <summary>하위1</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+		 <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
-	              <details>
+	<details>
           <summary>하위2</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
       </div>
@@ -60,13 +60,13 @@
         <details>
           <summary>하위1</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
-	              <details>
+	<details>
           <summary>하위2</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
       </div>
@@ -74,18 +74,48 @@
     <details>
       <summary>관광지 세부정보 페이지</summary>
       <div markdown="1">
+	<details>
+          <summary>홈화면에서 관광지 클릭하여 세부정보페이지로 이동</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146788146-189ada43-52a2-4dd1-a2aa-50ba7adc8f6f.gif"/>     
+          </div>
+        </details>
         <details>
-          <summary>로그인상태에서 댓글작성</summary>
+          <summary>세부정보페이지 내의 지도에서 길찾기 버튼 클릭</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146788121-61d41dae-50b5-4a21-ad82-80262c3e4a8e.gif"/>     
           </div>
         </details>
-	              <details>
-          <summary>비로그인상태에서 댓글작성</summary>
+        <details>
+          <summary>세부페이지 로그인상태에서 댓글작성</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
+	<details>
+          <summary>세부페이지 비로그인상태에서 댓글작성</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146785990-7c20c117-61f0-4861-8f7c-12a59576c942.gif"/>    
+          </div>
+        </details>
+	<details>
+          <summary>세부페이지 댓글삭제</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146787403-0759f4cd-dac0-49ee-83b8-a7586492f6d4.gif"/>     
+          </div>
+        </details>
+	<details>
+          <summary>세부페이지 댓글수정 및 수정 취소</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146787762-9168d487-5b11-441a-8f4f-48d31f4ee374.gif"/>     
+          </div>
+        </details>
+	<details>
+          <summary>세부페이지 좋아요 홈화면 좋아요 연동</summary>
+          <div markdown="1">
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146787822-14498038-c863-41f2-b039-e90fee8a55a0.gif"/>     
+          </div>
+        </details>           
       </div>
     </details>
     <details>
@@ -94,13 +124,13 @@
         <details>
           <summary>하위1</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
-	              <details>
+	<details>
           <summary>하위2</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
       </div>
@@ -111,13 +141,13 @@
         <details>
           <summary>하위1</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
-	              <details>
+	<details>
           <summary>하위2</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
       </div>
@@ -128,13 +158,13 @@
         <details>
           <summary>하위1</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
-	              <details>
+	<details>
           <summary>하위2</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
       </div>
@@ -145,13 +175,13 @@
         <details>
           <summary>하위1</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
-	              <details>
+	<details>
           <summary>하위2</summary>
           <div markdown="1">
- <img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
+ 		<img src = "https://user-images.githubusercontent.com/66232436/146783907-502dc766-f59c-4138-90f4-9dabcc3f9baf.gif"/>     
           </div>
         </details>
       </div>

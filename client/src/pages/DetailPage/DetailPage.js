@@ -7,18 +7,16 @@ import HashTagTemplate from "../../components/HashTagTemplate/HashTagTemplate";
 import CommentTemplate from "../../components/CommentTemplate/CommentTemplate";
 import MyComment from "../../components/MyComment/MyComment";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  loginState,
-  token,
-  kToken,
-  loginModal,
-  deleteCommentmode,
-  defaultcomments,
-  commentloading,
-} from "../../recoil/recoil";
+import { loginState, token, kToken, loginModal, defaultcomments } from "../../recoil/recoil";
 
 import LikeLoading from "../../components/Loading/LikeLoading";
 import NoComment from "../../components/NoComment/NoComment";
+
+// export const defaultcomments = atom({
+//   key: "defaultcomments",
+//   default: [],
+// });
+
 function DetailPage({ match }) {
   const { id } = match.params;
   const contentId = parseInt(id, 10);
@@ -44,15 +42,13 @@ function DetailPage({ match }) {
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-  //댓글지웠는지?
-  const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
+
   //로딩창
   const [likeLoading, setLikeLoading] = useState(false);
-  const [commentLoading, setCommentLoading] = useState(commentloading);
 
   useEffect(() => {
     // window.scrollTo(0, 0);
-    console.log(cookies.get("jwt"));
+
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
@@ -97,7 +93,6 @@ function DetailPage({ match }) {
   }, [defaultComment]);
 
   useEffect(async () => {
-    setCommentLoading(true);
     await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
@@ -111,16 +106,12 @@ function DetailPage({ match }) {
         let arr = res.data.data.map((el) => {
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
-        // arr = arr.reverse();
-        // console.log(arr, arr.reverse());
+
         setDefaultComment(arr);
         console.log(res.data.userinfo);
         setUserinfo(res.data.userinfo);
       });
-    setCommentLoading(false);
-
-    setDeleteOrNot(false);
-  }, [, deleteOrNot, isLogin]);
+  }, []);
 
   useEffect(() => {
     setLikeLoading(true);

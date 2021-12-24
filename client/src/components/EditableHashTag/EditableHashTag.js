@@ -1,7 +1,7 @@
 import React from "react";
 import { Styled } from "./style";
 
-const EditableHashTag = ({ setTags, tags }) => {
+const EditableHashTag = ({ setTags, tags, getCommentId }) => {
   const removeTags = (indexToRemove) => {
     setTags(tags.filter((_, index) => index !== indexToRemove));
   };
@@ -28,9 +28,20 @@ const EditableHashTag = ({ setTags, tags }) => {
     <>
       <Styled.TagsInput>
         <input
-          className="tag-input"
           type="text"
-          onKeyUp={(event) => (event.code === "Space" && event.target.value !== " " ? addTags(event) : null)}
+          onKeyUp={(event) => {
+            console.log(event.key);
+            if (event.code === "Space" && event.target.value !== " ") addTags(event);
+            else if (event.key === "Enter") {
+              event.preventDefault();
+              console.log("hi");
+              addTags(event);
+            } else return null;
+          }}
+          onSubmit={(event) => {
+            event.preventDefault();
+            return false;
+          }} //엔터누르면 submit되는 현상을 방지한다.
           placeholder="스페이스바로 해시태그를 입력할 수 있습니다"
         />
         <div id="tags">

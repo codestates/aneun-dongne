@@ -21,7 +21,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   const [tags, setTags] = useState([]);
   const setDefaultComment = useSetRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
-  const setDeleteOrNot = useSetRecoilState(deleteCommentmode);
+  // const setDeleteOrNot = useSetRecoilState(deleteCommentmode);
   const [commentLoading, setCommentLoading] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   }, []);
 
   function getCommentId(e) {
-    console.log(e);
+    console.log(e.target.className);
     setClickedBtn(e.target.className);
   }
 
@@ -74,7 +74,8 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
             return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
           });
           setDefaultComment(arr);
-          setDeleteOrNot(true);
+          //deleteOrNot 상태가 필요없는 이유 -> defaultComment를 공유하는 컴퍼넌트가 리렌더링된다.
+          // setDeleteOrNot(true);
         });
       setClickedBtn("");
       setCommentLoading(false);
@@ -187,7 +188,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
             <Styled.HashTagWrapper>
               {editable ? (
                 editMode ? (
-                  <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} />
+                  <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} getCommentId={getCommentId} />
                 ) : (
                   <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
                 )

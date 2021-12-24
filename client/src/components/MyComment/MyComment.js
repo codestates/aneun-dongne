@@ -7,7 +7,6 @@ import axios from "axios";
 import CommentLoading from "../Loading/CommentLoading";
 
 import { Styled } from "./style";
-import styled from "styled-components";
 
 import { toast } from "react-toastify";
 
@@ -27,11 +26,13 @@ function MyComment({ userinfo, contentId, setDefaultComment }) {
 
   const registerMyComment = async (e) => {
     e.preventDefault();
+
     if (!isLogin) {
       setIsLoginOpen(true);
       return;
     }
-    if (something === "") {
+    //빈칸인데 엔터키로 입력하면 빈칸이 아닌 '\n'이다.
+    if (something === "" || something === "\n") {
       toast.error("댓글을 입력해주세요", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -90,6 +91,7 @@ function MyComment({ userinfo, contentId, setDefaultComment }) {
                 placeholder="여러분의 소중한 댓글을 입력해주세요"
                 onChange={(e) => writeSomething(e)}
                 onKeyUp={(e) => {
+                  console.log(e.key);
                   if (e.key === "Enter") {
                     registerMyComment(e);
                     e.target.value = "";

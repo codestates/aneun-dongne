@@ -123,14 +123,14 @@ export const nowlocation = atom({
 });
 
 // ! 페이지번호를 리코일에 저장
-export const contentid = atom({
-  key: "contentid",
-  default: 0,
-});
-export const defaultcomments = atom({
-  key: "defaultcomments",
-  default: [],
-});
+// export const contentid = atom({
+//   key: "contentid",
+//   default: 0,
+// });
+// export const defaultcomments = atom({
+//   key: "defaultcomments",
+//   default: [],
+// });
 
 //! 댓글 수정신호
 export const deleteCommentmode = atom({

@@ -34,12 +34,12 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (accessToken || kakaoToken) {
+    if (cookies.get("jwt") || cookies.get("kakao-jwt")) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
     }
-  }, [accessToken, kakaoToken]);
+  }, [cookies.get("jwt"), cookies.get("kakao-jwt")]);
 
   const handleResponseSuccess = () => {
     isAuthenticated();

@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
+import { defaultcomments } from "../../recoil/detailpage";
 import axios from "axios";
+import Cookies from "universal-cookie";
 import CommentLoading from "../Loading/CommentLoading";
 
 import { Styled } from "./style";
 
 import { toast } from "react-toastify";
 
-function MyComment({ userinfo, contentId, setDefaultComment }) {
+function MyComment({ userinfo, contentId }) {
+  const cookies = new Cookies();
   const kakaoToken = useRecoilValue(kToken);
   const [something, setSomething] = useState("");
-
+  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [tags, setTags] = useState([]);
 
   const accessToken = useRecoilValue(token);
@@ -47,7 +50,7 @@ function MyComment({ userinfo, contentId, setDefaultComment }) {
       setCommentLoading(true);
       const result = await axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

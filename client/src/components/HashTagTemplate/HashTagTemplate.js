@@ -2,6 +2,7 @@ import React from "react";
 import { Styled } from "./style";
 
 function HashTagTemplate({ keywordDummy }) {
+  console.log(keywordDummy);
   return (
     <>
       <Styled.KeyWordBox>

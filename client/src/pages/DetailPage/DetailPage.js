@@ -6,21 +6,16 @@ import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTagTemplate/HashTagTemplate";
 import CommentTemplate from "../../components/CommentTemplate/CommentTemplate";
 import MyComment from "../../components/MyComment/MyComment";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, token, kToken, loginModal, defaultcomments } from "../../recoil/recoil";
+import { selector, useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { loginState, token, kToken, loginModal, loginAgainModal } from "../../recoil/recoil";
+import { contentid, defaultcomments, hashTagSelector } from "../../recoil/detailpage";
 
 import LikeLoading from "../../components/Loading/LikeLoading";
 import NoComment from "../../components/NoComment/NoComment";
 
-// export const defaultcomments = atom({
-//   key: "defaultcomments",
-//   default: [],
-// });
-
 function DetailPage({ match }) {
-  const { id } = match.params;
-  const contentId = parseInt(id, 10);
-
+  const contentId = parseInt(match.params.id, 10);
+  // const [contentId, setContentId] = useRecoilState(contentid);
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
@@ -30,6 +25,7 @@ function DetailPage({ match }) {
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
   const [navi, setNavi] = useState("");
   const [tags, setTags] = useState([]);
+  // const tags = useRecoilValueLoadable(hashTagSelector);
   const [readMore, setReadMore] = useState(false);
 
   //로긴모달창,로긴상태
@@ -42,7 +38,8 @@ function DetailPage({ match }) {
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-
+  //비로그인 아닌데 토큰만료되면 로그아웃유도
+  const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   //로딩창
   const [likeLoading, setLikeLoading] = useState(false);
 
@@ -59,12 +56,13 @@ function DetailPage({ match }) {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res);
         const { post_mapx, post_mapy } = res.data.post;
 
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
         setTitle(res.data.post.post_title);
-        if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
+        // if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
         setPlaceAddr(res.data.post.post_addr1);
         if (res.data.post.post_homepage_path) {
           if (res.data.post.post_homepage_path.split('<a href="')[1]) {
@@ -75,7 +73,7 @@ function DetailPage({ match }) {
         if (res.data.post.post_content) setOverview(res.data.post.post_content);
       });
   }, [contentId]);
-
+  // console.log(defaultComment[0][0]);
   useEffect(() => {
     //! 태그 추가될때만 실행 -> 태그 상위2개가 바뀌면 업데이트됨 -> 상위 2개 바뀌었을때만 줄 수 있을까요..
     axios
@@ -90,9 +88,10 @@ function DetailPage({ match }) {
       .then((res) => {
         if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
       });
-  }, [defaultComment]);
+  }, []);
 
   useEffect(async () => {
+    console.log(cookies.get("kakao-jwt"));
     await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
@@ -108,7 +107,10 @@ function DetailPage({ match }) {
         });
 
         setDefaultComment(arr);
-        console.log(res.data.userinfo);
+        //비로그인이 아닌데 토큰을 얻을 수 없다면 다시로그인시킨다.
+        if (res.data.userinfo.nickname === "김코딩" && isLogin) {
+          setIsLoginAgainOpen(true);
+        }
         setUserinfo(res.data.userinfo);
       });
   }, []);
@@ -194,6 +196,7 @@ function DetailPage({ match }) {
     }
     setLikeLoading(false);
   };
+
   //해시태그는 매번렌더링되지 않고 상위 2개의 값이 바뀌었을때만 재할당하도록 최적화
   //값에 변화가 없다면 이전값을 다시 사용한다.
   const memoTags = useMemo(() => tags, [tags[0], tags[1]]);
@@ -223,7 +226,6 @@ function DetailPage({ match }) {
           ) : null}
 
           <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
-
           <HashTagTemplate keywordDummy={memoTags} />
           {likeLoading ? (
             <LikeLoading />

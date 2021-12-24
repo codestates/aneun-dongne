@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { Styled } from "./style";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { defaultcomments, deleteCommentmode, token, kToken, loginState, loginModal } from "../../recoil/recoil";
+import { token, kToken, loginModal } from "../../recoil/recoil";
 
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
 import axios from "axios";
 import OnlyReadHashTag from "../OnlyReadHashTag/OnlyReadHashTag";
 import LikeLoading from "../Loading/LikeLoading";
+import { defaultcomments } from "../../recoil/detailpage";
 
 function Comments({ uuid, img, nickname, text, initialTags, date, editable, contentId }) {
   const [clickedBtn, setClickedBtn] = useState("");
@@ -21,7 +22,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   const [tags, setTags] = useState([]);
   const setDefaultComment = useSetRecoilState(defaultcomments);
   const [prevComment, setPrevComment] = useState(text);
-  // const setDeleteOrNot = useSetRecoilState(deleteCommentmode);
+
   const [commentLoading, setCommentLoading] = useState(false);
 
   useEffect(() => {

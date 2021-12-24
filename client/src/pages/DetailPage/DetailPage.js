@@ -56,7 +56,6 @@ function DetailPage({ match }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         const { post_mapx, post_mapy } = res.data.post;
 
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
@@ -73,7 +72,7 @@ function DetailPage({ match }) {
         if (res.data.post.post_content) setOverview(res.data.post.post_content);
       });
   }, [contentId]);
-  // console.log(defaultComment[0][0]);
+
   useEffect(() => {
     //! 태그 추가될때만 실행 -> 태그 상위2개가 바뀌면 업데이트됨 -> 상위 2개 바뀌었을때만 줄 수 있을까요..
     axios
@@ -88,10 +87,9 @@ function DetailPage({ match }) {
       .then((res) => {
         if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
       });
-  }, []);
+  }, [defaultComment]);
 
   useEffect(async () => {
-    console.log(cookies.get("kakao-jwt"));
     await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
@@ -268,8 +266,6 @@ export const LikeComponent = React.memo(
     );
   },
   (prev, next) => {
-    // console.log("이전props는 prev", prev);
-    // console.log("현재props는 next", next);
     //이전렌더링과 다음렌더링의 좋아요 상태가 다를때만 렌더링한다.
     return prev.likeOrNot === next.likeOrNot;
   }

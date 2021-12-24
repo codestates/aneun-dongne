@@ -94,7 +94,6 @@ function MyComment({ userinfo, contentId }) {
                 placeholder="여러분의 소중한 댓글을 입력해주세요"
                 onChange={(e) => writeSomething(e)}
                 onKeyUp={(e) => {
-                  console.log(e.key);
                   if (e.key === "Enter") {
                     registerMyComment(e);
                     e.target.value = "";

@@ -38,7 +38,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   }, []);
 
   function getCommentId(e) {
-    console.log(e.target.className);
     setClickedBtn(e.target.className);
   }
 
@@ -125,7 +124,6 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
   //댓글 바꾸는 함수
   const ChangeHandler = (e) => {
     setComment(e.target.value);
-    console.log(comment);
   };
   useEffect(() => {
     setComment(prevComment);

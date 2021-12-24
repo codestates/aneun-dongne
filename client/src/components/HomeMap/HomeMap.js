@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
 import { token, kToken, pickpoint, placelist, getWTM } from "../../recoil/recoil";
@@ -14,7 +14,7 @@ const HomeMap = () => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const history = useHistory();
-
+  const mapRef = useRef(null);
   const [placeList, setPlaceList] = useRecoilState(placelist);
 
   const [pending, setPending] = useState(true);
@@ -77,23 +77,29 @@ const HomeMap = () => {
 
   useEffect(async () => {
     // //!위경도 -> 평면좌표
-    const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+    setMapLoading(true);
+    // const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+    const container = mapRef.current;
 
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(pickPoint[0], pickPoint[1]), //지도의 중심좌표를 마커로 변경-> 밑의 let markerCenter랑 연결
       level: level, //지도의 레벨(확대, 축소 정도)
     };
+
     if (container === null) {
       return;
     }
+
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     //마커가 표시될 위치입니다.
+
     let markerCenter = new kakao.maps.Marker({
       // 지도 중심좌표에 마커를 생성합니다
       position: map.getCenter(),
       map: map,
     });
+
     let bounds = new kakao.maps.LatLngBounds();
 
     let positions = [];
@@ -107,7 +113,9 @@ const HomeMap = () => {
         contentId: placeList[i][5],
       });
     }
+
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    console.log(placeList);
     for (let i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(24, 35);
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -179,6 +187,10 @@ const HomeMap = () => {
     });
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+      if (container === null) {
+        console.log(container);
+        return;
+      }
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;
 
@@ -188,10 +200,12 @@ const HomeMap = () => {
     });
 
     map.setBounds(bounds);
+
     setMap(map);
+    setMapLoading(false);
     setPending(false);
   }, [placeList]);
-
+  console.log(mapRef.current);
   return (
     <Styled.Div>
       <HomeRightbar
@@ -201,10 +215,11 @@ const HomeMap = () => {
         // pickPoint={pickPoint}
         // setPickPoint={setPickPoint}
       />
-      {getWtm.state === "loading" ? (
+      {getWtm.state === "loading" || placeList.length === 0 ? (
         <MapLoading />
       ) : (
-        <Styled.Map id="map">
+        // <Styled.Map id="map">
+        <Styled.Map ref={mapRef}>
           <div className="map-experiment">&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다."}</div>
         </Styled.Map>
       )}

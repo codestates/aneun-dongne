@@ -22,6 +22,8 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
   const [area, setArea] = useState(usersArea);
   const [sigg, setSigg] = useState(usersSigg);
   useEffect(() => {
+    let mount = true;
+    if (!mount) return;
     setLikeLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
@@ -51,6 +53,9 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     // });
 
     setLikeLoading(false);
+    return () => {
+      mount = false;
+    };
   }, [placeList, likeOrNot]);
   useEffect(() => {
     axios

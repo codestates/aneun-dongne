@@ -7,6 +7,7 @@ function CommentTemplate({ commentDummy, contentId }) {
   return (
     <div>
       {commentDummy.map((comment, idx) => {
+        //여기도 toast로 바꿔보자
         if (comment.text === "\n") return null;
         return (
           <div className="comment-template" key={idx}>

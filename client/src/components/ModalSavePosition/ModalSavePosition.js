@@ -29,6 +29,7 @@ const ModalSavePosition = () => {
   const [errorMessage, setErrorMessage] = useState("");
   //유저 위치정보
   const [userAddr, setUserAddr] = useRecoilState(usersaddress);
+  //현재위치로 바꿀거면 nowlocation써
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);

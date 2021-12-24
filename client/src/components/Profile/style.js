@@ -73,7 +73,7 @@ export const Styled = {
       text-align: center;
       color: red;
     }
-    .btn-exit {
+    form .userinfo-button-label .btn-exit {
       width: 80px;
       height: 40px;
       border-radius: 20px;

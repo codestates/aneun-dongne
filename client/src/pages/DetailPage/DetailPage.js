@@ -52,11 +52,12 @@ function DetailPage({ match }) {
 
   useEffect(() => {
     // window.scrollTo(0, 0);
-
+    console.log(cookies.get("jwt"));
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -84,7 +85,8 @@ function DetailPage({ match }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -117,8 +119,8 @@ function DetailPage({ match }) {
       });
     setCommentLoading(false);
 
-    // setDeleteOrNot(false);
-  }, [, deleteOrNot]);
+    setDeleteOrNot(false);
+  }, [, deleteOrNot, isLogin]);
 
   useEffect(() => {
     setLikeLoading(true);
@@ -237,6 +239,7 @@ function DetailPage({ match }) {
           ) : (
             <LikeComponent like={like} likeOrNot={likeOrNot} LikeHandler={LikeHandler} />
           )}
+          {/* //! 토큰만료되면 버그생김 */}
           <MyComment
             userinfo={userinfo}
             contentId={contentId}
@@ -272,8 +275,8 @@ export const LikeComponent = React.memo(
     );
   },
   (prev, next) => {
-    console.log("이전props는 prev", prev);
-    console.log("현재props는 next", next);
+    // console.log("이전props는 prev", prev);
+    // console.log("현재props는 next", next);
     //이전렌더링과 다음렌더링의 좋아요 상태가 다를때만 렌더링한다.
     return prev.likeOrNot === next.likeOrNot;
   }

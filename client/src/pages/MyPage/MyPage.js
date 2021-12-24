@@ -11,33 +11,10 @@ import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
-const MoveToTopBtn = styled.button`
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  z-index: 100;
-  border-radius: 100%;
-  background-color: #b2e0f4;
-  color: white;
-  transition: all 0.3s;
-  border: 0.5px solid white;
-  display: ${(props) => (props.BtnStatus ? "flex" : "none")};
-  :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-    border: 0.5px solid white;
-  }
-`;
-
 const MyPage = ({ match }) => {
   const cookies = new Cookies();
-  const [imgUrl, setImgUrl] = useState("images/men.png");
-  const [prevImg, setPrevImg] = useState("images/men.png");
+  const [imgUrl, setImgUrl] = useState("/images/men.png");
+  const [prevImg, setPrevImg] = useState("/images/men.png");
   const [nickname, setNickname] = useState("");
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -71,9 +48,10 @@ const MyPage = ({ match }) => {
       .catch((err) => {
         if (err.response) {
           if (err.response.status === 401) {
+            // setPrevImg("/images/men.png");
             //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
             setIsLoginAgainOpen(true);
-            // console.log(err.response);
+            console.log(err.response);
           }
         }
       });
@@ -121,14 +99,14 @@ const MyPage = ({ match }) => {
       window.removeEventListener("scroll", handleFollow); // addEventListener 함수를 삭제
     };
   });
-
+  console.log(prevImg);
   return (
     <>
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
             <div className="profile-image">
-              <img src={prevImg} />
+              <img src={prevImg ? prevImg : "images/men.png"} />
             </div>
             <div className="profile-name">{nickname}</div>
           </div>
@@ -200,9 +178,9 @@ const MyPage = ({ match }) => {
               />
             </Route>
           </Switch>
-          <MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
+          <Styled.MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
             <Icon size={"60"} icon={angleUp} />
-          </MoveToTopBtn>
+          </Styled.MoveToTopBtn>
         </div>
 
         <div>{/* justify-content:space-between을 위한 빈 태그 */}</div>

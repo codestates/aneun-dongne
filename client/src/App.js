@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { loginState } from "./recoil/recoil";
 import { token, kToken, userInfo } from "./recoil/recoil";
 
@@ -12,7 +12,7 @@ import Header from "./components/Header/Header";
 import Cookies from "universal-cookie";
 const App = () => {
   const cookies = new Cookies();
-  const setIsLogin = useSetRecoilState(loginState);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setInfo = useSetRecoilState(userInfo);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);

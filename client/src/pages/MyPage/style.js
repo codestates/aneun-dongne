@@ -127,4 +127,26 @@ export const Styled = {
       }
     }
   `,
+  MoveToTopBtn: styled.button`
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    z-index: 100;
+    border-radius: 100%;
+    background-color: #b2e0f4;
+    color: white;
+    transition: all 0.3s;
+    border: 0.5px solid white;
+    display: ${(props) => (props.BtnStatus ? "flex" : "none")};
+    :hover {
+      background-color: #9cb1e0;
+      transition: all 0.3s;
+      border: 0.5px solid white;
+    }
+  `,
 };

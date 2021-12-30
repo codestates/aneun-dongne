@@ -4,29 +4,38 @@ export const Styled = {
   Body: styled.div`
     display: flex;
     padding: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    /* margin-left: 20px; */
+    /* margin-right: 20px; */
     border-top: 2px #2f4d6f solid;
     border-bottom: 2px #2f4d6f solid;
     margin-bottom: 10px;
 
     @media screen and (max-width: 780px) {
       width: 100%;
+
       font-size: 0.5rem;
-      margin-left: 5px;
-      margin-right: 5px;
+      /* padding-left: 5px; */
+      /* padding-right: 5px; */
+      /* margin-right: 5px; */
       padding: 0px 0 0px 0;
     }
   `,
   Side: styled.div`
+    /* background: orange; */
     /* min-width: 20%; */
+    /* background: skyblue; */
+    padding-right: 40px;
+    /* padding-left: 40px; */
+
     border-right: 2px #2f4d6f solid;
     display: flex;
     flex-direction: column;
     width: 30%;
 
     @media screen and (max-width: 780px) {
-      font-size: 0.5rem;
+      /* font-size: 0.5rem; */
+      padding-right: 0;
+      /* padding-right: 10px; */
       min-width: 80px;
       width: 5%;
     }
@@ -37,7 +46,6 @@ export const Styled = {
     }
 
     .footer-logo-text {
-      /* background: skyblue; */
       margin-top: 30px;
       font-size: 1.2rem;
       letter-spacing: 0.1em;
@@ -45,12 +53,14 @@ export const Styled = {
       /* padding-top: 20px; */
       /* padding-bottom: 30px; */
       padding-left: 25%;
-      min-width: 200px;
+      /* min-width: 200px; */
       @media screen and (max-width: 780px) {
         width: 100%;
         font-size: 0.8rem;
         margin-top: 30px;
+        padding-bottom: 15px;
         padding-left: 15%;
+        padding-right: 0;
       }
       @media screen and (max-width: 640px) {
         width: 100%;
@@ -96,6 +106,9 @@ export const Styled = {
     .side-col .info-icon a:hover {
       color: #2f4d6f;
       padding-left: 10px;
+      @media screen and (max-width: 780px) {
+        padding-left: 5px;
+      }
     }
     .side-col .info-icon i {
       padding-right: 20px;
@@ -105,13 +118,15 @@ export const Styled = {
     }
   `,
   User: styled.div`
-    background: blue;
-    /* display: flex;
-    justify-content: space-evenly; */
-    display: grid;
+    /* background: blue; */
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    /* display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-column-gap: 30px;
-    margin-left: 50px;
+    grid-column-gap: 30px; */
+
+    /* margin-left: 50px; */
     /* @media screen and (max-width: 1500px) { */
     /* display: grid; */
     /* display: flex; */
@@ -124,7 +139,7 @@ export const Styled = {
     } */
     //!
     @media screen and (max-width: 780px) {
-      font-size: 0.5rem;
+      /* font-size: 0.5rem; */
       margin-left: 5px;
       margin-right: 5px;
       padding: 0px 0 0px 0;
@@ -134,22 +149,25 @@ export const Styled = {
       /* display: grid; */
       /* display: flex; */
 
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 100px;
+      /* grid-template-columns: 1fr 1fr; */
+      /* grid-column-gap: 100px; */
     }
     @media screen and (max-width: 400px) {
       /* display: grid; */
       /* display: flex; */
 
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 10px;
+      /* grid-template-columns: 1fr 1fr; */
+      /* grid-column-gap: 10px; */
     }
 
     > .user-info {
+      margin-left: 10px;
+
+      /* background: red; */
       display: flex;
       flex-direction: column;
       @media screen and (max-width: 780px) {
-        width: 100%;
+        /* width: 100%; */
         font-size: 0.5rem;
         padding: 0px 0 0px 0;
       }
@@ -160,10 +178,10 @@ export const Styled = {
       /* margin: 10px; */
       width: 100px;
       height: 40px;
-      /* text-align: center; */
-      padding: 0 0 15px 0;
-      border-radius: 20px;
-      transition: all 0.3s ease;
+      text-align: center;
+      /* padding: 0 0 15px 0; */
+      /* border-radius: 20px; */
+      /* transition: all 0.3s ease; */
 
       //!추가한것
       margin-top: 30px;
@@ -179,12 +197,14 @@ export const Styled = {
         /* width: 100%; */
         font-size: 0.5rem;
         /* margin: 5px; */
+        /* background: orange; */
         text-align: start;
+
         /* margin: 0px; */
-        padding: 20px 0 0px 0;
+        /* padding: 20px 0 0px 0; */
       }
     }
-    > .user-info .user-job {
+    /* > .user-info .user-job {
       background-image: linear-gradient(
         to right bottom,
         rgba(255, 255, 255, 0.9) 0,
@@ -204,7 +224,7 @@ export const Styled = {
         padding: 0px 0 0px 0;
         height: 10px;
       }
-    }
+    } */
     > .user-info .info-icon {
       /* padding: 15px 10px 15px 10px; */
       /* width: 100px; */
@@ -216,13 +236,11 @@ export const Styled = {
       @media screen and (max-width: 780px) {
         font-size: 0.5rem;
         padding: 0px 0 0px 0;
-
-        height: 10px;
+        /* background: red; */
+        /* height: 10px; */
       }
 
       > i {
-        /* background: blue; */
-
         padding-right: 10px;
 
         @media screen and (max-width: 780px) {
@@ -233,7 +251,8 @@ export const Styled = {
     }
     a,
     span {
-      width: 200px;
+      /* background: purple; */
+      /* width: 200px; */
       transition: all 0.3s ease;
       text-decoration: none;
       color: gray;
@@ -247,7 +266,7 @@ export const Styled = {
       color: #2f4d6f;
       padding-left: 10px;
       @media screen and (max-width: 780px) {
-        width: 100%;
+        /* width: 100%; */
         font-size: 0.5rem;
         padding-left: 3px;
       }

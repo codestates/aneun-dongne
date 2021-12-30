@@ -9,6 +9,7 @@ export const Styled = {
     border-top: 2px #2f4d6f solid;
     border-bottom: 2px #2f4d6f solid;
     margin-bottom: 10px;
+
     @media screen and (max-width: 780px) {
       width: 100%;
       font-size: 0.5rem;
@@ -18,45 +19,33 @@ export const Styled = {
     }
   `,
   Side: styled.div`
-    min-width: 20%;
+    /* min-width: 20%; */
     border-right: 2px #2f4d6f solid;
     display: flex;
     flex-direction: column;
     width: 30%;
+
     @media screen and (max-width: 780px) {
       font-size: 0.5rem;
       min-width: 80px;
       width: 5%;
     }
 
-    .footer-logo {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      margin-right: auto;
-      margin-left: auto;
-      padding-top: 20px;
-      padding-bottom: 30px;
-      @media screen and (max-width: 780px) {
-        width: 100%;
-        font-size: 0.5rem;
-        padding-top: 5px;
-        padding-bottom: 5px;
-      }
-    }
     img {
       width: 60px;
       height: 30px;
     }
 
     .footer-logo-text {
+      /* background: skyblue; */
       margin-top: 30px;
       font-size: 1.2rem;
       letter-spacing: 0.1em;
       transition: all 0.3s ease;
-      padding-top: 20px;
-      padding-bottom: 30px;
+      /* padding-top: 20px; */
+      /* padding-bottom: 30px; */
       padding-left: 25%;
+      min-width: 200px;
       @media screen and (max-width: 780px) {
         width: 100%;
         font-size: 0.8rem;
@@ -73,7 +62,6 @@ export const Styled = {
 
     .side-col {
       display: flex;
-      background-color: red;
       flex-direction: column;
       justify-content: space-between;
       @media screen and (max-width: 780px) {
@@ -85,6 +73,7 @@ export const Styled = {
       display: flex;
       padding: 10px;
       background-color: white;
+      /* background: blue; */
       padding-left: 20%;
       @media screen and (max-width: 780px) {
         padding: 5px;
@@ -116,19 +105,24 @@ export const Styled = {
     }
   `,
   User: styled.div`
+    background: blue;
     /* display: flex;
     justify-content: space-evenly; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-column-gap: 30px;
     margin-left: 50px;
-    @media screen and (max-width: 1500px) {
-      /* display: grid; */
-      /* display: flex; */
+    /* @media screen and (max-width: 1500px) { */
+    /* display: grid; */
+    /* display: flex; */
+    //!경화님꺼
+    /* @media screen and (max-width: 1400px) {
+  
 
       grid-template-columns: 1fr 1fr;
       grid-column-gap: 130px;
-    }
+    } */
+    //!
     @media screen and (max-width: 780px) {
       font-size: 0.5rem;
       margin-left: 5px;
@@ -162,13 +156,25 @@ export const Styled = {
     }
 
     > .user-info .user-name {
-      margin: 10px;
+      /* background: skyblue; */
+      /* margin: 10px; */
       width: 100px;
       height: 40px;
-      text-align: center;
-      padding: 15px 0 15px 0;
+      /* text-align: center; */
+      padding: 0 0 15px 0;
       border-radius: 20px;
       transition: all 0.3s ease;
+
+      //!추가한것
+      margin-top: 30px;
+      /* font-size: 1.2rem; */
+      letter-spacing: 0.1em;
+      transition: all 0.3s ease;
+      /* padding-top: 20px; */
+      padding-bottom: 30px;
+      /* padding-left: 25%; */
+
+      //!
       @media screen and (max-width: 780px) {
         /* width: 100%; */
         font-size: 0.5rem;
@@ -200,18 +206,25 @@ export const Styled = {
       }
     }
     > .user-info .info-icon {
-      padding: 15px 10px 15px 10px;
+      /* padding: 15px 10px 15px 10px; */
+      /* width: 100px; */
       display: flex;
-      margin: 10px;
+      justify-content: space-evenly;
+      /* margin: 10px; */
       height: 50px;
+
       @media screen and (max-width: 780px) {
         font-size: 0.5rem;
         padding: 0px 0 0px 0;
+
         height: 10px;
       }
 
       > i {
+        /* background: blue; */
+
         padding-right: 10px;
+
         @media screen and (max-width: 780px) {
           font-size: 0.5rem;
           padding-right: 3px;

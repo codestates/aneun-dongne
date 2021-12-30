@@ -27,7 +27,7 @@ function ModalLoginAgain() {
     history.push("/");
   };
   const yesFunc = () => {
-    if (kToken) {
+    if (cookies.get("kakao-jwt")) {
       kakaologoutHandler();
     } else {
       logoutHandler();

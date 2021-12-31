@@ -169,7 +169,12 @@ export const Styled = {
       @media screen and (max-width: 780px) {
         /* width: 100%; */
         font-size: 0.5rem;
-        padding: 0px 0 0px 0;
+        padding: 0;
+        width: 60px;
+      }
+      @media screen and (max-width: 400px) {
+        /* background: orange; */
+        width: 40px;
       }
     }
 
@@ -228,8 +233,9 @@ export const Styled = {
     > .user-info .info-icon {
       /* padding: 15px 10px 15px 10px; */
       /* width: 100px; */
+      /* background: red; */
       display: flex;
-      justify-content: space-evenly;
+      /* justify-content: space-evenly; */
       /* margin: 10px; */
       height: 50px;
 
@@ -242,7 +248,8 @@ export const Styled = {
 
       > i {
         padding-right: 10px;
-
+        /* margin-left: 10px; */
+        /* background: orange; */
         @media screen and (max-width: 780px) {
           font-size: 0.5rem;
           padding-right: 3px;

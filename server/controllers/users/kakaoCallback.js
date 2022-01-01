@@ -52,7 +52,8 @@ module.exports = async (req, res) => {
                     // domain: ".aneun-dongne.com",
                     path: "/",
                     secure: true,
-                    sameSite: "None",
+                    sameSite: "none",
+                    httpOnly: true,
                   }); //토큰 담은 쿠키 전달
                   // res.redirect(`${process.env.URL_AFTER_LOGIN}`); //로그인 후 이동할 페이지 : MAIN_URL
                   sendAccessToken(res, accessToken);
@@ -67,9 +68,10 @@ module.exports = async (req, res) => {
               res.cookie("kakao-jwt", accessToken, {
                 // maxAge: 1000 * 60 * 60 * 24 * 7,
                 // domain: ".aneun-dongne.com",
+                httpOnly: true,
                 path: "/",
                 secure: true,
-                sameSite: "None",
+                sameSite: "none",
               }); //토큰 담은 쿠키 전달
               // res.redirect(`${process.env.URL_AFTER_LOGIN}`); //로그인 후 이동할 페이지 : MAIN_URL
               sendAccessToken(res, accessToken);

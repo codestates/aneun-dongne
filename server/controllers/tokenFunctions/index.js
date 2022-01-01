@@ -9,13 +9,15 @@ module.exports = {
     res.status(201).json({ data: { accessToken }, message: "ok" });
   },
   isAuthorized: (req) => {
-    const authorization = req.headers["authorization"];
-
+    // const authorization = req.headers["authorization"];
+    const authorization = req.cookies.jwt || req.cookies["kakao-jwt"];
+    console.log(authorization);
     if (!authorization) {
       return null;
     }
 
-    const token = authorization.split(" ")[1];
+    // const token = authorization.split(" ")[1];
+    const token = authorization;
     try {
       return verify(token, process.env.ACCESS_SECRET);
     } catch (err) {

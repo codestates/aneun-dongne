@@ -95,11 +95,13 @@ const Header = ({ handleResponseSuccess }) => {
       `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_API_URL}/signout`
     );
     setIsLogin(false);
+    window.sessionStorage.removeItem("jwt");
   };
 
   const logoutHandler = () => {
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
       setIsLogin(false);
+      window.sessionStorage.removeItem("jwt");
     });
 
     history.push("/");
@@ -210,7 +212,7 @@ const Header = ({ handleResponseSuccess }) => {
               </>
             ) : (
               <>
-                {cookies.get("kakao-jwt") ? (
+                {window.sessionStorage.getItem("jwt") === "카카오로긴" ? (
                   <div className="kakao_mainpage-button mainpage-button" onClick={kakaologoutHandler}>
                     Log Out
                   </div>

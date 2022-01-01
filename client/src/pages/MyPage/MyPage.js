@@ -31,7 +31,7 @@ const MyPage = ({ match }) => {
     const result = await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },

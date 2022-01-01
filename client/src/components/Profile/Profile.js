@@ -23,7 +23,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
   useEffect(() => {
-    if (kakaoToken) setErrorMessage(message.kakaoState);
+    if (window.sessionStorage.getItem("jwt") === "카카오로긴") setErrorMessage(message.kakaoState);
   }, []);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const editInfo = async (e) => {
     e.preventDefault();
 
-    if (!cookies.get("jwt") && !cookies.get("kakao-jwt")) {
+    if (!window.sessionStorage.getItem("jwt")) {
       //서버 유효성검사 필요해요
       setIsLoginAgainOpen(true);
       return;

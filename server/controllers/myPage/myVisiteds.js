@@ -134,7 +134,6 @@ module.exports = {
     }
   },
   updateVisited: async (req, res) => {
-    console.log(req.file);
     const accessTokenData = isAuthorized(req);
     try {
       if (!accessTokenData) {

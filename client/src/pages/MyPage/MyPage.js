@@ -99,7 +99,7 @@ const MyPage = ({ match }) => {
       window.removeEventListener("scroll", handleFollow); // addEventListener 함수를 삭제
     };
   });
-  console.log(prevImg);
+
   return (
     <>
       <Styled.Body>

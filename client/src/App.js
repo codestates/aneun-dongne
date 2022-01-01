@@ -40,7 +40,7 @@ const App = () => {
     } else {
       setIsLogin(false);
     }
-  }, [window.sessionStorage.getItem("jwt")]);
+  }, [, window.sessionStorage.getItem("jwt")]);
 
   const handleResponseSuccess = () => {
     isAuthenticated();

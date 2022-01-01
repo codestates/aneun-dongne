@@ -52,6 +52,7 @@ app.post("/user/login", controllers.signin);
 app.get("/user/kakao/callback", controllers.kakaoCallBack);
 app.get("/signout", controllers.kakaoSignout);
 app.post("/signout", controllers.signout);
+
 app.post("/home/bookmark", upload.single("image"), controllers.bookmark);
 
 app.get("/comment/:contentId", controllers.readComments);

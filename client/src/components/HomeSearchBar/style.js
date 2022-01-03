@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Styled = {
   MapRightBar: styled.div`
+    /* position: absolute; */
+    /* z-index: 999; */
     display: flex;
     align-content: center;
     width: 600px;

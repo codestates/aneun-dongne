@@ -25,37 +25,6 @@ const MyPage = ({ match }) => {
     color: "#172a71",
   };
 
-  // async function getUserInfo() {
-  //   const result = await axios
-  //     .get(`${process.env.REACT_APP_API_URL}/user/info`, {
-  //       headers: {
-  //         // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-  //         // Authorization: `Bearer ${accessToken || kakaoToken}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //       withCredentials: true,
-  //     })
-  //     .then((res) => {
-  //       setNickname(res.data.data.userInfo.nickname);
-  //       if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
-  //         setImgUrl(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
-  //         setPrevImg(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
-  //       }
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       if (err.response) {
-  //         if (err.response.status === 401) {
-  //           // setPrevImg("/images/men.png");
-  //           //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
-  //           setIsLoginAgainOpen(true);
-  //           console.log(err.response);
-  //         }
-  //       }
-  //     });
-  //   return result;
-  // }
-
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
     if (ScrollY > 300) {
@@ -73,7 +42,8 @@ const MyPage = ({ match }) => {
       behavior: "smooth",
     });
     setScrollY(0); // ScrollY 의 값을 초기화
-    setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
+
+    // setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
   }
 
   function btnToFalse() {
@@ -81,7 +51,9 @@ const MyPage = ({ match }) => {
   }
 
   function scrollyToZero() {
+    //화면최상단으로, 사이드바 버튼에 온클릭
     setScrollY(0);
+    setBtnStatus(false);
   }
 
   useEffect(() => {
@@ -93,7 +65,7 @@ const MyPage = ({ match }) => {
       window.removeEventListener("scroll", handleFollow); // addEventListener 함수를 삭제
     };
   });
-  console.log(btnStatus);
+
   useEffect(() => {
     async function getUserInfo() {
       const result = await axios
@@ -144,7 +116,7 @@ const MyPage = ({ match }) => {
                 to={`${match.url}/like`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >
@@ -156,7 +128,7 @@ const MyPage = ({ match }) => {
                 to={`${match.path}/visited`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >
@@ -168,7 +140,7 @@ const MyPage = ({ match }) => {
                 to={`${match.url}/comments`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >
@@ -180,7 +152,7 @@ const MyPage = ({ match }) => {
                 to={`${match.url}/profile`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >

@@ -26,9 +26,10 @@ export const Styled = {
       flex-direction: column;
       align-content: center;
       justify-content: center;
-      background-color: white;
+      /* background-color: white; */
       border-radius: 20px;
       width: 100%;
+      background: rgba(255, 255, 255, 0.3);
     }
     .place-cards > img {
       width: 80%;

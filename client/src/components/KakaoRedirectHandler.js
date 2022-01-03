@@ -20,7 +20,7 @@ const KakaoRedirectHandler = () => {
       })
       .then((res) => {
         setAccessToken(res.data.data.accessToken);
-        window.sessionStorage.setItem("jwt", "카카오로긴");
+        window.localStorage.setItem("jwt", "카카오로긴");
       })
       .then(() => {
         history.push("/"); // 토큰 받았고 로그인됐으니 화면 전환시켜줌(메인으로)

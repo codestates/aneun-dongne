@@ -31,12 +31,15 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
       {typeof imgUrl === "object" ? (
         <Styled.ImgDiv
           onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url('${URL.createObjectURL(imgUrl)}')` }}
+          //CSS 표현식 지양 : reflow 발생할때마다 JS표현식이 다시 계산되어 비용높은 코드가 되어버림.
+          // style={{ backgroundImage: `url('${URL.createObjectURL(imgUrl)}')` }}
+          photo={URL.createObjectURL(imgUrl)}
         ></Styled.ImgDiv>
       ) : (
         <Styled.ImgDiv
           onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url(${imgUrl})` }}
+          photo={imgUrl}
+          // style={{ backgroundImage: `url(${imgUrl})` }}
         ></Styled.ImgDiv>
       )}
 
@@ -48,6 +51,6 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
 }
 // export default ProfileUpload;
 export default React.memo(ProfileUpload, (prev, next) => {
-  console.log(prev.imgUrl === next.imgUrl);
+  // console.log(prev.imgUrl === next.imgUrl);
   return prev.imgUrl === next.imgUrl;
 });

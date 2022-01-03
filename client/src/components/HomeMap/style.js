@@ -51,8 +51,10 @@ export const Styled = {
     top: 0;
 
     @media (min-width: 1024px) {
-      width: 600px;
-      height: 600px;
+      /* width: 600px; */
+      width: 90%;
+      height: 100%;
+      /* height: 600px; */
     }
     @media (max-width: 1023px) {
       width: 600px;

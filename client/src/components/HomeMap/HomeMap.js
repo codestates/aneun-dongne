@@ -212,6 +212,7 @@ const HomeMap = () => {
     setPending(false);
   }, [placeList]);
   // console.log(mapRef.current);
+
   return (
     <Styled.Div>
       <HomeRightbar setLevel={setLevel} />

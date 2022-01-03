@@ -35,12 +35,12 @@ const App = () => {
 
   useEffect(() => {
     // if (cookies.get("jwt") || cookies.get("kakao-jwt")) {
-    if (window.sessionStorage.getItem("jwt")) {
+    if (window.localStorage.getItem("jwt")) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
     }
-  }, [, window.sessionStorage.getItem("jwt")]);
+  }, [, window.localStorage.getItem("jwt")]);
 
   const handleResponseSuccess = () => {
     isAuthenticated();

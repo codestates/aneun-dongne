@@ -5,17 +5,17 @@ export const Styled = {
     @media (max-width: 1000px) {
       margin: 0px;
       grid-column-gap: 0px;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(1, 1fr);
     }
-    @media (max-width: 1023px) {
+    /* @media (max-width: 1023px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-    }
+    } */
     @media (max-width: 660px) {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
     }
-    @media (min-width: 1040px) {
+    /* @media (min-width: 1040px) {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
       grid-column-gap: 40px;
@@ -24,12 +24,12 @@ export const Styled = {
     }
     @media (min-width: 1360px) {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(1, 1fr);
     }
     @media (min-width: 1730px) {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
+      grid-template-columns: repeat(1, 1fr);
+    } */
     /* display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 40px;

@@ -25,7 +25,7 @@ const HomeMap = () => {
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
   // const [pickPoint, setDefaultPosition] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
-  const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
+  // const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인

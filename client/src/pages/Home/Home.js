@@ -25,7 +25,7 @@ function Home() {
 
           setNowLocation({ lat, lon });
           setDefaultPosition({ lat, lon });
-          console.log("000");
+
           axios
             .get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`, {
               headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },

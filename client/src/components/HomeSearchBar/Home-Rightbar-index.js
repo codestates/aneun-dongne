@@ -20,7 +20,7 @@ function HomeRightbar({ setLevel }) {
 
   const [hashtag, setHashtag] = useState("");
   const setPlaceList = useSetRecoilState(placelist);
-  console.log(area, sigg);
+
   const changeArea = (area) => {
     if (area === "지역선택") {
       setArea("null");

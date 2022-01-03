@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Styled } from "./style";
 import axios from "axios";
-import Cookies from "universal-cookie";
+
 import { token, kToken, loginState, loginModal, pickpoint, placelist, usersArea, usersSigg } from "../../recoil/recoil";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 
@@ -18,9 +18,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
   const [likeLoading, setLikeLoading] = useState(false);
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const cookies = new Cookies();
-  const [area, setArea] = useState(usersArea);
-  const [sigg, setSigg] = useState(usersSigg);
+
   useEffect(() => {
     let mount = true;
     if (!mount) return;
@@ -56,7 +54,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     return () => {
       mount = false;
     };
-  }, [placeList, likeOrNot]);
+  }, [contentId, likeOrNot]);
   useEffect(() => {
     let mount = true;
     if (!mount) return;
@@ -77,7 +75,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     return () => {
       mount = false;
     };
-  }, [placeList]);
+  }, [contentId]);
   const LikeHandler = async (e) => {
     e.preventDefault();
     if (!isLogin) {
@@ -114,7 +112,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
           headers: {
-            Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+            // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,

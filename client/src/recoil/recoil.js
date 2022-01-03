@@ -166,7 +166,6 @@ export const isClickedNowLocation = atom({
 export const getWTM = selector({
   key: "getWTN",
   get: async ({ get }) => {
-    console.log("3");
     const result = await axios.get(
       // `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
       //   get(pickpoint)[0]

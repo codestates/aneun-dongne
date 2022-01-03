@@ -53,7 +53,7 @@ function PlaceList() {
     },
     [btnStatus]
   );
-  console.log(btnStatus);
+
   function getPlaceLocation(obj, path, title, address) {
     setPlaceLocation(obj);
     setImgURL(path);

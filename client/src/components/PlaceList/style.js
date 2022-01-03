@@ -49,7 +49,7 @@ export const Styled = {
     right: 10px;
     border: 0.5px solid #3a6fb0;
 
-    display: ${(props) => (props.BtnStatus ? "inline" : "none")};
+    display: ${(props) => (props.btnStatus ? "inline" : "none")};
     &:hover {
       background: rgba(192, 251, 255, 0.7);
       transform: scale(1.1);

@@ -3,17 +3,17 @@ import axios from "axios";
 import { Styled } from "./style";
 import HomeMap from "../../components/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList/PlaceList";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { loading, defaultposition, nowlocation, usersaddress } from "../../recoil/recoil";
 import Loading from "../../components/Loading/Loading";
 
 import { toast } from "react-toastify";
 
 function Home() {
-  const [nowLocation, setNowLocation] = useRecoilState(nowlocation);
+  const setNowLocation = useSetRecoilState(nowlocation);
   const [isLoading, setIsLoading] = useRecoilState(loading);
-  const [add, setAdd] = useRecoilState(usersaddress);
-  const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
+  const setAdd = useSetRecoilState(usersaddress);
+  const setDefaultPosition = useSetRecoilState(defaultposition);
   // * 현재위치 받는 useEffect
 
   useEffect(() => {
@@ -22,8 +22,10 @@ function Home() {
         (position) => {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
+
           setNowLocation({ lat, lon });
           setDefaultPosition({ lat, lon });
+          console.log("000");
           axios
             .get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`, {
               headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },

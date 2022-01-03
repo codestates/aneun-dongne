@@ -36,6 +36,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         },
         withCredentials: true,
       })
+
       .then((res) => {
         console.log(res.data.data.userInfo);
         setInputEmail(res.data.data.userInfo.email);

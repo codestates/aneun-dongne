@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useRecoilValue, useRecoilState, useRecoilValueLoadable } from "recoil";
-import { token, kToken, pickpoint, placelist, getWTM } from "../../recoil/recoil";
+import { useRecoilValue, useResetRecoilState, useRecoilState, useRecoilValueLoadable } from "recoil";
+import { usersArea, usersSigg, pickpoint, placelist, getWTM, defaultposition } from "../../recoil/recoil";
 
 import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
@@ -11,10 +11,11 @@ import { toast } from "react-toastify";
 
 const HomeMap = () => {
   const kakao = window.kakao;
-  const accessToken = useRecoilValue(token);
-  const kakaoToken = useRecoilValue(kToken);
+
   const history = useHistory();
   const mapRef = useRef(null);
+  const usersAreaReset = useResetRecoilState(usersArea);
+  const usersSiggReset = useResetRecoilState(usersSigg);
   const [placeList, setPlaceList] = useRecoilState(placelist);
 
   const [pending, setPending] = useState(true);
@@ -23,8 +24,9 @@ const HomeMap = () => {
   const getWtm = useRecoilValueLoadable(getWTM);
 
   //!!클릭한 곳을 pickPoint에 할당할 것, 초기값은 사용자 위치.
-  // const [pickPoint, setPickPoint] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
+  // const [pickPoint, setDefaultPosition] = useState([defaultPosition.lat, defaultPosition.lon]); //!원래 [location.lat,location.lon] 임
   const [pickPoint, setPickPoint] = useRecoilState(pickpoint); //!원래 [location.lat,location.lon] 임
+  const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
 
   //! 지도 줌인,줌아웃레벨, 숫자가 작을수록 줌인
   const [level, setLevel] = useState(10);
@@ -39,12 +41,16 @@ const HomeMap = () => {
   const wtm = getWtm.contents;
 
   useEffect(() => {
+    //클락하면 지역검색창 초기화
+    usersAreaReset();
+    usersSiggReset();
+
     // ! 픽포인트, 반경, 검색어 아예 없을때
     //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -74,7 +80,7 @@ const HomeMap = () => {
         setLevel(10);
       });
   }, [wtm.x, wtm.y]); //! 평면좌표 바뀔때마다 실행
-
+  // console.log(pickPoint);
   useEffect(async () => {
     // //!위경도 -> 평면좌표
     setMapLoading(true);
@@ -83,7 +89,7 @@ const HomeMap = () => {
 
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(pickPoint[0], pickPoint[1]), //지도의 중심좌표를 마커로 변경-> 밑의 let markerCenter랑 연결
+      center: new kakao.maps.LatLng(defaultPosition.lat, defaultPosition.lon), //지도의 중심좌표를 마커로 변경-> 밑의 let markerCenter랑 연결
       level: level, //지도의 레벨(확대, 축소 정도)
     };
 
@@ -115,7 +121,7 @@ const HomeMap = () => {
     }
 
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-    console.log(placeList);
+
     for (let i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(24, 35);
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -188,14 +194,14 @@ const HomeMap = () => {
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
       if (container === null) {
-        console.log(container);
         return;
       }
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;
 
-      setPickPoint([latlng.Ma, latlng.La]);
+      setDefaultPosition({ lat: latlng.Ma, lon: latlng.La });
       //?  마커 위치를 클릭한 위치로 옮깁니다
+
       markerCenter.setPosition(latlng);
     });
 
@@ -205,16 +211,10 @@ const HomeMap = () => {
     setMapLoading(false);
     setPending(false);
   }, [placeList]);
-  console.log(mapRef.current);
+  // console.log(mapRef.current);
   return (
     <Styled.Div>
-      <HomeRightbar
-        setLevel={setLevel}
-        // searchCurrentPlace={searchPlace}
-        // place={place}
-        // pickPoint={pickPoint}
-        // setPickPoint={setPickPoint}
-      />
+      <HomeRightbar setLevel={setLevel} />
       {getWtm.state === "loading" || placeList.length === 0 ? (
         <MapLoading />
       ) : (

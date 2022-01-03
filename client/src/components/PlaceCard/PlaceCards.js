@@ -28,7 +28,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -58,10 +58,13 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     };
   }, [placeList, likeOrNot]);
   useEffect(() => {
+    let mount = true;
+    if (!mount) return;
+    setLikeLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -71,6 +74,9 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
         if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
         else if (response.data.post.post_tags === null) setTags([]);
       });
+    return () => {
+      mount = false;
+    };
   }, [placeList]);
   const LikeHandler = async (e) => {
     e.preventDefault();
@@ -87,7 +93,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
           {},
           {
             headers: {
-              Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+              // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
               "Content-Type": "application/json",
             },
             withCredentials: true,

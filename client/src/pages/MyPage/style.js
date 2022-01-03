@@ -142,8 +142,8 @@ export const Styled = {
     color: white;
     transition: all 0.3s;
     border: 0.5px solid white;
-    display: ${(props) => (props.BtnStatus ? "flex" : "none")};
-    :hover {
+    display: ${(props) => (props.btnStatus ? "flex" : "none")};
+    &:hover {
       background-color: #9cb1e0;
       transition: all 0.3s;
       border: 0.5px solid white;

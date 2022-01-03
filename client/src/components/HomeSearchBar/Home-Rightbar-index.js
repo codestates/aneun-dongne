@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Styled } from "./style";
-
+import Cookies from "universal-cookie";
 import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import { token, kToken, placelist, usersArea, usersSigg } from "../../recoil/recoil";
@@ -12,16 +12,15 @@ import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
   // const [area, setArea] = useState("null");
   const [areaIdx, setAreaIdx] = useState(0);
-  // const [sigg, setSigg] = useState("null");
+  const cookies = new Cookies();
+
   const [area, setArea] = useRecoilState(usersArea);
   const [sigg, setSigg] = useRecoilState(usersSigg);
   const [place, setPlace] = useState("");
 
   const [hashtag, setHashtag] = useState("");
   const setPlaceList = useSetRecoilState(placelist);
-  const accessToken = useRecoilValue(token);
-  const kakaoToken = useRecoilValue(kToken);
-
+  console.log(area, sigg);
   const changeArea = (area) => {
     if (area === "지역선택") {
       setArea("null");
@@ -64,7 +63,8 @@ function HomeRightbar({ setLevel }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         params: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { Styled } from "./style";
 import { MemoCards } from "../PlaceCard/PlaceCards";
@@ -17,10 +17,21 @@ function PlaceList() {
   const setImgURL = useSetRecoilState(placeimg);
   const setTitle = useSetRecoilState(placetitle);
   const [ScrollY, setScrollY] = useState(0);
-  const [BtnStatus, setBtnStatus] = useState(false);
+  const [btnStatus, setBtnStatus] = useState(false);
 
   //! Top 버튼에 필요한 주석
   useEffect(() => {
+    const handleFollow = () => {
+      setScrollY(window.pageYOffset);
+      if (ScrollY > 300) {
+        // 300 이상이면 버튼이 보이게
+        setBtnStatus(true);
+      } else {
+        // 300 이하면 버튼이 사라지게
+        setBtnStatus(false);
+      }
+    };
+
     const watch = () => {
       window.addEventListener("scroll", handleFollow);
     };
@@ -30,25 +41,19 @@ function PlaceList() {
     };
   });
 
-  const handleFollow = () => {
-    setScrollY(window.pageYOffset);
-    if (ScrollY > 300) {
-      // 300 이상이면 버튼이 보이게
-      setBtnStatus(true);
-    } else {
-      // 300 이하면 버튼이 사라지게
-      setBtnStatus(false);
-    }
-  };
-  function topBtn() {
-    window.scroll({
-      top: 0,
-      behavior: "smooth",
-    });
-    setScrollY(0); // ScrollY 의 값을 초기화
-    setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
-  }
-
+  //탑버튼 클릭했을때 실행되는 onClick함수
+  const topBtn = useCallback(
+    function topBtn() {
+      window.scroll({
+        top: 0,
+        behavior: "smooth",
+      });
+      setScrollY(0); // ScrollY 의 값을 초기화
+      setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
+    },
+    [btnStatus]
+  );
+  console.log(btnStatus);
   function getPlaceLocation(obj, path, title, address) {
     setPlaceLocation(obj);
     setImgURL(path);
@@ -75,11 +80,11 @@ function PlaceList() {
           </Styled.Div>
         );
       })}
-      <Styled.MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
+      <Styled.MoveToTopBtn btnStatus={btnStatus} onClick={topBtn}>
         <Icon size={"60"} icon={angleUp} />
       </Styled.MoveToTopBtn>
     </Styled.PlaceLists>
   );
 }
-
-export default React.memo(PlaceList);
+export default PlaceList;
+// export default React.memo(PlaceList);

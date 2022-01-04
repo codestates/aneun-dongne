@@ -30,9 +30,9 @@ export const placelist = atom({
   default: [],
 });
 
-export const cannotSearchPlace = atom({
+export const canSearchPlace = atom({
   key: "cannotSearchPlace",
-  default: false,
+  default: true,
 });
 
 //메인페이지에서 유저주소, 좌표 넘어오면 연결시키기

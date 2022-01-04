@@ -11,7 +11,7 @@ import {
   placelist,
   token,
   kToken,
-  cannotSearchPlace,
+  canSearchPlace,
 } from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
@@ -19,7 +19,7 @@ import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
 
 function PlaceList() {
-  const ableToSearchPlace = useRecoilValue(cannotSearchPlace);
+  const ableToSearchPlace = useRecoilValue(canSearchPlace);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const placeList = useRecoilValue(placelist);
@@ -71,11 +71,11 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
-
+  console.log(ableToSearchPlace);
   return (
     <>
       <Styled.PlaceLists>
-        {ableToSearchPlace ? (
+        {!ableToSearchPlace ? (
           <>
             <Empty />
           </>

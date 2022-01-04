@@ -58,7 +58,7 @@ function Comments({ uuid, img, nickname, text, initialTags, date, editable, cont
           `${process.env.REACT_APP_API_URL}/comment/${contentId}`,
           {
             headers: {
-              Authorization: `Bearer ${accessToken || kakaoToken}`,
+              // Authorization: `Bearer ${accessToken || kakaoToken}`,
               "Content-Type": "application/json",
             },
             withCredentials: true,

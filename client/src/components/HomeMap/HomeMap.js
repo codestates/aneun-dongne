@@ -1,7 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useRecoilValue, useResetRecoilState, useRecoilState, useRecoilValueLoadable } from "recoil";
-import { usersArea, usersSigg, pickpoint, placelist, getWTM, defaultposition } from "../../recoil/recoil";
+import { useSetRecoilState, useResetRecoilState, useRecoilState, useRecoilValueLoadable } from "recoil";
+import {
+  usersArea,
+  usersSigg,
+  pickpoint,
+  placelist,
+  getWTM,
+  defaultposition,
+  canSearchPlace,
+} from "../../recoil/recoil";
 
 import { useHistory } from "react-router-dom";
 import { Styled } from "./style.js";
@@ -11,7 +19,7 @@ import { toast } from "react-toastify";
 
 const HomeMap = () => {
   const kakao = window.kakao;
-
+  const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
   const history = useHistory();
   const mapRef = useRef(null);
   const usersAreaReset = useResetRecoilState(usersArea);
@@ -196,6 +204,7 @@ const HomeMap = () => {
       if (container === null) {
         return;
       }
+      setAbleToSearchPlace(true);
       // ? 클릭한 위도, 경도 정보를 가져옵니다
       let latlng = mouseEvent.latLng;
 

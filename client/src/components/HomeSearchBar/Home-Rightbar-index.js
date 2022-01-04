@@ -4,15 +4,7 @@ import { Styled } from "./style";
 import Cookies from "universal-cookie";
 import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
 import { useSetRecoilState, useResetRecoilState, useRecoilState } from "recoil";
-import {
-  token,
-  kToken,
-  placelist,
-  usersArea,
-  usersSigg,
-  cannotSearchPlace,
-  searchPlaceModal,
-} from "../../recoil/recoil";
+import { token, kToken, placelist, usersArea, usersSigg, canSearchPlace, searchPlaceModal } from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "../Autocomplete/Autocomplete";
@@ -20,7 +12,7 @@ import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
   const setOpenSearchPlaceModal = useSetRecoilState(searchPlaceModal);
   // const placeListReset = useResetRecoilState(placelist);
-  const setAbleToSearchPlace = useSetRecoilState(cannotSearchPlace);
+  const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
   // const [area, setArea] = useState("null");
   const [areaIdx, setAreaIdx] = useState(0);
   const cookies = new Cookies();
@@ -92,7 +84,7 @@ function HomeRightbar({ setLevel }) {
       .then((res) => {
         // console.log(res.data.data);
         if (res.data.data.length === 0) {
-          setAbleToSearchPlace(true);
+          setAbleToSearchPlace(false);
           return;
         }
         // console.log(res.data.data);

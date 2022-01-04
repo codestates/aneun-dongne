@@ -4,12 +4,21 @@ import { Styled } from "./style";
 import Cookies from "universal-cookie";
 import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
 import { useSetRecoilState, useResetRecoilState, useRecoilState } from "recoil";
-import { token, kToken, placelist, usersArea, usersSigg, cannotSearchPlace } from "../../recoil/recoil";
+import {
+  token,
+  kToken,
+  placelist,
+  usersArea,
+  usersSigg,
+  cannotSearchPlace,
+  searchPlaceModal,
+} from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
+  const setOpenSearchPlaceModal = useSetRecoilState(searchPlaceModal);
   // const placeListReset = useResetRecoilState(placelist);
   const setAbleToSearchPlace = useSetRecoilState(cannotSearchPlace);
   // const [area, setArea] = useState("null");
@@ -108,8 +117,10 @@ function HomeRightbar({ setLevel }) {
   return (
     <div>
       <Styled.MapRightBar>
-        <p>오늘 떠나볼 동네는?</p>
-
+        {/* <p>오늘 떠나볼 동네는?</p> */}
+        <Styled.CloseBtn onClick={() => setOpenSearchPlaceModal(false)}>
+          <i className="fas fa-times"></i>
+        </Styled.CloseBtn>
         <Styled.SearchWrapper>
           <Styled.SearchBar>
             <Styled.SearchLocation first value={area} onChange={(e) => changeArea(e.target.value)} name="h_area1">

@@ -4,13 +4,15 @@ import { Styled } from "./style";
 import HomeMap from "../../components/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList/PlaceList";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { loading, defaultposition, nowlocation, usersaddress } from "../../recoil/recoil";
+import { loading, defaultposition, nowlocation, usersaddress, searchPlaceModal } from "../../recoil/recoil";
 import Loading from "../../components/Loading/Loading";
 
 import { toast } from "react-toastify";
+import HomeRightbar from "../../components/HomeSearchBar/Home-Rightbar-index";
 
 function Home() {
   //atom값을 참조하지 않아야 리렌더링이 안됨.
+  const setOpenSearchPlaceModal = useSetRecoilState(searchPlaceModal);
   const setNowLocation = useSetRecoilState(nowlocation);
   const [isLoading, setIsLoading] = useState(true);
   const setAdd = useSetRecoilState(usersaddress);
@@ -63,14 +65,19 @@ function Home() {
         {isLoading ? (
           <Loading />
         ) : (
-          <Styled.DivRow>
-            <Styled.DivColumn>
-              <HomeMap />
-            </Styled.DivColumn>
-            <Styled.DivColumnSecond>
-              <PlaceList />
-            </Styled.DivColumnSecond>
-          </Styled.DivRow>
+          <>
+            <Styled.DivRow>
+              <Styled.DivColumn className="second">
+                <HomeMap />
+                <Styled.OpenModalBtn onClick={() => setOpenSearchPlaceModal(true)}>지역검색창열기</Styled.OpenModalBtn>
+              </Styled.DivColumn>
+              <Styled.DivColumnSecond>
+                <PlaceList />
+              </Styled.DivColumnSecond>
+            </Styled.DivRow>
+
+            {/* <HomeRightbar /> */}
+          </>
         )}
       </Styled.FixedComp>
     </>

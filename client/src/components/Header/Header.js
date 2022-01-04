@@ -11,6 +11,7 @@ import {
   saveOrNotModal,
   loginAgainModal,
   warningDeleteUserModal,
+  searchPlaceModal,
 } from "../../recoil/recoil";
 import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteUserInfo";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
@@ -20,6 +21,7 @@ import { Link, useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
 import ModalLoginAgain from "../ModalLoginAgain/ModalLoginAgain";
+import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
 
 const Header = ({ handleResponseSuccess }) => {
   const cookies = new Cookies();
@@ -31,6 +33,7 @@ const Header = ({ handleResponseSuccess }) => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const [isLoginAgainOpen, setIsLoginAgainOpen] = useRecoilState(loginAgainModal);
   const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
+  const [isOpenSearchPlaceModal, setIsOpenSearchPlaceModal] = useRecoilState(searchPlaceModal);
 
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
@@ -191,6 +194,14 @@ const Header = ({ handleResponseSuccess }) => {
                 <ModalLoginAgain />
               </Styled.ModalView>
             </Styled.ModalBackdrop>
+          </>
+        ) : null}
+      </Styled.ModalContainer>
+      {/* 지역검색창 모달 */}
+      <Styled.ModalContainer>
+        {isOpenSearchPlaceModal ? (
+          <>
+            <HomeRightbar />
           </>
         ) : null}
       </Styled.ModalContainer>

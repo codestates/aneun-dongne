@@ -215,7 +215,6 @@ const HomeMap = () => {
 
   return (
     <Styled.Div>
-      <HomeRightbar setLevel={setLevel} />
       {getWtm.state === "loading" || placeList.length === 0 ? (
         <MapLoading />
       ) : (

@@ -2,39 +2,17 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 export const Styled = {
   PlaceLists: styled.div`
-    @media (max-width: 1000px) {
-      margin: 0px;
-      grid-column-gap: 0px;
-      grid-template-columns: repeat(1, 1fr);
+    /* margin-top: 0; */
+    display: flex;
+    flex-direction: column;
+
+    /* right: 0px; */
+    /* position: absolute; */
+
+    @media screen and (max-width: 880px) {
+      flex-direction: row;
+      bottom: 0px;
     }
-    /* @media (max-width: 1023px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    } */
-    @media (max-width: 660px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-    }
-    /* @media (min-width: 1040px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      grid-column-gap: 40px;
-      text-decoration-line: none;
-      margin-left: 30px;
-    }
-    @media (min-width: 1360px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-    }
-    @media (min-width: 1730px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-    } */
-    /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 40px;
-  text-decoration-line: none;
-  margin-left: 30px; */
   `,
   MoveToTopBtn: styled.button`
     border-radius: 70%;

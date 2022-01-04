@@ -145,10 +145,10 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
           </Styled.Tags>
         )}
         {img ? <img src={img} /> : <img src="./images/not-image-yet.png" />}
-        <div className="place-cards-title">
+        <span className="place-cards-title">
           <div>{`[${addr1}] `}</div>
           <span>{title}</span>
-        </div>
+        </span>
         {likeLoading ? (
           <Styled.LikeBtn onClick={(e) => e.preventDefault()}>
             <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>

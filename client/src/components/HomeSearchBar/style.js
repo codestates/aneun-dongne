@@ -1,8 +1,31 @@
 import styled from "styled-components";
 
 export const Styled = {
-  MapRightBar: styled.div`
+  CloseBtn: styled.button`
     position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 30px;
+    cursor: pointer;
+    background-color: white;
+    z-index: 999;
+    padding: 5px;
+    margin-left: auto;
+    border: none;
+  `,
+  MapRightBar: styled.div`
+    animation: modal-show 0.3s;
+    @keyframes modal-show {
+      from {
+        margin-top: -50px;
+      }
+      to {
+        margin-top: 0;
+      }
+    }
+    position: fixed;
+    top: 75px;
+    background: rgba(255, 255, 255, 0.5);
     z-index: 999;
     display: flex;
     align-content: center;
@@ -10,7 +33,6 @@ export const Styled = {
     border: 1px #3a6fb0 solid;
     border-radius: 10px;
     flex-direction: column;
-
     @media (max-width: 1023px) {
       margin: 2% auto;
     }

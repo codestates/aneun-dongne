@@ -161,6 +161,12 @@ export const infoEdit = atom({
   key: "infoEdit",
   default: "",
 });
+//! 홈화면 지역 검색 모달
+export const searchPlaceModal = atom({
+  key: "searchPlaceModal",
+  default: false,
+});
+
 // ! 현재위치
 export const isClickedNowLocation = atom({
   key: "isClickedNowLocation",

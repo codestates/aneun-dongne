@@ -54,7 +54,7 @@ function HomeRightbar({ setLevel }) {
   };
   const handleTagSearch = (e) => {
     setHashtag(e.target.value);
-    console.log("handleTagSearch", hashtag);
+    // console.log("handleTagSearch", hashtag);
   };
   const searchPlace = (area, sigg, place, hashtag) => {
     // console.log(place);
@@ -90,12 +90,12 @@ function HomeRightbar({ setLevel }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         if (res.data.data.length === 0) {
           setAbleToSearchPlace(true);
           return;
         }
-        console.log(res.data.data);
+        // console.log(res.data.data);
         const list = res.data.data
           .filter((el) => el.post_mapy !== "0.00000000000000000000" && el.post_mapx !== "0.00000000000000000000")
           .map((el) => {
@@ -109,7 +109,7 @@ function HomeRightbar({ setLevel }) {
               el.post_tags ? el.post_tags.split(",") : [],
             ];
           });
-        console.log(list);
+        // console.log(list);
         setPlaceList(list);
       })
       .catch((err) => console.log(err));

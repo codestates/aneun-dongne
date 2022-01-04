@@ -1,6 +1,6 @@
 module.exports = (req, res) => {
   res.clearCookie("jwt", {
-    domain: ".aneun-dongne.com",
+    // domain: ".aneun-dongne.com",
     path: "/",
     secure: true,
     sameSite: "None",

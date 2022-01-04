@@ -71,10 +71,6 @@ const ModalSavePosition = () => {
         setIsUploaded(true);
         setIsSaveOrNotModal(true);
         setIsSavePositionOpen(false);
-        toast.info("업로드 중입니다", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-        setIsSavePositionOpen(false);
       })
       .catch((err) => {
         setClickedBtn(true);

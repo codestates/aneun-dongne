@@ -3,12 +3,23 @@ import { useSetRecoilState, useRecoilValue } from "recoil";
 import { Styled } from "./style";
 import { MemoCards } from "../PlaceCard/PlaceCards";
 
-import { placeaddress, placelocation, placeimg, placetitle, placelist, token, kToken } from "../../recoil/recoil";
+import {
+  placeaddress,
+  placelocation,
+  placeimg,
+  placetitle,
+  placelist,
+  token,
+  kToken,
+  cannotSearchPlace,
+} from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
+import Empty from "../Empty/Empty";
 
 function PlaceList() {
+  const ableToSearchPlace = useRecoilValue(cannotSearchPlace);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const placeList = useRecoilValue(placelist);
@@ -62,28 +73,35 @@ function PlaceList() {
   }
 
   return (
-    <Styled.PlaceLists>
-      {placeList.map((place, idx) => {
-        return (
-          <Styled.Div key={idx}>
-            {/* addr1이 undefined 되는 장소가 있어서 addr1는 임시방편으로 3항연산자 처리함 나중에 살펴보자. */}
-            <Styled.StyledLink to={`/detailpage/${place[5]}`}>
-              <MemoCards
-                onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
-                title={place[2]}
-                img={place[3]}
-                addr1={place[4] ? place[4].split(" ")[0] : null}
-                contentId={place[5]}
-                tags={place[6]}
-              ></MemoCards>
-            </Styled.StyledLink>
-          </Styled.Div>
-        );
-      })}
-      <Styled.MoveToTopBtn btnStatus={btnStatus} onClick={topBtn}>
-        <Icon size={"60"} icon={angleUp} />
-      </Styled.MoveToTopBtn>
-    </Styled.PlaceLists>
+    <>
+      <Styled.PlaceLists>
+        {ableToSearchPlace ? (
+          <>
+            <Empty />
+          </>
+        ) : (
+          placeList.map((place, idx) => {
+            return (
+              <Styled.Div key={idx}>
+                <Styled.StyledLink to={`/detailpage/${place[5]}`}>
+                  <MemoCards
+                    onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
+                    title={place[2]}
+                    img={place[3]}
+                    addr1={place[4] ? place[4].split(" ")[0] : null}
+                    contentId={place[5]}
+                    tags={place[6]}
+                  ></MemoCards>
+                </Styled.StyledLink>
+              </Styled.Div>
+            );
+          })
+        )}
+        <Styled.MoveToTopBtn btnStatus={btnStatus} onClick={topBtn}>
+          <Icon size={"60"} icon={angleUp} />
+        </Styled.MoveToTopBtn>
+      </Styled.PlaceLists>
+    </>
   );
 }
 export default PlaceList;

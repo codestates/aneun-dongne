@@ -3,13 +3,15 @@ import axios from "axios";
 import { Styled } from "./style";
 import Cookies from "universal-cookie";
 import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
-import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
-import { token, kToken, placelist, usersArea, usersSigg } from "../../recoil/recoil";
+import { useSetRecoilState, useResetRecoilState, useRecoilState } from "recoil";
+import { token, kToken, placelist, usersArea, usersSigg, cannotSearchPlace } from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
+  // const placeListReset = useResetRecoilState(placelist);
+  const setAbleToSearchPlace = useSetRecoilState(cannotSearchPlace);
   // const [area, setArea] = useState("null");
   const [areaIdx, setAreaIdx] = useState(0);
   const cookies = new Cookies();
@@ -46,8 +48,8 @@ function HomeRightbar({ setLevel }) {
     console.log("handleTagSearch", hashtag);
   };
   const searchPlace = (area, sigg, place, hashtag) => {
-    console.log(place);
-    console.log("hash", hashtag);
+    // console.log(place);
+    // console.log("hash", hashtag);
     let areaCode = "";
     let siggCode = "";
     if (area === "null") {
@@ -79,7 +81,11 @@ function HomeRightbar({ setLevel }) {
         withCredentials: true,
       })
       .then((res) => {
-        if (res.data.data.length === 0) return;
+        console.log(res.data.data);
+        if (res.data.data.length === 0) {
+          setAbleToSearchPlace(true);
+          return;
+        }
         console.log(res.data.data);
         const list = res.data.data
           .filter((el) => el.post_mapy !== "0.00000000000000000000" && el.post_mapx !== "0.00000000000000000000")

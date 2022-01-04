@@ -219,7 +219,6 @@ const HomeMap = () => {
       {getWtm.state === "loading" || placeList.length === 0 ? (
         <MapLoading />
       ) : (
-        // <Styled.Map id="map">
         <Styled.Map ref={mapRef}>
           <div className="map-experiment">&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다."}</div>
         </Styled.Map>

@@ -6,6 +6,7 @@ import { token, kToken, loginState, loginModal, pickpoint, placelist, usersArea,
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 
 import HashTagTemplate from "../HashTagTemplate/HashTagTemplate";
+import LikeLoading from "../Loading/LikeLoading";
 //<HashTagTemplate keywordDummy={tags || []} />
 
 function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
@@ -15,14 +16,12 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
   const [tags, setTags] = useState([]);
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
-  const [likeLoading, setLikeLoading] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(true);
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
 
   useEffect(() => {
-    let mount = true;
-    if (!mount) return;
-    setLikeLoading(true);
+    // setLikeLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
         headers: {
@@ -51,9 +50,6 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     // });
 
     setLikeLoading(false);
-    return () => {
-      mount = false;
-    };
   }, [contentId, likeOrNot]);
   useEffect(() => {
     let mount = true;
@@ -155,9 +151,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
         </div>
         {likeLoading ? (
           <Styled.LikeBtn onClick={(e) => e.preventDefault()}>
-            <i className={likeOrNot ? "fas fa-heart" : "hide"}>
-              <span>?</span>
-            </i>
+            <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
           </Styled.LikeBtn>
         ) : (
           <Styled.LikeBtn onClick={(e) => LikeHandler(e)}>

@@ -18,15 +18,21 @@ export const usersaddress = atom({
 });
 export const usersArea = atom({
   key: "usersArea",
-  default: "null",
+  default: "지역선택",
 });
 export const usersSigg = atom({
   key: "usersSigg",
-  default: "null",
+  default: "지역선택",
 });
+
 export const placelist = atom({
   key: "placelist",
   default: [],
+});
+
+export const cannotSearchPlace = atom({
+  key: "cannotSearchPlace",
+  default: false,
 });
 
 //메인페이지에서 유저주소, 좌표 넘어오면 연결시키기
@@ -149,15 +155,18 @@ export const pickpoint = selector({
   get: ({ get }) => {
     return [get(defaultposition).lat, get(defaultposition).lon];
   },
-  set: ({ set }, arr) => {
-    set(defaultposition, { lat: arr[0], lon: arr[1] });
-  },
 });
 
 export const infoEdit = atom({
   key: "infoEdit",
   default: "",
 });
+//! 홈화면 지역 검색 모달
+export const searchPlaceModal = atom({
+  key: "searchPlaceModal",
+  default: false,
+});
+
 // ! 현재위치
 export const isClickedNowLocation = atom({
   key: "isClickedNowLocation",
@@ -169,8 +178,11 @@ export const getWTM = selector({
   key: "getWTN",
   get: async ({ get }) => {
     const result = await axios.get(
-      `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
-        get(pickpoint)[0]
+      // `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
+      //   get(pickpoint)[0]
+      // }&input_coord=WGS84&output_coord=WTM`,
+      `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(defaultposition).lon}&y=${
+        get(defaultposition).lat
       }&input_coord=WGS84&output_coord=WTM`,
       {
         headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },

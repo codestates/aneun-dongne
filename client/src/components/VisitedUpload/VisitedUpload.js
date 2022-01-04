@@ -32,13 +32,15 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
         <Styled.ImgDiv
           // className="img_preview"
           onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
+          // style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
+          photo={URL.createObjectURL(placeImage)}
         ></Styled.ImgDiv>
       ) : (
         <Styled.ImgDiv
           className="good"
           onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url(${placeImage})` }}
+          photo={placeImage}
+          // style={{ backgroundImage: `url(${placeImage})` }}
         ></Styled.ImgDiv>
       )}
       <Styled.EditProfile onClick={(e) => inputBtn(e, inputValue)}>

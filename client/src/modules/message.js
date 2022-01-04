@@ -14,4 +14,5 @@ export const message = {
   inputPhotoPlease: "사진을 등록해주세요",
   inputMemoPlease: "메모를 작성해주세요",
   failRegisterToImage: "이미지업로드 실패",
+  unauthorized: "로그인이 필요합니다.",
 };

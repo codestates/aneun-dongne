@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Styled } from "./style";
 import axios from "axios";
-import Cookies from "universal-cookie";
+
 import { token, kToken, loginState, loginModal, pickpoint, placelist, usersArea, usersSigg } from "../../recoil/recoil";
 import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 
 import HashTagTemplate from "../HashTagTemplate/HashTagTemplate";
+import LikeLoading from "../Loading/LikeLoading";
 //<HashTagTemplate keywordDummy={tags || []} />
 
 function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
@@ -15,20 +16,16 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
   const [tags, setTags] = useState([]);
   const [like, setLike] = useState(0); //나중에 서버로부터 받아오게 된다.
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
-  const [likeLoading, setLikeLoading] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(true);
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-  const cookies = new Cookies();
-  const [area, setArea] = useState(usersArea);
-  const [sigg, setSigg] = useState(usersSigg);
+
   useEffect(() => {
-    let mount = true;
-    if (!mount) return;
-    setLikeLoading(true);
+    // setLikeLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -53,15 +50,15 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     // });
 
     setLikeLoading(false);
-    return () => {
-      mount = false;
-    };
-  }, [placeList, likeOrNot]);
+  }, [contentId, likeOrNot]);
   useEffect(() => {
+    let mount = true;
+    if (!mount) return;
+    setLikeLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -71,7 +68,10 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
         if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
         else if (response.data.post.post_tags === null) setTags([]);
       });
-  }, [placeList]);
+    return () => {
+      mount = false;
+    };
+  }, [contentId]);
   const LikeHandler = async (e) => {
     e.preventDefault();
     if (!isLogin) {
@@ -87,7 +87,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
           {},
           {
             headers: {
-              Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+              // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
               "Content-Type": "application/json",
             },
             withCredentials: true,
@@ -108,7 +108,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
       axios
         .delete(`${process.env.REACT_APP_API_URL}/like/${contentId}`, {
           headers: {
-            Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+            // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -145,15 +145,13 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
           </Styled.Tags>
         )}
         {img ? <img src={img} /> : <img src="./images/not-image-yet.png" />}
-        <div className="place-cards-title">
+        <span className="place-cards-title">
           <div>{`[${addr1}] `}</div>
           <span>{title}</span>
-        </div>
+        </span>
         {likeLoading ? (
           <Styled.LikeBtn onClick={(e) => e.preventDefault()}>
-            <i className={likeOrNot ? "fas fa-heart" : "hide"}>
-              <span>?</span>
-            </i>
+            <i className={likeOrNot ? "fas fa-heart" : "hide"}></i>
           </Styled.LikeBtn>
         ) : (
           <Styled.LikeBtn onClick={(e) => LikeHandler(e)}>

@@ -21,9 +21,9 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
+  const setWarningModal = useSetRecoilState(warningDeleteUserModal);
   useEffect(() => {
-    if (kakaoToken) setErrorMessage(message.kakaoState);
+    if (window.localStorage.getItem("jwt") === "카카오로긴") setErrorMessage(message.kakaoState);
   }, []);
 
   useEffect(() => {
@@ -36,8 +36,9 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         },
         withCredentials: true,
       })
+
       .then((res) => {
-        console.log(res.data.data.userInfo);
+        // console.log(res.data.data.userInfo);
         setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
           setImgUrl(res.data.data.userInfo.user_image_path);
@@ -56,7 +57,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const editInfo = async (e) => {
     e.preventDefault();
 
-    if (!cookies.get("jwt") && !cookies.get("kakao-jwt")) {
+    if (!window.localStorage.getItem("jwt")) {
       //서버 유효성검사 필요해요
       setIsLoginAgainOpen(true);
       return;

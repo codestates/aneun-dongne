@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { getAreaNames } from "../../modules/AreaCodetoName";
-import Icon from "react-icons-kit";
-import { angleUp } from "react-icons-kit/fa/angleUp";
+// import Icon from "react-icons-kit";
+// import { angleUp } from "react-icons-kit/fa/angleUp";
 
 import Empty from "../Empty/Empty";
 import { Styled } from "./style";
@@ -60,9 +60,9 @@ const LikeLists = ({ postsInfo }) => {
           </div>
         </Styled.PlaceCard>
       )}
-      <Styled.TopButton onClick={ToScrollTop}>
-        <Icon size={"60"} icon={angleUp} />
-      </Styled.TopButton>
+      {/* <Styled.TopButton onClick={ToScrollTop}> */}
+      {/* <Icon size={"60"} icon={angleUp} /> */}
+      {/* </Styled.TopButton> */}
     </Styled.Lists>
   );
 };

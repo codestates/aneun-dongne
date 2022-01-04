@@ -1,26 +1,36 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Styled } from "./style";
-
+import Cookies from "universal-cookie";
 import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
-import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
-import { token, kToken, placelist, usersArea, usersSigg } from "../../recoil/recoil";
+import { useSetRecoilState, useResetRecoilState, useRecoilState } from "recoil";
+import {
+  token,
+  kToken,
+  placelist,
+  usersArea,
+  usersSigg,
+  cannotSearchPlace,
+  searchPlaceModal,
+} from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
 function HomeRightbar({ setLevel }) {
+  const setOpenSearchPlaceModal = useSetRecoilState(searchPlaceModal);
+  // const placeListReset = useResetRecoilState(placelist);
+  const setAbleToSearchPlace = useSetRecoilState(cannotSearchPlace);
   // const [area, setArea] = useState("null");
   const [areaIdx, setAreaIdx] = useState(0);
-  // const [sigg, setSigg] = useState("null");
+  const cookies = new Cookies();
+
   const [area, setArea] = useRecoilState(usersArea);
   const [sigg, setSigg] = useRecoilState(usersSigg);
   const [place, setPlace] = useState("");
 
   const [hashtag, setHashtag] = useState("");
   const setPlaceList = useSetRecoilState(placelist);
-  const accessToken = useRecoilValue(token);
-  const kakaoToken = useRecoilValue(kToken);
 
   const changeArea = (area) => {
     if (area === "지역선택") {
@@ -47,8 +57,8 @@ function HomeRightbar({ setLevel }) {
     console.log("handleTagSearch", hashtag);
   };
   const searchPlace = (area, sigg, place, hashtag) => {
-    console.log(place);
-    console.log("hash", hashtag);
+    // console.log(place);
+    // console.log("hash", hashtag);
     let areaCode = "";
     let siggCode = "";
     if (area === "null") {
@@ -64,7 +74,8 @@ function HomeRightbar({ setLevel }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -79,7 +90,11 @@ function HomeRightbar({ setLevel }) {
         withCredentials: true,
       })
       .then((res) => {
-        if (res.data.data.length === 0) return;
+        console.log(res.data.data);
+        if (res.data.data.length === 0) {
+          setAbleToSearchPlace(true);
+          return;
+        }
         console.log(res.data.data);
         const list = res.data.data
           .filter((el) => el.post_mapy !== "0.00000000000000000000" && el.post_mapx !== "0.00000000000000000000")
@@ -102,8 +117,10 @@ function HomeRightbar({ setLevel }) {
   return (
     <div>
       <Styled.MapRightBar>
-        <p>오늘 떠나볼 동네는?</p>
-
+        {/* <p>오늘 떠나볼 동네는?</p> */}
+        <Styled.CloseBtn onClick={() => setOpenSearchPlaceModal(false)}>
+          <i className="fas fa-times"></i>
+        </Styled.CloseBtn>
         <Styled.SearchWrapper>
           <Styled.SearchBar>
             <Styled.SearchLocation first value={area} onChange={(e) => changeArea(e.target.value)} name="h_area1">

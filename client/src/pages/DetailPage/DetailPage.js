@@ -6,7 +6,7 @@ import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTagTemplate/HashTagTemplate";
 import CommentTemplate from "../../components/CommentTemplate/CommentTemplate";
 import MyComment from "../../components/MyComment/MyComment";
-import { selector, useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { selector, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState, token, kToken, loginModal, loginAgainModal } from "../../recoil/recoil";
 import { contentid, defaultcomments, hashTagSelector } from "../../recoil/detailpage";
 
@@ -15,7 +15,7 @@ import NoComment from "../../components/NoComment/NoComment";
 
 function DetailPage({ match }) {
   const contentId = parseInt(match.params.id, 10);
-  // const [contentId, setContentId] = useRecoilState(contentid);
+
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
@@ -49,7 +49,7 @@ function DetailPage({ match }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
@@ -78,7 +78,7 @@ function DetailPage({ match }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
@@ -93,7 +93,7 @@ function DetailPage({ match }) {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },

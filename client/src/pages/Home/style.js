@@ -7,7 +7,7 @@ export const Styled = {
   `,
   DivRow: styled.div`
     display: flex;
-
+    /* background: blue; */
     @media screen and (max-width: 880px) {
       flex-direction: column;
     }
@@ -22,10 +22,17 @@ export const Styled = {
     }
     @media screen and (max-width: 880px) {
       height: 55vh;
+      position: fixed;
+      /* left: 0; */
+      top: 75px;
+      width: 100%;
+      /* height: 90vh; */
       /* background: red; */
     }
   `,
-  DivColumnSecond: styled.div``,
+  DivColumnSecond: styled.div`
+    /* background: orange; */
+  `,
   OpenModalBtn: styled.button`
     position: fixed;
     top: 75px;

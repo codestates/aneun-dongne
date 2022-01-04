@@ -11,7 +11,8 @@ export const Styled = {
 
     @media screen and (max-width: 880px) {
       flex-direction: row;
-      bottom: 0px;
+      margin-top: 55vh;
+      /* background: red; */
     }
   `,
   MoveToTopBtn: styled.button`

@@ -50,6 +50,10 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
     // });
 
     setLikeLoading(false);
+    return () => {
+      setLike(0);
+      // setLikeOrNot(false);
+    };
   }, [contentId, likeOrNot]);
   useEffect(() => {
     let mount = true;
@@ -70,6 +74,7 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
       });
     return () => {
       mount = false;
+      setTags("");
     };
   }, [contentId]);
   const LikeHandler = async (e) => {

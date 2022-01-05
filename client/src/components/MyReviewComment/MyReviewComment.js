@@ -11,7 +11,7 @@ import { Styled } from "./style";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 import Cookies from "universal-cookie";
 
-const MyReviewComment = ({ comment, SetComments }) => {
+const MyReviewComment = ({ comment, renderMyComments }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
 
@@ -38,10 +38,9 @@ const MyReviewComment = ({ comment, SetComments }) => {
         },
         withCredentials: true,
         params: { commentId: id },
-        withCredentials: true,
       })
-      .then((res) => {
-        SetComments(res.data.data);
+      .then(() => {
+        renderMyComments();
       });
   };
 

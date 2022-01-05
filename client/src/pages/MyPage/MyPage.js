@@ -153,7 +153,7 @@ const MyPage = ({ match }) => {
                   scrollyToZero();
                 }}
               >
-                <i class="fas fa-camera"></i> <span className="link-text">내 갤러리</span>
+                <i className="fas fa-camera"></i> <span className="link-text">내 갤러리</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">

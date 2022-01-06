@@ -76,12 +76,12 @@ export const Styled = {
 
     @media screen and (max-height: 900px) {
       width: 350px;
-      height: 450px;
+      height: 520px;
     }
 
     @media screen and (max-width: 500px) {
       width: 350px;
-      height: 450px;
+      height: 520px;
     }
   `,
 

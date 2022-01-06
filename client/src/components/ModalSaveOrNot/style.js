@@ -35,6 +35,7 @@ export const Styled = {
       background: #3a6fb0;
       width: 90px;
       height: 30px;
+      color: white;
 
       &:hover {
         background-color: #2f4d6f;

@@ -85,13 +85,13 @@ export const Styled = {
     border-radius: 20px;
 
     @media screen and (max-height: 900px) {
-      // height: 500px;
+      /* height: 500px; */
       height: ${(props) => props.height || "500px"};
       width: 350px;
     }
 
     @media screen and (max-width: 500px) {
-      // height: 500px;
+      /* height: 500px; */
       height: ${(props) => props.height || "500px"};
       width: 340px;
     }

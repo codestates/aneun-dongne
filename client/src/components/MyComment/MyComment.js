@@ -9,11 +9,10 @@ import Cookies from "universal-cookie";
 import CommentLoading from "../Loading/CommentLoading";
 
 import { Styled } from "./style";
-
 import { toast } from "react-toastify";
 
-function MyComment({ userinfo, contentId }) {
-  const cookies = new Cookies();
+function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
+
   const kakaoToken = useRecoilValue(kToken);
   const [something, setSomething] = useState("");
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);

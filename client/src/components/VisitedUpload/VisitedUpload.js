@@ -44,4 +44,4 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
   );
 }
 
-export default VisitedUpload;
+export default React.memo(VisitedUpload);

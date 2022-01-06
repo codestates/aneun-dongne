@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
   // 입력 안 했을 경우
   // pickpoint  params { tag, searchWord : ""  areacode="null", sigungucode="null"}
   // word {areacode=0, sigungucode=0, tag, searchWord : ""}: 돋보기검색버튼
-
+  console.log("아아아아", req.body);
   radius = Number(radius);
 
   if (tag === "null") {

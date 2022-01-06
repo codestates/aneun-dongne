@@ -68,7 +68,7 @@ export const Styled = {
     }
 
     .form-memo {
-      margin: 20px 0px;
+      margin: 5px 0px;
       display: flex;
       flex-direction: column;
       text-align: center;

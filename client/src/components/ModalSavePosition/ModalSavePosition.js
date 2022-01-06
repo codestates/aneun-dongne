@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -14,6 +14,7 @@ import {
 import { Styled } from "./style";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import { toast } from "react-toastify";
+import { message } from "../../modules/message";
 
 const ModalSavePosition = () => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
@@ -29,14 +30,21 @@ const ModalSavePosition = () => {
   const [errorMessage, setErrorMessage] = useState("");
   //유저 위치정보
   const [userAddr, setUserAddr] = useRecoilState(usersaddress);
+  //현재위치로 바꿀거면 nowlocation써
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
-
+  useEffect(() => {
+    console.log(isLogin);
+    if (!isLogin) {
+      setErrorMessage(message.unauthorized);
+    }
+  }, []);
   function updateInfoRequest(e) {
     e.preventDefault();
     // 로긴 안한상태면 로그인부터 시킨다.
+
     if (!isLogin) {
       setIsSavePositionOpen(false);
       setIsLoginOpen(true);
@@ -62,7 +70,7 @@ const ModalSavePosition = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/visited`, formData, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -108,10 +116,17 @@ const ModalSavePosition = () => {
               }}
             />
           </div>
+          <span className="error-message">{errorMessage}</span>
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
-          <button type="submit" className="save-position-button">
-            저장
-          </button>
+          {!isLogin ? (
+            <button type="submit" className="save-position-button">
+              로그인
+            </button>
+          ) : (
+            <button type="submit" className="save-position-button">
+              저장
+            </button>
+          )}
         </form>
       </Styled.FormContainer>
     </>

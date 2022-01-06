@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 
 import EditableHashTag from "../EditableHashTag/EditableHashTag";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
+import { defaultcomments } from "../../recoil/detailpage";
 import axios from "axios";
+import Cookies from "universal-cookie";
 import CommentLoading from "../Loading/CommentLoading";
 
 import { Styled } from "./style";
 import { toast } from "react-toastify";
 
 function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
+
   const kakaoToken = useRecoilValue(kToken);
   const [something, setSomething] = useState("");
+  const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
   const [tags, setTags] = useState([]);
+
   const accessToken = useRecoilValue(token);
   const [commentLoading, setCommentLoading] = useState(false);
   const isLogin = useRecoilValue(loginState);
@@ -23,11 +28,13 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
 
   const registerMyComment = async (e) => {
     e.preventDefault();
+
     if (!isLogin) {
       setIsLoginOpen(true);
       return;
     }
-    if (something === "") {
+    //빈칸인데 엔터키로 입력하면 빈칸이 아닌 '\n'이다.
+    if (something === "" || something === "\n") {
       toast.error("댓글을 입력해주세요", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -42,7 +49,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       setCommentLoading(true);
       const result = await axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

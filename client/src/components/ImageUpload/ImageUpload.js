@@ -28,7 +28,8 @@ function ImageUpload({ placeImage, setPlaceImage }) {
         <Styled.ImgDiv
           className="img_preview"
           onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
+          // style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
+          photo={URL.createObjectURL(placeImage)}
         ></Styled.ImgDiv>
       ) : (
         <Styled.ImgDiv className="img_preview" onClick={(e) => inputBtn(e, inputValue)}></Styled.ImgDiv>

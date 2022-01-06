@@ -86,7 +86,9 @@ const ModalSignup = ({ handleResponseSuccess, ToLoginModal, closeLogoutModalHand
         }
       )
       .then((res) => {
+        console.log(res);
         closeLogoutModalHandler();
+        window.localStorage.setItem("jwt", "일반로긴");
         handleResponseSuccess();
       })
       .catch((err) => console.log(err.response));

@@ -7,9 +7,11 @@ function CommentTemplate({ commentDummy, contentId }) {
   return (
     <div>
       {commentDummy.map((comment, idx) => {
+        //여기도 toast로 바꿔보자
         if (comment.text === "\n") return null;
+        //key에 인덱스넣는건 최후의수단
         return (
-          <div className="comment-template" key={idx}>
+          <div className="comment-template" key={comment[0].id}>
             <Comments
               uuid={comment[0].id}
               img={comment[0].user_image_path}

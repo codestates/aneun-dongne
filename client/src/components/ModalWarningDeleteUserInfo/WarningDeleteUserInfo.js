@@ -16,12 +16,13 @@ function WarningDeleteUserModal() {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
       .then((res) => {
+        window.sessionStorage.removeItem("jwt");
         setWarningModal(false);
         setIsLogin(false);
         setTimeout(() => {

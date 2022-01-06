@@ -52,6 +52,10 @@ app.post("/user/login", controllers.signin);
 app.get("/user/kakao/callback", controllers.kakaoCallBack);
 app.get("/signout", controllers.kakaoSignout);
 app.post("/signout", controllers.signout);
+// 미들웨어 upload는 controllers.bookmark가 실행되기 전에 먼저 실행된다.
+// 만약 전송한 데이터중에 파일이 포함되어 있다면, 그 파일을 가공해서 req객체에 file이라는 프로퍼티를 암시적으로 추가
+// upload.single('image')의 매개변수 'image'는 formData('image')와 연결된다.
+
 app.post("/home/bookmark", upload.single("image"), controllers.bookmark);
 
 app.get("/comment/:contentId", controllers.readComments);

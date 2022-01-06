@@ -60,6 +60,7 @@ module.exports = {
   },
   addLike: async (req, res) => {
     const accessTokenData = isAuthorized(req);
+    console.log(accessTokenData);
     const { contentId } = req.params;
     try {
       if (!accessTokenData) {

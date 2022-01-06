@@ -11,6 +11,7 @@ import {
   saveOrNotModal,
   loginAgainModal,
   warningDeleteUserModal,
+  searchPlaceModal,
 } from "../../recoil/recoil";
 import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteUserInfo";
 import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
@@ -20,6 +21,7 @@ import { Link, useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
 import ModalLoginAgain from "../ModalLoginAgain/ModalLoginAgain";
+import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";
 
 const Header = ({ handleResponseSuccess }) => {
   const cookies = new Cookies();
@@ -31,6 +33,7 @@ const Header = ({ handleResponseSuccess }) => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const [isLoginAgainOpen, setIsLoginAgainOpen] = useRecoilState(loginAgainModal);
   const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
+  const [isOpenSearchPlaceModal, setIsOpenSearchPlaceModal] = useRecoilState(searchPlaceModal);
 
   const openLoginModalHandler = (e) => {
     if (isLoginOpen) {
@@ -95,11 +98,13 @@ const Header = ({ handleResponseSuccess }) => {
       `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_API_URL}/signout`
     );
     setIsLogin(false);
+    window.localStorage.removeItem("jwt"); //제거
   };
 
   const logoutHandler = () => {
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
       setIsLogin(false);
+      window.localStorage.removeItem("jwt"); //제거
     });
 
     history.push("/");
@@ -192,6 +197,14 @@ const Header = ({ handleResponseSuccess }) => {
           </>
         ) : null}
       </Styled.ModalContainer>
+      {/* 지역검색창 모달 */}
+      <Styled.ModalContainer>
+        {isOpenSearchPlaceModal ? (
+          <>
+            <HomeRightbar />
+          </>
+        ) : null}
+      </Styled.ModalContainer>
 
       <Styled.HeaderContainer>
         <div className="header-wrapper">
@@ -210,7 +223,7 @@ const Header = ({ handleResponseSuccess }) => {
               </>
             ) : (
               <>
-                {cookies.get("kakao-jwt") ? (
+                {window.localStorage.getItem("jwt") === "카카오로긴" ? (
                   <div className="kakao_mainpage-button mainpage-button" onClick={kakaologoutHandler}>
                     Log Out
                   </div>

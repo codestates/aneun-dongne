@@ -21,9 +21,9 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
+  const setWarningModal = useSetRecoilState(warningDeleteUserModal);
   useEffect(() => {
-    if (kakaoToken) setErrorMessage(message.kakaoState);
+    if (window.localStorage.getItem("jwt") === "카카오로긴") setErrorMessage(message.kakaoState);
   }, []);
 
   useEffect(() => {
@@ -36,7 +36,9 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         },
         withCredentials: true,
       })
+
       .then((res) => {
+        // console.log(res.data.data.userInfo);
         setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
           setImgUrl(res.data.data.userInfo.user_image_path);
@@ -55,17 +57,19 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const editInfo = async (e) => {
     e.preventDefault();
 
-    if (!kakaoToken && !accessToken) {
+    if (!window.localStorage.getItem("jwt")) {
+      //서버 유효성검사 필요해요
       setIsLoginAgainOpen(true);
       return;
     }
 
     let formData = new FormData();
 
-    if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
+    if (inputCheckPassword !== inputNewPassword || inputPassword.length < 8 || inputNewPassword.length < 8) {
       setErrorMessage(message.checkAgain);
       return;
     }
+
     if (imgUrl) {
       formData.append("image", imgUrl);
     }
@@ -132,6 +136,12 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
 
   //회원탈퇴모달 오픈 (회원탈퇴로직 ModalWarningDeleteUserInfo/WaringDeleteUserInfo.js)
   const openWarningModalHandler = () => {
+    if (inputPassword.length < 8) {
+      setErrorMessage(message.checkAgain);
+      return;
+    }
+    //서버에서 비번 검사해서 안맞으면 404같은거보내주세요
+    //404뜨면 비번다시입력하라고 하게
     setWarningModal(true);
   };
 
@@ -181,7 +191,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
               </div>
               <div className="alert-box">{errorMessage}</div>
               <div className="userinfo-button-label">
-                <button className="btn-exit" onClick={openWarningModalHandler}>
+                <button className="btn-exit" type="button" onClick={openWarningModalHandler}>
                   회원탈퇴
                 </button>
                 <button className="btn-edit" type="submit">

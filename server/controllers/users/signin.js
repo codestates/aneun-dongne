@@ -17,8 +17,8 @@ module.exports = (req, res) => {
         const accessToken = generateAccessToken(data.dataValues);
         res.cookie("jwt", accessToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
-          domain: ".aneun-dongne.com",
-          // httpOnly: true,
+          // domain: ".aneun-dongne.com",
+          httpOnly: true,
           path: "/",
           secure: true,
           sameSite: "None",

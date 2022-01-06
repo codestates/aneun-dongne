@@ -105,10 +105,10 @@ const MyVisited = () => {
           white-space: nowrap;"
           >${positions[i].content}
         </div>
-      </div>`,
-        iwPosition = new kakao.maps.LatLng(positions[i].latlng.Ma, positions[i].latlng.La);
+      </div>`;
+
       let infowindow = new kakao.maps.InfoWindow({
-        position: iwPosition,
+        position: positions[i].latlng,
         content: iwContent,
         // removable : iwRemoveable
       });

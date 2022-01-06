@@ -106,7 +106,6 @@ module.exports = {
       } else {
         const { id } = accessTokenData;
         const { area, sigg, mapx, mapy, memo } = req.body;
-
         if (!req.file) {
           await createMyVisited(id, area, sigg, mapx, mapy, memo, "", "");
           await res.status(200).json({ data: await getMyVisiteds(id) });

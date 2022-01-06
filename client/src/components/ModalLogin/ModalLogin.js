@@ -43,7 +43,7 @@ const ModalLogin = ({ handleResponseSuccess, ToSignupModal, closeLoginModalHandl
       })
       .then(() => {
         handleResponseSuccess();
-        window.localStorage.setItem("jwt", "일반로긴");
+        window.localStorage.setItem("jwt", "일반로긴"); //여기서 담고
       })
       .catch(() => {
         setErrorMessage(message.loginError);

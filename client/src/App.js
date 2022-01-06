@@ -21,11 +21,11 @@ const App = () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
-        withCredentials: true,
+        withCredentials: true, //ㅇㅓ차피 쿠키는 전송됨
       })
       .then((res) => {
         setInfo(res.data.data.userInfo);
@@ -36,6 +36,7 @@ const App = () => {
   useEffect(() => {
     // if (cookies.get("jwt") || cookies.get("kakao-jwt")) {
     if (window.localStorage.getItem("jwt")) {
+      //조회
       setIsLogin(true);
     } else {
       setIsLogin(false);

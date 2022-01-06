@@ -98,13 +98,13 @@ const Header = ({ handleResponseSuccess }) => {
       `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&logout_redirect_uri=${process.env.REACT_APP_API_URL}/signout`
     );
     setIsLogin(false);
-    window.localStorage.removeItem("jwt");
+    window.localStorage.removeItem("jwt"); //제거
   };
 
   const logoutHandler = () => {
     axios.post(`${process.env.REACT_APP_API_URL}/signout`, {}, { withCredentials: true }).then((res) => {
       setIsLogin(false);
-      window.localStorage.removeItem("jwt");
+      window.localStorage.removeItem("jwt"); //제거
     });
 
     history.push("/");

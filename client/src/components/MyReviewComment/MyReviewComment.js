@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -10,10 +10,12 @@ import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 import { Styled } from "./style";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 import Cookies from "universal-cookie";
+import LikeLoading from "../Loading/LikeLoading";
 
 const MyReviewComment = ({ comment, renderMyComments }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
+  const [isLoing, SetIsloading] = useState(false);
 
   const history = useHistory();
   const cookies = new Cookies();
@@ -30,6 +32,7 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
   };
 
   const deleteComment = async () => {
+    SetIsloading(true);
     await axios
       .delete(`${process.env.REACT_APP_API_URL}/comment/${comment_post_contentid}`, {
         headers: {
@@ -41,6 +44,9 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
       })
       .then(() => {
         renderMyComments();
+      })
+      .then(() => {
+        SetIsloading(false);
       });
   };
 
@@ -53,9 +59,15 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
             <div className="user-name">{nickname}</div>
           </div>
           <div className="user-content-wrapper">
-            <div className="user-content" onClick={handleContentClick}>
-              {comment_content}
-            </div>
+            {isLoing ? (
+              <>
+                <LikeLoading />
+              </>
+            ) : (
+              <div className="user-content" onClick={handleContentClick}>
+                {comment_content}
+              </div>
+            )}
             <div className="user-hastag-wrapper">
               {tagArr.map((tag, idx) => (
                 <span key={idx} className="user-hastag">

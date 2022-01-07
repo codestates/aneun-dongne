@@ -5,79 +5,25 @@ import { useHistory } from "react-router-dom";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { token, kToken, loginState, loginAgainModal } from "../../recoil/recoil";
 import styled from "styled-components";
-import Cookies from "universal-cookie";
+
 import axios from "axios";
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
 import { Profile, MyLike, MyReview, MyVisited } from ".";
 
-const MoveToTopBtn = styled.button`
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  z-index: 100;
-  border-radius: 100%;
-  background-color: #b2e0f4;
-  color: white;
-  transition: all 0.3s;
-  border: 0.5px solid white;
-  display: ${(props) => (props.BtnStatus ? "flex" : "none")};
-  :hover {
-    background-color: #9cb1e0;
-    transition: all 0.3s;
-    border: 0.5px solid white;
-  }
-`;
-
 const MyPage = ({ match }) => {
-  const cookies = new Cookies();
-  const [imgUrl, setImgUrl] = useState("images/men.png");
-  const [prevImg, setPrevImg] = useState("images/men.png");
+  const [imgUrl, setImgUrl] = useState("/images/men.png");
+  const [prevImg, setPrevImg] = useState("/images/men.png");
   const [nickname, setNickname] = useState("");
-  const accessToken = useRecoilValue(token);
-  const kakaoToken = useRecoilValue(kToken);
+
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
+
   const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   const [ScrollY, setScrollY] = useState(0);
-  const [BtnStatus, setBtnStatus] = useState(false);
+  const [btnStatus, setBtnStatus] = useState(false);
   const activeStyle = {
     color: "#172a71",
   };
-
-  async function getUserInfo() {
-    const result = await axios
-      .get(`${process.env.REACT_APP_API_URL}/user/info`, {
-        headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          // Authorization: `Bearer ${accessToken || kakaoToken}`,
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        setNickname(res.data.data.userInfo.nickname);
-        if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
-          setImgUrl(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
-          setPrevImg(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err.response) {
-          if (err.response.status === 401) {
-            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
-            setIsLoginAgainOpen(true);
-          }
-        }
-      });
-    return result;
-  }
 
   const handleFollow = () => {
     setScrollY(window.pageYOffset);
@@ -96,7 +42,8 @@ const MyPage = ({ match }) => {
       behavior: "smooth",
     });
     setScrollY(0); // ScrollY 의 값을 초기화
-    setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
+
+    // setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
   }
 
   function btnToFalse() {
@@ -104,12 +51,10 @@ const MyPage = ({ match }) => {
   }
 
   function scrollyToZero() {
+    //화면최상단으로, 사이드바 버튼에 온클릭
     setScrollY(0);
+    setBtnStatus(false);
   }
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
 
   useEffect(() => {
     const watch = () => {
@@ -121,13 +66,47 @@ const MyPage = ({ match }) => {
     };
   });
 
+  useEffect(() => {
+    async function getUserInfo() {
+      const result = await axios
+        .get(`${process.env.REACT_APP_API_URL}/user/info`, {
+          headers: {
+            // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+            // Authorization: `Bearer ${accessToken || kakaoToken}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
+        .then((res) => {
+          setNickname(res.data.data.userInfo.nickname);
+          if (res.data.data.userInfo.user_image_path && res.data.data.userInfo.user_thumbnail_path) {
+            setImgUrl(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
+            setPrevImg(res.data.data.userInfo.user_thumbnail_path || res.data.data.userInfo.user_image_path);
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          if (err.response) {
+            if (err.response.status === 401) {
+              // setPrevImg("/images/men.png");
+              //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때가 있음.
+              setIsLoginAgainOpen(true);
+              console.log(err.response);
+            }
+          }
+        });
+      return result;
+    }
+    getUserInfo();
+  }, []);
+
   return (
     <>
       <Styled.Body>
         <nav className="menu-bar">
           <div className="profile">
             <div className="profile-image">
-              <img src={prevImg} />
+              <img src={prevImg ? prevImg : "images/men.png"} />
             </div>
             <div className="profile-name">{nickname}</div>
           </div>
@@ -137,7 +116,7 @@ const MyPage = ({ match }) => {
                 to={`${match.url}/like`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >
@@ -149,11 +128,11 @@ const MyPage = ({ match }) => {
                 to={`${match.path}/visited`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >
-                <i className="fas fa-map-marker-alt"></i> <span className="link-text">내가 저장한 장소</span>
+                <i className="fas fa-camera"></i> <span className="link-text">내 갤러리</span>
               </Styled.NavLink>
             </li>
             <li className="link-wrapper">
@@ -161,7 +140,7 @@ const MyPage = ({ match }) => {
                 to={`${match.url}/comments`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >
@@ -173,7 +152,7 @@ const MyPage = ({ match }) => {
                 to={`${match.url}/profile`}
                 activeStyle={activeStyle}
                 onClick={() => {
-                  btnToFalse();
+                  // btnToFalse();
                   scrollyToZero();
                 }}
               >
@@ -199,9 +178,9 @@ const MyPage = ({ match }) => {
               />
             </Route>
           </Switch>
-          <MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
+          <Styled.MoveToTopBtn btnStatus={btnStatus} onClick={topBtn}>
             <Icon size={"60"} icon={angleUp} />
-          </MoveToTopBtn>
+          </Styled.MoveToTopBtn>
         </div>
 
         <div>{/* justify-content:space-between을 위한 빈 태그 */}</div>

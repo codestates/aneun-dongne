@@ -16,10 +16,23 @@ export const usersaddress = atom({
   key: "usersaddress",
   default: { area: "", sigg: "", addr: "" },
 });
+export const usersArea = atom({
+  key: "usersArea",
+  default: "지역선택",
+});
+export const usersSigg = atom({
+  key: "usersSigg",
+  default: "지역선택",
+});
 
 export const placelist = atom({
   key: "placelist",
   default: [],
+});
+
+export const canSearchPlace = atom({
+  key: "cannotSearchPlace",
+  default: true,
 });
 
 //메인페이지에서 유저주소, 좌표 넘어오면 연결시키기
@@ -116,14 +129,14 @@ export const nowlocation = atom({
 });
 
 // ! 페이지번호를 리코일에 저장
-export const contentid = atom({
-  key: "contentid",
-  default: 0,
-});
-export const defaultcomments = atom({
-  key: "defaultcomments",
-  default: [],
-});
+// export const contentid = atom({
+//   key: "contentid",
+//   default: 0,
+// });
+// export const defaultcomments = atom({
+//   key: "defaultcomments",
+//   default: [],
+// });
 
 //! 댓글 수정신호
 export const deleteCommentmode = atom({
@@ -142,15 +155,18 @@ export const pickpoint = selector({
   get: ({ get }) => {
     return [get(defaultposition).lat, get(defaultposition).lon];
   },
-  set: ({ set }, arr) => {
-    set(defaultposition, { lat: arr[0], lon: arr[1] });
-  },
 });
 
 export const infoEdit = atom({
   key: "infoEdit",
   default: "",
 });
+//! 홈화면 지역 검색 모달
+export const searchPlaceModal = atom({
+  key: "searchPlaceModal",
+  default: false,
+});
+
 // ! 현재위치
 export const isClickedNowLocation = atom({
   key: "isClickedNowLocation",
@@ -162,45 +178,23 @@ export const getWTM = selector({
   key: "getWTN",
   get: async ({ get }) => {
     const result = await axios.get(
-      `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
-        get(pickpoint)[0]
+      // `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
+      //   get(pickpoint)[0]
+      // }&input_coord=WGS84&output_coord=WTM`,
+      `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(defaultposition).lon}&y=${
+        get(defaultposition).lat
       }&input_coord=WGS84&output_coord=WTM`,
       {
         headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
       }
     );
-    const data = await { x: result.data.documents[0].x, y: result.data.documents[0].y };
+    const data = { x: result.data.documents[0].x, y: result.data.documents[0].y };
     // .then((res) => {
     //   return { x: res.data.documents[0].x, y: res.data.documents[0].y };
     // })
     // .catch((err) => console.log(err));
+
     return data;
-  },
-});
-export const setLo = selector({
-  key: "setLo",
-  get: async ({ get }) => {
-    return (
-      axios
-        .get(
-          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${get(pickpoint)[1]}&y=${
-            get(pickpoint)[0]
-          }&input_coord=WGS84`,
-          { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` } }
-        )
-        .then((res) => res.data.documents[0].address)
-        .then((address) => {
-          // console.log(address)
-          // console.log({
-          //   area: address.region_1depth_name,
-          //   sigg: address.region_2depth_name,
-          //   address: address.address_name,
-          // });
-          return { area: address.region_1depth_name, sigg: address.region_2depth_name, address: address.address_name };
-        })
-        //   .then(res=>console.log(meetingPlace))
-        .catch((err) => console.log(err))
-    ); //237줄에 console.log(meetingPlace)있음.
   },
 });
 

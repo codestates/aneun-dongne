@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 export const Styled = {
   RightBtnBox: styled.div`
-    @media (min-width: 768px) {
-    }
     z-index: 7.9;
     display: flex;
     justify-content: space-evenly;
@@ -14,7 +12,7 @@ export const Styled = {
     border-radius: 5px;
     position: relative;
     z-index: 7.9;
-    position: relative;
+
     background-color: #3a6fb0;
     color: white;
     height: 40px;

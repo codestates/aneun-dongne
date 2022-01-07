@@ -57,7 +57,7 @@ module.exports = async (userId, tag, searchWord) => {
       result.sort(function (a, b) {
         return b.likeCount - a.likeCount;
       });
-      result.splice(50);
+      result.splice(30);
       // console.log("해시태그없고 지역없고 검색어만눌렀을때 나오는거", result);
     })
     .catch((err) => console.log("에러", err));

@@ -67,7 +67,7 @@ function MainPage() {
           <Styled.VideoContainer>
             <Styled.Image>
               <img className="illust" src="images/likeimg.png" />
-
+              {/* <img className="play-diy" src="/images/saveposition.gif" muted autoPlay loop playsInline /> */}
               <img className="play-diy" src="/images/diy02.gif" muted autoPlay loop playsInline />
             </Styled.Image>
           </Styled.VideoContainer>

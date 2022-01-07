@@ -53,7 +53,7 @@ const MyReview = () => {
               comments.map((comment) => {
                 return (
                   <div key={comment.comments.id}>
-                    <MyReviewComment comment={comment} SetComments={SetComments} />
+                    <MyReviewComment comment={comment} renderMyComments={renderMyComments} />
                   </div>
                 );
               })

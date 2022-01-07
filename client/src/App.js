@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { loginState } from "./recoil/recoil";
 import { token, kToken, userInfo } from "./recoil/recoil";
 
@@ -12,7 +12,7 @@ import Header from "./components/Header/Header";
 import Cookies from "universal-cookie";
 const App = () => {
   const cookies = new Cookies();
-  const setIsLogin = useSetRecoilState(loginState);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const setInfo = useSetRecoilState(userInfo);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -21,11 +21,11 @@ const App = () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
-        withCredentials: true,
+        withCredentials: true, //ㅇㅓ차피 쿠키는 전송됨
       })
       .then((res) => {
         setInfo(res.data.data.userInfo);
@@ -34,12 +34,14 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (accessToken || kakaoToken) {
+    // if (cookies.get("jwt") || cookies.get("kakao-jwt")) {
+    if (window.localStorage.getItem("jwt")) {
+      //조회
       setIsLogin(true);
     } else {
       setIsLogin(false);
     }
-  }, [accessToken, kakaoToken]);
+  }, [, window.localStorage.getItem("jwt")]);
 
   const handleResponseSuccess = () => {
     isAuthenticated();

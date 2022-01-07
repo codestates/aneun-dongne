@@ -29,17 +29,13 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
       />
 
       {typeof placeImage === "object" ? (
-        <Styled.ImgDiv
-          // className="img_preview"
-          onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url('${URL.createObjectURL(placeImage)}')` }}
-        ></Styled.ImgDiv>
+        <Styled.ImgDiv onClick={(e) => inputBtn(e, inputValue)}>
+          <img src={URL.createObjectURL(placeImage)} />
+        </Styled.ImgDiv>
       ) : (
-        <Styled.ImgDiv
-          className="good"
-          onClick={(e) => inputBtn(e, inputValue)}
-          style={{ backgroundImage: `url(${placeImage})` }}
-        ></Styled.ImgDiv>
+        <Styled.ImgDiv onClick={(e) => inputBtn(e, inputValue)}>
+          <img src={placeImage} />
+        </Styled.ImgDiv>
       )}
       <Styled.EditProfile onClick={(e) => inputBtn(e, inputValue)}>
         <i className="fas fa-edit"></i>
@@ -48,4 +44,4 @@ function VisitedUpload({ placeImage, setPlaceImage }) {
   );
 }
 
-export default VisitedUpload;
+export default React.memo(VisitedUpload);

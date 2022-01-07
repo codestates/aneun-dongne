@@ -1,14 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { Styled } from "./style";
 import { MemoCards } from "../PlaceCard/PlaceCards";
 
-import { placeaddress, placelocation, placeimg, placetitle, placelist, token, kToken } from "../../recoil/recoil";
+import {
+  placeaddress,
+  placelocation,
+  placeimg,
+  placetitle,
+  placelist,
+  token,
+  kToken,
+  canSearchPlace,
+} from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
+import Empty from "../Empty/Empty";
 
 function PlaceList() {
+  const ableToSearchPlace = useRecoilValue(canSearchPlace);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const placeList = useRecoilValue(placelist);
@@ -17,10 +28,21 @@ function PlaceList() {
   const setImgURL = useSetRecoilState(placeimg);
   const setTitle = useSetRecoilState(placetitle);
   const [ScrollY, setScrollY] = useState(0);
-  const [BtnStatus, setBtnStatus] = useState(false);
+  const [btnStatus, setBtnStatus] = useState(false);
 
   //! Top 버튼에 필요한 주석
   useEffect(() => {
+    const handleFollow = () => {
+      setScrollY(window.pageYOffset);
+      if (ScrollY > 300) {
+        // 300 이상이면 버튼이 보이게
+        setBtnStatus(true);
+      } else {
+        // 300 이하면 버튼이 사라지게
+        setBtnStatus(false);
+      }
+    };
+
     const watch = () => {
       window.addEventListener("scroll", handleFollow);
     };
@@ -30,24 +52,18 @@ function PlaceList() {
     };
   });
 
-  const handleFollow = () => {
-    setScrollY(window.pageYOffset);
-    if (ScrollY > 300) {
-      // 300 이상이면 버튼이 보이게
-      setBtnStatus(true);
-    } else {
-      // 300 이하면 버튼이 사라지게
-      setBtnStatus(false);
-    }
-  };
-  function topBtn() {
-    window.scroll({
-      top: 0,
-      behavior: "smooth",
-    });
-    setScrollY(0); // ScrollY 의 값을 초기화
-    setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
-  }
+  //탑버튼 클릭했을때 실행되는 onClick함수
+  const topBtn = useCallback(
+    function topBtn() {
+      window.scroll({
+        top: 0,
+        behavior: "smooth",
+      });
+      setScrollY(0); // ScrollY 의 값을 초기화
+      setBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
+    },
+    [btnStatus]
+  );
 
   function getPlaceLocation(obj, path, title, address) {
     setPlaceLocation(obj);
@@ -55,31 +71,38 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
-
+  console.log(ableToSearchPlace);
   return (
-    <Styled.PlaceLists>
-      {placeList.map((place, idx) => {
-        return (
-          <Styled.Div key={idx}>
-            {/* addr1이 undefined 되는 장소가 있어서 addr1는 임시방편으로 3항연산자 처리함 나중에 살펴보자. */}
-            <Styled.StyledLink to={`/detailpage/${place[5]}`}>
-              <MemoCards
-                onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
-                title={place[2]}
-                img={place[3]}
-                addr1={place[4] ? place[4].split(" ")[0] : null}
-                contentId={place[5]}
-                tags={place[6]}
-              ></MemoCards>
-            </Styled.StyledLink>
-          </Styled.Div>
-        );
-      })}
-      <Styled.MoveToTopBtn BtnStatus={BtnStatus} onClick={topBtn}>
-        <Icon size={"60"} icon={angleUp} />
-      </Styled.MoveToTopBtn>
-    </Styled.PlaceLists>
+    <>
+      <Styled.PlaceLists>
+        {!ableToSearchPlace ? (
+          <>
+            <Empty />
+          </>
+        ) : (
+          placeList.map((place, idx) => {
+            return (
+              <Styled.Div key={idx}>
+                <Styled.StyledLink to={`/detailpage/${place[5]}`}>
+                  <MemoCards
+                    onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
+                    title={place[2]}
+                    img={place[3]}
+                    addr1={place[4] ? place[4].split(" ")[0] : null}
+                    contentId={place[5]}
+                    tags={place[6]}
+                  ></MemoCards>
+                </Styled.StyledLink>
+              </Styled.Div>
+            );
+          })
+        )}
+        <Styled.MoveToTopBtn btnStatus={btnStatus} onClick={topBtn}>
+          <Icon size={"60"} icon={angleUp} />
+        </Styled.MoveToTopBtn>
+      </Styled.PlaceLists>
+    </>
   );
 }
-
-export default React.memo(PlaceList);
+export default PlaceList;
+// export default React.memo(PlaceList);

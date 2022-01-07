@@ -4,7 +4,7 @@ export const Styled = {
   Div: styled.div`
     padding: 10px;
     /* background: skyblue; */
-    
+    position:relative;
     /* width:80%; */
       height:100%;
   
@@ -21,15 +21,5 @@ export const Styled = {
 
   
     }
-  `,
-  Map: styled.div`
-    margin: 5px;
-
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-  `,
-  MapBox: styled.div`
-    width: auto;
   `,
 };

@@ -11,8 +11,7 @@ import CommentLoading from "../Loading/CommentLoading";
 import { Styled } from "./style";
 import { toast } from "react-toastify";
 
-function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
-
+function MyComment({ userinfo, contentId }) {
   const kakaoToken = useRecoilValue(kToken);
   const [something, setSomething] = useState("");
   const [defaultComment, setDefaultComment] = useRecoilState(defaultcomments);
@@ -49,7 +48,7 @@ function MyComment({ userinfo, contentId, defaultComment, setDefaultComment }) {
       setCommentLoading(true);
       const result = await axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

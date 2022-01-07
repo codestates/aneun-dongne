@@ -69,6 +69,7 @@ function Home() {
             <Styled.DivRow>
               <Styled.DivColumn className="second">
                 <HomeMap />
+
                 <Styled.OpenModalBtn onClick={() => setOpenSearchPlaceModal(true)}>지역검색창열기</Styled.OpenModalBtn>
               </Styled.DivColumn>
               <Styled.DivColumnSecond>

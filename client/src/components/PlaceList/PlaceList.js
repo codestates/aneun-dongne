@@ -75,6 +75,7 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
+
   if (placeListLoading || placeList.length === 0) {
     return <LikeLoading />;
   }
@@ -86,12 +87,12 @@ function PlaceList() {
             <Empty />
           </>
         ) : (
-          placeList.map((place, idx) => {
+          placeList.map((place) => {
             return (
-              <Styled.Div key={idx}>
+              <Styled.Div key={place[5]}>
                 <Styled.StyledLink to={`/detailpage/${place[5]}`}>
                   <MemoCards
-                    onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
+                    // onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
                     title={place[2]}
                     img={place[3]}
                     addr1={place[4] ? place[4].split(" ")[0] : null}

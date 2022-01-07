@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Styled } from "./style";
 import Cookies from "universal-cookie";
@@ -13,17 +13,20 @@ import {
   canSearchPlace,
   searchPlaceModal,
   searcnPlaceBtnPressed,
+  setPlacelistLoading,
+  usersaddress,
 } from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
-function HomeRightbar({ setLevel }) {
+function HomeRightbar() {
   const setOpenSearchPlaceModal = useSetRecoilState(searchPlaceModal);
   // const placeListReset = useResetRecoilState(placelist);
   const setSearchPlaceBtnPressed = useSetRecoilState(searcnPlaceBtnPressed);
   const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
   // const [area, setArea] = useState("null");
+  const [add, setAdd] = useRecoilState(usersaddress);
   const [areaIdx, setAreaIdx] = useState(0);
   const cookies = new Cookies();
 
@@ -33,7 +36,9 @@ function HomeRightbar({ setLevel }) {
 
   const [hashtag, setHashtag] = useState("");
   const setPlaceList = useSetRecoilState(placelist);
-
+  useEffect(() => {
+    setAreaIdx(areaNameArr.indexOf(area));
+  }, [, area]);
   const changeArea = (area) => {
     if (area === "지역선택") {
       setArea("null");
@@ -41,7 +46,7 @@ function HomeRightbar({ setLevel }) {
       setArea(area);
       setSigg("null");
     }
-    setAreaIdx(areaNameArr.indexOf(area));
+    // setAreaIdx(areaNameArr.indexOf(area));
   };
   const changeSigg = (sigg) => {
     if (sigg === "지역선택") {
@@ -49,7 +54,7 @@ function HomeRightbar({ setLevel }) {
     } else {
       setSigg(sigg);
     }
-    setLevel(10);
+    // setLevel(10);
   };
   const handleSearch = (e) => {
     setPlace(e.target.value);
@@ -112,12 +117,19 @@ function HomeRightbar({ setLevel }) {
               el.post_tags ? el.post_tags.split(",") : [],
             ];
           });
-        // console.log(list);
-        // setSearchPlaceBtnPressed(true);
+        console.log(list);
+        setSearchPlaceBtnPressed(true);
+        setAdd(() => {
+          if (sigg === "null") sigg = "";
+          return { ...add, ...{ area, sigg, address: `${area} ${sigg}` } };
+        });
 
         setPlaceList(list);
       })
       .catch((err) => console.log(err));
+    setAreaIdx(areaNameArr.indexOf(area));
+    console.log(areaNameArr.indexOf(area));
+    console.log(allSigg[areaIdx]);
   };
   return (
     <div>
@@ -135,6 +147,8 @@ function HomeRightbar({ setLevel }) {
             </Styled.SearchLocation>
             <Styled.SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
               {allSigg[areaIdx].map((el, idx) => {
+                // console.log(allSigg[areaIdx]);
+                console.log(area);
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>

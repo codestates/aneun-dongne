@@ -81,7 +81,7 @@ const HomeMap = () => {
             el.post_contentid,
           ];
         });
-        console.log(list);
+        // console.log(list);
         setPlaceList(list);
       });
     // setPlaceListLoading(false);

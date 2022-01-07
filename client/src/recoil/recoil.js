@@ -14,7 +14,7 @@ export const kToken = atom({
 //! 유저 주소 - Home.js, savePositioModal 에서 사용
 export const usersaddress = atom({
   key: "usersaddress",
-  default: { area: "", sigg: "", addr: "" },
+  default: { area: "서울", sigg: "서초구", addr: "서울 서오구 반포동 70-1" },
 });
 export const usersArea = atom({
   key: "usersArea",

@@ -13,6 +13,7 @@ import {
   nowlocation,
   setPlacelistLoading,
   searcnPlaceBtnPressed,
+  usersaddress,
 } from "../../recoil/recoil.js";
 import { Styled } from "./style.js";
 import { useRecoilState } from "recoil";
@@ -32,19 +33,19 @@ function DefaultMap() {
   const [placeListLoading, setPlaceListLoading] = useRecoilState(setPlacelistLoading);
   const [kakaoMap, setKakaoMap] = useState(null);
   //   let kakaoMap = useRef(null);
-  const [markers, setMarkers] = useState();
+  const [markerList, setMarkerList] = useState();
   const getWtm = useRecoilValueLoadable(getWTM);
   const history = useHistory();
   const container = useRef();
-  const isSearchPlaceBtnPressed = useRecoilValue(searcnPlaceBtnPressed);
+  const [isSearchPlaceBtnPressed, setSearchPlaceBtnPressed] = useRecoilState(searcnPlaceBtnPressed);
   const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
   const wtm = getWtm.contents;
   const nowLoc = useRecoilValue(nowlocation);
-
+  const [add, setAdd] = useRecoilState(usersaddress);
   useEffect(() => {
     //지도 틀
-    usersAreaReset();
-    usersSiggReset();
+    // usersAreaReset();
+    // usersSiggReset();
     let center = new kakao.maps.LatLng(defaultPosition.lat, defaultPosition.lon);
     if (nowLoc.lat !== 0) {
       center = new kakao.maps.LatLng(nowLoc.lat, nowLoc.lon);
@@ -66,8 +67,14 @@ function DefaultMap() {
     return () => setOpenSearchPlaceModal(false);
   });
   useEffect(() => {
+    if (markerList) {
+      //useState에서 이런식으로 함수 할당할수 있네
+      setMarkerList(() => {
+        markerList.forEach((marker) => marker.setMap(null));
+      });
+    }
     //마커 그리는 과정, 관광지배열이 변경될때만 실행함.
-    console.log(placeList);
+    // console.log(placeList);
     if (kakaoMap === null) {
       console.log("멥이 null일때");
       return;
@@ -89,7 +96,6 @@ function DefaultMap() {
       });
     }
     let markers = [];
-
     for (let i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(24, 35);
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -138,7 +144,9 @@ function DefaultMap() {
 
       kakao.maps.event.addListener(marker, "click", function () {
         // infowindowOnClick.open(map, marker);
-        history.push(`/detailpage/${positions[i].contentId}`);
+        setPlaceList([placeList[i]]);
+
+        // history.push(`/detailpage/${positions[i].contentId}`);
       });
     }
 
@@ -161,35 +169,61 @@ function DefaultMap() {
     //   infowindowCenter.open(kakaoMap, markerCenter);
     // });
 
-    // kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-    kakao.maps.event.addListener(kakaoMap, "dragend", function (mouseEvent) {
+    kakao.maps.event.addListener(kakaoMap, "click", function (mouseEvent) {
+      // kakao.maps.event.addListener(kakaoMap, "dragend", function (mouseEvent) {
+
       if (container === null) {
         return;
       }
-      for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-      }
+
+      //   for (let i = 0; i < markers.length; i++) {
+      //     markers[i].setMap(null);
+      //   }
       setPlaceListLoading(true);
 
       setAbleToSearchPlace(true);
-      console.log("드래그");
+
       // ? 클릭한 위도, 경도 정보를 가져옵니다
-      // let latlng = mouseEvent.latLng;
-      let latlng = kakaoMap.getCenter();
+      let latlng = mouseEvent.latLng;
+      //   let latlng = kakaoMap.getCenter();
 
       setDefaultPosition({ lat: latlng.Ma, lon: latlng.La });
       //?  마커 위치를 클릭한 위치로 옮깁니다
       //   markerCenter.setPosition(latlng);
+      axios
+        .get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latlng.La}&y=${latlng.Ma}&input_coord=WGS84`, {
+          headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+        })
+        .then((res) => {
+          return res.data.documents[0].address;
+        })
+        .then((address) => {
+          setAdd({
+            area: address.region_1depth_name,
+            sigg: address.region_2depth_name,
+            address: address.address_name,
+          });
+        });
     });
     //! 지역검색하면 마커있는곳으로 지도 이동해야함
-    // kakaoMap.setBounds(bounds);
+    if (isSearchPlaceBtnPressed === true) {
+      kakaoMap.setBounds(bounds);
+      setSearchPlaceBtnPressed(false);
+    }
     setPlaceListLoading(false);
+    setMarkerList(markers);
   }, [placeList]);
-  useEffect(() => {}, [isSearchPlaceBtnPressed]);
+  useEffect(() => {
+    console.log(add);
+  }, [add]);
 
   return (
     <>
-      <Styled.Map ref={container}></Styled.Map>
+      <Styled.Map ref={container}>
+        <Styled.ClickedAddress>
+          {add.area} {add.sigg}
+        </Styled.ClickedAddress>
+      </Styled.Map>
     </>
   );
 }

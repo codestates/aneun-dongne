@@ -3,29 +3,33 @@ import styled from "styled-components";
 export const Styled = {
   CloseBtn: styled.button`
     position: absolute;
-    top: 20px;
-    right: 35px;
-    font-size: 30px;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
     cursor: pointer;
-    background-color: white;
+    /* background-color: white; */
+    background-color: #3a6fb0;
+    color: white;
+    border-radius: 10px;
     z-index: 999;
-    padding: 5px;
+    padding: 7px;
     margin-left: auto;
     border: none;
   `,
   MapRightBar: styled.div`
-    animation: modal-show 0.3s;
+    animation: modal-show 1s;
     @keyframes modal-show {
       from {
-        margin-top: -50px;
+        margin-top: 50px;
       }
       to {
         margin-top: 0;
       }
     }
     position: fixed;
-    top: 75px;
-    background: rgba(255, 255, 255, 0.5);
+    top: 120px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.3);
     z-index: 999;
     display: flex;
     align-content: center;
@@ -54,20 +58,6 @@ export const Styled = {
     @media (min-width: 1024px) {
       margin-left: 10px;
       margin-top: 10px;
-    }
-
-    > p {
-      @media (max-width: 1023px) {
-        margin: 2% auto;
-
-        text-align: center;
-      }
-
-      @media (min-width: 1024px) {
-        margin: 2% auto;
-
-        text-align: center;
-      }
     }
   `,
 
@@ -106,7 +96,7 @@ export const Styled = {
     width: 300px;
     height: 40px;
     border-radius: 5px;
-    border: 1px gray solid;
+    /* border: 1px gray solid; */
 
     @media (max-width: 1023px) {
       width: 80%;
@@ -141,8 +131,9 @@ export const Styled = {
   `,
 
   SearchPlace: styled.input`
+    border: none;
     @media (max-width: 1023px) {
-      border: 1px gray solid;
+      /* border: 1px gray solid; */
       padding: 10px;
       width: 80%;
       height: 30px;
@@ -154,7 +145,7 @@ export const Styled = {
       margin: 5px auto;
     }
     @media (min-width: 1024px) {
-      border: 1px gray solid;
+      /* border: 1px gray solid; */
       margin-top: 5px;
       margin-bottom: 5px;
       margin-left: 5px;
@@ -162,7 +153,7 @@ export const Styled = {
       width: 120px;
       height: 40px;
       background-color: white;
-      border: gray 1px solid;
+      /* border: gray 1px solid; */
       border-radius: 5px;
       padding: 5px;
     }

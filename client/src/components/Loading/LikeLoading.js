@@ -12,6 +12,7 @@ const Div = styled.div`
     text-align: center;
   }
   .loadingBox .circle {
+    z-index: 999;
     margin-left: auto;
     margin-right: auto;
     width: 10px;

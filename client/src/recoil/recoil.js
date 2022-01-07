@@ -74,7 +74,10 @@ export const sendPlaceinfo = selector({
     set(placeaddress, address);
   },
 });
-
+export const searcnPlaceBtnPressed = atom({
+  key: "searcnPlaceBtnPressed",
+  default: false,
+});
 //! 로딩state
 export const loading = atom({
   key: "loading",
@@ -146,7 +149,7 @@ export const deleteCommentmode = atom({
 //!pickpoint바뀔때마다 바뀌는 값
 export const defaultposition = atom({
   key: "defaultPosition",
-  default: { lat: 37, lon: 127 },
+  default: { lat: 37.5, lon: 127 },
 });
 
 // ! 위치기반 API -> 지도위 나타나는 좌표 바꾸는거. 지도 클릭한효과랑 같음

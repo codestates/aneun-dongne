@@ -62,7 +62,7 @@ const HomeMap = () => {
         params: {
           areacode: "null",
           sigungucode: "null",
-          radius: 10000,
+          radius: 20000,
           clientwtmx: wtm.x,
           clientwtmy: wtm.y,
           tag: "null", //null로 넣으면 undefined되어서, 문자열로 넣겠음

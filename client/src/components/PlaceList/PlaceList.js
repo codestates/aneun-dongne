@@ -75,7 +75,7 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
-  if (placeListLoading) {
+  if (placeListLoading || placeList.length === 0) {
     return <LikeLoading />;
   }
   return (

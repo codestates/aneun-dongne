@@ -6,9 +6,6 @@ export const Styled = {
     display: flex;
     flex-direction: column;
 
-    /* right: 0px; */
-    /* position: absolute; */
-
     @media screen and (max-width: 880px) {
       flex-direction: row;
       margin-top: 55vh;

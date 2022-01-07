@@ -3,21 +3,25 @@ export const Styled = {
   FixedComp: styled.div`
     margin-top: 73px;
     position: relative;
-    /* background: red; */
   `,
   DivRow: styled.div`
     display: flex;
-    /* background: blue; */
+
     @media screen and (max-width: 880px) {
       flex-direction: column;
     }
   `,
   DivColumn: styled.div`
+    /* background: orange; */
+    /* margin-right: 60px; */
+
     @media screen and (min-width: 880px) {
       position: sticky;
       left: 0;
+
       top: 75px;
       width: 100%;
+
       height: 90vh;
     }
     @media screen and (max-width: 880px) {
@@ -31,7 +35,8 @@ export const Styled = {
     }
   `,
   DivColumnSecond: styled.div`
-    /* background: orange; */
+    border-left: 1px gray solid;
+    width: 240px;
   `,
   OpenModalBtn: styled.button`
     position: fixed;

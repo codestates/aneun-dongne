@@ -1,89 +1,78 @@
 /* global kakao */
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import { useRecoilValueLoadable, useResetRecoilState, useSetRecoilState } from "recoil";
-import { usersArea, usersSigg, canSearchPlace, defaultposition, placelist, getWTM } from "../../recoil/recoil.js";
+import { useRecoilValue, useRecoilValueLoadable, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+  usersArea,
+  usersSigg,
+  canSearchPlace,
+  defaultposition,
+  placelist,
+  getWTM,
+  searchPlaceModal,
+  nowlocation,
+  setPlacelistLoading,
+} from "../../recoil/recoil.js";
 import { Styled } from "./style.js";
 import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
+import LikeLoading from "../Loading/LikeLoading.js";
+import CommentLoading from "../Loading/CommentLoading.js";
+import MapLoading from "../Loading/MapLoading.js";
 
 function DefaultMap() {
+  const setOpenSearchPlaceModal = useSetRecoilState(searchPlaceModal);
   const usersAreaReset = useResetRecoilState(usersArea);
   const usersSiggReset = useResetRecoilState(usersSigg);
   const [placeList, setPlaceList] = useRecoilState(placelist);
   //   const visitedList = useRecoilValueLoadable(placelist);
   //   const placeList = visitedList.contents;
   const [defaultPosition, setDefaultPosition] = useRecoilState(defaultposition);
-
+  const [placeListLoading, setPlaceListLoading] = useRecoilState(setPlacelistLoading);
   const [kakaoMap, setKakaoMap] = useState(null);
   //   let kakaoMap = useRef(null);
   const getWtm = useRecoilValueLoadable(getWTM);
   const history = useHistory();
   const container = useRef();
-  const [, setMarkers] = useState([]);
+
   const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
   const wtm = getWtm.contents;
+  const nowLoc = useRecoilValue(nowlocation);
+
   useEffect(() => {
     usersAreaReset();
     usersSiggReset();
-    const center = new kakao.maps.LatLng(defaultPosition.lat, defaultPosition.lon);
+    let center = new kakao.maps.LatLng(defaultPosition.lat, defaultPosition.lon);
+    if (nowLoc.lat !== 0) {
+      center = new kakao.maps.LatLng(nowLoc.lat, nowLoc.lon);
+      setDefaultPosition({ lat: nowLoc.lat, lon: nowLoc.lon });
+    }
+
     const options = {
       center,
       level: 11,
     };
     const map = new kakao.maps.Map(container.current, options);
     // kakaoMap = map;
-    console.log("hk");
+
     setKakaoMap(map);
-  }, []);
-  useEffect(() => {
-    //클락하면 지역검색창 초기화
-    usersAreaReset();
-    usersSiggReset();
-
-    // ! 픽포인트, 반경, 검색어 아예 없을때
-    //! areaCode : 서울1,인천2,대전3,대구4,광주5,부산6,울산7,세종8,경기31,강원32,충북33,충남34,경북35,경남36,전북37,전남38,제주40
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/home`, {
-        headers: {
-          // Authorization: `Bearer ${accessToken || kakaoToken}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          areacode: "null",
-          sigungucode: "null",
-          radius: 10000,
-          clientwtmx: wtm.x,
-          clientwtmy: wtm.y,
-          tag: "null", //null로 넣으면 undefined되어서, 문자열로 넣겠음
-          searchWord: "null",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        const list = res.data.data.map((el) => {
-          return [
-            Number(el.post_mapy),
-            Number(el.post_mapx),
-            el.post_title,
-            el.post_firstimage,
-            el.post_addr1,
-            el.post_contentid,
-          ];
-        });
-        console.log(list);
-        setPlaceList(list);
-      });
-  }, [wtm.x, wtm.y]); //! 평면좌표 바뀔때마다 실행
+  }, [nowLoc]);
 
   useEffect(() => {
-    console.log(kakaoMap);
+    //언마운트시 모달창 끄기
+    return () => setOpenSearchPlaceModal(false);
+  });
+  useEffect(() => {
+    console.log(placeList);
     if (kakaoMap === null) {
       console.log("멥이 null일때");
       return;
     }
-
-    if (placeList.length === 0) return;
+    if (placeList.length === 0) {
+      setAbleToSearchPlace(false);
+    } else {
+      setAbleToSearchPlace(true);
+    }
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
     let markerCenter = new kakao.maps.Marker({
@@ -95,7 +84,7 @@ function DefaultMap() {
     let bounds = new kakao.maps.LatLngBounds();
 
     let positions = [];
-    console.log(placeList);
+
     for (let i = 0; i < placeList.length; i++) {
       positions.push({
         addr: placeList[i][4],
@@ -106,6 +95,7 @@ function DefaultMap() {
       });
     }
     let markers = [];
+
     for (let i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(24, 35);
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -186,7 +176,8 @@ function DefaultMap() {
       for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
       }
-      console.log(positions);
+      setPlaceListLoading(true);
+
       setAbleToSearchPlace(true);
       console.log("드래그");
       // ? 클릭한 위도, 경도 정보를 가져옵니다
@@ -198,6 +189,12 @@ function DefaultMap() {
       markerCenter.setPosition(latlng);
     });
 
+    setPlaceListLoading(false);
+    // if (placeListLoading) {
+    //   setTimeout(() => {
+    //     setAbleToSearchPlace(false);
+    //   }, 3000);
+    // }
     // kakaoMap.setBounds(bounds);
   }, [placeList]);
 

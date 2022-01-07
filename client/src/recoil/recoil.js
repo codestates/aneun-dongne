@@ -146,7 +146,7 @@ export const deleteCommentmode = atom({
 //!pickpoint바뀔때마다 바뀌는 값
 export const defaultposition = atom({
   key: "defaultPosition",
-  default: { lat: 0, lon: 0 },
+  default: { lat: 37, lon: 127 },
 });
 
 // ! 위치기반 API -> 지도위 나타나는 좌표 바꾸는거. 지도 클릭한효과랑 같음
@@ -260,7 +260,11 @@ export const loginAgainModal = atom({
   key: "loginAgainModal",
   default: false,
 });
-
+//!로딩
+export const setPlacelistLoading = atom({
+  key: "setPlacelistLoading",
+  default: true,
+});
 //! 마이페이지
 export const newVisitedPlace = atom({
   key: "newVisitedPlace",

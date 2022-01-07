@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Styled = {
   Div: styled.div`
+  
     padding: 10px;
     /* background: skyblue; */
     position:relative;

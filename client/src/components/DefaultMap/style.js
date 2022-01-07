@@ -8,7 +8,4 @@ export const Styled = {
     height: 99%;
     border-radius: 10px;
   `,
-  MapBox: styled.div`
-    width: auto;
-  `,
 };

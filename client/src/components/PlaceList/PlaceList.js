@@ -12,11 +12,13 @@ import {
   token,
   kToken,
   canSearchPlace,
+  setPlacelistLoading,
 } from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
+import LikeLoading from "../Loading/LikeLoading";
 
 function PlaceList() {
   const ableToSearchPlace = useRecoilValue(canSearchPlace);
@@ -31,7 +33,7 @@ function PlaceList() {
   const [ScrollY, setScrollY] = useState(0);
   const [btnStatus, setBtnStatus] = useState(false);
   // const placeList = visitedList.contents;
-
+  const placeListLoading = useRecoilValue(setPlacelistLoading);
   //! Top 버튼에 필요한 주석
   useEffect(() => {
     const handleFollow = () => {
@@ -73,7 +75,9 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
-
+  if (placeListLoading) {
+    return <LikeLoading />;
+  }
   return (
     <>
       <Styled.PlaceLists>

@@ -10,6 +10,9 @@ import {
   token,
   kToken,
   saveOrNotModal,
+  savedVisitedPlaceInMyPage,
+  fromMyPage,
+  newVisitedPlace,
 } from "../../recoil/recoil";
 import { Styled } from "./style";
 import ImageUpload from "../ImageUpload/ImageUpload";
@@ -20,6 +23,7 @@ const ModalSavePosition = () => {
   const [isSaveOrNotModal, setIsSaveOrNotModal] = useRecoilState(saveOrNotModal);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
+  const [savedPlaceInMyPage, setSavedPlaceInMyPage] = useRecoilState(savedVisitedPlaceInMyPage);
   const [isSavePositionOpen, setIsSavePositionOpen] = useRecoilState(isSavepositionOpen);
   const [image, setImage] = useState(""); //전역으로 바꿀수도
   const [memo, setMemo] = useState(""); //마찬가지 전역으로 바꿀수도
@@ -28,6 +32,8 @@ const ModalSavePosition = () => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [clickedBtn, setClickedBtn] = useState(false); //저장버튼 누른 후 인지 아닌지 확인하려는 용도
   const [errorMessage, setErrorMessage] = useState("");
+  const [fromMypage, setFromMyPage] = useRecoilState(fromMyPage);
+  const [placeList, setPlaceList] = useRecoilState(newVisitedPlace);
   //유저 위치정보
   const [userAddr, setUserAddr] = useRecoilState(usersaddress);
   //현재위치로 바꿀거면 nowlocation써
@@ -35,8 +41,8 @@ const ModalSavePosition = () => {
   //로긴모달창,로긴상태
   const isLogin = useRecoilValue(loginState);
   const setIsLoginOpen = useSetRecoilState(loginModal);
+  console.log(fromMypage);
   useEffect(() => {
-    console.log(isLogin);
     if (!isLogin) {
       setErrorMessage(message.unauthorized);
     }
@@ -76,19 +82,43 @@ const ModalSavePosition = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setIsUploaded(true);
+        // setIsUploaded(true);
+
+        if (fromMypage) {
+          console.log("hihi");
+          //바꿨다는 신호, 이 신호가 바뀔때 useEffect의 의존성배열에 의해  get요청 다시받음
+          //이 신호는 마이페이지에서 들어왔을때만 실행된다.
+          setSavedPlaceInMyPage(true);
+          setIsSavePositionOpen(false); //모달창 닫고 return ;
+          const list = res.data.data.map((el) => {
+            const { visited_area, visited_sigg, visited_thumbnail_path, visited_memo, id, visited_mapx, visited_mapy } =
+              el;
+
+            return [
+              visited_mapy,
+              visited_mapx,
+              visited_memo,
+              visited_thumbnail_path,
+              `${visited_area} ${visited_sigg}`,
+              id,
+            ];
+          });
+          setPlaceList(list);
+          return;
+        }
         setIsSaveOrNotModal(true);
+
         setIsSavePositionOpen(false);
       })
       .catch((err) => {
-        setClickedBtn(true);
-        setIsUploaded(false);
-        if (!isUploaded && clickedBtn) {
-          toast.error("이미지 업로드 실패", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          setIsSavePositionOpen(false);
-        }
+        // setClickedBtn(true);
+        // setIsUploaded(false);
+        // if (!isUploaded && clickedBtn) {
+        toast.error("이미지 업로드 실패", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        setIsSavePositionOpen(false);
+        // }
       });
   }
   // useEffect(() => {

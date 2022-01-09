@@ -37,15 +37,16 @@ function HomeRightbar() {
   const [hashtag, setHashtag] = useState("");
   const setPlaceList = useSetRecoilState(placelist);
   useEffect(() => {
-    setAreaIdx(areaNameArr.indexOf(area));
+    if (area === "null") setAreaIdx(0);
+    else setAreaIdx(areaNameArr.indexOf(area));
   }, [, area]);
   const changeArea = (area) => {
     if (area === "지역선택") {
       setArea("null");
     } else {
       setArea(area);
-      setSigg("null");
     }
+    setSigg("null");
     // setAreaIdx(areaNameArr.indexOf(area));
   };
   const changeSigg = (sigg) => {
@@ -118,12 +119,19 @@ function HomeRightbar() {
             ];
           });
         console.log(list);
+
         setSearchPlaceBtnPressed(true);
         setAdd(() => {
-          if (sigg === "null") sigg = "";
+          console.log(area, sigg);
+          if (area === "지역선택") area = "전체지역";
+          if (sigg === "null" || sigg === "지역선택") sigg = "인기순 30";
+          console.log(area, sigg);
           return { ...add, ...{ area, sigg, address: `${area} ${sigg}` } };
         });
-
+        if (list.length > 0) {
+          //검색결과 있으면 '텅비어있어요' 안나오게하기
+          setAbleToSearchPlace(true);
+        }
         setPlaceList(list);
       })
       .catch((err) => console.log(err));
@@ -131,6 +139,18 @@ function HomeRightbar() {
     console.log(areaNameArr.indexOf(area));
     console.log(allSigg[areaIdx]);
   };
+  // console.log(area);
+  // console.log(areaNameArr.indexOf(area));
+
+  // console.log([areaIdx]);
+  useEffect(() => {
+    //searchPlace실행되고 나면 지역검색에 null입력되기 때문에 다시 바꿔줌.
+    if (area === "null") {
+      setArea("지역선택");
+      setSigg("지역선택");
+    }
+  }, [area, sigg]);
+
   return (
     <div>
       <Styled.MapRightBar>
@@ -141,14 +161,14 @@ function HomeRightbar() {
         <Styled.SearchWrapper>
           <Styled.SearchBar>
             <Styled.SearchLocation first value={area} onChange={(e) => changeArea(e.target.value)} name="h_area1">
-              {areaNameArr.map((el, idx) => {
+              {areaNameArr.map((el, idx, arr) => {
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>
             <Styled.SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
-              {allSigg[areaIdx].map((el, idx) => {
-                // console.log(allSigg[areaIdx]);
-                console.log(area);
+              {allSigg[areaIdx].map((el, idx, arr) => {
+                if (areaIdx === -1) console.log([areaIdx]);
+
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>

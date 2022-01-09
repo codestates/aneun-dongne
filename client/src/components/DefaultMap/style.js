@@ -6,6 +6,7 @@ export const Styled = {
     position: relative;
     width: 100%;
     height: 99%;
+    /* height: 300px; */
     border-radius: 10px;
   `,
   ClickedAddress: styled.span`

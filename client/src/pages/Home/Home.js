@@ -3,7 +3,7 @@ import axios from "axios";
 import { Styled } from "./style";
 import HomeMap from "../../components/HomeMap/HomeMap";
 import PlaceList from "../../components/PlaceList/PlaceList";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { loading, defaultposition, nowlocation, usersaddress, searchPlaceModal } from "../../recoil/recoil";
 import Loading from "../../components/Loading/Loading";
 
@@ -18,28 +18,36 @@ function Home() {
   // const setNowLocation = useSetRecoilState(nowlocation);
   // const [isLoading, setIsLoading] = useState(true);
   const setAdd = useSetRecoilState(usersaddress);
+  const defaultPositionReset = useResetRecoilState(defaultposition);
   // const setDefaultPosition = useSetRecoilState(defaultposition);
 
+  const addressReset = useResetRecoilState(usersaddress);
+  useEffect(() => {
+    return () => {
+      addressReset();
+      defaultPositionReset();
+    };
+  }, []);
   // * 현재위치 받는 useEffect
 
-  useEffect(() => {
-    axios
-      .get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${127}&y=${37.5}&input_coord=WGS84`, {
-        headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
-      })
-      .then((res) => {
-        console.log(res);
-        return res.data.documents[0].address;
-      })
-      .then((address) => {
-        setAdd({
-          area: address.region_1depth_name,
-          sigg: address.region_2depth_name,
-          address: address.address_name,
-        });
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${127}&y=${37.5}&input_coord=WGS84`, {
+  //       headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       return res.data.documents[0].address;
+  //     })
+  //     .then((address) => {
+  //       setAdd({
+  //         area: address.region_1depth_name,
+  //         sigg: address.region_2depth_name,
+  //         address: address.address_name,
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
   // useEffect(() => {
   //   setOpenSearchPlaceModal(!openSearchPlaceModal);
   //   console.log(openSearchPlaceModal);

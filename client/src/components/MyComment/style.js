@@ -31,7 +31,7 @@ export const Styled = {
     border-radius: 20px;
   `,
 
-  ProfileBox: styled.form`
+  ProfileBox: styled.div`
     position: relative;
     width: 70%;
     height: 50%;
@@ -104,7 +104,7 @@ export const Styled = {
     }
   `,
 
-  ContentBox: styled.form`
+  ContentBox: styled.div`
     position: relative;
     display: grid;
     grid-template-rows: auto auto;

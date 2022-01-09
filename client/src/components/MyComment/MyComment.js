@@ -100,7 +100,7 @@ function MyComment({ userinfo, contentId }) {
               />
             </Styled.ContentWrapper>
             <Styled.HashTagWrapper>
-              <EditableHashTag tags={tags} setTags={setTags} />
+              <EditableHashTag tags={tags} setTags={setTags} registerMyComment={registerMyComment} />
             </Styled.HashTagWrapper>
           </Styled.ContentBox>
           <Styled.BtnBox>

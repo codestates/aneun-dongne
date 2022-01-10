@@ -22,6 +22,7 @@ import LikeLoading from "../Loading/LikeLoading";
 // import { toast } from "react-toastify";
 
 const HomeMap = () => {
+  const [prevList, setPrevList] = useState([]);
   const setPlaceListLoading = useSetRecoilState(setPlacelistLoading);
   const kakao = window.kakao;
   const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
@@ -50,6 +51,10 @@ const HomeMap = () => {
    */
   const wtm = getWtm.contents;
   // const placeList = visitedList.contents;
+  useEffect(() => {
+    setPrevList(placeList);
+  }, [placeList]);
+
   useEffect(() => {
     //클락하면 지역검색창 초기화
     usersAreaReset();
@@ -115,7 +120,7 @@ const HomeMap = () => {
     <Styled.Div>
       <>
         <div className="map-experiment">&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다."}</div>
-        <DefaultMap placeList={placeList} setPlaceList={setPlaceList} />
+        <DefaultMap placeList={placeList} setPlaceList={setPlaceList} setPrevList={setPrevList} />
       </>
     </Styled.Div>
   );

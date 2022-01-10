@@ -65,7 +65,7 @@ function HomeRightbar() {
     // console.log("handleTagSearch", hashtag);
   };
   const searchPlace = (area, sigg, place, hashtag) => {
-    // console.log(place);
+    console.log(area, sigg, place, hashtag);
     // console.log("hash", hashtag);
     let areaCode = "";
     let siggCode = "";
@@ -104,7 +104,7 @@ function HomeRightbar() {
 
           return;
         }
-        // console.log(res.data.data);
+        console.log(res.data.data);
         const list = res.data.data
           .filter((el) => el.post_mapy !== "0.00000000000000000000" && el.post_mapx !== "0.00000000000000000000")
           .map((el) => {
@@ -136,8 +136,8 @@ function HomeRightbar() {
       })
       .catch((err) => console.log(err));
     setAreaIdx(areaNameArr.indexOf(area));
-    console.log(areaNameArr.indexOf(area));
-    console.log(allSigg[areaIdx]);
+    // console.log(areaNameArr.indexOf(area));
+    // console.log(allSigg[areaIdx]);
   };
   // console.log(area);
   // console.log(areaNameArr.indexOf(area));
@@ -173,8 +173,15 @@ function HomeRightbar() {
               })}
             </Styled.SearchLocation>
           </Styled.SearchBar>
-          {/* <Autocomplete hashtag={hashtag} setHashtag={setHashtag} /> */}
-          <Styled.SearchPlace
+          <Autocomplete
+            hashtag={hashtag}
+            setHashtag={setHashtag}
+            area={area}
+            sigg={sigg}
+            place={place}
+            searchPlace={searchPlace}
+          />
+          {/* <Styled.SearchPlace
             type="text"
             value={hashtag}
             onChange={(e) => handleTagSearch(e)}
@@ -184,7 +191,7 @@ function HomeRightbar() {
                 searchPlace(area, sigg, place, hashtag);
               }
             }}
-          ></Styled.SearchPlace>
+          ></Styled.SearchPlace> */}
           <Styled.SearchPlace
             type="text"
             value={place}

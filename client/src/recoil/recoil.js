@@ -14,7 +14,8 @@ export const kToken = atom({
 //! 유저 주소 - Home.js, savePositioModal 에서 사용
 export const usersaddress = atom({
   key: "usersaddress",
-  default: { area: "", sigg: "", addr: "" },
+  // default: { area: "서울", sigg: "서초구", addr: "서울 서오구 반포동 70-1" },
+  default: { area: "지도를", sigg: "클릭해주세요", addr: "서울 서오구 반포동 70-1" },
 });
 export const usersArea = atom({
   key: "usersArea",
@@ -74,7 +75,10 @@ export const sendPlaceinfo = selector({
     set(placeaddress, address);
   },
 });
-
+export const searcnPlaceBtnPressed = atom({
+  key: "searcnPlaceBtnPressed",
+  default: false,
+});
 //! 로딩state
 export const loading = atom({
   key: "loading",
@@ -146,7 +150,7 @@ export const deleteCommentmode = atom({
 //!pickpoint바뀔때마다 바뀌는 값
 export const defaultposition = atom({
   key: "defaultPosition",
-  default: { lat: 37, lon: 127 },
+  default: { lat: 37.5, lon: 127 },
 });
 
 // ! 위치기반 API -> 지도위 나타나는 좌표 바꾸는거. 지도 클릭한효과랑 같음
@@ -263,7 +267,7 @@ export const loginAgainModal = atom({
 //!로딩
 export const setPlacelistLoading = atom({
   key: "setPlacelistLoading",
-  default: true,
+  default: false,
 });
 //! 마이페이지
 export const newVisitedPlace = atom({
@@ -273,6 +277,14 @@ export const newVisitedPlace = atom({
 export const newVisitedMemo = atom({
   key: "newVisitedMemo",
   default: "",
+});
+export const savedVisitedPlaceInMyPage = atom({
+  key: "savedVisitedPlaceInMyPage",
+  default: false,
+});
+export const fromMyPage = atom({
+  key: "fromMyPage",
+  default: false,
 });
 export const getVisitedList = selector({
   key: "getVisitedList",

@@ -14,7 +14,7 @@ import { Styled } from "./style";
 import VisitedUpload from "../VisitedUpload/VisitedUpload";
 import { toast } from "react-toastify";
 
-function ModalVisited({ id, kmemo, visitedImg }) {
+function ModalVisited({ id, kmemo, visitedImg, setPrevList }) {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const [isVisitedPlaceOpen, setIsVisitedPlaceOpen] = useRecoilState(visitedModal);
@@ -53,7 +53,27 @@ function ModalVisited({ id, kmemo, visitedImg }) {
       })
 
       .then((res) => {
-        setPlaceList(res.data.data);
+        // setPlaceList(res.data.data);
+
+        const list = res.data.data.map((el) => {
+          const { visited_area, visited_sigg, visited_thumbnail_path, visited_memo, id, visited_mapx, visited_mapy } =
+            el;
+
+          return [
+            visited_mapy,
+            visited_mapx,
+            visited_memo,
+            visited_thumbnail_path,
+            `${visited_area} ${visited_sigg}`,
+            id,
+          ];
+        });
+        // setPlaceList(res.data.data);
+
+        setPlaceList(list);
+        console.log(list);
+        setPrevList(list);
+
         setIsUploaded(true);
         setIsVisitedPlaceOpen(false);
       })
@@ -71,7 +91,6 @@ function ModalVisited({ id, kmemo, visitedImg }) {
     await axios
       .delete(`${process.env.REACT_APP_API_URL}/visited`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

@@ -1,7 +1,7 @@
 import React from "react";
 import { Styled } from "./style";
 
-const EditableHashTag = ({ setTags, tags, getCommentId }) => {
+const EditableHashTag = ({ setTags, tags, registerMyComment }) => {
   const removeTags = (indexToRemove) => {
     setTags(tags.filter((_, index) => index !== indexToRemove));
   };
@@ -36,6 +36,7 @@ const EditableHashTag = ({ setTags, tags, getCommentId }) => {
               event.preventDefault();
               console.log("hi");
               addTags(event);
+              registerMyComment(event);
             } else return null;
           }}
           onSubmit={(event) => {

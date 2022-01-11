@@ -53,6 +53,7 @@ export const Autocomplete = ({ area, sigg, place, searchPlace, hashtag, setHasht
     console.log(hashtag);
     // const resultOptions = deselectedOptions.filter((option) => option === clickedOption);
     // setOptions(resultOptions);
+
     setClickedSomething(true);
   };
   const handleDeleteButtonClick = () => {
@@ -115,7 +116,7 @@ export const Autocomplete = ({ area, sigg, place, searchPlace, hashtag, setHasht
         />
       ) : null}
     </div>
-    // </div>
+    // {/* </div> */}
   );
 };
 

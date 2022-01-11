@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Styled } from "./style";
 import HomeMap from "../../components/HomeMap/HomeMap";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import HomeRightbar from "../../components/HomeSearchBar/Home-Rightbar-index";
 
 function Home() {
+  const upBox = useRef();
   //atom값을 참조하지 않아야 리렌더링이 안됨.
   const [openModal, setOpenModal] = useState(false);
   // const [openSearchPlaceModal, setOpenSearchPlaceModal] = useRecoilState(searchPlaceModal);
@@ -20,8 +21,16 @@ function Home() {
   const setAdd = useSetRecoilState(usersaddress);
   const defaultPositionReset = useResetRecoilState(defaultposition);
   // const setDefaultPosition = useSetRecoilState(defaultposition);
-
+  const [height, setHeight] = useState(0);
   const addressReset = useResetRecoilState(usersaddress);
+
+  useEffect(() => {
+    setHeight(upBox.current.getBoundingClientRect().height);
+    // mount 되고 난 뒤의 시점이니까 catContainerRef.current의 값이 업데이트 된 상태
+  }, []);
+  useEffect(() => {
+    console.log(height);
+  }, [height]);
   useEffect(() => {
     return () => {
       addressReset();
@@ -52,25 +61,29 @@ function Home() {
   //   setOpenSearchPlaceModal(!openSearchPlaceModal);
   //   console.log(openSearchPlaceModal);
   // }, [openModal]);
+  console.log(window.innerHeight * 0.68);
+  let upBoxHeight = window.innerHeight * 0.68;
   return (
     <>
       <Styled.FixedComp>
         <>
           <Styled.DivRow>
-            <Styled.DivColumn className="second">
+            <Styled.DivColumn upBoxHeight={upBoxHeight} className="second" ref={upBox}>
               <HomeMap />
               {openModal ? null : (
-                <Styled.OpenModalBtn
-                  onClick={() => {
-                    setOpenSearchPlaceModal(true);
-                  }}
-                >
-                  지역검색창
-                </Styled.OpenModalBtn>
+                <>
+                  <Styled.OpenModalBtn
+                    onClick={() => {
+                      setOpenSearchPlaceModal(true);
+                    }}
+                  >
+                    지역검색창
+                  </Styled.OpenModalBtn>
+                </>
               )}
             </Styled.DivColumn>
             <Styled.DivColumnSecond>
-              <PlaceList />
+              <PlaceList height={height} />
             </Styled.DivColumnSecond>
           </Styled.DivRow>
 

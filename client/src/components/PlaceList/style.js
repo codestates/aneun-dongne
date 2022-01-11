@@ -8,12 +8,16 @@ export const Styled = {
 
     @media screen and (max-width: 880px) {
       flex-direction: row;
-      margin-top: 55vh;
-      /* background: red; */
+      background: white;
+      /* margin-top: 55vh; */
+      margin-top: ${(props) => `${props.height}px` || "null"};
     }
   `,
   MoveToTopBtn: styled.button`
     border-radius: 70%;
+    @media screen and (max-width: 880px) {
+      display: none;
+    }
 
     background: rgba(255, 255, 255, 0.7);
     /* background-color: #b2e0f4; */

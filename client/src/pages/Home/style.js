@@ -6,7 +6,7 @@ export const Styled = {
   `,
   DivRow: styled.div`
     display: flex;
-
+    /* background: skyblue; */
     @media screen and (max-width: 880px) {
       flex-direction: column;
     }
@@ -15,7 +15,7 @@ export const Styled = {
     position: relative;
     /* background: orange; */
     /* margin-right: 60px; */
-
+    /* background: blue; */
     @media screen and (min-width: 880px) {
       position: sticky;
       left: 0;
@@ -31,13 +31,22 @@ export const Styled = {
       /* left: 0; */
       top: 75px;
       width: 100%;
-      /* height: 90vh; */
-      /* background: red; */
+
+      height: 68%;
+      /* height: ${(props) => `${props.upBoxHeight}px` || "null"}; */
+      /* background: orange; */
     }
   `,
   DivColumnSecond: styled.div`
     border-left: 1px gray solid;
     width: 240px;
+    /* background: red; */
+    display: flex;
+
+    position: relative;
+    /* @media screen and (max-width: 880px) {
+      display: flex;
+    } */
   `,
   OpenModalBtn: styled.button`
     position: absolute;

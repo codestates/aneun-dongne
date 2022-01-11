@@ -12,6 +12,7 @@ export const Styled = {
     }
   `,
   DivColumn: styled.div`
+    position: relative;
     /* background: orange; */
     /* margin-right: 60px; */
 
@@ -39,9 +40,18 @@ export const Styled = {
     width: 240px;
   `,
   OpenModalBtn: styled.button`
-    position: fixed;
-    top: 75px;
-    background: rgba(255, 255, 255, 0.5);
-    background: skyblue;
+    position: absolute;
+    z-index: 998;
+    top: 20px;
+    left: 20px;
+    padding: 10px;
+    /* background: rgba(255, 255, 255, 0.5); */
+    opacity: 0.7;
+    border-radius: 10px;
+    border: none;
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
   `,
 };

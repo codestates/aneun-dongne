@@ -10,6 +10,7 @@ import {
   defaultposition,
   canSearchPlace,
   setPlacelistLoading,
+  usersaddress,
 } from "../../recoil/recoil";
 
 import { useHistory } from "react-router-dom";
@@ -21,15 +22,19 @@ import LikeLoading from "../Loading/LikeLoading";
 // import { toast } from "react-toastify";
 
 const HomeMap = () => {
+  const [prevList, setPrevList] = useState([]);
   const setPlaceListLoading = useSetRecoilState(setPlacelistLoading);
   const kakao = window.kakao;
   const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
   const history = useHistory();
   const mapRef = useRef(null);
   // const [options, setOptions] = useState({});
+
   const usersAreaReset = useResetRecoilState(usersArea);
   const usersSiggReset = useResetRecoilState(usersSigg);
   const [placeList, setPlaceList] = useRecoilState(placelist);
+  const defaultPosition = useRecoilValue(defaultposition);
+  const [add, setAdd] = useRecoilState(usersaddress);
   // const visitedList = useRecoilValueLoadable(placelist);
   // console.log(visitedList);
 
@@ -47,6 +52,10 @@ const HomeMap = () => {
   const wtm = getWtm.contents;
   // const placeList = visitedList.contents;
   useEffect(() => {
+    setPrevList(placeList);
+  }, [placeList]);
+
+  useEffect(() => {
     //클락하면 지역검색창 초기화
     usersAreaReset();
     usersSiggReset();
@@ -62,7 +71,7 @@ const HomeMap = () => {
         params: {
           areacode: "null",
           sigungucode: "null",
-          radius: 10000,
+          radius: 20000,
           clientwtmx: wtm.x,
           clientwtmy: wtm.y,
           tag: "null", //null로 넣으면 undefined되어서, 문자열로 넣겠음
@@ -81,17 +90,37 @@ const HomeMap = () => {
             el.post_contentid,
           ];
         });
-        console.log(list);
+        // console.log(list);
         setPlaceList(list);
       });
     // setPlaceListLoading(false);
   }, [wtm.x, wtm.y]); //! 평면좌표 바뀔때마다 실행
 
+  useEffect(() => {
+    // axios
+    //   .get(
+    //     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${defaultPosition.lon}&y=${defaultPosition.lat}&input_coord=WGS84`,
+    //     {
+    //       headers: { Authorization: `KakaoAK ${process.env.REACT_APP_REST_API}` },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     return res.data.documents[0].address;
+    //   })
+    //   .then((address) => {
+    //     setAdd({
+    //       area: address.region_1depth_name,
+    //       sigg: address.region_2depth_name,
+    //       address: address.address_name,
+    //     });
+    //   });
+  }, [defaultPosition]);
+
   return (
     <Styled.Div>
       <>
         <div className="map-experiment">&nbsp;&nbsp;{"지도를 클릭하시면 반경 10km 내의 관광지가 표시됩니다."}</div>
-        <DefaultMap />
+        <DefaultMap placeList={placeList} setPlaceList={setPlaceList} setPrevList={setPrevList} />
       </>
     </Styled.Div>
   );

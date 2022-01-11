@@ -22,7 +22,7 @@ export const Styled = {
 
       border-radius: 5px;
     }
-
+    position: relative;
     margin: 5px 2% 5px 2%;
     height: 40px;
     width: 140px;
@@ -43,10 +43,20 @@ export const Styled = {
         margin-left: auto;
         margin-right: auto;
       }
+
       padding: 10px;
       width: 140px;
       border-radius: 5px;
-      border: 1px gray solid;
+      /* border: 1px gray solid; */
+      border: none;
+    }
+
+    > i {
+      right: 5px;
+      top: 30%;
+
+      font-size: 0.5rem;
+      position: absolute;
     }
   `,
 
@@ -67,6 +77,7 @@ export const Styled = {
     border-radius: 0 0 1rem 1rem;
     box-shadow: ${boxShadow};
     z-index: 999;
+
     .hashtag-drop-down {
       z-index: 999;
       padding: 0 1rem;
@@ -79,20 +90,33 @@ export const Styled = {
         background-color: #ebe5f9;
       }
     }
+    > li {
+      padding: 0 1rem;
+      &:hover {
+        background-color: #eee;
+      }
+
+      &.selected {
+        background-color: #ebe5f9;
+      }
+    }
   `,
-  DropDownWrapper: styled.div`
-    position: relative;
-    z-index: 999;
-    border-radius: 0 0 5px 5px;
-    padding: 5px;
-    background: white;
-  `,
-  DropDownValue: styled.div`
-    position: relative;
-    border-bottom: 1px gray solid;
-    padding: 3px;
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-  `,
+
+  // DropDownWrapper: styled.div`
+  //   position: relative;
+  //   z-index: 999;
+  //   border-radius: 0 0 5px 5px;
+  //   padding: 5px;
+  //   background: white;
+  //   background: red;
+  // `,
+  // DropDownValue: styled.div`
+  //   position: relative;
+  //   border-bottom: 1px gray solid;
+  //   padding: 3px;
+  //   z-index: 999;
+  //   display: flex;
+  //   flex-direction: column;
+  //   background: orange;
+  // `,
 };

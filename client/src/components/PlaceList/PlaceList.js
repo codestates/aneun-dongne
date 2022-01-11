@@ -78,7 +78,11 @@ function PlaceList({ height }) {
   console.log(height);
 
   if (placeListLoading || placeList.length === 0) {
-    return <LikeLoading />;
+    return (
+      <Styled.Loading height={height}>
+        <LikeLoading />
+      </Styled.Loading>
+    );
   }
 
   return (

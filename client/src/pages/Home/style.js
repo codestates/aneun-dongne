@@ -6,7 +6,7 @@ export const Styled = {
   `,
   DivRow: styled.div`
     display: flex;
-    /* background: skyblue; */
+
     @media screen and (max-width: 880px) {
       flex-direction: column;
     }
@@ -15,38 +15,43 @@ export const Styled = {
     position: relative;
     /* background: orange; */
     /* margin-right: 60px; */
-    /* background: blue; */
+
+    /* width: 100px; */
     @media screen and (min-width: 880px) {
-      position: sticky;
+      position: fixed;
       left: 0;
 
       top: 75px;
-      width: 100%;
-
+      /* width: 100%; */
+      width: ${(props) => `${props.width}px`};
       height: 90vh;
     }
     @media screen and (max-width: 880px) {
       height: 55vh;
       position: fixed;
       /* left: 0; */
-      top: 75px;
       width: 100%;
+      top: 75px;
 
-      height: 68%;
-      /* height: ${(props) => `${props.upBoxHeight}px` || "null"}; */
-      /* background: orange; */
+      /* height: 401px; */
+      height: ${(props) => `${props.upBoxHeight}px` || "null"};
+      /* background: red; */
     }
   `,
   DivColumnSecond: styled.div`
-    border-left: 1px gray solid;
     width: 240px;
+    height: 240px;
     /* background: red; */
-    display: flex;
+    /* margin: auto 0; */
+    @media screen and (min-width: 880px) {
+      position: absolute;
+      right: 0;
+    }
+    @media screen and (max-width: 880px) {
+      margin-top: ${(props) => `${props.height}px` || "null"};
 
-    position: relative;
-    /* @media screen and (max-width: 880px) {
-      display: flex;
-    } */
+      width: 100%;
+    }
   `,
   OpenModalBtn: styled.button`
     position: absolute;
@@ -54,12 +59,12 @@ export const Styled = {
     top: 20px;
     left: 20px;
     padding: 10px;
-    /* background: rgba(255, 255, 255, 0.5); */
-    opacity: 0.7;
+    background: rgba(58, 111, 176, 0.7);
+
     border-radius: 10px;
     border: none;
     &:hover {
-      opacity: 1;
+      background: rgba(58, 111, 176, 1);
       cursor: pointer;
     }
   `,

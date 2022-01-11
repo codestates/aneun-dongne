@@ -61,14 +61,18 @@ function Home() {
   //   setOpenSearchPlaceModal(!openSearchPlaceModal);
   //   console.log(openSearchPlaceModal);
   // }, [openModal]);
-  console.log(window.innerHeight * 0.68);
-  let upBoxHeight = window.innerHeight * 0.68;
+  console.log(window.innerWidth - 240);
   return (
     <>
       <Styled.FixedComp>
         <>
           <Styled.DivRow>
-            <Styled.DivColumn upBoxHeight={upBoxHeight} className="second" ref={upBox}>
+            <Styled.DivColumn
+              width={window.innerWidth - 250}
+              upBoxHeight={window.innerHeight - 330}
+              className="second"
+              ref={upBox}
+            >
               <HomeMap />
               {openModal ? null : (
                 <>
@@ -82,8 +86,8 @@ function Home() {
                 </>
               )}
             </Styled.DivColumn>
-            <Styled.DivColumnSecond>
-              <PlaceList height={height} />
+            <Styled.DivColumnSecond height={height}>
+              <PlaceList />
             </Styled.DivColumnSecond>
           </Styled.DivRow>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { Styled } from "./style";
 import { MemoCards } from "../PlaceCard/PlaceCards";
 
@@ -12,24 +12,28 @@ import {
   token,
   kToken,
   canSearchPlace,
+  setPlacelistLoading,
 } from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
 import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
+import LikeLoading from "../Loading/LikeLoading";
 
 function PlaceList() {
   const ableToSearchPlace = useRecoilValue(canSearchPlace);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
   const placeList = useRecoilValue(placelist);
+  // const visitedList = useRecoilValueLoadable(placelist);
   const setPlaceLocation = useSetRecoilState(placelocation);
   const setPlaceAddress = useSetRecoilState(placeaddress);
   const setImgURL = useSetRecoilState(placeimg);
   const setTitle = useSetRecoilState(placetitle);
   const [ScrollY, setScrollY] = useState(0);
   const [btnStatus, setBtnStatus] = useState(false);
-
+  // const placeList = visitedList.contents;
+  const placeListLoading = useRecoilValue(setPlacelistLoading);
   //! Top 버튼에 필요한 주석
   useEffect(() => {
     const handleFollow = () => {
@@ -71,7 +75,10 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
-  console.log(ableToSearchPlace);
+
+  if (placeListLoading || placeList.length === 0) {
+    return <LikeLoading />;
+  }
   return (
     <>
       <Styled.PlaceLists>
@@ -80,12 +87,12 @@ function PlaceList() {
             <Empty />
           </>
         ) : (
-          placeList.map((place, idx) => {
+          placeList.map((place) => {
             return (
-              <Styled.Div key={idx}>
+              <Styled.Div key={place[5]}>
                 <Styled.StyledLink to={`/detailpage/${place[5]}`}>
                   <MemoCards
-                    onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
+                    // onClick={() => getPlaceLocation({ lat: place[0], lon: place[1] }, place[3], place[2], place[4])}
                     title={place[2]}
                     img={place[3]}
                     addr1={place[4] ? place[4].split(" ")[0] : null}

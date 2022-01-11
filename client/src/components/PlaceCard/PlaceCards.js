@@ -68,7 +68,6 @@ function PlaceCards({ title, img, addr1, onClick, contentId, tag }) {
         withCredentials: true,
       })
       .then((response) => {
-        // console.log(response.data.post.post_tags);
         if (response.data.post.post_tags) setTags(response.data.post.post_tags.split(","));
         else if (response.data.post.post_tags === null) setTags([]);
       });

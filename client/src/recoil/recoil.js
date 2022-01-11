@@ -14,7 +14,8 @@ export const kToken = atom({
 //! 유저 주소 - Home.js, savePositioModal 에서 사용
 export const usersaddress = atom({
   key: "usersaddress",
-  default: { area: "", sigg: "", addr: "" },
+  // default: { area: "서울", sigg: "서초구", addr: "서울 서오구 반포동 70-1" },
+  default: { area: "지도를", sigg: "클릭해주세요", addr: "서울 서오구 반포동 70-1" },
 });
 export const usersArea = atom({
   key: "usersArea",
@@ -74,7 +75,10 @@ export const sendPlaceinfo = selector({
     set(placeaddress, address);
   },
 });
-
+export const searcnPlaceBtnPressed = atom({
+  key: "searcnPlaceBtnPressed",
+  default: false,
+});
 //! 로딩state
 export const loading = atom({
   key: "loading",
@@ -146,7 +150,7 @@ export const deleteCommentmode = atom({
 //!pickpoint바뀔때마다 바뀌는 값
 export const defaultposition = atom({
   key: "defaultPosition",
-  default: { lat: 0, lon: 0 },
+  default: { lat: 37.5, lon: 127 },
 });
 
 // ! 위치기반 API -> 지도위 나타나는 좌표 바꾸는거. 지도 클릭한효과랑 같음
@@ -175,7 +179,7 @@ export const isClickedNowLocation = atom({
 
 // ! 위치기반 API - Homemap.js랑 연결
 export const getWTM = selector({
-  key: "getWTN",
+  key: "getWTM",
   get: async ({ get }) => {
     const result = await axios.get(
       // `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${get(pickpoint)[1]}&y=${
@@ -197,6 +201,46 @@ export const getWTM = selector({
     return data;
   },
 });
+
+// export const placelist = selector({
+//   key: "placelist",
+//   get: async ({ get }) => {
+//     const wtm = get(getWTM);
+//     const result = await axios
+//       .get(`${process.env.REACT_APP_API_URL}/home`, {
+//         headers: {
+//           // Authorization: `Bearer ${accessToken || kakaoToken}`,
+//           "Content-Type": "application/json",
+//         },
+//         params: {
+//           areacode: "null",
+//           sigungucode: "null",
+//           radius: 10000,
+//           clientwtmx: wtm.x,
+//           clientwtmy: wtm.y,
+//           tag: "null", //null로 넣으면 undefined되어서, 문자열로 넣겠음
+//           searchWord: "null",
+//         },
+//         withCredentials: true,
+//       })
+//       .then((res) => {
+//         const list = res.data.data.map((el) => {
+//           return [
+//             Number(el.post_mapy),
+//             Number(el.post_mapx),
+//             el.post_title,
+//             el.post_firstimage,
+//             el.post_addr1,
+//             el.post_contentid,
+//           ];
+//         });
+
+//         return list;
+//       });
+
+//     return result;
+//   },
+// });
 
 //! myVisited 모달
 export const visitedModal = atom({
@@ -220,7 +264,11 @@ export const loginAgainModal = atom({
   key: "loginAgainModal",
   default: false,
 });
-
+//!로딩
+export const setPlacelistLoading = atom({
+  key: "setPlacelistLoading",
+  default: false,
+});
 //! 마이페이지
 export const newVisitedPlace = atom({
   key: "newVisitedPlace",
@@ -229,6 +277,14 @@ export const newVisitedPlace = atom({
 export const newVisitedMemo = atom({
   key: "newVisitedMemo",
   default: "",
+});
+export const savedVisitedPlaceInMyPage = atom({
+  key: "savedVisitedPlaceInMyPage",
+  default: false,
+});
+export const fromMyPage = atom({
+  key: "fromMyPage",
+  default: false,
 });
 export const getVisitedList = selector({
   key: "getVisitedList",

@@ -12,7 +12,7 @@ import Cookies from "universal-cookie";
 const MyReview = () => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-  const [isLoing, setIsloading] = useRecoilState(commentDeleteLoading);
+  const [isLoading, setIsloading] = useRecoilState(commentDeleteLoading);
 
   const [comments, setComments] = useState([]);
   const cookies = new Cookies();
@@ -42,7 +42,7 @@ const MyReview = () => {
   return (
     <>
       <div className="comment-list">
-        {isLoing ? (
+        {isLoading ? (
           <div>
             <LikeLoading />
           </div>

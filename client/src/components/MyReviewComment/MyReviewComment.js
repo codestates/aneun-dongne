@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { token, kToken, deleteCommentModal, commentPostId, commentUniqueId } from "../../recoil/recoil";
@@ -16,7 +16,6 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
   const kakaoToken = useRecoilValue(kToken);
 
   const [isDeleteModal, setIsDeleteModal] = useRecoilState(deleteCommentModal);
-
   const [contentId, setContentId] = useRecoilState(commentPostId);
   const [commentId, setCommnetId] = useRecoilState(commentUniqueId);
 

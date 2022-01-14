@@ -133,7 +133,7 @@ function ModalVisited({ id, kmemo, visitedImg, setPrevList }) {
             />
           </div>
           {/* //! 로긴안했으면 모달창뜨게하기, 모달창 여러개 떴을때 우선순위 정하기 */}
-          <div className="button-wraaper">
+          <div className="button-wrapper">
             <button type="submit" value="update" className="edit-position-button" onClick={updateInfo}>
               저장
             </button>

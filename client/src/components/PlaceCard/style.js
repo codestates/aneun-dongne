@@ -91,8 +91,9 @@ export const Styled = {
     display: flex;
     // flex: 1;
     position: absolute;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
+    padding: 1px;
     max-width: 400px;
     font-size: 1rem;
     color: #3a6fb0;

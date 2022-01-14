@@ -160,4 +160,40 @@ export const Styled = {
       }
     }
   `,
+
+  ModalContainer: styled.div`
+    position: relative;
+  `,
+
+  ModalBackdrop: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    backdrop-filter: contrast(90%);
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+  `,
+  ModalView: styled.div`
+    position: fixed;
+    background-color: white;
+    width: 400px;
+    height: 250px;
+    z-index: 2;
+    border: 1px solid white;
+    border-radius: 20px;
+
+    @media screen and (max-height: 900px) {
+      width: 350px;
+      height: 200px;
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 350px;
+      height: 200px;
+    }
+  `,
 };

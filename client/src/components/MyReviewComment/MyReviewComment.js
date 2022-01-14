@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { token, kToken } from "../../recoil/recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { token, kToken, deleteCommentModal, commentPostId, commentUniqueId } from "../../recoil/recoil";
 
 import { Icon } from "react-icons-kit";
 import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
@@ -10,12 +9,15 @@ import { ic_cancel_outline } from "react-icons-kit/md/ic_cancel_outline";
 import { Styled } from "./style";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 import Cookies from "universal-cookie";
-import LikeLoading from "../Loading/LikeLoading";
+import ModalDeleteComment from "../ModalDeleteComment/ModalDeleteComment";
 
 const MyReviewComment = ({ comment, renderMyComments }) => {
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-  const [isLoing, SetIsloading] = useState(false);
+
+  const [isDeleteModal, setIsDeleteModal] = useRecoilState(deleteCommentModal);
+  const [contentId, setContentId] = useRecoilState(commentPostId);
+  const [commentId, setCommnetId] = useRecoilState(commentUniqueId);
 
   const history = useHistory();
   const cookies = new Cookies();
@@ -31,27 +33,31 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
     history.push(`/detailpage/${comment_post_contentid}`);
   };
 
-  const deleteComment = async () => {
-    SetIsloading(true);
-    await axios
-      .delete(`${process.env.REACT_APP_API_URL}/comment/${comment_post_contentid}`, {
-        headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-        params: { commentId: id },
-      })
-      .then(() => {
-        renderMyComments();
-      })
-      .then(() => {
-        SetIsloading(false);
-      });
+  const handleDeleteCommentModal = (e) => {
+    setIsDeleteModal(true);
+    setContentId(comment_post_contentid);
+    setCommnetId(id);
+  };
+
+  const closeDeleteModalHandler = () => {
+    setIsDeleteModal(false);
+    setContentId(null);
+    setCommnetId(null);
   };
 
   return (
     <>
+      <Styled.ModalContainer>
+        {isDeleteModal ? (
+          <>
+            <Styled.ModalBackdrop onClick={closeDeleteModalHandler}>
+              <Styled.ModalView onClick={(e) => e.stopPropagation()}>
+                <ModalDeleteComment renderMyComments={renderMyComments} setIsDeleteModal={setIsDeleteModal} />
+              </Styled.ModalView>
+            </Styled.ModalBackdrop>
+          </>
+        ) : null}
+      </Styled.ModalContainer>
       <Styled.Comment>
         <div className="user-container">
           <div className="user-info-wrapper">
@@ -59,15 +65,9 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
             <div className="user-name">{nickname}</div>
           </div>
           <div className="user-content-wrapper">
-            {isLoing ? (
-              <>
-                <LikeLoading />
-              </>
-            ) : (
-              <div className="user-content" onClick={handleContentClick}>
-                {comment_content}
-              </div>
-            )}
+            <div className="user-content" onClick={handleContentClick}>
+              {comment_content}
+            </div>
             <div className="user-hastag-wrapper">
               {tagArr.map((tag, idx) => (
                 <span key={idx} className="user-hastag">
@@ -88,7 +88,7 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
             </div>
           </div>
         </div>
-        <div className="side" onClick={deleteComment}>
+        <div className="side" onClick={handleDeleteCommentModal}>
           <Icon size={28} icon={ic_cancel_outline} className="delete-button" />
         </div>
       </Styled.Comment>

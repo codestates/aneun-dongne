@@ -15,7 +15,6 @@ import NoComment from "../../components/NoComment/NoComment";
 
 function DetailPage({ match }) {
   const contentId = parseInt(match.params.id, 10);
-
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");

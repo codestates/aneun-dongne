@@ -13,12 +13,12 @@ import {
   warningDeleteUserModal,
   searchPlaceModal,
 } from "../../recoil/recoil";
-import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteUserInfo";
-import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-
 import Cookies from "universal-cookie";
+
+import WarningDeleteUserModal from "../ModalWarningDeleteUserInfo/WarningDeleteUserInfo";
+import ModalSavePosition from "../ModalSavePosition/ModalSavePosition";
 import SaveOrNotModal from "../ModalSaveOrNot/SaveOrNotModal";
 import ModalLoginAgain from "../ModalLoginAgain/ModalLoginAgain";
 import HomeRightbar from "../HomeSearchBar/Home-Rightbar-index";

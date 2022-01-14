@@ -304,3 +304,27 @@ export const getVisitedList = selector({
     return result;
   },
 });
+
+// 댓글 삭제 모달
+export const deleteCommentModal = atom({
+  key: "deleteCommentModal",
+  default: false,
+});
+
+// 댓글 포스트 id
+export const commentPostId = atom({
+  key: "commentPostId",
+  default: null,
+});
+
+// 댓글 고유 id
+export const commentUniqueId = atom({
+  key: "commentUniqueId",
+  default: null,
+});
+
+// 댓글 삭제 시 로딩
+export const commentDeleteLoading = atom({
+  key: "commentDeleteLoading",
+  default: false,
+});

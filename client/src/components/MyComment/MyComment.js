@@ -48,7 +48,6 @@ function MyComment({ userinfo, contentId }) {
       setCommentLoading(true);
       const result = await axios.post(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, body, {
         headers: {
-          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

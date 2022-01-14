@@ -1,11 +1,18 @@
 import React from "react";
 
-import Comments from "../Comments/Comments";
 import { Styled } from "./style";
 
+import { useRecoilValue } from "recoil";
+import { commentDeleteLoading } from "../../recoil/recoil";
+
+import LikeLoading from "../Loading/LikeLoading";
+import Comments from "../Comments/Comments";
+
 function CommentTemplate({ commentDummy, contentId }) {
+  const isLoading = useRecoilValue(commentDeleteLoading);
+
   return (
-    <div>
+    <>
       {commentDummy.map((comment, idx) => {
         //여기도 toast로 바꿔보자
         if (comment.text === "\n") return null;
@@ -26,7 +33,7 @@ function CommentTemplate({ commentDummy, contentId }) {
           </div>
         );
       })}
-    </div>
+    </>
   );
 }
 

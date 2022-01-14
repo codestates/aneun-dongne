@@ -20,7 +20,7 @@ import { angleUp } from "react-icons-kit/fa/angleUp";
 import Empty from "../Empty/Empty";
 import LikeLoading from "../Loading/LikeLoading";
 
-function PlaceList() {
+function PlaceList({ height }) {
   const ableToSearchPlace = useRecoilValue(canSearchPlace);
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
@@ -75,13 +75,19 @@ function PlaceList() {
     setTitle(title);
     setPlaceAddress(address);
   }
+  console.log(height);
 
   if (placeListLoading || placeList.length === 0) {
-    return <LikeLoading />;
+    return (
+      <Styled.Loading height={height}>
+        <LikeLoading />
+      </Styled.Loading>
+    );
   }
+
   return (
     <>
-      <Styled.PlaceLists>
+      <Styled.PlaceLists height={height}>
         {!ableToSearchPlace ? (
           <>
             <Empty />

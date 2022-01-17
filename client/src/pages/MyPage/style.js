@@ -21,7 +21,7 @@ export const Styled = {
         rgba(255, 255, 255, 0.1) 100%
       );
       height: 100vh;
-      width: 400px;
+      min-width: 400px;
     }
 
     .profile {

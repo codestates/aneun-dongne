@@ -27,7 +27,7 @@ function VisitedList({ placeList, selectedPosition, setSelectedPosition, markerC
       setIsVisitedOpen(false);
     }
   };
-  console.log(placeList);
+  // console.log(placeList);
   //! 배열을 매핑해서 모달에 넣을때는 array.map()을 작성하는 그 위치에서 모달창을 만들어야함
   return (
     <>

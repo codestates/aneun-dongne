@@ -2,20 +2,22 @@ import styled from "styled-components";
 
 export const Styled = {
   Lists: styled.div`
-    padding: 0px 10px;
+    padding: 0px 15px;
   `,
 
   PlaceCard: styled.div`
     margin-top: 40px;
     border: 3px #3a6fb0 solid;
     border-radius: 20px;
-    width: 300px;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
 
     &:hover {
       transform: scale(1.1);
       box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
         4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
     .place-cards {
@@ -28,8 +30,8 @@ export const Styled = {
     }
 
     .place-cards > img {
-      width: 80%;
-      height: 200px;
+      width: 90%;
+      height: auto;
       margin-left: auto;
       margin-right: auto;
       border-radius: 20px;
@@ -38,39 +40,6 @@ export const Styled = {
     .place-cards-title {
       margin-left: 10px;
       margin-top: 6px;
-    }
-
-    @media screen and (max-width: 1400px) {
-      width: 250px;
-      height: 330px;
-      .place-cards > img {
-        height: 150px;
-      }
-    }
-
-    @media screen and (max-width: 710px) {
-      width: 220px;
-      height: 320px;
-      .place-cards > img {
-        height: 150px;
-      }
-    }
-
-    @media screen and (max-width: 560px) {
-      width: 190px;
-      height: 290px;
-      .place-cards > img {
-        height: 120px;
-      }
-    }
-
-    @media screen and (max-width: 400px) {
-      font-size: 0.7rem;
-      width: 150px;
-      height: 240px;
-      .place-cards > img {
-        height: 100px;
-      }
     }
   `,
 
@@ -82,12 +51,13 @@ export const Styled = {
   `,
 
   KeyWord: styled.span`
-    width: 120px;
+    width: 70%;
     color: #3a6fb0;
     cursor: pointer;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding-left: 25px;
 
     &:hover {
       color: #2f4d6f;
@@ -106,7 +76,7 @@ export const Styled = {
     text-justify: center;
     flex-direction: row-reverse;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
-    transition: all 0.1s ease-in-out;
+    transition: transform 0.1s ease-in-out;
     i {
       color: red;
       justify-content: center;
@@ -123,28 +93,6 @@ export const Styled = {
     &:hover:after {
       left: 0;
       width: 100%;
-    }
-
-    &:active {
-      transform: scale(1.3);
-    }
-
-    @media screen and (max-width: 710px) {
-      width: 70px;
-      height: 25px;
-      margin: 0px auto;
-      i {
-        margin-top: 4px;
-      }
-    }
-
-    @media screen and (max-width: 400px) {
-      width: 70px;
-      height: 20px;
-      margin: 0px auto;
-      i {
-        margin-top: 5px;
-      }
     }
   `,
 

@@ -54,7 +54,6 @@ const MyVisited = () => {
   useEffect(() => {
     setFromMyPage(true);
     return () => {
-      console.log("언마운트?");
       setFromMyPage(false);
       addressReset();
       defaultPositionReset();

@@ -8,13 +8,6 @@ import { Styled } from "./style";
 const LikeLists = ({ postsInfo }) => {
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
-  const ToScrollTop = (e) => {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
 
   const handlecontentClick = () => {
     history.push(`/detailpage/${postsInfo.post_contentid}`);
@@ -39,7 +32,7 @@ const LikeLists = ({ postsInfo }) => {
           </Styled.KeyWordBox>
           <div className="place-cards">
             {!postsInfo.post_firstimage ? (
-              <img src="/images/not-image-yet.png" />
+              <img className="not-img" src="/images/not-image-yet.png" />
             ) : (
               <img src={postsInfo.post_firstimage} />
             )}

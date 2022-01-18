@@ -3,55 +3,49 @@ import styled from "styled-components";
 export const Styled = {
   Comment: styled.div`
     display: flex;
-    width: 700px;
     border: 1px gray solid;
     border-radius: 10px;
     margin: 20px 20px;
+    margin-right: auto;
+    margin-left: auto;
     &:hover {
       box-shadow: 1px 1px 3px black;
     }
 
     .user-container {
       display: flex;
-      margin: 10px 0px 0px 20px;
+      margin: 10px 0px 0px 15px;
     }
 
     .user-image {
-      width: 80px;
-      height: 80px;
       border-radius: 100%;
       object-fit: cover;
     }
 
-    .user-name {
-      text-align: center;
-    }
-
     .user-content-wrapper {
-      margin-left: 30px;
-      margin-top: 5px;
-      line-height: 30px;
-      width: 500px;
+      /* margin-left: 30px; */
+      /* margin-bottom: -100px; */
+      line-height: 26px;
+      /* width: 500px; */
     }
 
     .user-content {
       cursor: pointer;
-      width: 500px;
+      /* width: 500px; */
     }
 
     .user-hastag-wrapper {
-      width: 500px;
+      /* width: 500px; */
     }
 
     .user-hastag {
-      padding: 0px 4px;
+      /* padding: 0px 4px; */
       color: #162b71;
     }
 
     .user-content-bottom {
-      display: flex;
-      justify-content: space-between;
-      width: 550px;
+      /* justify-content: space-between; */
+      /* width: 550px; */
     }
 
     .user-location {
@@ -72,9 +66,9 @@ export const Styled = {
       align-items: center;
       justify-content: center;
       margin: 15px;
-      width: 40px;
-      height: 40px;
-      border-radius: 100%;
+      width: 35px;
+      height: 35px;
+      border-radius: 15px;
       &:hover {
         background-color: #eee;
       }
@@ -85,79 +79,33 @@ export const Styled = {
       cursor: pointer;
     }
 
-    @media screen and (max-width: 1150px) {
-      width: 600px;
+    @media screen and (min-width: 320px) {
+      max-width: 90%;
+      font-size: 0.8rem;
 
-      .user-content-wrapper {
-        width: 400px;
-      }
-
-      .user-content {
-        width: 400px;
-      }
-
-      .user-hastag-wrapper {
-        width: 400px;
+      .user-image {
+        max-width: 55%;
+        /* max-height: 55%; */
       }
 
       .user-content-bottom {
-        width: 450px;
-      }
-    }
-
-    @media screen and (max-width: 650px) {
-      width: 450px;
-
-      .user-content-wrapper {
-        width: 250px;
-      }
-
-      .user-content {
-        width: 250px;
-      }
-
-      .user-hastag-wrapper {
-        width: 250px;
-      }
-
-      .user-content-bottom {
-        width: 300px;
-      }
-
-      .user-location-wrapper {
         display: flex;
         flex-direction: column;
       }
 
-      .user-location {
-        margin-left: 5px;
+      .user-content {
+        cursor: pointer;
+        min-width: 10rem;
       }
     }
 
-    @media screen and (max-width: 480px) {
-      width: 300px;
-      font-size: 0.7rem;
+    @media screen and (min-width: 412px) {
+      font-size: 0.9rem;
+    }
 
-      .user-image {
-        width: 45px;
-        height: 45px;
-      }
-
-      .user-content-wrapper {
-        width: 150px;
-      }
-
-      .user-content {
-        width: 140px;
-      }
-
-      .user-hastag-wrapper {
-        width: 140px;
-      }
-
-      .user-content-bottom {
-        width: 190px;
-      }
+    @media screen and (min-width: 1024px) {
+      font-size: 1rem;
+      max-width: 80%;
     }
   `,
 

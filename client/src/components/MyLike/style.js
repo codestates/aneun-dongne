@@ -11,6 +11,8 @@ export const Styled = {
     border: 3px #3a6fb0 solid;
     border-radius: 20px;
     transition: transform 0.3s ease;
+    margin-left: 10px;
+    margin-right: 10px;
 
     &:hover {
       transform: scale(1.05);
@@ -26,6 +28,8 @@ export const Styled = {
       margin-left: auto;
       margin-right: auto;
       border-radius: 20px;
+      max-width: 80%;
+      max-height: 80%;
     }
 
     .place-cards-title {
@@ -35,17 +39,13 @@ export const Styled = {
 
     @media screen and (min-width: 320px) {
       font-size: 0.8rem;
-      max-width: 80%;
-      max-height: 100%;
-
-      .place-cards > img {
-        max-width: 80%;
-        max-height: 80%;
+      .place-cards {
+        max-width: 100%;
+        max-height: 90%;
       }
 
       .place-cards > .not-img {
-        max-width: 53%;
-        max-height: 80%;
+        max-width: 65%;
       }
     }
 
@@ -53,14 +53,19 @@ export const Styled = {
       font-size: 1rem;
     }
 
-    @media screen and (min-width: 1400px) {
-      max-height: 70%;
-      max-width: 80%;
+    @media screen and (min-width: 520px) {
+      .place-cards {
+        max-width: 100%;
+        max-height: 50%;
+      }
     }
 
-    @media screen and (min-width: 1600px) {
-      max-height: 80%;
-      max-width: 80%;
+    @media screen and (min-width: 1024px) {
+      height: 350px;
+    }
+
+    @media screen and (min-width: 1400px) {
+      max-width: 300px;
     }
   `,
 

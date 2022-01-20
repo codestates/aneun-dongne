@@ -10,13 +10,37 @@
 const { isAuthorized, generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 const { User } = require("../../models");
 
-const updateUserInfo = async (userId, newNickname, newPassword, imagePath, thumbnailPath) => {
+const updateUserImage = async (userId, imagePath, thumbnailPath) => {
+  await User.update(
+    {
+      user_image_path: imagePath,
+      user_thumbnail_path: thumbnailPath,
+    },
+    {
+      where: {
+        id: userId,
+      },
+    }
+  );
+};
+
+const updateUserNick = async (userId, newNickname) => {
   await User.update(
     {
       nickname: newNickname,
+    },
+    {
+      where: {
+        id: userId,
+      },
+    }
+  );
+};
+
+const updateUserPW = async (userId, newPassword) => {
+  await User.update(
+    {
       password: newPassword,
-      user_image_path: imagePath,
-      user_thumbnail_path: thumbnailPath,
     },
     {
       where: {
@@ -54,7 +78,7 @@ module.exports = {
       res.status(200).json({ data: { userInfo: accessTokenData }, message: "ok" });
     }
   },
-  patch: async (req, res) => {
+  imagePatch: async (req, res) => {
     const accessTokenData = isAuthorized(req);
 
     if (!accessTokenData) {
@@ -62,12 +86,8 @@ module.exports = {
     } else {
       //토큰이 존재한다면
       const { id, email } = accessTokenData;
-      const { password, checkPassword, nickname, newPassword } = req.body;
 
       let validUser = {};
-      let new_Nickname = "";
-      let new_Password = "";
-      let check_Password = "";
 
       await User.findOne({
         raw: true,
@@ -78,34 +98,13 @@ module.exports = {
         validUser = data;
       }); // 유저정보 조회
 
-      if (nickname === "") {
-        new_Nickname = validUser.nickname;
-      } else {
-        new_Nickname = nickname;
-      }
-
-      if (newPassword === "") {
-        new_Password = validUser.password;
-      } else {
-        new_Password = newPassword;
-      }
-
-      if (checkPassword === "") {
-        check_Password = validUser.password;
-      } else {
-        check_Password = checkPassword;
-      }
-
       if (Object.keys(validUser).length === 0) {
         //유저 없으면 컷
         await res.status(400).json({ data: null, message: "no such user in the database" });
       } else {
-        if (!validUser.password || validUser.provider === "kakao") {
+        if (validUser.provider === "kakao") {
           //카카오 로그인하면 비번 없음
           await res.status(403).send({ message: "Cannot edit kakao profile" });
-        } else if (validUser.password !== password || check_Password !== new_Password) {
-          //보통 password 실수한 경우
-          await res.status(400).send({ message: "Type your password again" });
         } else {
           //validUser가 존재하며 카카오로그인도 아니고 비번도 일치할 때
           // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
@@ -125,17 +124,11 @@ module.exports = {
           } else {
             //변경하고싶은 프사 있을때
             //s3 서버에 저장된 이미지의 url 경로 획득
-
-            // const imagesInfo = req.file.transforms;
             thumbnailPath = req.file.transforms[0].location;
             imagePath = req.file.transforms[1].location;
-            // imagesInfo.forEach((imageInfo) => {
-            //   if (imageInfo.id === "thumbnail") thumbnailPath = imageInfo.location;
-            //   else if (imageInfo.id === "origin") imagePath = imageInfo.location;
-            // });
           }
 
-          await updateUserInfo(id, new_Nickname, new_Password, imagePath, thumbnailPath).then(async () => {
+          await updateUserImage(id, imagePath, thumbnailPath).then(async () => {
             const userInfo = await getUserInfo(id);
             const accessToken = generateAccessToken(userInfo);
             // await res.status(200).json({ data: userInfo, message: "ok" });
@@ -147,15 +140,127 @@ module.exports = {
               sameSite: "None",
             });
             // sendAccessToken(res, accessToken);
-            res.json({
+            await res.status(201).json({
               data: {
                 accessToken,
-                email,
-                nickname: new_Nickname,
-                user_image_path: imagePath,
-                user_thumbnail_path: thumbnailPath,
+                userInfo: userInfo,
               },
-              message: "okkk",
+              message: "ok",
+            });
+          });
+        }
+      }
+    }
+  },
+  nicknamePatch: async (req, res) => {
+    const accessTokenData = isAuthorized(req);
+
+    if (!accessTokenData) {
+      res.status(401).send({ data: null, message: "not authorized" });
+    } else {
+      //토큰이 존재한다면
+      const { id, email } = accessTokenData;
+      const { nickname } = req.body;
+
+      let validUser = {};
+
+      await User.findOne({
+        raw: true,
+        where: {
+          email: email,
+        },
+      }).then((data) => {
+        validUser = data;
+      }); // 유저정보 조회
+
+      if (Object.keys(validUser).length === 0) {
+        //유저 없으면 컷
+        await res.status(400).json({ data: null, message: "no such user in the database" });
+      } else {
+        if (validUser.provider === "kakao") {
+          //카카오 로그인하면 비번 없음
+          await res.status(403).send({ message: "Cannot edit kakao profile" });
+        } else {
+          //validUser가 존재하며 카카오로그인도 아니고 비번도 일치할 때
+          // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
+
+          await updateUserNick(id, nickname).then(async () => {
+            const userInfo = await getUserInfo(id);
+            const accessToken = generateAccessToken(userInfo);
+            // await res.status(200).json({ data: userInfo, message: "ok" });
+            await res.cookie("jwt", accessToken, {
+              maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+              // domain: ".aneun-dongne.com",
+              path: "/",
+              secure: true,
+              sameSite: "None",
+            });
+            // sendAccessToken(res, accessToken);
+            await res.status(201).json({
+              data: {
+                accessToken,
+                userInfo: userInfo,
+              },
+              message: "ok",
+            });
+          });
+        }
+      }
+    }
+  },
+  passwordPatch: async (req, res) => {
+    const accessTokenData = isAuthorized(req);
+
+    if (!accessTokenData) {
+      res.status(401).send({ data: null, message: "not authorized" });
+    } else {
+      //토큰이 존재한다면
+      const { id, email } = accessTokenData;
+      const { password, checkPassword, newPassword } = req.body;
+
+      let validUser = {};
+
+      await User.findOne({
+        raw: true,
+        where: {
+          email: email,
+        },
+      }).then((data) => {
+        validUser = data;
+      }); // 유저정보 조회
+
+      if (Object.keys(validUser).length === 0) {
+        //유저 없으면 컷
+        await res.status(400).json({ data: null, message: "no such user in the database" });
+      } else {
+        if (validUser.provider === "kakao") {
+          //카카오 로그인하면 비번 없음
+          await res.status(403).send({ message: "Cannot edit kakao profile" });
+        } else if (validUser.password !== password || checkPassword !== newPassword) {
+          //보통 password 실수한 경우
+          await res.status(400).send({ message: "Type your password again" });
+        } else {
+          //validUser가 존재하며 카카오로그인도 아니고 비번도 일치할 때
+          // 업로드시 삭제해줄 애, 지금은 운영자가 직접삭제해야함..
+
+          await updateUserPW(id, newPassword).then(async () => {
+            const userInfo = await getUserInfo(id);
+            const accessToken = generateAccessToken(userInfo);
+            // await res.status(200).json({ data: userInfo, message: "ok" });
+            await res.cookie("jwt", accessToken, {
+              maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
+              // domain: ".aneun-dongne.com",
+              path: "/",
+              secure: true,
+              sameSite: "None",
+            });
+            // sendAccessToken(res, accessToken);
+            await res.status(201).json({
+              data: {
+                accessToken,
+                userInfo: userInfo,
+              },
+              message: "ok",
             });
           });
         }

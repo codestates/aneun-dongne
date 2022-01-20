@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { loginAgainModal, token, kToken, warningDeleteUserModal } from "../../recoil/recoil";
@@ -31,14 +31,12 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
 
       .then((res) => {
-        // console.log(res.data.data.userInfo);
         setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
           setImgUrl(res.data.data.userInfo.user_image_path);
@@ -117,12 +115,8 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const handleInputUsername = (e) => {
     setInputUsername(e.target.value);
   };
-  //이메일변경불가
-  const handleInputEmail = (e) => {
-    setInputEmail(e.target.value);
-  };
 
-  //비밀번호변경//유효성검사추가해야함
+  //비밀번호변경
   const handleInputPassword = (e) => {
     setInputPassword(e.target.value);
   };
@@ -146,21 +140,30 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   };
 
   return (
-    <div>
+    <>
       <Styled.UserInfopage>
         <Styled.View>
-          <Styled.ImgDiv>
-            <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
-          </Styled.ImgDiv>
+          <form onSubmit={editInfo} className="image-container">
+            <div className="image-wrapper">
+              <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
+            </div>
+            <button className="btn-image-edit" type="submit">
+              적용
+            </button>
+          </form>
 
           <Styled.ContentBox>
             <form onSubmit={editInfo}>
               <div className="userinfo-each-label">
-                <input type="text" name="nickname" placeholder="새로운 닉네임" onChange={handleInputUsername} />
-              </div>
-              <div className="userinfo-each-label">
                 <input type="text" value={inputEmail} readOnly />
               </div>
+              <div className="userinfo-each-label">
+                <input type="text" name="nickname" placeholder="새 닉네임" onChange={handleInputUsername} />
+                <button className="btn-edit" type="submit">
+                  변경
+                </button>
+              </div>
+
               <div className="userinfo-each-label">
                 <input
                   type="password"
@@ -175,7 +178,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                 <input
                   type="password"
                   name="password"
-                  placeholder="새로운 비밀번호"
+                  placeholder="새 비밀번호"
                   value={inputNewPassword}
                   onChange={(e) => handleInputNewPassword(e)}
                 />
@@ -184,25 +187,25 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                 <input
                   type="password"
                   name="password"
-                  placeholder="새로운 비밀번호 확인"
+                  placeholder="새 비밀번호 재확인"
                   value={inputCheckPassword}
                   onChange={(e) => handleInputCheckPassword(e)}
                 />
+                <button className="btn-edit" type="submit">
+                  변경
+                </button>
               </div>
               <div className="alert-box">{errorMessage}</div>
               <div className="userinfo-button-label">
                 <button className="btn-exit" type="button" onClick={openWarningModalHandler}>
                   회원탈퇴
                 </button>
-                <button className="btn-edit" type="submit">
-                  저장
-                </button>
               </div>
             </form>
           </Styled.ContentBox>
         </Styled.View>
       </Styled.UserInfopage>
-    </div>
+    </>
   );
 }
 

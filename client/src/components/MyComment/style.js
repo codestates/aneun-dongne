@@ -18,8 +18,6 @@ export const Styled = {
       left: 0;
       width: auto;
     }
-    @media (max-width: 768px) {
-    }
   `,
 
   Comment: styled.div`

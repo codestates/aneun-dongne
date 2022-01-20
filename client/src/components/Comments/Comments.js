@@ -187,7 +187,7 @@ const Comments = ({ uuid, img, nickname, text, initialTags, date, editable, cont
                   editMode ? (
                     <EditableHashTag tags={tags} setTags={setTags} uuid={uuid} getCommentId={getCommentId} />
                   ) : (
-                    <OnlyReadHashTag initialTags={tags} uuid={uuid} /> //
+                    <OnlyReadHashTag initialTags={tags} uuid={uuid} />
                   )
                 ) : (
                   <OnlyReadHashTag initialTags={initialTags} uuid={uuid} />

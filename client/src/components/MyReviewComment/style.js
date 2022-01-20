@@ -5,7 +5,7 @@ export const Styled = {
     display: flex;
     border: 1px gray solid;
     border-radius: 10px;
-    margin: 20px 20px;
+    margin: 1% 1%;
     margin-right: auto;
     margin-left: auto;
     &:hover {
@@ -13,8 +13,15 @@ export const Styled = {
     }
 
     .user-container {
+      display: grid;
+      margin: 1% 0px;
+    }
+
+    .user-info-wrapper {
       display: flex;
-      margin: 10px 0px 0px 15px;
+      flex-direction: column;
+      align-items: center;
+      margin: 6% 0px;
     }
 
     .user-image {
@@ -22,30 +29,28 @@ export const Styled = {
       object-fit: cover;
     }
 
+    .user-name {
+      margin-top: 3%;
+    }
+
     .user-content-wrapper {
-      /* margin-left: 30px; */
-      /* margin-bottom: -100px; */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
       line-height: 26px;
-      /* width: 500px; */
     }
 
     .user-content {
       cursor: pointer;
-      /* width: 500px; */
     }
 
     .user-hastag-wrapper {
-      /* width: 500px; */
+      padding: 1% 0%;
     }
 
     .user-hastag {
-      /* padding: 0px 4px; */
+      padding-right: 1%;
       color: #162b71;
-    }
-
-    .user-content-bottom {
-      /* justify-content: space-between; */
-      /* width: 550px; */
     }
 
     .user-location {
@@ -83,9 +88,12 @@ export const Styled = {
       max-width: 90%;
       font-size: 0.8rem;
 
+      .user-container {
+        grid-template-columns: 1fr 3fr;
+      }
+
       .user-image {
         max-width: 55%;
-        /* max-height: 55%; */
       }
 
       .user-content-bottom {
@@ -106,6 +114,10 @@ export const Styled = {
     @media screen and (min-width: 1024px) {
       font-size: 1rem;
       max-width: 80%;
+
+      .user-container {
+        grid-template-columns: 1fr 6fr;
+      }
     }
   `,
 

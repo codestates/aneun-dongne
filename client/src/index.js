@@ -13,7 +13,6 @@ ReactDOM.render(
     <RecoilRoot>
       <BrowserRouter>
         <App />
-
         <ToastContainer />
       </BrowserRouter>
     </RecoilRoot>

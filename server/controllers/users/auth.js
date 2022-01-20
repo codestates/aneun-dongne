@@ -80,7 +80,6 @@ module.exports = {
   },
   imagePatch: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-
     if (!accessTokenData) {
       res.status(401).send({ data: null, message: "not authorized" });
     } else {

@@ -3,10 +3,8 @@ import styled from "styled-components";
 export const Styled = {
   CommentWrapper: styled.div`
     position: relative;
-
     width: 100%;
     height: auto;
-
     border-radius: 20px;
     margin-bottom: 5%;
     box-shadow: 4px 4px 4px rgb(85, 85, 85);
@@ -20,8 +18,6 @@ export const Styled = {
     &:hover:after {
       left: 0;
       width: auto;
-    }
-    @media (max-width: 768px) {
     }
   `,
 
@@ -74,7 +70,6 @@ export const Styled = {
 
   Profile: styled.div`
     position: relative;
-
     display: grid;
     grid-template-rows: 1fr 1fr;
     margin-left: auto;
@@ -98,7 +93,6 @@ export const Styled = {
     width: 100%;
     height: 100%;
     position: absolute;
-
     top: 0;
   `,
 

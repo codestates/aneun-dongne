@@ -44,7 +44,7 @@ function ProfileUpload({ imgUrl, setImgUrl }) {
       )}
 
       <Styled.EditProfile onClick={(e) => inputBtn(e, inputValue)}>
-        <i className="fas fa-edit"></i>
+        <i className="fas fa-edit">이미지</i>
       </Styled.EditProfile>
     </Styled.ImageUploadBox>
   );

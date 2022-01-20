@@ -11,7 +11,6 @@ export const Styled = {
       left: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
       background-color: #8ea1da;
       background-image: linear-gradient(
@@ -20,8 +19,6 @@ export const Styled = {
         rgba(192, 251, 255, 0.5) 60%,
         rgba(255, 255, 255, 0.1) 100%
       );
-      height: 100vh;
-      width: 400px;
     }
 
     .profile {
@@ -68,37 +65,49 @@ export const Styled = {
       justify-content: center;
     }
 
-    .link-text {
-      font-size: 1.5rem;
-    }
-
-    @media screen and (max-width: 1024px) {
+    @media screen and (min-width: 320px) {
       flex-direction: column;
       .menu-bar {
         align-items: flex-start;
         margin-top: 260px;
         height: 80px;
-        width: 100%;
+        min-width: 50%;
       }
 
       .link-container {
         flex-direction: row;
-        width: 100%;
         justify-content: space-around;
+        width: 100%;
         margin-bottom: 190px;
       }
-    }
 
-    @media screen and (max-width: 780px) {
       .link-text {
-        font-size: 1.3rem;
+        font-size: 0.8rem;
       }
     }
 
-    @media screen and (max-width: 480px) {
+    @media screen and (min-width: 412px) {
       .link-text {
-        font-size: 0.8rem;
-        padding: 0px 7px;
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      flex-direction: row;
+      .menu-bar {
+        align-items: center;
+        height: 100vh;
+        min-width: 400px;
+        margin-top: 0px;
+      }
+      .link-container {
+        flex-direction: column;
+        width: 60%;
+        margin-bottom: 0px;
+      }
+
+      .link-text {
+        font-size: 1.5rem;
       }
     }
   `,

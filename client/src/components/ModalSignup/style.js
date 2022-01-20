@@ -117,7 +117,7 @@ export const Styled = {
         font-size: 0.8rem;
         height: 2px;
         color: red;
-        margin-bottom: 12px;
+        margin-bottom: 18px;
       }
     }
 

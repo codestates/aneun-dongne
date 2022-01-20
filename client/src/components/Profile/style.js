@@ -50,13 +50,13 @@ export const Styled = {
   ContentBox: styled.div`
     margin-top: 40px;
 
-    > form {
+    .contentBox {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    > form .userinfo-each-label {
+    .contentBox .userinfo-each-label {
       width: 400px;
       margin: 20px 0px 20px 100px;
 
@@ -71,7 +71,7 @@ export const Styled = {
       }
     }
 
-    > form .userinfo-each-label input {
+    .contentBox .userinfo-each-label input {
       border: 2px solid gray;
       font-size: 1.2rem;
       width: 300px;
@@ -79,17 +79,17 @@ export const Styled = {
       padding-left: 10px;
       border-radius: 8px;
     }
-    form .userinfo-button-label {
+    .contentBox .userinfo-button-label {
       display: flex;
       justify-content: center;
       margin: 30px 0;
     }
 
-    > form .alert-box {
+    .contentBox .alert-box {
       text-align: center;
       color: red;
     }
-    form .userinfo-button-label .btn-exit {
+    .contentBox .userinfo-button-label .btn-exit {
       width: 80px;
       height: 40px;
       background-color: red;

@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
 import { token, kToken, loginState, loginModal } from "../../recoil/recoil";
 import { defaultcomments } from "../../recoil/detailpage";
 import axios from "axios";
-import Cookies from "universal-cookie";
+import cookies from "universal-cookie";
 import CommentLoading from "../Loading/CommentLoading";
 
 import { Styled } from "./style";

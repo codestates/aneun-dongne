@@ -27,7 +27,7 @@ module.exports = (req, res) => {
         res.cookie("jwt", accessToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
           // domain: ".aneun-dongne.com",
-          httpOnly: true,
+          // httpOnly: true,
           path: "/",
           secure: true,
           sameSite: "None",

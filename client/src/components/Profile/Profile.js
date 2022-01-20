@@ -52,7 +52,8 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         }
       });
   }, []);
-  const editInfo = async (e) => {
+
+  const editImage = async (e) => {
     e.preventDefault();
 
     if (!window.localStorage.getItem("jwt")) {
@@ -63,22 +64,12 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
 
     let formData = new FormData();
 
-    if (inputCheckPassword !== inputNewPassword || inputPassword.length < 8 || inputNewPassword.length < 8) {
-      setErrorMessage(message.checkAgain);
-      return;
-    }
-
     if (imgUrl) {
       formData.append("image", imgUrl);
     }
-    formData.append("nickname", inputUsername);
-    formData.append("email", inputEmail);
-    formData.append("password", inputPassword);
-    formData.append("checkPassword", inputCheckPassword);
-    formData.append("newPassword", inputNewPassword);
 
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/user/info`, formData, {
+      .patch(`${process.env.REACT_APP_API_URL}/user/info/image`, formData, {
         headers: {
           Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
@@ -86,10 +77,10 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         withCredentials: true,
       })
       .then((res) => {
-        setImgUrl(res.data.data.user_image_path);
-        setPrevImg(res.data.data.user_image_path);
-        setNickname(res.data.data.nickname);
-        setInputEmail(res.data.data.email);
+        setImgUrl(res.data.data.userInfo.user_image_path);
+        setPrevImg(res.data.data.userInfo.user_image_path);
+        setNickname(res.data.data.userInfo.nickname);
+        setInputEmail(res.data.data.userInfo.email);
         setErrorMessage(message.changedProfile);
       })
       .catch((err) => {
@@ -111,6 +102,114 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         }
       });
   };
+
+  const editNickname = async () => {
+    if (!window.localStorage.getItem("jwt")) {
+      //서버 유효성검사 필요해요
+      setIsLoginAgainOpen(true);
+      return;
+    }
+
+    if (inputUsername.length === 0) {
+      setErrorMessage(message.checkAgain);
+      return;
+    }
+
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/user/info/nickname`,
+        { nickname: inputUsername },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log("res", res);
+        setImgUrl(res.data.data.userInfo.user_image_path);
+        setPrevImg(res.data.data.userInfo.user_image_path);
+        setNickname(res.data.data.userInfo.nickname);
+        setInputEmail(res.data.data.userInfo.email);
+        setErrorMessage(message.changedProfile);
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때
+            setIsLoginAgainOpen(true);
+          } else if (err.response.status === 400) {
+            //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
+            setErrorMessage(message.checkAgain);
+          } else if (err.response.status === 403) {
+            //3. 카톡로긴일땐 정보변경을 허용하지 않음
+            //403번: 유저가 누구인진 알지만 허용하지 않을때
+            setErrorMessage(message.kakaoState);
+
+            //현재비번 잘못썼을때else if()
+            //닉넴잘못적었을때
+          }
+        }
+      });
+  };
+
+  const editPassword = async () => {
+    if (!window.localStorage.getItem("jwt")) {
+      //서버 유효성검사 필요해요
+      setIsLoginAgainOpen(true);
+      return;
+    }
+
+    if (inputCheckPassword !== inputNewPassword || inputPassword.length < 8 || inputNewPassword.length < 8) {
+      setErrorMessage(message.checkAgain);
+      return;
+    }
+
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/user/info/password`,
+        {
+          password: inputPassword,
+          checkPassword: inputCheckPassword,
+          newPassword: inputNewPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setImgUrl(res.data.data.userInfo.user_image_path);
+        setPrevImg(res.data.data.userInfo.user_image_path);
+        setNickname(res.data.data.userInfo.nickname);
+        setInputEmail(res.data.data.userInfo.email);
+        setErrorMessage(message.changedProfile);
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때
+            setIsLoginAgainOpen(true);
+          } else if (err.response.status === 400) {
+            //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
+            setErrorMessage(message.checkAgain);
+          } else if (err.response.status === 403) {
+            //3. 카톡로긴일땐 정보변경을 허용하지 않음
+            //403번: 유저가 누구인진 알지만 허용하지 않을때
+            setErrorMessage(message.kakaoState);
+
+            //현재비번 잘못썼을때else if()
+            //닉넴잘못적었을때
+          }
+        }
+      });
+  };
+
   //닉네임변경
   const handleInputUsername = (e) => {
     setInputUsername(e.target.value);
@@ -143,7 +242,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
     <>
       <Styled.UserInfopage>
         <Styled.View>
-          <form onSubmit={editInfo} className="image-container">
+          <form onSubmit={editImage} className="image-container">
             <div className="image-wrapper">
               <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
             </div>
@@ -153,13 +252,13 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
           </form>
 
           <Styled.ContentBox>
-            <form onSubmit={editInfo}>
+            <div className="contentBox">
               <div className="userinfo-each-label">
                 <input type="text" value={inputEmail} readOnly />
               </div>
               <div className="userinfo-each-label">
                 <input type="text" name="nickname" placeholder="새 닉네임" onChange={handleInputUsername} />
-                <button className="btn-edit" type="submit">
+                <button className="btn-edit" onClick={editNickname}>
                   변경
                 </button>
               </div>
@@ -191,7 +290,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                   value={inputCheckPassword}
                   onChange={(e) => handleInputCheckPassword(e)}
                 />
-                <button className="btn-edit" type="submit">
+                <button className="btn-edit" onClick={editPassword}>
                   변경
                 </button>
               </div>
@@ -201,7 +300,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                   회원탈퇴
                 </button>
               </div>
-            </form>
+            </div>
           </Styled.ContentBox>
         </Styled.View>
       </Styled.UserInfopage>

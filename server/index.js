@@ -35,7 +35,9 @@ app.get("/home", controllers.home);
 app.get("/post/:contentId", controllers.postDetails);
 
 app.get("/user/info", controllers.getAuth);
-app.patch("/user/info", upload.single("image"), controllers.updateAuth);
+app.patch("/user/info/image", upload.single("image"), controllers.updateImage);
+app.patch("/user/info/nickname", controllers.updateNickname);
+app.patch("/user/info/password", controllers.updatePassword);
 app.delete("/user/info", controllers.deleteAuth);
 
 app.get("/mypage/likelists", controllers.myLikes);

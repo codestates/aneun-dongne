@@ -50,7 +50,7 @@ function DefaultMap({ placeList, setPlaceList, prevList }) {
   const [address, setAddress] = useRecoilState(usersaddress);
 
   useEffect(() => {
-    console.log(defaultPosition.lat);
+    // console.log(defaultPosition.lat);
     //지도 틀
     // usersAreaReset();
     // usersSiggReset();
@@ -87,7 +87,7 @@ function DefaultMap({ placeList, setPlaceList, prevList }) {
     //마커 그리는 과정, 관광지배열이 변경될때만 실행함.
 
     if (kakaoMap === null) {
-      console.log("멥이 null일때");
+      // console.log("멥이 null일때");
 
       return;
     }
@@ -249,21 +249,21 @@ function DefaultMap({ placeList, setPlaceList, prevList }) {
     //! 지역검색하면 마커있는곳으로 지도 이동.
     if (isSearchPlaceBtnPressed === true) {
       kakaoMap.setBounds(bounds);
-      console.log("지역검색시 마커들 한눈에 보이도록 화면이동");
+      // console.log("지역검색시 마커들 한눈에 보이도록 화면이동");
 
       if (isSearchPlaceBtnPressed) setSearchPlaceBtnPressed(false);
     }
     //!
     // if (prevList) {
     if (prevList) {
-      console.log("클릭", prevList);
+      // console.log("클릭", prevList);
       kakaoMap.setBounds(bounds);
       setMarkerClicked(false);
     }
 
     setPlaceListLoading(false);
     setMarkerList(markers);
-    console.log("hi");
+    // console.log("hi");
   }, [placeList, kakaoMap, savedPlaceInMyPage]);
 
   return (

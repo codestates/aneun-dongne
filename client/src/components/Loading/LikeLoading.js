@@ -17,8 +17,8 @@ const Div = styled.div`
     margin-right: auto;
     width: 10px;
     height: 10px;
-    border: 10px solid #fff;
-    border-top: 10px solid rgb(176, 233, 168);
+    border: 20px solid #fff;
+    border-top: 20px solid #3a6fb0;
     border-radius: 50em;
     transition: all 0.2s;
     animation-name: spinCircle;

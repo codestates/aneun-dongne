@@ -22,5 +22,11 @@ export const Styled = {
     cursor: pointer;
     display: inline-block;
     margin-top: 10px;
+
+    .fas {
+      font-size: 1.3rem;
+      font-weight: 400;
+      padding: 5px;
+    }
   `,
 };

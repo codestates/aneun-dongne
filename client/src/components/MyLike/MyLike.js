@@ -50,7 +50,6 @@ const MyLike = () => {
 
   useEffect(() => {
     renderMyLike();
-    return () => null;
   }, []);
 
   return (
@@ -66,7 +65,7 @@ const MyLike = () => {
           ) : (
             <List>
               {postsInfo.map((postsInfo) => (
-                <LikeLists key={postsInfo.id} postsInfo={postsInfo} />
+                <LikeLists key={postsInfo.id} postsInfo={postsInfo} renderMyLike={renderMyLike} />
               ))}
             </List>
           )}

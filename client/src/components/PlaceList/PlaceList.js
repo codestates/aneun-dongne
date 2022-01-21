@@ -75,7 +75,6 @@ function PlaceList({ height }) {
     setTitle(title);
     setPlaceAddress(address);
   }
-  console.log(height);
 
   if (placeListLoading || placeList.length === 0) {
     return (

@@ -41,27 +41,25 @@ const MyReview = () => {
 
   return (
     <>
-      <div className="comment-list">
-        {isLoading ? (
-          <div>
-            <LikeLoading />
-          </div>
-        ) : (
-          <div>
-            {comments.length === 0 ? (
-              <Empty />
-            ) : (
-              comments.map((comment) => {
-                return (
-                  <div key={comment.comments.id}>
-                    <MyReviewComment comment={comment} renderMyComments={renderMyComments} />
-                  </div>
-                );
-              })
-            )}
-          </div>
-        )}
-      </div>
+      {isLoading ? (
+        <div>
+          <LikeLoading />
+        </div>
+      ) : (
+        <div>
+          {comments.length === 0 ? (
+            <Empty />
+          ) : (
+            comments.map((comment) => {
+              return (
+                <div key={comment.comments.id}>
+                  <MyReviewComment comment={comment} renderMyComments={renderMyComments} />
+                </div>
+              );
+            })
+          )}
+        </div>
+      )}
     </>
   );
 };

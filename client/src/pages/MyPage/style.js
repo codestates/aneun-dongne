@@ -61,8 +61,8 @@ export const Styled = {
 
     .page-container {
       margin-top: 75px;
-      display: flex;
-      justify-content: center;
+      // display: flex;
+      // justify-content: center;
     }
 
     @media screen and (min-width: 320px) {

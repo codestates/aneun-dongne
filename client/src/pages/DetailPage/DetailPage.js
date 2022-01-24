@@ -43,13 +43,9 @@ function DetailPage({ match }) {
   const [likeLoading, setLikeLoading] = useState(false);
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
-
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -60,7 +56,6 @@ function DetailPage({ match }) {
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
         setTitle(res.data.post.post_title);
-        // if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
         setPlaceAddr(res.data.post.post_addr1);
         if (res.data.post.post_homepage_path) {
           if (res.data.post.post_homepage_path.split('<a href="')[1]) {
@@ -77,8 +72,6 @@ function DetailPage({ match }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,

@@ -10,6 +10,7 @@ import { Styled } from "./style";
 import { getAreaNames } from "../../modules/AreaCodetoName";
 import Cookies from "universal-cookie";
 import ModalDeleteComment from "../ModalDeleteComment/ModalDeleteComment";
+import OnlyReadHashTag from "../OnlyReadHashTag/OnlyReadHashTag";
 
 const MyReviewComment = ({ comment, renderMyComments }) => {
   const accessToken = useRecoilValue(token);
@@ -58,40 +59,49 @@ const MyReviewComment = ({ comment, renderMyComments }) => {
           </>
         ) : null}
       </Styled.ModalContainer>
-      <Styled.Comment>
-        <div className="user-container">
-          <div className="user-info-wrapper">
-            <img src={user_image_path} className="user-image" />
-            <div className="user-name">{nickname}</div>
-          </div>
-          <div className="user-content-wrapper">
-            <div className="user-content" onClick={handleContentClick}>
-              {comment_content}
-            </div>
-            <div className="user-hastag-wrapper">
-              {tagArr.map((tag, idx) => (
-                <span key={idx} className="user-hastag">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-            <div className="user-content-bottom">
-              <div className="user-location-wrapper">
-                <span className="user-location">
-                  [{sigungu.areaName} {sigungu.siggName}]
-                </span>
-                <span className="user-place" onClick={handleContentClick}>
-                  {title}
-                </span>
-              </div>
-              <div className="created-date">작성날짜 : {created}</div>
-            </div>
-          </div>
-        </div>
-        <div className="side" onClick={handleDeleteCommentModal}>
-          <Icon size={28} icon={ic_cancel_outline} className="delete-button" />
-        </div>
-      </Styled.Comment>
+      <Styled.Wrapper>
+        <Styled.CommentWrapper>
+          <Styled.Comment>
+            <Styled.ProfileBox>
+              <Styled.Profile>
+                <Styled.ProfileImgBox>
+                  <Styled.ProfileImg src={user_image_path} />
+                </Styled.ProfileImgBox>
+                <Styled.NickName>{nickname}</Styled.NickName>
+              </Styled.Profile>
+            </Styled.ProfileBox>
+            <Styled.ContentBox>
+              <Styled.ContentWrapper onClick={handleContentClick}>
+                <Styled.Content name="comment" className="comment-read">
+                  {comment_content}
+                </Styled.Content>
+                <Styled.HashTagWrapper>
+                  <OnlyReadHashTag initialTags={tagArr} />
+                </Styled.HashTagWrapper>
+                <Styled.UserLocationWrapper>
+                  <span className="user-location">
+                    [{sigungu.areaName} {sigungu.siggName}]
+                  </span>
+                  <span className="user-place">{` ${title}`}</span>
+                </Styled.UserLocationWrapper>
+              </Styled.ContentWrapper>
+            </Styled.ContentBox>
+            <Styled.BtnBox>
+              <Styled.BtnWrapper>
+                <Styled.BtnOne>
+                  <Icon
+                    size={28}
+                    icon={ic_cancel_outline}
+                    className="delete-button"
+                    onClick={handleDeleteCommentModal}
+                  />
+                </Styled.BtnOne>
+              </Styled.BtnWrapper>
+            </Styled.BtnBox>
+            <Styled.Date>{`작성날짜: ${created}`}</Styled.Date>
+          </Styled.Comment>
+        </Styled.CommentWrapper>
+      </Styled.Wrapper>
     </>
   );
 };

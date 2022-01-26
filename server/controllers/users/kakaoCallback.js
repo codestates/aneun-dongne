@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
                   // res.cookie("jwt", accessToken, {
                   res.cookie("kakao-jwt", accessToken, {
                     // maxAge: 1000 * 60 * 60 * 24 * 7,
-                    // domain: ".aneun-dongne.com",
+                    domain: ".aneun-dongne.com",
                     httpOnly: true,
                     path: "/",
                     secure: true,
@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
               // res.cookie("jwt", accessToken, {
               res.cookie("kakao-jwt", accessToken, {
                 // maxAge: 1000 * 60 * 60 * 24 * 7,
-                // domain: ".aneun-dongne.com",
+                domain: ".aneun-dongne.com",
                 httpOnly: true,
                 path: "/",
                 secure: true,

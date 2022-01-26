@@ -1,6 +1,6 @@
 module.exports = (req, res) => {
   res.clearCookie("kakao-jwt", {
-    // domain: ".aneun-dongne.com",
+    domain: ".aneun-dongne.com",
     httpOnly: true,
     path: "/",
     secure: true,

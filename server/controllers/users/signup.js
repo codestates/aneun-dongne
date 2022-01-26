@@ -26,7 +26,7 @@ module.exports = (req, res) => {
         const accessToken = generateAccessToken(save.dataValues);
         res.cookie("jwt", accessToken, {
           maxAge: 1000 * 60 * 60 * 24 * 7, // 7일간 유지
-          // domain: ".aneun-dongne.com",
+          domain: ".aneun-dongne.com",
           // httpOnly: true,
           path: "/",
           secure: true,

@@ -13,10 +13,13 @@ import Cookies from "universal-cookie";
 
 const List = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
 
-  @media screen and (max-width: 1400px) {
+  @media screen and (min-width: 520px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: 1400px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 
@@ -47,11 +50,10 @@ const MyLike = () => {
 
   useEffect(() => {
     renderMyLike();
-    return () => null;
   }, []);
 
   return (
-    <div className="like-list">
+    <>
       {isLoing ? (
         <div>
           <LikeLoading />
@@ -63,13 +65,13 @@ const MyLike = () => {
           ) : (
             <List>
               {postsInfo.map((postsInfo) => (
-                <LikeLists key={postsInfo.id} postsInfo={postsInfo} />
+                <LikeLists key={postsInfo.id} postsInfo={postsInfo} renderMyLike={renderMyLike} />
               ))}
             </List>
           )}
         </>
       )}
-    </div>
+    </>
   );
 };
 

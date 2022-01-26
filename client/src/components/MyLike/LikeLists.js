@@ -1,25 +1,39 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { getAreaNames } from "../../modules/AreaCodetoName";
-import Icon from "react-icons-kit";
-import { angleUp } from "react-icons-kit/fa/angleUp";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
 
-import Empty from "../Empty/Empty";
 import { Styled } from "./style";
 
-const LikeLists = ({ postsInfo }) => {
+import { getAreaNames } from "../../modules/AreaCodetoName";
+import { token, kToken } from "../../recoil/recoil";
+
+import Empty from "../Empty/Empty";
+
+const LikeLists = ({ postsInfo, renderMyLike }) => {
+  const accessToken = useRecoilValue(token);
+  const kakaoToken = useRecoilValue(kToken);
+
   const sigungu = getAreaNames(postsInfo.post_areacode, postsInfo.post_sigungucode);
   const history = useHistory();
-  const ToScrollTop = (e) => {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
 
   const handlecontentClick = () => {
     history.push(`/detailpage/${postsInfo.post_contentid}`);
+  };
+
+  const LikeHandler = async (e) => {
+    e.stopPropagation();
+    await axios
+      .delete(`${process.env.REACT_APP_API_URL}/like/${postsInfo.post_contentid}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then(() => {
+        renderMyLike();
+      });
   };
 
   return (
@@ -41,7 +55,7 @@ const LikeLists = ({ postsInfo }) => {
           </Styled.KeyWordBox>
           <div className="place-cards">
             {!postsInfo.post_firstimage ? (
-              <img src="/images/not-image-yet.png" />
+              <img className="not-img" src="/images/not-image-yet.png" />
             ) : (
               <img src={postsInfo.post_firstimage} />
             )}
@@ -53,16 +67,13 @@ const LikeLists = ({ postsInfo }) => {
               </div>
               <div>{postsInfo.post_title}</div>
             </div>
-            <Styled.LikeBtn>
+            <Styled.LikeBtn onClick={LikeHandler}>
               <i className="fas fa-heart"></i>
               {postsInfo["Likes.likeCount"]}
             </Styled.LikeBtn>
           </div>
         </Styled.PlaceCard>
       )}
-      <Styled.TopButton onClick={ToScrollTop}>
-        <Icon size={"60"} icon={angleUp} />
-      </Styled.TopButton>
     </Styled.Lists>
   );
 };

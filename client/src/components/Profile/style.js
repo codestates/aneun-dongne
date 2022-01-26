@@ -11,29 +11,33 @@ export const Styled = {
   View: styled.div`
     margin-top: 40px;
     margin-left: 20px;
-
     width: 500px;
-
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-self: center;
-  `,
 
-  ContentBox: styled.div`
-    width: 100%;
-    margin-top: 30px;
-
-    > form {
+    .image-container {
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
-    > form button {
-      width: 80px;
+    .image-container .image-wrapper {
+      width: 200px;
+      height: 200px;
+    }
+
+    .image-container .btn-image-edit {
+      margin-left: 200px;
+      margin-top: 8px;
+    }
+
+    button {
+      width: 65px;
+      height: 35px;
+      margin-left: 10px;
       border: none;
-      height: 40px;
       background-color: #3a6fb0;
-      border-radius: 20px;
+      border-radius: 12px;
       cursor: pointer;
       color: white;
 
@@ -41,53 +45,58 @@ export const Styled = {
         background-color: #2f4d6f;
       }
     }
-    > form .userinfo-each-label {
-      margin: 23px auto;
+  `,
 
-      position: relative;
+  ContentBox: styled.div`
+    margin-top: 40px;
+
+    .contentBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    > form .userinfo-each-label input,
-    form .userinfo-each-label div {
+    .contentBox .userinfo-each-label {
+      width: 400px;
+      margin: 20px 0px 20px 100px;
+
+      @media screen and (min-width: 320px) {
+        width: 300px;
+        margin: 20px 0px 20px 0px;
+      }
+
+      @media screen and (min-width: 500px) {
+        width: 400px;
+        margin: 20px 0px 20px 100px;
+      }
+    }
+
+    .contentBox .userinfo-each-label input {
+      border: 2px solid gray;
       font-size: 1.2rem;
       width: 300px;
-      border-left: none;
-      border-right: none;
-      border-top: none;
+      height: 30px;
       padding-left: 10px;
-      padding-right: 10px;
-      border-radius: 20px;
+      border-radius: 8px;
     }
-    form .userinfo-button-label {
+    .contentBox .userinfo-button-label {
       display: flex;
       justify-content: center;
-      margin: 40px 0;
+      margin: 30px 0;
     }
-    > form .userinfo-button-label .btn-edit {
-      width: 80px;
-      height: 40px;
-      border-radius: 20px;
-      margin-left: 120px;
-    }
-    > form .alert-box {
+
+    .contentBox .alert-box {
       text-align: center;
       color: red;
     }
-    .btn-exit {
+    .contentBox .userinfo-button-label .btn-exit {
       width: 80px;
       height: 40px;
-      border-radius: 20px;
       background-color: red;
       color: white;
       &:hover {
         background-color: #ff443c;
       }
     }
-  `,
-
-  ImgDiv: styled.div`
-    width: 200px;
-    height: 200px;
-    margin: 10px auto;
   `,
 };

@@ -1,43 +1,39 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 export const Styled = {
+  Loading: styled.div`
+    @media screen and (min-width: 880px) {
+      margin-left: auto;
+      margin-right: auto;
+
+      /* background: red; */
+    }
+    @media screen and (max-width: 880px) {
+      position: absolute;
+
+      /* top: 100px; */
+      top: ${(props) => `${props.height}px` || "null"};
+      right: 0;
+
+      width: 100%;
+    }
+  `,
   PlaceLists: styled.div`
-    @media (max-width: 1000px) {
-      margin: 0px;
-      grid-column-gap: 0px;
-      grid-template-columns: repeat(2, 1fr);
+    /* margin-top: 0; */
+    border-left: 1px gray solid;
+    display: flex;
+    flex-direction: column;
+
+    /* background: white; */
+    @media screen and (max-width: 880px) {
+      flex-direction: row;
     }
-    @media (max-width: 1023px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 660px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-    }
-    @media (min-width: 1040px) {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      grid-column-gap: 40px;
-      text-decoration-line: none;
-      margin-left: 30px;
-    }
-    @media (min-width: 1360px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (min-width: 1730px) {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
-    /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 40px;
-  text-decoration-line: none;
-  margin-left: 30px; */
   `,
   MoveToTopBtn: styled.button`
     border-radius: 70%;
+    @media screen and (max-width: 880px) {
+      display: none;
+    }
 
     background: rgba(255, 255, 255, 0.7);
     /* background-color: #b2e0f4; */
@@ -49,7 +45,7 @@ export const Styled = {
     right: 10px;
     border: 0.5px solid #3a6fb0;
 
-    display: ${(props) => (props.BtnStatus ? "inline" : "none")};
+    display: ${(props) => (props.btnStatus ? "inline" : "none")};
     &:hover {
       background: rgba(192, 251, 255, 0.7);
       transform: scale(1.1);

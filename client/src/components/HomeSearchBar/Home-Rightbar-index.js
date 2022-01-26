@@ -1,33 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Styled } from "./style";
-
+import Cookies from "universal-cookie";
 import { areaNameArr, allSigg } from "../../modules/AreaCodetoName";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { token, kToken, placelist } from "../../recoil/recoil";
+import { useSetRecoilState, useResetRecoilState, useRecoilState } from "recoil";
+import {
+  token,
+  kToken,
+  placelist,
+  usersArea,
+  usersSigg,
+  canSearchPlace,
+  searchPlaceModal,
+  searcnPlaceBtnPressed,
+  setPlacelistLoading,
+  usersaddress,
+} from "../../recoil/recoil";
 import HomeRightBtn from "../HomeSearchBtn/HomeRightBtn-index";
 
 import { Autocomplete } from "../Autocomplete/Autocomplete";
 import { getCodes } from "../../modules/AreaCodetoName";
-function HomeRightbar({ setLevel }) {
-  const [area, setArea] = useState("null");
+function HomeRightbar() {
+  const setOpenSearchPlaceModal = useSetRecoilState(searchPlaceModal);
+  // const placeListReset = useResetRecoilState(placelist);
+  const setSearchPlaceBtnPressed = useSetRecoilState(searcnPlaceBtnPressed);
+  const setAbleToSearchPlace = useSetRecoilState(canSearchPlace);
+  // const [area, setArea] = useState("null");
+  const [add, setAdd] = useRecoilState(usersaddress);
   const [areaIdx, setAreaIdx] = useState(0);
-  const [sigg, setSigg] = useState("null");
+  const cookies = new Cookies();
+
+  const [area, setArea] = useRecoilState(usersArea);
+  const [sigg, setSigg] = useRecoilState(usersSigg);
   const [place, setPlace] = useState("");
 
   const [hashtag, setHashtag] = useState("");
   const setPlaceList = useSetRecoilState(placelist);
-  const accessToken = useRecoilValue(token);
-  const kakaoToken = useRecoilValue(kToken);
-
+  useEffect(() => {
+    if (area === "null") setAreaIdx(0);
+    else setAreaIdx(areaNameArr.indexOf(area));
+  }, [, area]);
   const changeArea = (area) => {
     if (area === "지역선택") {
       setArea("null");
     } else {
       setArea(area);
-      setSigg("null");
     }
-    setAreaIdx(areaNameArr.indexOf(area));
+    setSigg("null");
+    // setAreaIdx(areaNameArr.indexOf(area));
   };
   const changeSigg = (sigg) => {
     if (sigg === "지역선택") {
@@ -35,18 +55,18 @@ function HomeRightbar({ setLevel }) {
     } else {
       setSigg(sigg);
     }
-    setLevel(10);
+    // setLevel(10);
   };
   const handleSearch = (e) => {
     setPlace(e.target.value);
   };
   const handleTagSearch = (e) => {
     setHashtag(e.target.value);
-    console.log("handleTagSearch", hashtag);
+    // console.log("handleTagSearch", hashtag);
   };
   const searchPlace = (area, sigg, place, hashtag) => {
-    console.log(place);
-    console.log("hash", hashtag);
+    console.log(area, sigg, place, hashtag);
+    // console.log("hash", hashtag);
     let areaCode = "";
     let siggCode = "";
     if (area === "null") {
@@ -62,7 +82,8 @@ function HomeRightbar({ setLevel }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/home`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
+          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -77,7 +98,12 @@ function HomeRightbar({ setLevel }) {
         withCredentials: true,
       })
       .then((res) => {
-        if (res.data.data.length === 0) return;
+        // console.log(res.data.data);
+        if (res.data.data.length === 0) {
+          setAbleToSearchPlace(false);
+
+          return;
+        }
         console.log(res.data.data);
         const list = res.data.data
           .filter((el) => el.post_mapy !== "0.00000000000000000000" && el.post_mapx !== "0.00000000000000000000")
@@ -93,30 +119,69 @@ function HomeRightbar({ setLevel }) {
             ];
           });
         console.log(list);
+
+        setSearchPlaceBtnPressed(true);
+        setAdd(() => {
+          console.log(area, sigg);
+          if (area === "지역선택") area = "전체지역";
+          if (sigg === "null" || sigg === "지역선택") sigg = "인기순 30";
+          console.log(area, sigg);
+          return { ...add, ...{ area, sigg, address: `${area} ${sigg}` } };
+        });
+        if (list.length > 0) {
+          //검색결과 있으면 '텅비어있어요' 안나오게하기
+          setAbleToSearchPlace(true);
+        }
         setPlaceList(list);
       })
       .catch((err) => console.log(err));
+    setAreaIdx(areaNameArr.indexOf(area));
+    // console.log(areaNameArr.indexOf(area));
+    // console.log(allSigg[areaIdx]);
   };
+  // console.log(area);
+  // console.log(areaNameArr.indexOf(area));
+
+  // console.log([areaIdx]);
+  useEffect(() => {
+    //searchPlace실행되고 나면 지역검색에 null입력되기 때문에 다시 바꿔줌.
+    if (area === "null") {
+      setArea("지역선택");
+      setSigg("지역선택");
+    }
+  }, [area, sigg]);
+
   return (
     <div>
       <Styled.MapRightBar>
-        <p>오늘 떠나볼 동네는?</p>
-
+        {/* <p>오늘 떠나볼 동네는?</p> */}
+        <Styled.CloseBtn onClick={() => setOpenSearchPlaceModal(false)}>
+          <i className="fas fa-times"></i>
+        </Styled.CloseBtn>
         <Styled.SearchWrapper>
           <Styled.SearchBar>
             <Styled.SearchLocation first value={area} onChange={(e) => changeArea(e.target.value)} name="h_area1">
-              {areaNameArr.map((el, idx) => {
+              {areaNameArr.map((el, idx, arr) => {
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>
             <Styled.SearchLocation value={sigg} onChange={(e) => changeSigg(e.target.value)} name="h_area2">
-              {allSigg[areaIdx].map((el, idx) => {
+              {allSigg[areaIdx].map((el, idx, arr) => {
+                if (areaIdx === -1) console.log([areaIdx]);
+
                 return <option key={idx}>{el}</option>;
               })}
             </Styled.SearchLocation>
           </Styled.SearchBar>
-          {/* <Autocomplete hashtag={hashtag} setHashtag={setHashtag} /> */}
-          <Styled.SearchPlace
+          <Autocomplete
+            hashtag={hashtag}
+            setHashtag={setHashtag}
+            area={area}
+            sigg={sigg}
+            place={place}
+            searchPlace={searchPlace}
+          />
+          {/* <Styled.SearchPlace
             type="text"
             value={hashtag}
             onChange={(e) => handleTagSearch(e)}
@@ -126,7 +191,7 @@ function HomeRightbar({ setLevel }) {
                 searchPlace(area, sigg, place, hashtag);
               }
             }}
-          ></Styled.SearchPlace>
+          ></Styled.SearchPlace> */}
           <Styled.SearchPlace
             type="text"
             value={place}

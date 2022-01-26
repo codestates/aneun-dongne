@@ -11,7 +11,6 @@ export const Styled = {
       left: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
       background-color: #8ea1da;
       background-image: linear-gradient(
@@ -20,8 +19,6 @@ export const Styled = {
         rgba(192, 251, 255, 0.5) 60%,
         rgba(255, 255, 255, 0.1) 100%
       );
-      height: 100vh;
-      width: 400px;
     }
 
     .profile {
@@ -64,41 +61,53 @@ export const Styled = {
 
     .page-container {
       margin-top: 75px;
-      display: flex;
-      justify-content: center;
+      // display: flex;
+      // justify-content: center;
     }
 
-    .link-text {
-      font-size: 1.5rem;
-    }
-
-    @media screen and (max-width: 1024px) {
+    @media screen and (min-width: 320px) {
       flex-direction: column;
       .menu-bar {
         align-items: flex-start;
         margin-top: 260px;
         height: 80px;
-        width: 100%;
+        min-width: 50%;
       }
 
       .link-container {
         flex-direction: row;
-        width: 100%;
         justify-content: space-around;
+        width: 100%;
         margin-bottom: 190px;
       }
-    }
 
-    @media screen and (max-width: 780px) {
       .link-text {
-        font-size: 1.3rem;
+        font-size: 0.8rem;
       }
     }
 
-    @media screen and (max-width: 480px) {
+    @media screen and (min-width: 412px) {
       .link-text {
-        font-size: 0.8rem;
-        padding: 0px 7px;
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      flex-direction: row;
+      .menu-bar {
+        align-items: center;
+        height: 100vh;
+        min-width: 400px;
+        margin-top: 0px;
+      }
+      .link-container {
+        flex-direction: column;
+        width: 60%;
+        margin-bottom: 0px;
+      }
+
+      .link-text {
+        font-size: 1.5rem;
       }
     }
   `,
@@ -125,6 +134,28 @@ export const Styled = {
         width: 100%;
         margin-bottom: 10px;
       }
+    }
+  `,
+  MoveToTopBtn: styled.button`
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    z-index: 100;
+    border-radius: 100%;
+    background-color: #b2e0f4;
+    color: white;
+    transition: all 0.3s;
+    border: 0.5px solid white;
+    display: ${(props) => (props.btnStatus ? "flex" : "none")};
+    &:hover {
+      background-color: #9cb1e0;
+      transition: all 0.3s;
+      border: 0.5px solid white;
     }
   `,
 };

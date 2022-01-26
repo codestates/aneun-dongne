@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import MapInRoom from "../../components/MapInRoom/MapInRoom";
 import Cookies from "universal-cookie";
@@ -6,23 +6,15 @@ import { Styled } from "./style";
 import HashTagTemplate from "../../components/HashTagTemplate/HashTagTemplate";
 import CommentTemplate from "../../components/CommentTemplate/CommentTemplate";
 import MyComment from "../../components/MyComment/MyComment";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  loginState,
-  token,
-  kToken,
-  loginModal,
-  deleteCommentmode,
-  defaultcomments,
-  commentloading,
-} from "../../recoil/recoil";
+import { selector, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { loginState, token, kToken, loginModal, loginAgainModal } from "../../recoil/recoil";
+import { contentid, defaultcomments, hashTagSelector } from "../../recoil/detailpage";
 
 import LikeLoading from "../../components/Loading/LikeLoading";
 import NoComment from "../../components/NoComment/NoComment";
-function DetailPage({ match }) {
-  const { id } = match.params;
-  const contentId = parseInt(id, 10);
 
+function DetailPage({ match }) {
+  const contentId = parseInt(match.params.id, 10);
   const [userinfo, setUserinfo] = useState({});
   const [overview, setOverview] = useState("");
   const [pageURL, setPageURL] = useState("");
@@ -32,6 +24,7 @@ function DetailPage({ match }) {
   const [placeLocation, setPlaceLocation] = useState({ lon: 0, lat: 0 });
   const [navi, setNavi] = useState("");
   const [tags, setTags] = useState([]);
+  // const tags = useRecoilValueLoadable(hashTagSelector);
   const [readMore, setReadMore] = useState(false);
 
   //로긴모달창,로긴상태
@@ -44,19 +37,15 @@ function DetailPage({ match }) {
   const [likeOrNot, setLikeOrNot] = useState(false); //이것도 서버에서 받아와야함
   const accessToken = useRecoilValue(token);
   const kakaoToken = useRecoilValue(kToken);
-  //댓글지웠는지?
-  const [deleteOrNot, setDeleteOrNot] = useRecoilState(deleteCommentmode);
+  //비로그인 아닌데 토큰만료되면 로그아웃유도
+  const setIsLoginAgainOpen = useSetRecoilState(loginAgainModal);
   //로딩창
   const [likeLoading, setLikeLoading] = useState(false);
-  const [commentLoading, setCommentLoading] = useState(commentloading);
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
-
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -67,7 +56,6 @@ function DetailPage({ match }) {
         setPlaceLocation({ lat: post_mapy, lon: post_mapx });
         setImgURL(res.data.post.post_firstimage);
         setTitle(res.data.post.post_title);
-        if (res.data.post.post_tags) setTags(res.data.post.post_tags.split(",").map((el) => "#" + el));
         setPlaceAddr(res.data.post.post_addr1);
         if (res.data.post.post_homepage_path) {
           if (res.data.post.post_homepage_path.split('<a href="')[1]) {
@@ -84,7 +72,6 @@ function DetailPage({ match }) {
     axios
       .get(`${process.env.REACT_APP_API_URL}/post/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -95,11 +82,10 @@ function DetailPage({ match }) {
   }, [defaultComment]);
 
   useEffect(async () => {
-    setCommentLoading(true);
     await axios
       .get(`${process.env.REACT_APP_API_URL}/comment/${contentId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+          // Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
@@ -109,15 +95,15 @@ function DetailPage({ match }) {
         let arr = res.data.data.map((el) => {
           return [{ ...el.user, ...{ ...el.comments, comment_tags: el.comments.comment_tags.split(",") } }];
         });
-        // arr = arr.reverse();
-        // console.log(arr, arr.reverse());
+
         setDefaultComment(arr);
+        //비로그인이 아닌데 토큰을 얻을 수 없다면 다시로그인시킨다.
+        if (res.data.userinfo.nickname === "김코딩" && isLogin) {
+          setIsLoginAgainOpen(true);
+        }
         setUserinfo(res.data.userinfo);
       });
-    setCommentLoading(false);
-
-    // setDeleteOrNot(false);
-  }, [, deleteOrNot]);
+  }, []);
 
   useEffect(() => {
     setLikeLoading(true);
@@ -200,7 +186,9 @@ function DetailPage({ match }) {
     }
     setLikeLoading(false);
   };
-  //해시태그는 매번렌더링되지 않고 상위 2개의 값이 바뀌었을때만 렌더링되도록 최적화
+
+  //해시태그는 매번렌더링되지 않고 상위 2개의 값이 바뀌었을때만 재할당하도록 최적화
+  //값에 변화가 없다면 이전값을 다시 사용한다.
   const memoTags = useMemo(() => tags, [tags[0], tags[1]]);
 
   return (
@@ -228,13 +216,13 @@ function DetailPage({ match }) {
           ) : null}
 
           <MapInRoom placeLocation={placeLocation} placeAddress={placeAddr} title={title} navi={navi} />
-
           <HashTagTemplate keywordDummy={memoTags} />
           {likeLoading ? (
             <LikeLoading />
           ) : (
             <LikeComponent like={like} likeOrNot={likeOrNot} LikeHandler={LikeHandler} />
           )}
+          {/* //! 토큰만료되면 버그생김 */}
           <MyComment
             userinfo={userinfo}
             contentId={contentId}

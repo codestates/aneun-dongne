@@ -1,56 +1,46 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { Styled } from "./style";
 
-const deselectedOptions = [
-  "rustic",
-  "antique",
-  "vinyl",
-  "vintage",
-  "refurbished",
-  "신품",
-  "빈티지",
-  "중고A급",
-  "중고B급",
-  "골동품",
-  "#산책하기좋은",
-  "#산책하기좋은ㅁ",
-  "#산책하기좋은ㄴㅇ",
-  "#산책하기좋은ㅋㅌㅊ",
-  "#산책하기좋ㅋㅌㅊ은",
-  "#산책하ㅁㄴㅇ기좋은",
-  "#산책ㅌㅊ하기좋은",
-  "#산책하기ㅂ좋은",
-  "#절",
-  "#왕릉",
-  "#공원",
-  "#놀이공원",
-  "#데이트",
-  "#자전거코스",
-  "#가을",
-  "#미술관",
-  "#박물관",
-];
+let deselectedOptions = [];
 
-export const Autocomplete = ({ hashtag, setHashtag }) => {
-  const [inputValue, setInputValue] = useState("");
+export const Autocomplete = ({ area, sigg, place, searchPlace, hashtag, setHashtag }) => {
   const [options, setOptions] = useState(deselectedOptions);
   const [selected, setSelected] = useState(-1);
+  const [clickedSomething, setClickedSomething] = useState(false);
+  const [hasHashtag, setHasHashtag] = useState(false);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/hashtagslist`, {
+        headers: {
+          // Authorization: `Bearer ${accessToken || kakaoToken}`,
+          "Content-Type": "application/json",
+        },
+
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        // setOptions(res.data.data);
+        deselectedOptions = res.data.data;
+      });
+  }, []);
 
   useEffect(() => {
-    if (inputValue === "") {
-      setHashtag("null");
+    if (hashtag === "") {
+      setHasHashtag("null");
     }
-  }, [inputValue]);
+  }, [hashtag]);
 
   const handleInputChange = (event) => {
     const { value } = event.target;
     if (value.includes("\\")) return;
 
     // input에 텍스트가 있는지 없는지 확인하는 코드
-    value ? setHashtag(true) : setHashtag(false);
+    value ? setHasHashtag(true) : setHasHashtag(false);
 
     // updateText
-    setInputValue(value);
+    setHashtag(value);
 
     // dropdown을 위한 기능
     const filterRegex = new RegExp(value, "i");
@@ -59,13 +49,16 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
   };
 
   const handleDropDownClick = (clickedOption) => {
-    setInputValue(clickedOption);
+    setHashtag(clickedOption);
+    console.log(hashtag);
+    // const resultOptions = deselectedOptions.filter((option) => option === clickedOption);
+    // setOptions(resultOptions);
 
-    const resultOptions = deselectedOptions.filter((option) => option === clickedOption);
-    setOptions(resultOptions);
+    setClickedSomething(true);
   };
   const handleDeleteButtonClick = () => {
-    setInputValue("");
+    setClickedSomething(false);
+    setHashtag("");
   };
 
   const handleKeyUp = (event) => {
@@ -80,7 +73,7 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
     )
       return;
     if (event.getModifierState("Control") + event.getModifierState("Alt") + event.getModifierState("Meta") > 1) return;
-    if (hashtag) {
+    if (hasHashtag) {
       if (event.code === "ArrowDown" && options.length - 1 > selected) {
         setSelected(selected + 1);
       }
@@ -93,39 +86,61 @@ export const Autocomplete = ({ hashtag, setHashtag }) => {
       }
     }
   };
-
+  console.log(hashtag);
   return (
-    <div onClick={handleDeleteButtonClick}>
-      <div className="autocomplete-wrapper" onKeyUp={handleKeyUp} onClick={(e) => e.preventDefault()}>
-        <Styled.InputContainer hashtag={hashtag}>
-          <input
-            type="text"
-            className="autocomplete-input"
-            placeholder="해시태그를 입력하세요"
-            onChange={handleInputChange}
-            value={inputValue}
-          />
-        </Styled.InputContainer>
-        {hashtag !== "null" ? (
-          <DropDown options={options} handleDropDownClick={(e) => handleDropDownClick(e)} selected={selected} />
-        ) : null}
-      </div>
+    // <div onClick={handleDeleteButtonClick}>
+    <div className="autocomplete-wrapper" onKeyUp={handleKeyUp} onClick={(e) => e.preventDefault()}>
+      <Styled.InputContainer hasHashTag={hasHashtag}>
+        <input
+          type="text"
+          className="autocomplete-input"
+          placeholder="# 해시태그 검색"
+          onChange={handleInputChange}
+          value={hashtag}
+          onKeyUp={(e) => {
+            console.log(hashtag);
+            if (e.key === "Enter") {
+              searchPlace(area, sigg, place, hashtag);
+            }
+          }}
+        />
+        <i className="fas fa-times" onClick={handleDeleteButtonClick}></i>
+      </Styled.InputContainer>
+      {hasHashtag !== "null" ? (
+        <DropDown
+          options={options}
+          handleDropDownClick={(e) => handleDropDownClick(e)}
+          selected={selected}
+          clickedSomething={clickedSomething}
+          setClickedSomething={setClickedSomething}
+        />
+      ) : null}
     </div>
+    // {/* </div> */}
   );
 };
 
-export const DropDown = ({ options, handleDropDownClick, selected }) => {
+export const DropDown = ({ options, handleDropDownClick, selected, clickedSomething, setClickedSomething }) => {
   return (
-    <Styled.DropDownWrapper className="hashtag-drop-down">
-      {options.map((option, idx) => (
-        <Styled.DropDownValue
-          key={idx}
-          onClick={() => handleDropDownClick(option)}
-          className={selected === idx ? "hashtag-drop-down selected" : "hashtag-drop-down"}
-        >
-          {option}
-        </Styled.DropDownValue>
-      ))}
-    </Styled.DropDownWrapper>
+    <Styled.DropDownContainer>
+      {!clickedSomething
+        ? options.map((option, idx) => (
+            <li key={idx} onClick={() => handleDropDownClick(option)} className={selected === idx ? "selected" : ""}>
+              {option}
+            </li>
+          ))
+        : null}
+    </Styled.DropDownContainer>
+    // <Styled.DropDownWrapper className="hashtag-drop-down">
+    //   {options.map((option, idx) => (
+    //     <Styled.DropDownValue
+    //       key={idx}
+    //       onClick={() => handleDropDownClick(option)}
+    //       className={selected === idx ? "hashtag-drop-down selected" : "hashtag-drop-down"}
+    //     >
+    //       {option}
+    //     </Styled.DropDownValue>
+    //   ))}
+    // </Styled.DropDownWrapper>
   );
 };

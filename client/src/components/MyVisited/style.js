@@ -7,6 +7,7 @@ export const Styled = {
     margin-left: 20px;
     position: relative;
     width: 500px;
+    height: 300px;
     margin-top: 30px;
     margin-bottom: 50px;
     margin-left: auto;
@@ -36,30 +37,30 @@ export const Styled = {
       width: 320px;
     }
   `,
-  Map: styled.div`
-    width: 480px;
-    height: 300px;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1rem;
+  // Map: styled.div`
+  //   width: 480px;
+  //   height: 300px;
+  //   border-radius: 10px;
+  //   margin-left: auto;
+  //   margin-right: auto;
+  //   margin-bottom: 1rem;
 
-    @media screen and (max-width: 530px) {
-      width: 440px;
-    }
+  //   @media screen and (max-width: 530px) {
+  //     width: 440px;
+  //   }
 
-    @media screen and (max-width: 480px) {
-      width: 380px;
-    }
+  //   @media screen and (max-width: 480px) {
+  //     width: 380px;
+  //   }
 
-    @media screen and (max-width: 438px) {
-      width: 330px;
-    }
+  //   @media screen and (max-width: 438px) {
+  //     width: 330px;
+  //   }
 
-    @media screen and (max-width: 370px) {
-      width: 300px;
-    }
-  `,
+  //   @media screen and (max-width: 370px) {
+  //     width: 300px;
+  //   }
+  // `,
   ModalContainer: styled.div`
     position: relative;
   `,
@@ -84,5 +85,28 @@ export const Styled = {
     z-index: 2;
     border: 1px solid white;
     border-radius: 20px;
+  `,
+  RightBtn: styled.button`
+    border-radius: 5px;
+    position: relative;
+    z-index: 7.9;
+
+    background-color: #3a6fb0;
+    color: white;
+    height: 40px;
+    width: 150px;
+    border: none;
+    cursor: pointer;
+    perspective: 230px;
+    margin-left: auto;
+    margin-right: auto;
+    &:hover {
+      background-color: #2f4d6f;
+    }
+    @media (max-width: 400px) {
+      margin: 1px auto;
+
+      width: 80px;
+    }
   `,
 };

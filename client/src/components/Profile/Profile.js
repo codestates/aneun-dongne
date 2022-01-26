@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { loginAgainModal, token, kToken, warningDeleteUserModal } from "../../recoil/recoil";
@@ -21,9 +21,9 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
   const [accessToken, setAccessToken] = useRecoilState(token);
   const kakaoToken = useRecoilValue(kToken);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isWarningModal, setWarningModal] = useRecoilState(warningDeleteUserModal);
+  const setWarningModal = useSetRecoilState(warningDeleteUserModal);
   useEffect(() => {
-    if (kakaoToken) setErrorMessage(message.kakaoState);
+    if (window.localStorage.getItem("jwt") === "카카오로긴") setErrorMessage(message.kakaoState);
   }, []);
 
   useEffect(() => {
@@ -31,11 +31,11 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
       .get(`${process.env.REACT_APP_API_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
-          // Authorization: `Bearer ${accessToken || kakaoToken}`,
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
+
       .then((res) => {
         setInputEmail(res.data.data.userInfo.email);
         if (res.data.data.userInfo.user_image_path) {
@@ -52,31 +52,24 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         }
       });
   }, []);
-  const editInfo = async (e) => {
+
+  const editImage = async (e) => {
     e.preventDefault();
 
-    if (!kakaoToken && !accessToken) {
+    if (!window.localStorage.getItem("jwt")) {
+      //서버 유효성검사 필요해요
       setIsLoginAgainOpen(true);
       return;
     }
 
     let formData = new FormData();
 
-    if (inputCheckPassword !== inputNewPassword || inputPassword < 8 || inputNewPassword.length < 8) {
-      setErrorMessage(message.checkAgain);
-      return;
-    }
     if (imgUrl) {
       formData.append("image", imgUrl);
     }
-    formData.append("nickname", inputUsername);
-    formData.append("email", inputEmail);
-    formData.append("password", inputPassword);
-    formData.append("checkPassword", inputCheckPassword);
-    formData.append("newPassword", inputNewPassword);
 
     axios
-      .patch(`${process.env.REACT_APP_API_URL}/user/info`, formData, {
+      .patch(`${process.env.REACT_APP_API_URL}/user/info/image`, formData, {
         headers: {
           Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
           "Content-Type": "application/json",
@@ -84,10 +77,10 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         withCredentials: true,
       })
       .then((res) => {
-        setImgUrl(res.data.data.user_image_path);
-        setPrevImg(res.data.data.user_image_path);
-        setNickname(res.data.data.nickname);
-        setInputEmail(res.data.data.email);
+        setImgUrl(res.data.data.userInfo.user_image_path);
+        setPrevImg(res.data.data.userInfo.user_image_path);
+        setNickname(res.data.data.userInfo.nickname);
+        setInputEmail(res.data.data.userInfo.email);
         setErrorMessage(message.changedProfile);
       })
       .catch((err) => {
@@ -109,16 +102,120 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
         }
       });
   };
+
+  const editNickname = async () => {
+    if (!window.localStorage.getItem("jwt")) {
+      //서버 유효성검사 필요해요
+      setIsLoginAgainOpen(true);
+      return;
+    }
+
+    if (inputUsername.length === 0) {
+      setErrorMessage(message.checkAgain);
+      return;
+    }
+
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/user/info/nickname`,
+        { nickname: inputUsername },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log("res", res);
+        setImgUrl(res.data.data.userInfo.user_image_path);
+        setPrevImg(res.data.data.userInfo.user_image_path);
+        setNickname(res.data.data.userInfo.nickname);
+        setInputEmail(res.data.data.userInfo.email);
+        setErrorMessage(message.changedProfile);
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때
+            setIsLoginAgainOpen(true);
+          } else if (err.response.status === 400) {
+            //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
+            setErrorMessage(message.checkAgain);
+          } else if (err.response.status === 403) {
+            //3. 카톡로긴일땐 정보변경을 허용하지 않음
+            //403번: 유저가 누구인진 알지만 허용하지 않을때
+            setErrorMessage(message.kakaoState);
+
+            //현재비번 잘못썼을때else if()
+            //닉넴잘못적었을때
+          }
+        }
+      });
+  };
+
+  const editPassword = async () => {
+    if (!window.localStorage.getItem("jwt")) {
+      //서버 유효성검사 필요해요
+      setIsLoginAgainOpen(true);
+      return;
+    }
+
+    if (inputCheckPassword !== inputNewPassword || inputPassword.length < 8 || inputNewPassword.length < 8) {
+      setErrorMessage(message.checkAgain);
+      return;
+    }
+
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/user/info/password`,
+        {
+          password: inputPassword,
+          checkPassword: inputCheckPassword,
+          newPassword: inputNewPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.get("jwt") || cookies.get("kakao-jwt")}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setImgUrl(res.data.data.userInfo.user_image_path);
+        setPrevImg(res.data.data.userInfo.user_image_path);
+        setNickname(res.data.data.userInfo.nickname);
+        setInputEmail(res.data.data.userInfo.email);
+        setErrorMessage(message.changedProfile);
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            //1. 토큰없는데 어떻게 마이페이지에 들어와져있을때
+            setIsLoginAgainOpen(true);
+          } else if (err.response.status === 400) {
+            //2. DB에서 확인 안될때 or 수정비번이랑 수정비번확인이 틀릴때
+            setErrorMessage(message.checkAgain);
+          } else if (err.response.status === 403) {
+            //3. 카톡로긴일땐 정보변경을 허용하지 않음
+            //403번: 유저가 누구인진 알지만 허용하지 않을때
+            setErrorMessage(message.kakaoState);
+
+            //현재비번 잘못썼을때else if()
+            //닉넴잘못적었을때
+          }
+        }
+      });
+  };
+
   //닉네임변경
   const handleInputUsername = (e) => {
     setInputUsername(e.target.value);
   };
-  //이메일변경불가
-  const handleInputEmail = (e) => {
-    setInputEmail(e.target.value);
-  };
 
-  //비밀번호변경//유효성검사추가해야함
+  //비밀번호변경
   const handleInputPassword = (e) => {
     setInputPassword(e.target.value);
   };
@@ -132,25 +229,40 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
 
   //회원탈퇴모달 오픈 (회원탈퇴로직 ModalWarningDeleteUserInfo/WaringDeleteUserInfo.js)
   const openWarningModalHandler = () => {
+    if (inputPassword.length < 8) {
+      setErrorMessage(message.checkAgain);
+      return;
+    }
+    //서버에서 비번 검사해서 안맞으면 404같은거보내주세요
+    //404뜨면 비번다시입력하라고 하게
     setWarningModal(true);
   };
 
   return (
-    <div>
+    <>
       <Styled.UserInfopage>
         <Styled.View>
-          <Styled.ImgDiv>
-            <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
-          </Styled.ImgDiv>
+          <form onSubmit={editImage} className="image-container">
+            <div className="image-wrapper">
+              <ProfileUpload imgUrl={imgUrl} setImgUrl={setImgUrl} />
+            </div>
+            <button className="btn-image-edit" type="submit">
+              적용
+            </button>
+          </form>
 
           <Styled.ContentBox>
-            <form onSubmit={editInfo}>
-              <div className="userinfo-each-label">
-                <input type="text" name="nickname" placeholder="새로운 닉네임" onChange={handleInputUsername} />
-              </div>
+            <div className="contentBox">
               <div className="userinfo-each-label">
                 <input type="text" value={inputEmail} readOnly />
               </div>
+              <div className="userinfo-each-label">
+                <input type="text" name="nickname" placeholder="새 닉네임" onChange={handleInputUsername} />
+                <button className="btn-edit" onClick={editNickname}>
+                  변경
+                </button>
+              </div>
+
               <div className="userinfo-each-label">
                 <input
                   type="password"
@@ -165,7 +277,7 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                 <input
                   type="password"
                   name="password"
-                  placeholder="새로운 비밀번호"
+                  placeholder="새 비밀번호"
                   value={inputNewPassword}
                   onChange={(e) => handleInputNewPassword(e)}
                 />
@@ -174,25 +286,25 @@ function Profile({ imgUrl, setImgUrl, setPrevImg, setNickname }) {
                 <input
                   type="password"
                   name="password"
-                  placeholder="새로운 비밀번호 확인"
+                  placeholder="새 비밀번호 재확인"
                   value={inputCheckPassword}
                   onChange={(e) => handleInputCheckPassword(e)}
                 />
+                <button className="btn-edit" onClick={editPassword}>
+                  변경
+                </button>
               </div>
               <div className="alert-box">{errorMessage}</div>
               <div className="userinfo-button-label">
-                <button className="btn-exit" onClick={openWarningModalHandler}>
+                <button className="btn-exit" type="button" onClick={openWarningModalHandler}>
                   회원탈퇴
                 </button>
-                <button className="btn-edit" type="submit">
-                  저장
-                </button>
               </div>
-            </form>
+            </div>
           </Styled.ContentBox>
         </Styled.View>
       </Styled.UserInfopage>
-    </div>
+    </>
   );
 }
 

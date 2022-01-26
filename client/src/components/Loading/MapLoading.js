@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 const Div = styled.div`
-  width: 700px;
+  display: flex;
+  flex-direction: column;
+
   .loadingBox {
-    margin-top: 200px;
+    margin-top: 40%;
   }
   .loadingBox h1 {
     text-align: center;
@@ -11,8 +13,8 @@ const Div = styled.div`
   .loadingBox .circle {
     margin-left: auto;
     margin-right: auto;
-    width: 100px;
-    height: 100px;
+    width: 10px;
+    height: 10px;
     border: 10px solid #fff;
     border-top: 10px solid rgb(176, 233, 168);
     border-radius: 50em;

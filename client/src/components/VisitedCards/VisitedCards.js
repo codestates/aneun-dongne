@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { Styled } from "./style";
 import { visitedModal } from "../../recoil/recoil";
 
-function VisitedCards({ area, sigg, image, memo, id }) {
+function VisitedCards({ address, image, memo, id }) {
   const [isVisitedOpen, setIsVisitedOpen] = useRecoilState(visitedModal);
   const [vtModal, setVtModal] = useState(null);
   const openModalHandler = (modal) => {
@@ -23,9 +23,7 @@ function VisitedCards({ area, sigg, image, memo, id }) {
         <div className={`place-cards ${id}`}>
           {image ? <img className={id} src={image} /> : <img className={id} src="/images/not-image-yet.png" />}
           <div className={`place-cards-title ${id}`}>
-            <div className={id}>
-              [ {area} {sigg} ]
-            </div>
+            <div className={id}>[ {address} ]</div>
             <div className="place-cards-memo">{memo}</div>
           </div>
         </div>
